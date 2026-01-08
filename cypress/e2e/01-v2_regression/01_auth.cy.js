@@ -309,4 +309,7 @@ describe("testing INBOX page", () => {
   it("Confirm that the access token truly becomes invalid after 15 minutes", () => {
     authAction.tokenValidationAfter15minutes();
   });
+  it("test push to new github repo", () => {
+    authAction.tokenValidationAfter15minutes();
+  });
 });
