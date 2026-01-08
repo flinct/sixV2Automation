@@ -1,0 +1,216 @@
+{
+  "_id": {
+    "$oid": "66e0fca76e375bb16516d8a2"
+  },
+  "fullname": "god dumm",
+  "email": "god@dummy.com",
+  "password": "$2a$08$kbLcgfzxbM0dXnA5IY3TBuTD4CywatVS7PZxyz7aMxBUPrfYlysNy",
+  "role": "internalTeam",
+  "isActive": true,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-09-11T02:12:55.442Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-03T08:53:00.236Z"
+  },
+  "__v": 0,
+  "createdBy": "System (Register)",
+  "division": {
+    "$oid": "66e28ba71ecefc1815bdf812"
+  },
+  "updatedBy": "god@dummy.com",
+  "username": "goddummy",
+  "feature": {
+    "accountWhatsapp": true,
+    "broadcast": true,
+    "contact": true,
+    "dashboard": true,
+    "division": true,
+    "groupDivision": true,
+    "groupInbox": true,
+    "inbox": true,
+    "templateBroadcast": true,
+    "templateMessages": true,
+    "ticketing": true,
+    "users": true,
+    "workingHour": true
+  },
+  "isMaster": false,
+  "phoneNumber": "6285137294825",
+  "isEmailVerified": false,
+  "lastLogin": {
+    "$date": "2025-04-03T08:53:00.233Z"
+  }
+}
+
+{
+    "_id": {
+      "$oid": "66ea7cf9b8d4a225aa7e4d59"
+    },
+    "fullname": "akun testing prod",
+    "number_handphone": "6285135430934",
+    "email": "gokipah412@provko.com",
+    "password": "$2a$08$atyNWnVpSbvuv03PxFGWmeb/2tjG9fpXFNVCnBP7JxDlAVVNWtZxe",
+    "role": "internalTeam",
+    "email_verified": false,
+    "isActive": true,
+    "isDeleted": false,
+    "createdAt": {
+      "$date": "2024-09-18T07:10:49.309Z"
+    },
+    "updatedAt": {
+      "$date": "2025-04-03T07:25:05.302Z"
+    },
+    "__v": 0,
+    "createdBy": "System (Register)",
+    "last_login": {
+      "$date": "2025-04-03T06:22:44.690Z"
+    },
+    "division": {
+      "$oid": "672440a4296658893c1309c0"
+    },
+    "updatedBy": "god@dummy1.com",
+    "username": "goddummyprod",
+    "feature": {
+      "dashboard": true,
+      "inbox": true,
+      "broadcast": true,
+      "ticketing": false,
+      "groupInbox": false,
+      "users": true,
+      "templateMessages": true,
+      "accountWhatsapp": true,
+      "division": true,
+      "groupDivision": true,
+      "workingHour": true,
+      "contact": true,
+      "templateBroadcast": true
+    },
+    "isEmailVerified": false,
+    "isMaster": false,
+    "lastLogin": {
+      "$date": "2025-04-03T07:25:05.299Z"
+    }
+  }
+
+  
+app-1  | engine: saving..
+app-1  | validate message
+app-1  | engine: parsing webhook data 3EB0768A59A5E40D6AA7AE
+app-1  | engine: saving..
+app-1  | validate message
+app-1  | engine: parsing webhook data 3EB0F9789938EC7C2DE8A4
+app-1  | engine: saving..
+app-1  | validate message
+app-1  | engine: parsing webhook data 3EB0E7BF55B149B7EE1FFF
+app-1  | 2025-04-17T03:56:49.835Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:49.837Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:49.839Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:49.840Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:49.847Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | engine: saving..
+app-1  | validate message
+app-1  | engine: parsing webhook data 3EB02CC0B077F72905FD54
+app-1  | 2025-04-17T03:56:50.535Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.538Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.539Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.541Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.542Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.543Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.544Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.545Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.546Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.548Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.549Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.550Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.551Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.553Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.554Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.555Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.556Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.558Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.568Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.570Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.571Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.572Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.573Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.575Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.576Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.577Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.876Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.883Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.885Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.885Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.886Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.887Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.888Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.889Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.890Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.891Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.892Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.892Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.893Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.894Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.895Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.896Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.897Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.898Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.899Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.900Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.903Z /67f5d2669f4f80b0902b7cc8/info engine
+app-1  | 2025-04-17T03:56:50.904Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.905Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.907Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.910Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:50.911Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:51.072Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:51.078Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:51.082Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:51.083Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:51.085Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | 2025-04-17T03:56:51.086Z /67f5d2669f4f80b0902b7cc8/message/text engine
+app-1  | engine: saving..
+app-1  | validate message
+app-1  | engine: parsing webhook data 3EB0A63695E55BB58DDF96
+app-1  | socket: messages.upsert (m.type) append
+app-1  | engine: socket value m :  6285135425714 {"messages":[{"key":{"remoteJid":"6289655057778@s.whatsapp.net","fromMe":true,"id":"3EB045837E461F713FB126"},"message":{"extendedTextMessage":{"text":"Finn M feet on the ground \n2025-04-17T03:56:25.573Z"}},"messageTimestamp":"1744862212","status":"PENDING"}],"type":"append"}
+app-1  | socket: messages.upsert (m.type) append
+
+tokenMiddleware err :  Error
+app-1  |     at tokenMiddleware (/app/middlewares/token.middleware.js:12:13)
+app-1  |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+app-1  |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+app-1  |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:119:3)
+app-1  |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+app-1  |     at /app/node_modules/express/lib/router/index.js:284:15
+app-1  |     at param (/app/node_modules/express/lib/router/index.js:365:14)
+app-1  |     at param (/app/node_modules/express/lib/router/index.js:376:14)
+app-1  |     at Function.process_params (/app/node_modules/express/lib/router/index.js:421:3)
+app-1  |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+app-1  | engine: saving..
+app-1  | validate message
+app-1  | engine: parsing webhook data 3EB00F88DA44E0D8E8B9D8
+
+ro| <--- Last few GCs --->
+app-1  |
+app-1  | [1:0x1a29c180] 83661314 ms: Scavenge 1999.1 (2072.5) -> 1995.5 (2074.0) MB, 12.30 / 0.00 ms  (average mu = 0.761, current mu = 0.613) allocation failure;
+app-1  | [1:0x1a29c180] 83661364 ms: Scavenge 2001.0 (2074.0) -> 1997.4 (2091.8) MB, 12.03 / 0.00 ms  (average mu = 0.761, current mu = 0.613) allocation failure;
+app-1  | [1:0x1a29c180] 83663935 ms: Mark-Compact 2010.9 (2091.8) -> 1998.3 (2096.3) MB, 2526.19 / 0.00 ms  (average mu = 0.593, current mu = 0.312) allocation failure; scavenge might not succeed
+app-1  |
+app-1  |
+app-1  | <--- JS stacktrace --->
+app-1  |
+app-1  | FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+app-1  | ----- Native stack trace -----
+app-1  |
+app-1  |  1: 0xb8cf03 node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/nodejs/bin/node]
+app-1  |  2: 0xf04140 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/nodejs/bin/node]
+app-1  |  3: 0xf04427 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/nodejs/bin/node]
+app-1  |  4: 0x1116075  [/nodejs/bin/node]
+app-1  |  5: 0x112def8 v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/nodejs/bin/node]
+app-1  |  6: 0x1104011 v8::internal::HeapAllocator::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/nodejs/bin/node]
+app-1  |  7: 0x11051a5 v8::internal::HeapAllocator::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/nodejs/bin/node]
+app-1  |  8: 0x10e27f6 v8::internal::Factory::NewFillerObject(int, v8::internal::AllocationAlignment, v8::internal::AllocationType, v8::internal::AllocationOrigin) [/nodejs/bin/node]
+app-1  |  9: 0x153e336 v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/nodejs/bin/node]
+app-1  | 10: 0x7fdacfed9ef6
