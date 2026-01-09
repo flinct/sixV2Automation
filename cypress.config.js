@@ -6,7 +6,8 @@ const generate = require("mochawesome-report-generator");
 const chalk = require("chalk");
 // const fs = require("fs");
 
-const baseUrl = process.env.CYPRESS_baseUrl || "//localhost:3000";
+// const baseUrl = process.env.CYPRESS_baseUrl || "//localhost:3000";
+const baseUrl = process.env.CYPRESS_baseUrl;
 
 module.exports = defineConfig({
   defaultCommandTimeout: 10000, //timeout untuk menunggu command dieksekusi
