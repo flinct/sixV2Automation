@@ -1,0 +1,25 @@
+image: cypress/browsers:node18.12.0-chrome107
+
+stages:
+  - test
+
+variables:
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+cache:
+  paths:
+    - node_modules/
+    - cache/Cypress
+
+cypress_scheduled_test:
+  stage: test
+  script:
+    - npm ci
+    - npx cypress run --spec "cypress\e2e\01-v2_regression\01_auth.cy.js"
+  rules:
+    # - when: manual
+    # jalan kalau di-push ke branch tertentu
+    - if: '$CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "main")'
+
+    # jalan kalau dipicu oleh schedule (cron)
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'

@@ -52,13 +52,13 @@ describe("testing INBOX page", () => {
   //   inboxAction.writeCombinedLog();
   // });
 
-  it("check exist element on register", () => {
+  it.only("check exist element on register", () => {
     authAction.elementCheckingRegister();
   });
   it("check register error state", () => {
     authAction.checkingRegisterErrorState();
   });
-  it("check exist element on login", () => {
+  it.only("check exist element on login", () => {
     authAction.elementCheckingV2Login();
   });
   it("check login error state", () => {
@@ -294,7 +294,7 @@ describe("testing INBOX page", () => {
   });
 
   //test functional auth - REGISTER - LOGIN - LOGOUT - RESET PASSWORD - LOGIN WITH NEW PASSWORD
-  it.only("try register and reset password", () => {
+  it("try register and reset password", () => {
     authAction.registerAndResetWithMailTm();
   });
 
@@ -308,13 +308,5 @@ describe("testing INBOX page", () => {
   //access token validation
   it("Confirm that the access token truly becomes invalid after 15 minutes", () => {
     authAction.tokenValidationAfter15minutes();
-  });
-  it("test push to new github repo", () => {
-    authAction.tokenValidationAfter15minutes();
-    //test ubah lagi
-    //test ubah lagi 2
-    //test ubah lagi 3
-    //test ubah lagi 4
-    //test ubah lagi 5
   });
 });
