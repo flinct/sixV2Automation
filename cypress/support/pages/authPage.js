@@ -95,6 +95,7 @@ class authPage {
   //-----------------------V2---------------------------------
   //login
   elementCheckingV2Login() {
+    //test
     this.visitLoginPage();
     //MAIN ELEMENT
     elementAuth.satuinboxLogo().should("be.visible");
