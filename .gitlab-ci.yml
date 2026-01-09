@@ -15,7 +15,7 @@ cypress_scheduled_test:
   stage: test
   script:
     - npm ci
-    - $env:CYPRESS_baseUrl="https://app.satuinbox.com"; $env:CYPRESS_loginType="goddummyprod";  npx cypress run --env taskType=monitoring --spec "cypress\e2e\01-v2_regression\01_auth.cy.js"
+    - CYPRESS_baseUrl="https://v2.satuinbox.com"; CYPRESS_loginType="danyatminsatu";  npx cypress run --spec "cypress/e2e/01-v2_regression/01_auth.cy.js"
   rules:
     # - when: manual
     # jalan kalau di-push ke branch tertentu
