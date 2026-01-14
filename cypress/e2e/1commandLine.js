@@ -874,4 +874,43 @@ https://apisanbox.coresyssap.com/ext/satuinbox/confirmation
       //     // cy.get(".bg-primary").click();
       //   });
       // });
+  }
+  
+  {
+  "tickets": [
+    {
+      //optional
+      "conversationId": "66f28db6a83f4e1c9b41c7a9", 
+      "messageIds": [
+        "6720d5c8a1b4b91e6c3d44a7",
+        "6720d5c8a1b4b91e6c3d44a8"
+      ],
+      "teamId": "6720d5c8a1b4b91e6c3d44a9",
+      "memberIds": [
+        "6720d5c8a1b4b91e6c3d44a0"
+      ],
+      "accountChannelCanReply": "6720d5c8a1b4b91e6c3d44a1",
+      "primaryMessage": "6720d5c8a1b4b91e6c3d44a1",
+      optional
+      //
+      
+      "ticketTypeId": "66f28db6a83f4e1c9b41c7a9",
+      "title": "Customer Support Request",
+      "description": "Customer needs help with order #12345",
+      "customAttributes": [
+        {
+          "title": "Full Name", //sesuai ticket type
+          "value": "John Doe",
+          "attachment": { //optional
+            "type": "image",
+            "url": "https://cdn.satuinbox.com/files/image.jpg",
+            "filename": "profile-picture.jpg",
+            "mimeType": "image/jpeg",
+            "size": 1024000,
+            "mediaResourceKey": "media_abc123xyz"
+          }
+        }
+      ]
     }
+  ]
+}
