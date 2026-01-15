@@ -9,18 +9,15 @@ class elementAuth {
   keyword() {
     return cy.get('[data-cy="Keyword-Input"]');
   }
-  keywordErrState() {
-    return cy.get("#username.border-red-600");
-  }
   password() {
     return cy.get('[data-cy="Password-Input"]');
-  }
-  passwordErrState() {
-    return cy.get("#password.border-red-600");
   }
   buttonLogin() {
     return cy.get('[data-cy="Login-Submit-Button"]');
     // return cy.get('[data-cy="login-button-sign-in"]');
+  }
+  errState() {
+    return cy.get('[data-cy="Login-Form"]').find("div").find("p");
   }
 
   //SECONDARY ELEMENT

@@ -72,24 +72,24 @@ Cypress.on("uncaught:exception", (err, runnable) => {
 //   }
 // });
 
-afterEach(function () {
-  const testState = this.currentTest.state;
-  const testName = this.currentTest
-    .fullTitle()
-    .replace(/[^a-z0-9]/gi, "_")
-    .toLowerCase();
+// afterEach(function () {
+//   const testState = this.currentTest.state;
+//   const testName = this.currentTest
+//     .fullTitle()
+//     .replace(/[^a-z0-9]/gi, "_")
+//     .toLowerCase();
 
-  const screenshotFolder =
-    Cypress.config("screenshotsFolder") || "cypress/screenshots";
+//   const screenshotFolder =
+//     Cypress.config("screenshotsFolder") || "cypress/screenshots";
 
-  // Screenshot path per status: passed / failed
-  const screenshotPath = `screenshot_${testName}`;
+//   // Screenshot path per status: passed / failed
+//   const screenshotPath = `screenshot_${testName}`;
 
-  // Ambil screenshot untuk semua test (tidak hanya di CI)
-  cy.screenshot(screenshotPath, {
-    capture: "runner", // bisa diganti "viewport" atau "fullPage"
-  });
-});
+//   // Ambil screenshot untuk semua test (tidak hanya di CI)
+//   cy.screenshot(screenshotPath, {
+//     capture: "runner", // bisa diganti "viewport" atau "fullPage"
+//   });
+// });
 
 // afterEach(function () {
 //   const testName = this.currentTest

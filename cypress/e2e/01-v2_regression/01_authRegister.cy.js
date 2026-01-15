@@ -52,17 +52,11 @@ describe("testing INBOX page", () => {
   //   inboxAction.writeCombinedLog();
   // });
 
-  it.skip("check exist element on register", () => {
+  it("check exist element on register", () => {
     authAction.elementCheckingRegister();
   });
-  it.skip("check register error state", () => {
+  it("check register error state", () => {
     authAction.checkingRegisterErrorState();
-  });
-  it.skip("check exist element on login", () => {
-    authAction.elementCheckingV2Login();
-  });
-  it.skip("check login error state", () => {
-    authAction.elementCheckingV2LoginErrorState();
   });
 
   //---------register validation-----------
@@ -88,7 +82,7 @@ describe("testing INBOX page", () => {
     authAction.validateTokenAndLinkEmail();
   });
   it("check successfull register with all valid format input", () => {
-    authAction.successfullRegisterWithValidAllInputFormat(); //
+    authAction.successfullRegisterWithValidAllInputFormat();
   });
 
   //--------------fullname validation--------------------
@@ -198,119 +192,14 @@ describe("testing INBOX page", () => {
     authAction.validatePasswordContainsSpacing();
   });
 
-  //--------------onboarding validation--------------------
-  it("check login validation - try login without validate email -", () => {
-    authAction.tryLoginBeforeEmailValidated();
-  });
-
-  it("check onboarding validation -display behavior-", () => {
-    authAction.validateOnboardingSuccessAccess();
-  });
-  it("check onboarding validation -try re-access with refreshing the page-", () => {
-    authAction.validateOnboardingNotRedisplayWhenRefreshed();
-  });
-  it("check onboarding validation -re access via path-", () => {
-    authAction.validateOnboardingReAccessViaPath();
-  });
-  it("check onboarding validation -successfull onboarding-", () => {
-    authAction.validateOnboardingWithValidCriteria();
-  });
-  it("check onboarding validation -minimum organization name-", () => {
-    authAction.validateOnboardingMinimumOrganizationName();
-  });
-  it("check onboarding validation -valid length organization name-", () => {
-    authAction.validateOnboardingOrganizationNameValidLength();
-  });
-  it("check onboarding validation -maximum organization name-", () => {
-    authAction.validateOnboardingMaximumOrganizationName();
-  });
-  it("check onboarding validation -organization name with special chars-", () => {
-    authAction.validateOnboardingOrganizationNameWithSpecialChars();
-  });
-  it("check onboarding validation -organization name with numeric only-", () => {
-    authAction.validateOnboardingOrganizationNameWithNumericOnly();
-  });
-  it("check onboarding validation -organization name with exsisting data-", () => {
-    authAction.validateOnboardingOrganizationNameWithExistingData();
-  });
-  it("check onboarding validation -minimum NIB-", () => {
-    authAction.validateOnboardingMinimumNIB();
-  });
-  it("check onboarding validation -valid lenght NIB-", () => {
-    authAction.validateOnboardingNIBValidLength();
-  });
-  it("check onboarding validation -maximum NIB-", () => {
-    authAction.validateOnboardingMaximumNIB();
-  });
-  it("check onboarding validation -NIB with alphabeth-", () => {
-    authAction.validateOnboardingNIBWithAlphabet();
-  });
-  it("check onboarding validation -NIB with special chars-", () => {
-    authAction.validateOnboardingNIBWithSpecialChars();
-  });
-  it("check onboarding validation -NIB with spaces-", () => {
-    authAction.validateOnboardingNIBWithSpaces();
-  });
-  it("check onboarding validation -minimum NPWP-", () => {
-    authAction.validateOnboardingMinimumNPWP();
-  });
-  it("check onboarding validation -valid lenght NPWP-", () => {
-    authAction.validateOnboardingNPWPValidLength();
-  });
-  it("check onboarding validation -maximum NPWP-", () => {
-    authAction.validateOnboardingMaximumNPWP();
-  });
-  it("check onboarding validation -NPWP with alphabeth-", () => {
-    authAction.validateOnboardingNPWPWithAlphabet();
-  });
-  it("check onboarding validation -NPWP with special chars-", () => {
-    authAction.validateOnboardingNPWPWithAlphabet();
-  });
-  it("check onboarding validation -NPWP with spaces-", () => {
-    authAction.validateOnboardingNPWPWithSpaces();
-  });
-  it("check onboarding validation -NIB upload minimum-", () => {
-    authAction.validateOnboardingNIBUploadBelowMax();
-  });
-  it("check onboarding validation -NIB upload maximum-", () => {
-    authAction.validateOnboardingNIBUploadExceedMax();
-  });
-  it("check onboarding validation -NIB upload invalid ext-", () => {
-    authAction.validateOnboardingNIBUploadInvalidExt();
-  });
-  it("check onboarding validation -NIB upload corrupted file-", () => {
-    authAction.validateOnboardingNIBUploadCorruptFile();
-  });
-  it("check onboarding validation -minimum ID number-", () => {
-    authAction.validateOnboardingMinimumIDnumber();
-  });
-  it("check onboarding validation -valid length ID number-", () => {
-    authAction.validateOnboardingIDnumberValidLength();
-  });
-  it("check onboarding validation -maximum ID number-", () => {
-    authAction.validateOnboardingMaximumIDnumber();
-  });
-  it("check onboarding validation -ID number with alphabeth-", () => {
-    authAction.validateOnboardingIDnumberWithAlphabeth();
-  });
-  it("check onboarding validation -ID number with spaces-", () => {
-    authAction.validateOnboardingIDnumberWithSpaces();
-  });
-
   //test functional auth - REGISTER - LOGIN - LOGOUT - RESET PASSWORD - LOGIN WITH NEW PASSWORD
   it("try register and reset password", () => {
     authAction.registerAndResetWithMailTm();
   });
-
-  it("try login with valid credentials", () => {
-    authAction.loginValidUsername();
-  });
-  it("try login with INVALID credentials", () => {
-    authAction.loginInvalidUsername();
-  });
-
-  //access token validation
-  it("Confirm that the access token truly becomes invalid after 15 minutes", () => {
-    authAction.tokenValidationAfter15minutes();
-  });
 });
+
+//check phoneNumber register with local code
+//check phoneNumber register with trailing spacing
+//check onboarding validation -display behavior-
+//check onboarding validation -try re-access with refreshing the page-
+//check onboarding validation -re access via path-

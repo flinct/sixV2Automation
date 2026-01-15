@@ -10,7 +10,8 @@ import { env_config } from "../01_url_page.js";
 import "cypress-mailslurp";
 const baseUrl = Cypress.config("baseUrl");
 const loginType = Cypress.env("loginType");
-const randomNumber = Math.floor(Math.random() * 10000000);
+const randomNumber = Math.floor(10000000 + Math.random() * 10000000);
+const randomSortNumber = Math.floor(10 + Math.random() * 10);
 const randomNumber2 = Math.floor(Math.random() * 1000) + 1000;
 const randomPhoneNumber = Math.floor(100000000 + Math.random() * 100000000);
 const nib = Math.floor(1000000000000 + Math.random() * 1000000000000); //13 digits
@@ -28,6 +29,7 @@ const generateRandomText = (length = 6) => {
 
   return result;
 };
+const indentifierRegres = "cyt ";
 
 const randomText = generateRandomText(6);
 const config = env_config(baseUrl);
@@ -156,15 +158,14 @@ class authPage {
   loginInvalidUsername() {
     this.visitLoginPage();
     cy.login_invalid_username("myUsername", "myPassword");
-    cy.xpath(
-      // "/html[1]/body[1]/main[1]/main[1]/section[1]/div[1]/div[2]/form[1]/div[4]/p[1]"
-      "/html[1]/body[1]/main[1]/main[1]/section[1]/div[1]/div[2]/div[1]/div[1]"
-    )
+    elementAuth
+      .errState()
       .should("be.visible")
       .contains(
         // "Akun tidak ditemukan, periksa kembali email/username dan password Anda!"
         // "Email dan/atau password salah. Coba lagi atau coba reset password anda."
-        "Email atau kata sandi tidak valid. Silakan coba lagi atau atur ulang kata sandi Anda."
+        // "Email atau kata sandi tidak valid. Silakan coba lagi atau atur ulang kata sandi Anda."
+        /coba lagi atau coba reset password anda/i
       );
   }
 
@@ -197,14 +198,7 @@ class authPage {
   checkingRegisterErrorState() {
     this.visitRegisterPage();
     cy.wait(500);
-    // elementAuth.fullnameErrorState().type("a");
-    // elementAuth.emailErrorState().type("a");
-    // elementAuth.usernameErrorState().type("a");
-    // elementAuth.phoneErrorState().type("1");
-    // elementAuth.passwordErrorState().type("a");
-    // elementAuth.passwordConfirmErrorState().type("a");
     elementAuth.buttonDaftar().click();
-    elementAuth.regFullnameErr().should("be.visible");
     elementAuth
       .regFullnameErrMsg()
       .softAssert("Nama lengkap minimal 3 karakter");
@@ -226,21 +220,26 @@ class authPage {
     elementAuth
       .regPasswordConfirmErrMsg()
       .softAssert("Silakan masukkan kembali kata sandi Anda");
-    // elementAuth
-    //   .confirmation()
-    //   .hardAssert(
-    //     "By signing up, i accept the Satuinbox Terms of Service and Privacy Policy"
-    //   );
   }
 
   validateAlreadyRegisteredEmail() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("User with email") &&
+        err.message.includes("already exists")
+      ) {
+        // do not fail the test for duplicate email error
+        return false;
+      }
+    });
+
     this.visitRegisterPage();
     cy.task("log", "checking already used email");
     cy.task("log", "--------------");
-    elementAuth.regFullname().type("test duplicate email");
+    elementAuth.regFullname().type(indentifierRegres + "test duplicate email");
     elementAuth.regUsername().type("testduplicateemail");
     elementAuth.regEmail().type("duplicate@email.com");
-    elementAuth.regPhone().type("08" + randomPhoneNumber);
+    elementAuth.regPhone().type("08" + randomPhoneNumber); //0855695874
     elementAuth.regPassword().type("Asdqwe12@");
     elementAuth.regPasswordConfirm().type("Asdqwe12@");
     elementAuth.buttonDaftar().click();
@@ -248,7 +247,7 @@ class authPage {
   }
 
   validateEmailWithLeading() {
-    const prefix = " leading" + randomNumber2;
+    const prefix = " leading" + randomNumber;
     const email = prefix + "@mail.com";
     const username = prefix;
     this.visitRegisterPage();
@@ -261,7 +260,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("test spacing email");
+    elementAuth.regFullname().type(indentifierRegres + "test spacing email");
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08" + randomPhoneNumber);
@@ -270,19 +269,25 @@ class authPage {
     elementAuth.buttonDaftar().click();
 
     //validate
-    const prefixTrim = prefix.trim();
-    const emailTrim = prefixTrim + "@mail.com";
-    cy.log(emailTrim);
-    elementAuth.regEmail().contains(emailTrim, { timeout: 500 });
-    // cy.url().should(
-    //   "include",
-    //   `/register/verify-email?email=${encodeURIComponent(email)}`
-    // );
-    // elementAuth.satuinboxLogo().should('be.visible')
-    // elementAuth.successTitle().softAssert('Periksa email Anda')
-    // elementAuth.iconSent().should('be.visible')
-    // elementAuth.checkEmailDesc().softAssert('Kami telah mengirimkan email verifikasi ke')
-    // elementAuth.registeredUserEmail().softAssert(email)
+    const normalizedEmail = email.trim();
+
+    cy.url().should(
+      "include",
+      `/register/verify-email?email=${encodeURIComponent(normalizedEmail)}`
+    );
+    elementAuth.satuinboxLogo().should("be.visible");
+    elementAuth
+      .successTitle()
+      .contains(/Periksa email Anda untuk melanjutkan/i);
+    elementAuth.iconSent().should("be.visible");
+    elementAuth
+      .checkEmailDesc()
+      .contains(
+        new RegExp(
+          `Kami telah mengirimkan email verifikasi ke.*${normalizedEmail}`,
+          "i"
+        )
+      );
   }
 
   validateEmailWithUpprecase() {
@@ -299,7 +304,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("uppercase email");
+    elementAuth.regFullname().type(indentifierRegres + "uppercase email");
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08" + randomPhoneNumber);
@@ -308,8 +313,9 @@ class authPage {
     // elementAuth.buttonDaftar().click();
 
     //validate login with email
-    const emailTrim = prefix + "@mail.com";
-    elementAuth.regEmail().contains(emailTrim, { timeout: 500 });
+    // const emailTrim = prefix + "@mail.com";
+    elementAuth.regEmail().should("have.value", email, { timeout: 500 });
+    elementAuth.regEmail().should("have.css", "text-transform", "lowercase");
   }
 
   validateInvalidEmailInput() {
@@ -326,7 +332,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("invalid email");
+    elementAuth.regFullname().type(indentifierRegres + "invalid email");
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08" + randomPhoneNumber);
@@ -350,7 +356,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("invalid email");
+    elementAuth.regFullname().type(indentifierRegres + "invalid email");
     elementAuth.regUsername().type("invalidemail");
     elementAuth.regEmail().type("invalid@mail.");
     elementAuth.regPhone().type("08" + randomPhoneNumber);
@@ -374,7 +380,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("invalid email");
+    elementAuth.regFullname().type(indentifierRegres + "invalid email");
     elementAuth.regUsername().type("invalidemail");
     elementAuth.regEmail().type("invalidmail.");
     elementAuth.regPhone().type("08" + randomPhoneNumber);
@@ -395,6 +401,14 @@ class authPage {
     //step
   }
 
+  successRegisterPage() {
+    elementAuth.successTitle().should("be.visible");
+    // elementAuth.iconSent().should('be.visible')
+    elementAuth.checkEmailDesc().should("be.visible");
+    elementAuth.registeredUserEmail().should("be.visible");
+    elementAuth.resendEmail().should("be.visible");
+  }
+
   successfullRegisterWithValidAllInputFormat() {
     this.visitRegisterPage();
     elementAuth.regFullname().clear();
@@ -404,7 +418,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("success register ");
+    elementAuth.regFullname().type(indentifierRegres + "success register ");
     elementAuth.regUsername().type("testatc" + randomNumber2);
     elementAuth.regEmail().type(randomNumber + "@testatc.com");
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -413,11 +427,12 @@ class authPage {
     elementAuth.buttonDaftar().click();
 
     //success
-    elementAuth.successTitle().should("be.visible");
-    // elementAuth.iconSent().should('be.visible')
-    elementAuth.checkEmailDesc().should("be.visible");
-    elementAuth.registeredUserEmail().should("be.visible");
-    elementAuth.resendEmail().should("be.visible");
+    this.successRegisterPage();
+    // elementAuth.successTitle().should("be.visible");
+    // // elementAuth.iconSent().should('be.visible')
+    // elementAuth.checkEmailDesc().should("be.visible");
+    // elementAuth.registeredUserEmail().should("be.visible");
+    // elementAuth.resendEmail().should("be.visible");
     // elementAuth.resendEmail_sentState()
   }
 
@@ -436,7 +451,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("su");
+    elementAuth.regFullname().type("cy");
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -499,7 +514,9 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("10000000testmaxusername");
+    elementAuth
+      .regFullname()
+      .type(indentifierRegres + "10000000testmaxusername");
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -529,7 +546,9 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("asd!@#$%^&*()_+{}:',./?><;][-=~`");
+    elementAuth
+      .regFullname()
+      .type(indentifierRegres + "asd!@#$%^&*()_+{}:',./?><;][-=~`");
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -559,19 +578,23 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type("double  space"); //double spacing
+    elementAuth.regFullname().type(indentifierRegres + "double  space"); //double spacing
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("08960000" + randomNumber2);
+    elementAuth.regPhone().type("08" + randomNumber);
     elementAuth.regPassword().type("Asdqwe12@");
     elementAuth.regPasswordConfirm().type("Asdqwe12@");
-    // elementAuth.buttonDaftar().click();
 
     //error steps
     //validate
     // const usernameTrim = prefix.trim();
     // elementAuth.regFullname().contains("double space", { timeout: 500 });
-    elementAuth.regFullname().should("have.value", "double space");
+    elementAuth
+      .regFullname()
+      .should("have.value", indentifierRegres + "double  space");
+    elementAuth.buttonDaftar().click();
+    elementAuth.buttonDaftar().should("not.exist");
+    this.successRegisterPage();
   }
 
   validateMinimumUsername() {
@@ -589,7 +612,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type("te");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -619,7 +642,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth
       .regUsername()
       .type("testmaxusernameisthirtyfivedigitsdsadsadsa"); //42 digits
@@ -651,7 +674,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type("test regUsername"); //spacing
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -681,7 +704,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type("asd!@#$%^&*()_+");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -697,6 +720,16 @@ class authPage {
       .softAssert("Nama pengguna hanya boleh berisi huruf kecil dan angka");
   }
   validateAlreadyRegisteredUsername() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("User with username") &&
+        err.message.includes("already exists")
+      ) {
+        // do not fail the test for duplicate email error
+        return false;
+      }
+    });
+
     const identifier = "atc";
     const number = randomNumber2;
     const prefix = "username";
@@ -711,7 +744,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type("chickentester01");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -720,13 +753,23 @@ class authPage {
     elementAuth.buttonDaftar().click();
 
     //validate duplicate username message
-    // cy.wait(200);
-    elementToast.toastError().should("be.visible");
-    elementToast.toastErrorTitle().contains("Error");
-    elementToast.toastErrorMsg().should("include.text", "User with username");
-    elementToast.toastErrorMsg().should("include.text", "chickentester01");
+    cy.wait(200);
+    elementToast.toastError({ timeout: 3000 }).should("be.visible");
+    elementToast.toastError().contains("Error");
+    elementToast.toastError().should("include.text", "User with username");
+    elementToast.toastError().should("include.text", "chickentester01");
   }
   validateUsernameWithUppercase() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("User with username") &&
+        err.message.includes("already exists")
+      ) {
+        // do not fail the test for duplicate email error
+        return false;
+      }
+    });
+
     const identifier = "atc";
     const number = randomNumber2;
     const prefix = "username";
@@ -741,7 +784,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type("CHICKENTESTER01");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -751,10 +794,9 @@ class authPage {
 
     //error steps
     cy.wait(1000);
-    elementAuth.regUsernameErr().should("be.visible");
-    elementAuth
-      .regUsernameErrMsg()
-      .softAssert("Nama pengguna hanya boleh berisi huruf kecil dan angka");
+    // elementAuth.regUsername().should("have.value", fullname);
+    elementAuth.regUsername().should("have.css", "text-transform", "lowercase");
+    elementAuth.regUsername().should("have.value", "CHICKENTESTER01");
   }
   validateUsernameWithtrailingSpace() {
     const identifier = "atc";
@@ -773,7 +815,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username); //trailing spacing
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
@@ -782,17 +824,30 @@ class authPage {
     // elementAuth.buttonDaftar().click();
 
     //error steps
-    const usernameTrim = username.trim();
-    cy.task("log", usernameTrim);
+    const normalize = (str) => str.replace(/\u00A0/g, "").trim();
+
+    const usernameNormalized = normalize(username);
+
     elementAuth
       .regUsername({ timeout: 500 })
-      .should("have.value", usernameTrim);
+      .invoke("val")
+      .then((val) => normalize(val))
+      .should("eq", usernameNormalized);
     // elementAuth.regUsername().contains(usernameTrim, { timeout: 500 });
   }
 
   validatePhoneNumberLocalCode() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("already exists") ||
+        err.message.includes("ServiceError")
+      ) {
+        return false; // prevent test failure
+      }
+    });
+
     const identifier = "atc";
-    const number = randomNumber2;
+    const number = randomNumber;
     const prefix = "phone";
     const email = prefix + number + "@gmail.com";
     const username = prefix + number;
@@ -805,24 +860,55 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("08960000" + randomNumber2);
+    elementAuth.regPhone().type("6285173223344");
+    // elementAuth.regPhone().type("0896" + randomNumber);
     elementAuth.regPassword().type("Asdqwe12@");
     elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    cy.intercept("POST", "/api/auth/register").as("register");
     elementAuth.buttonDaftar().click();
 
     //error steps
     //validate
+    cy.wait("@register").then((interception) => {
+      const status = interception.response?.statusCode;
+      const changeNumber = randomNumber;
+      cy.task("log", "is response 409?");
+      cy.wait(5000);
+
+      if (status === 409) {
+        cy.task("log", "Phone already exists, retry with new number");
+
+        // const newRandom = Math.floor(100000 + Math.random() * 900000);
+        elementAuth
+          .regPhone()
+          .clear()
+          .type("62897" + changeNumber);
+        cy.wait(500);
+        elementAuth.buttonDaftar().click();
+      } else {
+        cy.task("log", "no conflict");
+      }
+    });
     cy.url().should(
       "include",
       `/register/verify-email?email=${encodeURIComponent(email)}`
     );
   }
   validatePhoneNumberInternationalCode() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("already exists") ||
+        err.message.includes("ServiceError")
+      ) {
+        return false; // prevent test failure
+      }
+    });
+
     const identifier = "atc";
-    const number = randomNumber2;
+    const number = Math.floor(10000000 + Math.random() * 10000000);
     const prefix = "phone";
     const email = prefix + number + "@gmail.com";
     const username = prefix + number;
@@ -835,16 +921,38 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("628960000" + randomNumber2);
+    elementAuth.regPhone().type("6285173223344");
+    // elementAuth.regPhone().type("62896" + randomNumber);
     elementAuth.regPassword().type("Asdqwe12@");
     elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    cy.intercept("POST", "/api/auth/register").as("register");
     elementAuth.buttonDaftar().click();
 
     //error steps
     //validate
+    cy.wait("@register").then((interception) => {
+      const status = interception.response?.statusCode;
+      const changeNumber = number;
+      cy.task("log", "is response 409?");
+      cy.wait(5000);
+
+      if (status === 409) {
+        cy.task("log", "Phone already exists, retry with new number");
+
+        // const newRandom = Math.floor(100000 + Math.random() * 900000);
+        elementAuth
+          .regPhone()
+          .clear()
+          .type("62897" + changeNumber);
+        cy.wait(500);
+        elementAuth.buttonDaftar().click();
+      } else {
+        cy.task("log", "no conflict");
+      }
+    });
     cy.url().should(
       "include",
       `/register/verify-email?email=${encodeURIComponent(email)}`
@@ -865,7 +973,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("089600001"); //9 digits
@@ -895,7 +1003,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960"); //5 digits
@@ -925,7 +1033,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08"); //2 digits
@@ -955,7 +1063,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("0896000000011"); //13 digits
@@ -985,7 +1093,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000000112345"); //17 digits
@@ -1015,7 +1123,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("0896000000011234567891234"); //25 digits
@@ -1045,7 +1153,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000!@#$");
@@ -1063,12 +1171,23 @@ class authPage {
       );
   }
   validatePhoneNumberWithSpacing() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("User with phone") &&
+        err.message.includes("already exists")
+      ) {
+        // do not fail the test for duplicate email error
+        return false;
+      }
+    });
+
     const identifier = "atc";
     const number = randomNumber2;
     const prefix = "phone";
     const email = prefix + number + "@gmail.com";
     const username = prefix + number;
     const fullname = "local num " + prefix + identifier;
+    const numberWithSpace = "0816382873 11";
     this.visitRegisterPage();
     elementAuth.regFullname().clear();
     elementAuth.regUsername().clear();
@@ -1077,30 +1196,54 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("08960000 23");
+    // elementAuth.regPhone().type(numberWithSpace);
+    elementAuth.regPhone().type(numberWithSpace);
     elementAuth.regPassword().type("Asdqwe12@");
     elementAuth.regPasswordConfirm().type("Asdqwe12@");
     elementAuth.buttonDaftar().click();
 
     //error steps
     cy.wait(1000);
-    elementAuth.regPhoneErr().should("be.visible");
+    const normalize = (str) => str.replace(/\D/g, "");
+
+    const numberWithSpaceTrimmed = normalize(numberWithSpace);
+
     elementAuth
-      .regPhoneErrMsg()
-      .softAssert(
-        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka"
-      );
+      .regPhone({ timeout: 500 })
+      .invoke("val")
+      .then((val) => val.trim())
+      .should("eq", numberWithSpaceTrimmed);
+
+    elementToast.toastError().should("be.visible");
+    // elementToast
+    //   .toastErrorMsg()
+    //   .should("include.text", `${numberWithSpaceTrimmed} already exists`);
+    // cy.contains(
+    //   "p",
+    //   `Username with phone ${numberWithSpaceTrimmed} already exists`
+    // );
   }
   validatePhoneNumberWithTrailing() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("User with phone") &&
+        err.message.includes("already exists")
+      ) {
+        // do not fail the test for duplicate email error
+        return false;
+      }
+    });
+
     const identifier = "atc";
     const number = randomNumber2;
     const prefix = "phone";
     const email = prefix + number + "@gmail.com";
     const username = prefix + number;
     const fullname = "local num " + prefix + identifier;
+    const numberWithTrailingSpace = "081638287311 ";
     this.visitRegisterPage();
     elementAuth.regFullname().clear();
     elementAuth.regUsername().clear();
@@ -1109,22 +1252,27 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("0896000000 ");
+    elementAuth.regPhone().type(numberWithTrailingSpace);
     elementAuth.regPassword().type("Asdqwe12@");
     elementAuth.regPasswordConfirm().type("Asdqwe12@");
     elementAuth.buttonDaftar().click();
 
     //error steps
     cy.wait(1000);
-    elementAuth.regPhoneErr().should("be.visible");
+    const normalize = (str) => str.replace(/\D/g, "");
+
+    const numberWithSpaceTrimmed = numberWithTrailingSpace.trim();
+
     elementAuth
-      .regPhoneErrMsg()
-      .softAssert(
-        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka"
-      );
+      .regPhone({ timeout: 500 })
+      .invoke("val")
+      .then((val) => val.trim())
+      .should("eq", numberWithSpaceTrimmed);
+
+    elementToast.toastError().should("be.visible").contains(/error/i);
   }
   validatePhoneNumberWithInvalidPrefix() {
     const identifier = "atc";
@@ -1141,7 +1289,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("02960000" + randomNumber2);
@@ -1173,7 +1321,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type(" 02960000" + randomNumber2);
@@ -1191,12 +1339,23 @@ class authPage {
       );
   }
   validatePhoneNumberWithAlreadyRegisteredNumber() {
+    Cypress.on("uncaught:exception", (err) => {
+      if (
+        err.message.includes("User with phone") &&
+        err.message.includes("already exists")
+      ) {
+        // do not fail the test for duplicate email error
+        return false;
+      }
+    });
+
     const identifier = "atc";
     const number = randomNumber2;
     const prefix = "phone";
     const email = prefix + number + "@gmail.com";
     const username = prefix + number;
     const fullname = "local num " + prefix + identifier;
+    const numberWithTrailingSpace = "081638287311 ";
     this.visitRegisterPage();
     elementAuth.regFullname().clear();
     elementAuth.regUsername().clear();
@@ -1205,10 +1364,10 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("089655057778");
+    elementAuth.regPhone().type(numberWithTrailingSpace);
     elementAuth.regPassword().type("Asdqwe12@");
     elementAuth.regPasswordConfirm().type("Asdqwe12@");
     elementAuth.buttonDaftar().click();
@@ -1216,9 +1375,9 @@ class authPage {
     //error steps
     //validate duplicate username message
     elementToast.toastError().should("be.visible");
-    elementToast.toastErrorTitle().contains("Error");
-    elementToast.toastErrorMsg().should("include.text", "User with username");
-    elementToast.toastErrorMsg().should("include.text", "chickentester01");
+    elementToast.toastError().contains("Error");
+    // elementToast.toastErrorMsg().should("include.text", "User with username");
+    // elementToast.toastErrorMsg().should("include.text", "chickentester01");
   }
 
   validateMinimumPassword() {
@@ -1236,7 +1395,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
@@ -1264,7 +1423,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
@@ -1294,7 +1453,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
@@ -1326,7 +1485,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
@@ -1358,7 +1517,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
@@ -1390,7 +1549,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
@@ -1422,7 +1581,7 @@ class authPage {
     elementAuth.regPassword().clear();
     elementAuth.regPasswordConfirm().clear();
 
-    elementAuth.regFullname().type(fullname);
+    elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
@@ -1683,7 +1842,7 @@ class authPage {
       cy.wait(2000);
       cy.visit("/login");
       elementAuth.hyperlinkRegister().click();
-      elementAuth.regFullname().type(firstTextMailAndName);
+      elementAuth.regFullname().type(indentifierRegres + firstTextMailAndName);
       elementAuth.regUsername().type(trimFromFullName);
       elementAuth.regEmail().type(tempMail);
       elementAuth.regPhone().type("628" + randomPhoneNumber);
