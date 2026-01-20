@@ -37,7 +37,7 @@ describe("testing ONBOARDING page", () => {
     authAction.tryLoginBeforeEmailValidated();
   });
 
-  it("check onboarding validation -display behavior-", () => {
+  it.only("check onboarding validation -display behavior-", () => {
     authAction.validateOnboardingSuccessAccess();
   });
   it("check onboarding validation -try re-access with refreshing the page-", () => {

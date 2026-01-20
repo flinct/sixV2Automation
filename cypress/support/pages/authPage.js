@@ -1599,51 +1599,200 @@ class authPage {
 
   //onboarding
   validateOnboardingSuccessAccess() {
+    const firstTextMailAndName = "registermailtm" + randomText;
+    const createNewEmailName = "registermailtm" + randomNumber;
+    const mailTmGetDomains = "https://api.mail.tm/domains";
+    const mailTmGetAccount = "https://api.mail.tm/accounts";
+    const mailTmGetToken = "https://api.mail.tm/token";
+    const mailTmGetAllMsg = "https://api.mail.tm/messages";
+    const mailTmGetMsgById = "https://api.mail.tm/messages/";
+    const password = "Asdqwe12@";
+    const newpassword = "newasdqwe12";
+
+    const usernameSuperAdmin = "satuinbox";
+    const passwordSuperAdmin = "_-ng9E0ftEz5$d(I";
+
+    //get domain mail.tm
+    cy.request({
+      method: "GET",
+      url: mailTmGetDomains,
+    }).then((response) => {
+      const domain = response.body["hydra:member"][0].domain;
+      cy.task("log", "get domain : " + domain);
+      const email = `${createNewEmailName}@${domain}`; //`logArray[${index}]: ${text}`
+      // cy.task("log", "email : " + email);
+      //create random temp email
+      cy.task("log", "create temp mail with this : " + email);
+      cy.request({
+        method: "POST",
+        url: mailTmGetAccount,
+        body: {
+          address: email,
+          password: password,
+        },
+      }).then(() => {
+        //get token temp email
+        cy.request({
+          method: "POST",
+          url: mailTmGetToken,
+          body: {
+            address: email,
+            password: password,
+          },
+        }).then((loginResponse) => {
+          const token = loginResponse.body.token;
+          cy.task("log", "get temp mail token : " + token);
+          cy.wrap(token).as("accessToken");
+        });
+      });
+      cy.wrap(email).as("tempEmail");
+    });
+
     this.visitRegisterPage();
-    elementAuth.fullname().clear();
-    elementAuth.username().clear();
-    elementAuth.emai().clear();
-    elementAuth.phone().clear();
-    elementAuth.password().clear();
-    elementAuth.passwordConfirm().clear();
+    const trimFromFullName = firstTextMailAndName.replace(/\s+/g, "");
+    cy.get("@tempEmail").then((tempMail) => {
+      cy.task("log", "register at satuinbox with temp mail : " + tempMail);
+      // cy.wait(2000);
+      // cy.visit("/login");
+      // elementAuth.hyperlinkRegister().click();
+      elementAuth.regFullname().type(indentifierRegres + firstTextMailAndName);
+      elementAuth.regUsername().type(trimFromFullName);
+      elementAuth.regEmail().type(tempMail);
+      elementAuth.regPhone().type("628" + randomPhoneNumber);
+      elementAuth.regPassword().clear().type("Asdqwe12@");
+      elementAuth.regPasswordConfirm().clear().type("Asdqwe12@");
+      elementAuth.buttonDaftar().click();
+      elementAuth.buttonDaftar({ timeout: 10000 }).should("not.exist");
+      // cy.wait(5000);
+      elementAuth.successTitle().should("be.visible");
+      elementAuth.registeredUserEmail().should("be.visible").contains(tempMail);
+    });
 
-    elementAuth.fullname().type("success register");
-    elementAuth.username().type("testatc" + randomNumber2);
-    elementAuth.emai().type(randomNumber + "@testatc.com");
-    elementAuth.phone().type("08960000" + randomNumber2);
-    elementAuth.password().type("Asdqwe12@");
-    elementAuth.passwordConfirm().type("Asdqwe12@");
-    elementAuth.buttonDaftar().click();
+    // elementAuth.fullname().clear();
+    // elementAuth.username().clear();
+    // elementAuth.emai().clear();
+    // elementAuth.phone().clear();
+    // elementAuth.password().clear();
+    // elementAuth.passwordConfirm().clear();
 
-    cy.wait(2000);
+    // elementAuth.fullname().type("success register");
+    // elementAuth.username().type("testatc" + randomNumber2);
+    // elementAuth.emai().type(randomNumber + "@testatc.com");
+    // elementAuth.phone().type("08960000" + randomNumber2);
+    // elementAuth.password().type("Asdqwe12@");
+    // elementAuth.passwordConfirm().type("Asdqwe12@");
+    // elementAuth.buttonDaftar().click();
 
-    elementAuth.onboardingTitle().should("be.visible");
-    elementAuth.onboardingOrganizationInfo().should("be.visible");
-    elementAuth.onboardingOrganizationName().should("be.visible");
-    elementAuth.onboardingOrganizationNIB().should("be.visible");
-    elementAuth.onboardingOrganizationNPWP().should("be.visible");
-    elementAuth.onboardingOrganizationNIBupload().should("be.visible");
-    elementAuth.onboardingOrganizationPICdesc().should("be.visible");
-    elementAuth.onboardingOrganizationIDnumber().should("be.visible");
-    elementAuth.onboardingOrganizationIDnumberUpload().should("be.visible");
-    elementAuth.onboardingButtonSubmit().should("be.visible");
+    // //get all message from temp email
+    cy.wait(5000);
+    function waitForEmail(token, maxRetry = 10, delay = 3000) {
+      if (maxRetry === 0)
+        throw new Error("Email belum diterima setelah beberapa kali percobaan");
 
-    elementAuth
-      .onboardingTitle()
-      .contains("Verify your organization or company");
-    elementAuth.onboardingOrganizationInfo().type("");
+      return cy
+        .request({
+          method: "GET",
+          url: mailTmGetAllMsg,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          failOnStatusCode: false,
+        })
+        .then((res) => {
+          const messages = res.body["hydra:member"];
+          // cy.wrap(messages).as("messages");
+          if (messages && messages.length > 0) {
+            return messages[0].id;
+          } else {
+            cy.wait(delay);
+            return waitForEmail(token, maxRetry - 1, delay);
+          }
+        });
+    }
+
+    cy.get("@accessToken").then((token) => {
+      cy.task("log", "waiting inbox from satuinbox.....");
+      waitForEmail(token).then((messageId) => {
+        cy.task("log", "get inbox from satuinbox with ID :" + messageId);
+        cy.task("log", "opening inbox.......");
+
+        const getSpecificEmailInbox = mailTmGetMsgById + messageId;
+        cy.task("log", getSpecificEmailInbox);
+
+        cy.request({
+          method: "GET",
+          url: getSpecificEmailInbox,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }).then((searchLink) => {
+          const htmlContent = searchLink.body.html?.[0];
+          // const regex = /href=https:"([^"]+)"/;
+          // const regex = /href="(https:[^"]+)"/;
+          // const match = htmlContent?.match(regex);
+          const regex =
+            /href='(https:\/\/v2\.satuinbox\.com\/verification\?token[^']+)'/;
+
+          const match = htmlContent.match(regex);
+          // if (match) {
+          //   const verificationUrl = match[1];
+          //   cy.task("log", "access verification link from");
+          //   cy.visit(verificationUrl); // lanjutkan ke halaman verify
+          // } else {
+          //   cy.log("failed to visit verification link");
+          //   // failOnStatusCode: true;
+          // }
+          if (!match) {
+            throw new Error("Failed to find verification link");
+          }
+
+          // Decode HTML entities
+          const verificationUrl = match[1]
+            .replace(/&#x3D;/g, "=")
+            .replace(/&amp;/g, "&");
+
+          cy.task("log", `access verification link: ${verificationUrl}`);
+          cy.visit(verificationUrl);
+          cy.task("log", "visiting verify user page");
+          cy.task("log", "waiting page to load..........");
+          // elementAuth.verifyUserEmail().click();
+        });
+      });
+    });
+
+    //verify user
+    cy.task("log", "visited verify user page");
+    cy.task("log", "verify user");
+    elementAuth.verifyUserEmail().click();
+    // cy.wait(5000)
+    elementAuth.verifyUserEmail({ timeout: 10000 }).should("not.exist");
+
+    // // //login after verify email and setup onboarding
+    cy.task("log", "login after verify email and setup onboarding");
+    // cy.wait(2500);
+    cy.visit("/login");
+    elementAuth.keyword().type(firstTextMailAndName);
+    // elementAuth.keyword().type("valencia10");
+    elementAuth.password().type(password);
+    elementAuth.buttonLogin().click();
+    // cy.wait(5000);
+    cy.url({ timeout: 10000 }).should("not.include", "/login");
+
+    // // //onboarding page
     elementAuth
       .onboardingOrganizationName()
-      .type("Dummy Organization" + randomNumber2);
+      .type("company " + firstTextMailAndName);
     elementAuth.onboardingOrganizationNIB().type(nib);
     elementAuth.onboardingOrganizationNPWP().type(npwp);
     elementAuth.onboardingOrganizationNIBupload();
-    elementAuth.onboardingOrganizationPICdesc().contains();
     elementAuth.onboardingOrganizationIDnumber().type(idNumber);
-    elementAuth.onboardingOrganizationIDnumberUpload().type("");
-    elementAuth.onboardingButtonSubmit().click();
+    elementAuth.onboardingOrganizationIDnumberUpload();
+    elementAuth.onboardingButtonSubmit().click({ timeout: 60000 });
 
-    //validation
+    cy.wait(1000);
+    elementAuth.onboardingSUBMITTEDdataTitle();
+    elementAuth.onboardingSUBMITTEDdataLogout().click();
+    cy.url({ timeout: 10000 }).should("not.include", "/onboarding");
   }
   validateOnboardingNotRedisplayWhenRefreshed() {
     this.visitRegisterPage();
@@ -1876,10 +2025,6 @@ class authPage {
           }
         });
     }
-
-    // // cy.get("@messages").then((msg) => {
-    // //   cy.log(msg);
-    // // });
 
     cy.get("@accessToken").then((token) => {
       cy.task("log", "waiting inbox from satuinbox.....");
