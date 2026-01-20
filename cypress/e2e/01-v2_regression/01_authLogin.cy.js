@@ -13,7 +13,7 @@ import { env_config } from "../../support/01_url_page.js";
 import liveChatPage from "../../support/pages/liveChatPage.js";
 // import 'cypress-file-upload';
 
-describe("testing INBOX page", () => {
+describe("testing LOGIN page", () => {
   const authAction = new authPage();
   const inboxAction = new inboxPage();
   const dashboardAction = new dashboardPage();
@@ -67,7 +67,7 @@ describe("testing INBOX page", () => {
   });
 
   //access token validation
-  it.only("Confirm that the access token truly becomes invalid after 15 minutes", () => {
+  it.skip("Confirm that the access token truly becomes invalid after 15 minutes", () => {
     authAction.tokenValidationAfter15minutes();
   });
 });

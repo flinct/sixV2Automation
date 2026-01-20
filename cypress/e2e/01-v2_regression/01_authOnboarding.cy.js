@@ -13,7 +13,7 @@ import { env_config } from "../../support/01_url_page.js";
 import liveChatPage from "../../support/pages/liveChatPage.js";
 // import 'cypress-file-upload';
 
-describe("testing INBOX page", () => {
+describe("testing ONBOARDING page", () => {
   const authAction = new authPage();
   const inboxAction = new inboxPage();
   const dashboardAction = new dashboardPage();
