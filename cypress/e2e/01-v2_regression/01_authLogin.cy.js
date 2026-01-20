@@ -55,14 +55,14 @@ describe("testing INBOX page", () => {
   it("check exist element on login", () => {
     authAction.elementCheckingV2Login();
   });
-  it("check login error state", () => {
+  it.only("check login error state", () => {
     authAction.elementCheckingV2LoginErrorState();
   });
 
   it("try login with valid credentials", () => {
     authAction.loginValidUsername();
   });
-  it.only("try login with INVALID credentials", () => {
+  it("try login with INVALID credentials", () => {
     authAction.loginInvalidUsername();
   });
 

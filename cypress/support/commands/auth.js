@@ -17,6 +17,12 @@ class elementAuth {
     // return cy.get('[data-cy="login-button-sign-in"]');
   }
   errState() {
+    return cy.get('[data-cy="Login-Form"]').find("div").find("p").eq(0);
+  }
+  keywordErrState() {
+    return cy.get('[data-cy="Login-Form"]').find("div").find("p");
+  }
+  passwordErrState() {
     return cy.get('[data-cy="Login-Form"]').find("div").find("p");
   }
 
@@ -140,7 +146,7 @@ class elementAuth {
   }
   confirmation() {
     return cy.get(
-      "div.grid.place-self-start p.text-xs.leading-4.text-slate-800"
+      "div.grid.place-self-start p.text-xs.leading-4.text-slate-800",
     );
   } //TOF and P.Policy
   hyperlinkToLoginPage() {
@@ -261,7 +267,7 @@ class elementAuth {
   onboardingSUBMITTEDdataTitle() {
     return cy.contains(
       "h1",
-      /Data perusahaan atau organisasi Anda telah berhasil dikirim./i
+      /Data perusahaan atau organisasi Anda telah berhasil dikirim./i,
     );
   }
   onboardingSUBMITTEDdataLogout() {

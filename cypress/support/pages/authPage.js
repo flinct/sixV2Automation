@@ -17,7 +17,7 @@ const randomPhoneNumber = Math.floor(100000000 + Math.random() * 100000000);
 const nib = Math.floor(1000000000000 + Math.random() * 1000000000000); //13 digits
 const npwp = Math.floor(100000000000000 + Math.random() * 100000000000000); //15 digits
 const idNumber = Math.floor(
-  1000000000000000 + Math.random() * 1000000000000000
+  1000000000000000 + Math.random() * 1000000000000000,
 ); //16 digits
 const generateRandomText = (length = 6) => {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -89,7 +89,7 @@ class authPage {
     cy.wait(1000);
     cy.softAssert(
       cy.dashboardNav().should("be.visible"),
-      "Login Success, directed to Dashboard"
+      "Login Success, directed to Dashboard",
     );
     cy.wait(1000);
   }
@@ -117,8 +117,10 @@ class authPage {
   elementCheckingV2LoginErrorState() {
     this.visitLoginPage();
     elementAuth.buttonLogin().click();
-    elementAuth.keywordErrState().softAssert("Username atau Email wajib diisi");
-    elementAuth.passwordErrState().softAssert("");
+    elementAuth.keywordErrState().should("be.visible");
+    cy.contains(/Username atau Email wajib diisi/i);
+    elementAuth.passwordErrState().should("be.visible");
+    cy.contains(/Password minimal 8 karakter/i);
   }
 
   elementCheckingV2Setup() {
@@ -158,15 +160,8 @@ class authPage {
   loginInvalidUsername() {
     this.visitLoginPage();
     cy.login_invalid_username("myUsername", "myPassword");
-    elementAuth
-      .errState()
-      .should("be.visible")
-      .contains(
-        // "Akun tidak ditemukan, periksa kembali email/username dan password Anda!"
-        // "Email dan/atau password salah. Coba lagi atau coba reset password anda."
-        // "Email atau kata sandi tidak valid. Silakan coba lagi atau atur ulang kata sandi Anda."
-        /coba lagi atau coba reset password anda/i
-      );
+    elementAuth.errState().should("be.visible");
+    cy.contains(/coba lagi atau coba reset password anda/i);
   }
 
   //register
@@ -212,7 +207,7 @@ class authPage {
     elementAuth
       .regPhoneErrMsg()
       .softAssert(
-        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka"
+        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka",
       );
     elementAuth.regPassword().should("be.visible");
     elementAuth.regPasswordErrMsg().softAssert("Kata sandi minimal 8 karakter");
@@ -273,7 +268,7 @@ class authPage {
 
     cy.url().should(
       "include",
-      `/register/verify-email?email=${encodeURIComponent(normalizedEmail)}`
+      `/register/verify-email?email=${encodeURIComponent(normalizedEmail)}`,
     );
     elementAuth.satuinboxLogo().should("be.visible");
     elementAuth
@@ -285,8 +280,8 @@ class authPage {
       .contains(
         new RegExp(
           `Kami telah mengirimkan email verifikasi ke.*${normalizedEmail}`,
-          "i"
-        )
+          "i",
+        ),
       );
   }
 
@@ -894,7 +889,7 @@ class authPage {
     });
     cy.url().should(
       "include",
-      `/register/verify-email?email=${encodeURIComponent(email)}`
+      `/register/verify-email?email=${encodeURIComponent(email)}`,
     );
   }
   validatePhoneNumberInternationalCode() {
@@ -955,7 +950,7 @@ class authPage {
     });
     cy.url().should(
       "include",
-      `/register/verify-email?email=${encodeURIComponent(email)}`
+      `/register/verify-email?email=${encodeURIComponent(email)}`,
     );
   }
   validateMinimumPhoneNumber9digit() {
@@ -1167,7 +1162,7 @@ class authPage {
     elementAuth
       .regPhoneErrMsg()
       .softAssert(
-        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka"
+        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka",
       );
   }
   validatePhoneNumberWithSpacing() {
@@ -1303,7 +1298,7 @@ class authPage {
     elementAuth
       .regPhoneErrMsg()
       .softAssert(
-        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka"
+        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka",
       );
   }
   validatePhoneNumberWithPrefixSpacing() {
@@ -1335,7 +1330,7 @@ class authPage {
     elementAuth
       .regPhoneErrMsg()
       .softAssert(
-        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka"
+        "Nomor whatsapp harus dimulai dengan 0 atau 62 dan hanya berisi angka",
       );
   }
   validatePhoneNumberWithAlreadyRegisteredNumber() {
@@ -1467,7 +1462,7 @@ class authPage {
     elementAuth
       .regPasswordErrMsg()
       .softAssert(
-        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus"
+        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus",
       );
   }
   validatePasswordNoCapitalChar() {
@@ -1499,7 +1494,7 @@ class authPage {
     elementAuth
       .regPasswordErrMsg()
       .softAssert(
-        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus"
+        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus",
       );
   }
   validatePasswordSameAsUsername() {
@@ -1531,7 +1526,7 @@ class authPage {
     elementAuth
       .regPasswordErrMsg()
       .softAssert(
-        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus, tidak dapat sama dengan username / email"
+        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus, tidak dapat sama dengan username / email",
       );
   }
   validatePasswordSameAsEmail() {
@@ -1563,7 +1558,7 @@ class authPage {
     elementAuth
       .regPasswordErrMsg()
       .softAssert(
-        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus, tidak dapat sama dengan username / email"
+        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus, tidak dapat sama dengan username / email",
       );
   }
   validatePasswordContainsSpacing() {
@@ -1595,7 +1590,7 @@ class authPage {
     elementAuth
       .regPasswordErrMsg()
       .softAssert(
-        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus, tidak dapat sama dengan username / email"
+        "Kata sandi harus mencakup huruf besar, huruf kecil, angka, dan karakter khusus, tidak dapat sama dengan username / email",
       );
   }
 
@@ -2006,7 +2001,7 @@ class authPage {
           cy.task(
             "log",
             "response after approvall ",
-            responseOnboarding.status
+            responseOnboarding.status,
           );
         });
       });
