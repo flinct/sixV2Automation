@@ -67,7 +67,7 @@ describe("testing INBOX page", () => {
   });
 
   //access token validation
-  it("Confirm that the access token truly becomes invalid after 15 minutes", () => {
+  it.only("Confirm that the access token truly becomes invalid after 15 minutes", () => {
     authAction.tokenValidationAfter15minutes();
   });
 });
