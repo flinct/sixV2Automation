@@ -55,7 +55,7 @@ describe("testing INBOX page", () => {
   it("check exist element on login", () => {
     authAction.elementCheckingV2Login();
   });
-  it.only("check login error state", () => {
+  it("check login error state", () => {
     authAction.elementCheckingV2LoginErrorState();
   });
 
