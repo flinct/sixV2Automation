@@ -27,11 +27,7 @@ function getHeaderByLoginType(config, baseUrl, loginType) {
   }
   if (baseUrl === "https://dev-v2.satuinbox.com") {
     if (loginType === "chickentester") return config.headers_CT;
-    if (loginType === "goddevsa1") return config.headers_GD;
-    if (loginType === "goddummy") return config.headers_GD;
-    if (loginType === "messagelogsatu") return config.headers_ms1;
-    if (loginType === "messagelogdua") return config.headers_ms2;
-    if (loginType === "helloworld") return config.loginBody_helloWorld;
+    if (loginType === "testerdummy01") return config.loginBody_testerdummy01;
   }
   if (baseUrl === "https://v2.satuinbox.com") {
     if (loginType === "tantaffgo") return config.loginBody_tantaffgo;
@@ -72,12 +68,7 @@ function getLoginBodyByLoginType(config, baseUrl, loginType) {
   }
   if (baseUrl === "https://dev-v2.satuinbox.com") {
     if (loginType === "chickentester") return config.loginBody_CT2;
-    if (loginType === "goddevsa1") return config.loginBody_SAP;
-    if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
-    if (loginType === "goddummy") return config.loginBody_GD_dev;
-    if (loginType === "messagelogdua") return config.loginBody_ms2;
-    if (loginType === "spongebobkotak") return config.loginBody_bikini;
-    if (loginType === "helloworld") return config.loginBody_helloWorld;
+    if (loginType === "testerdummy01") return config.loginBody_testerdummy01;
   }
   if (baseUrl === "https://v2.satuinbox.com") {
     if (loginType === "tantaffgo") return config.loginBody_tantaffgo;

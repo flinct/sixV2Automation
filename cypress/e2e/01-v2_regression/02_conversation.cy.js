@@ -54,7 +54,7 @@ describe("testing INBOX page", () => {
   beforeEach(() => {
     cy.session("loginSession", () => {
       // Adjust cookie names to match your app
-      authAction.loginValidUsername();
+      authAction.loginDummy_testerDummy02();
       cy.wait(2000);
       // cy.softAssert(cy.dashboardNav(), "a");
     });
@@ -82,12 +82,27 @@ describe("testing INBOX page", () => {
   it("accessing conversation page - spam", () => {
     inboxAction.accessSpamConversation();
   });
+  it("accessing conversation page - junk", () => {
+    inboxAction.accessSpamConversation();
+  });
   it("accessing conversation page - your inbox - validate empty state", () => {
     cy.wait(2000);
     inboxAction.validateChatList_emptyState();
   });
-  it.only("accessing conversation page - your inbox - validate title section", () => {
+  it("accessing conversation page - your inbox - validate title section", () => {
     cy.wait(2000);
     inboxAction.validateTitleAndFilterChatlist();
+  });
+  it("accessing conversation page - your inbox - testing filter component placement and visiblity", () => {
+    cy.wait(2000);
+    inboxAction.checkConversationFilter();
+  });
+  it("opening a conversation", () => {
+    cy.wait(2000);
+    inboxAction.openConversation();
+  });
+  it.only("opening a conversation - compare account channel connectivity impact to conversation", () => {
+    cy.wait(2000);
+    inboxAction.compareConversationAccountChannelConnectivity();
   });
 });

@@ -104,6 +104,10 @@ export function env_config(baseUrl) {
       identifier: "danyatmin01",
       password: "Asdqwe12@",
     },
+    loginBody_testerdummy01: {
+      identifier: "testerdummy01",
+      password: "Asdqwe12@",
+    },
 
     headers: {
       //goddummyprod

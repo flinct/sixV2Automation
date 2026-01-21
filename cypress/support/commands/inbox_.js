@@ -48,6 +48,13 @@ class elementConversation {
       .eq(3);
   }
 
+  inboxJunkNav() {
+    return cy
+      .get('[data-cy="Conversation-Sidebar-Navigation"]')
+      .find("button")
+      .eq(5);
+  }
+
   groupChatNav() {
     return cy
       .get('[data-cy="Conversation-Sidebar-Navigation"]')
@@ -111,7 +118,7 @@ class elementConversation {
 
   // ─── CHAT LIST ─────────────────────────────────────
   chatListEmptyState() {
-    return cy.get('[data-cy="conversation-empty-state"]');
+    return cy.get('[data-cy="Conversation-Chat-List-Container"]');
   }
   chatListTitle() {
     return cy.get('[data-cy="Conversation-Chat-List-Header"]').find("h1");
@@ -128,17 +135,67 @@ class elementConversation {
   openFilterSearch() {
     return cy.get('[data-cy="Conversation-Chat-List-Container"]').find("input");
   }
+  closeFilterSearch() {
+    return cy
+      .get('[data-cy="Conversation-Chat-List-Container"]')
+      .find("button")
+      .eq(0);
+  }
 
   chatListFilterDeliveryMessageStatus() {
-    return cy.get('[data-cy="chatList-filter-deliveryMessageStatus"]');
+    return cy
+      .get('[data-cy="Conversation-Chat-List-Container"]')
+      .find("div")
+      .eq(5)
+      .find("button")
+      .eq(0);
+  }
+  chatListFilterReadConversation() {
+    return cy
+      .get('[data-cy="Conversation-Chat-List-Container"]')
+      .find("div")
+      .eq(5)
+      .find("button")
+      .eq(1);
+  }
+  chatListFilterSort() {
+    return cy
+      .get('[data-cy="Conversation-Chat-List-Container"]')
+      .find("div")
+      .eq(6)
+      .find("button")
+      .eq(0);
+  }
+  chatListFilterVisibility() {
+    return cy
+      .get('[data-cy="Conversation-Chat-List-Container"]')
+      .find("div")
+      .eq(6)
+      .find("button")
+      .eq(1);
+  }
+  chatListFilterAdvance() {
+    return cy
+      .get('[data-cy="Conversation-Chat-List-Container"]')
+      .find("div")
+      .eq(6)
+      .find("button")
+      .eq(2);
+  }
+  closePopupFIlterButton() {
+    return cy.get('[data-slot="dialog-close"]');
   }
 
   chatListContainer() {
     return cy.get('[data-cy="Conversation-Chat-List-Container"]');
   }
-
-  chatListClientContainer(index) {
-    return cy.get(`[data-cy="chatList-client-${index}"]`);
+  chatListClientContainer(index, option = {}) {
+    return cy.get(`[data-cy="chat-list-${index}"]`, option);
+    // return cy.get(`[data-cy="Conversation-Chat-List-Container"]`).eq({index});
+  }
+  chatListClientAccountChannelNumber(index, option = {}) {
+    return cy.get(`[data-cy="chat-list-${index}"]`, option).find("span").eq(2);
+    // return cy.get(`[data-cy="Conversation-Chat-List-Container"]`).eq({index});
   }
 
   chatListClientName() {
@@ -198,22 +255,22 @@ class elementConversation {
   }
 
   // ─── CHAT SECTION ─────────────────────────────────────
+  chatRoom() {
+    return cy.get("#conversation-screenshot-chatroom-capture-area");
+    // return cy.get('[data-cy="chatSection-clientName"]');
+  }
   chatSectionClientName() {
     return cy.get('[data-cy="chatSection-clientName"]');
   }
-
   chatSectionClientNameInitial() {
     return cy.get('[data-cy="chatSection-clientName-initial"]');
   }
-
   chatSectionClientOnlineStatus() {
     return cy.get('[data-cy="chatSection-clientName-initial-onlineStatus"]');
   }
-
   chatSectionMoreButton() {
     return cy.get('[data-cy="chatSection-moreButton"]');
   }
-
   chatSectionButtonChangeStatus() {
     return cy.get('[data-cy="chatSection-button-changeStatus"]');
   }
@@ -221,9 +278,66 @@ class elementConversation {
   chatSectionChatRoomContainer() {
     return cy.get('[data-cy="chatSection-chatRoom-container"]');
   }
+  chatSectionBubbleChatCustomer(index) {
+    return cy.get(`#conversation-buble.items-start`).eq(index);
+  }
+  chatSectionBubbleChatCustomerName(index) {
+    return cy
+      .get(`#conversation-buble.items-start`)
+      .eq(index)
+      .find("span")
+      .eq(0);
+  }
+  chatSectionBubbleChatCustomerNumber(index) {
+    return cy
+      .get(`#conversation-buble.items-start`)
+      .eq(index)
+      .find("span")
+      .eq(1);
+  }
+  chatSectionBubbleChatCustomerMessage(index) {
+    return cy
+      .get(`#conversation-buble.items-start`)
+      .eq(index)
+      .find("span.whitespace-pre-wrap"); //.eq(2)
+  }
+  chatSectionBubbleChatCustomerMessageTimestamp(index) {
+    return cy.get(`#conversation-buble.items-start`).eq(index).find("p");
+  }
 
-  chatSectionBubbleChat(index) {
-    return cy.get(`[data-cy="chatSection-buble-chat-${index}"]`);
+  chatSectionBubbleChatAgent(index) {
+    return cy.get(`#conversation-buble.items-end`).eq(index);
+  }
+  chatSectionBubbleChatAgentMessage(index) {
+    return cy
+      .get(`#conversation-buble.items-end`)
+      .eq(index)
+      .find("span.whitespace-pre-wrap");
+  }
+  chatSectionBubbleChatAgentName(index) {
+    return cy.get(`#conversation-buble.items-end`).eq(index).find("span").eq(0);
+  }
+  chatSectionBubbleChatAgentNumber(index) {
+    return cy.get(`#conversation-buble.items-end`).eq(index).find("span").eq(1);
+  }
+  chatSectionBubbleChatAgentTimestamp(index) {
+    return cy.get(`#conversation-buble.items-end`).eq(index).find("p");
+  }
+  chatSectionBubbleChatAgentMessageStatus(index) {
+    return cy
+      .get(`#conversation-buble.items-end`)
+      .eq(index)
+      .find("svg.tabler-icon.tabler-icon-checks")
+      .eq(0)
+      .should("have.class", "text-slate-500");
+  }
+  chatSectionBubbleChatAgentMessageStatus_read(index) {
+    return cy
+      .get(`#conversation-buble.items-end`)
+      .eq(index)
+      .find("svg.tabler-icon.tabler-icon-checks")
+      .eq(0)
+      .should("have.class", "text-green-600");
   }
 
   chatSectionBubbleChatTimestamp(index) {
@@ -232,7 +346,7 @@ class elementConversation {
 
   chatSectionBubbleChatDeliveryStatus(index) {
     return cy.get(
-      `[data-cy="chatSection-buble-chat-${index}-deliveryMessageStatus"]`
+      `[data-cy="chatSection-buble-chat-${index}-deliveryMessageStatus"]`,
     );
   }
 

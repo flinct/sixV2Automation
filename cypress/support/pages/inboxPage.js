@@ -100,7 +100,7 @@ function scroll() {
           "div.custom-scrollbar.overflow-y-auto.h-full.w-full.pb-5", // Scrollable container
           ".lazy-loaded-item", // Lazy-loaded item selector
           maxScrollAttempts, // Dynamic maximum scroll attempts
-          300 // Optional scroll step duration
+          300, // Optional scroll step duration
         );
       } else {
         cy.log("Skipping scrolling as count is below 6.");
@@ -301,7 +301,7 @@ function assignChatList(el_chatList, textList) {
   cy.softAssert(cy.simpan_popupModal_min1().click());
   cy.wait(2000);
   cy.softAssert(
-    cy.inboxOngoingTab().should("have.attr", "data-state", "active")
+    cy.inboxOngoingTab().should("have.attr", "data-state", "active"),
   );
 }
 
@@ -311,7 +311,7 @@ function verifyAssigneUsers(el_chatList, textList) {
     cy.get(`${el_chatList}:contains("${value})`).within(() => {
       cy.softAssert(
         cy.checkbox_chatList(),
-        `checking ${value} succes assigned to ongoing`
+        `checking ${value} succes assigned to ongoing`,
       );
       cy.contains(value).click();
     });
@@ -330,9 +330,9 @@ function verifyAssigneUsers(el_chatList, textList) {
           expect(text2.trim()).to.equal(userLoginName);
           cy.softAssert(
             cy.inbox_chat_detail_all_agent().contains(userLoginName),
-            "this value is equal to : " + userLoginName
+            "this value is equal to : " + userLoginName,
           );
-        })
+        }),
     );
   });
 }
@@ -372,7 +372,7 @@ function tickAllNumber(offset = 0) {
   cy.get("@customerNumValues").then((values) => {
     cy.task(
       "log",
-      `✔️ Tick dari index ${offset} sampai ${offset + values.length - 1}`
+      `✔️ Tick dari index ${offset} sampai ${offset + values.length - 1}`,
     );
     values.forEach((value) => {
       cy.get(`${el_chatList}:contains("${value}")`).within(() => {
@@ -462,7 +462,7 @@ function validateAssigned(maxLoop) {
         .invoke("text")
         .then((text) => {
           userLoginName = text.trim();
-        })
+        }),
     );
     values.forEach((value, index2) => {
       if (index2 < maxLoop) {
@@ -473,7 +473,7 @@ function validateAssigned(maxLoop) {
           .within(() => {
             cy.softAssert(
               cy.checkbox_chatList(),
-              `checking ${value} success assigned to ongoing`
+              `checking ${value} success assigned to ongoing`,
             );
             cy.contains(value).click();
           });
@@ -488,9 +488,9 @@ function validateAssigned(maxLoop) {
               expect(value.trim()).to.equal(userLoginName);
               cy.softAssert(
                 cy.inbox_chat_detail_all_agent().contains(userLoginName),
-                "this value is equal to :" + userLoginName
+                "this value is equal to :" + userLoginName,
               );
-            })
+            }),
         );
         cy.get(el_chatList).eq(0).scrollIntoView();
         // .scrollTo("top");
@@ -523,7 +523,7 @@ function get_multipleList_unassigned() {
 
     cy.task(
       "log",
-      `jumlah list chat yang dibaca cypress : ${el_chatList.length}`
+      `jumlah list chat yang dibaca cypress : ${el_chatList.length}`,
     );
     cy.get("@badgeValue").then((badgeVal) => {
       cy.log(badgeVal);
@@ -548,7 +548,7 @@ function get_multipleList_unassigned() {
 
   cy.wait(2000);
   cy.softAssert(
-    cy.inboxOngoingTab().should("have.attr", "data-state", "active")
+    cy.inboxOngoingTab().should("have.attr", "data-state", "active"),
   );
 
   validateAssigned(10);
@@ -564,27 +564,27 @@ class inboxPage {
     cy.wait(2000);
     cy.softAssert(
       cy.inboxNav().should("have.class", "text-primary"),
-      "Head Label Inbox"
+      "Head Label Inbox",
     );
     cy.softAssert(cy.searchbar().should("be.visible"), "Searchbox");
     cy.softAssert(
       cy.labelPriorityMessage_Unread().should("be.visible").contains("Unread"),
-      "Unread filter"
+      "Unread filter",
     );
     cy.softAssert(
       cy
         .labelPriorityMessage_Waiting()
         .should("be.visible")
         .contains("Waiting"),
-      "Waiting filter"
+      "Waiting filter",
     );
     cy.softAssert(
       cy.inbox_filter_button().click().wait(500),
-      "Open action - Filter by Agent,Label or Divisi"
+      "Open action - Filter by Agent,Label or Divisi",
     );
     cy.softAssert(
       cy.inbox_filter_button().click(),
-      "Close action - Filter by Agent,Label or Divisi open"
+      "Close action - Filter by Agent,Label or Divisi open",
     );
     cy.softAssert(cy.inboxOngoingTab().click(), "open ongoing tab");
     cy.softAssert(cy.inboxResolvedTab().click(), "open resolved tab");
@@ -624,65 +624,65 @@ class inboxPage {
     });
     cy.softAssert(
       cy.searchbar().type("6289655057778"),
-      "get customer number 6289655057778"
+      "get customer number 6289655057778",
     );
     cy.softAssert(cy.inboxOngoingTab().click(), "open ongoing tab");
     cy.softAssert(
       cy.listChatInbox().contains("62 896 5505 7778").click(),
-      "open chat with customer number 6289655057778"
+      "open chat with customer number 6289655057778",
     );
     cy.softAssert(cy.buttonAttachFile().click(), "click button attachement");
     cy.softAssert(
       cy.buttonAttachFile_Img().click().wait(1000),
-      "click button attachement for image or video"
+      "click button attachement for image or video",
     );
     cy.document().trigger("keydown", { key: "Escape" });
     cy.softAssert(
       cy.buttonAttachFile_Docs().click().wait(1000),
-      "click button attachement for docs"
+      "click button attachement for docs",
     );
     cy.document().trigger("keydown", { key: "Escape" });
     cy.softAssert(
       cy.custumer_number().should("be.visible").wait(1000),
-      "get customer number"
+      "get customer number",
     );
     cy.softAssert(
       cy.custumer_profilePicture().should("be.visible").wait(1000),
-      "get customer profile picture"
+      "get customer profile picture",
     );
     cy.softAssert(
       cy.handover_chat_button().should("be.visible").contains("Handover"),
-      "get handover chat button"
+      "get handover chat button",
     );
     cy.softAssert(
       cy.handover_chat_button().click(),
-      "click handover chat button"
+      "click handover chat button",
     );
     cy.softAssert(
       cy.opened_handover_modal().find("h2").contains("Handover"),
-      "Label handover Modal Handover"
+      "Label handover Modal Handover",
     );
     cy.softAssert(
       cy.opened_handover_modal().find("h2").contains("Handover"),
-      "Label handover Modal Handover"
+      "Label handover Modal Handover",
     );
     cy.softAssert(
       cy.opened_handover_modal().find("p").contains("Pindahkan ke"),
-      'Label "pindahkan ke" Modal Handover'
+      'Label "pindahkan ke" Modal Handover',
     );
     //tab kembalikan ke pool
     cy.softAssert(
       cy.opened_handover_modal().find("button").contains("Kembalikan ke Pool"),
-      'Button "Kembalikan ke Pool" Modal Handover'
+      'Button "Kembalikan ke Pool" Modal Handover',
     );
     cy.softAssert(
       cy
         .opened_handover_modal()
         .find("p")
         .contains(
-          "Dengan memilih opsi ini, tiket atau chat yang dipilih akan tersedia kembali pada menu “Unassigned” agar dapat di ambil alih oleh CS yang tersedia."
+          "Dengan memilih opsi ini, tiket atau chat yang dipilih akan tersedia kembali pada menu “Unassigned” agar dapat di ambil alih oleh CS yang tersedia.",
         ),
-      'Text guide "kembalikan ke pool" Modal Handover'
+      'Text guide "kembalikan ke pool" Modal Handover',
     );
     //click button alihkan k CS spesifik
     cy.softAssert(
@@ -691,57 +691,57 @@ class inboxPage {
         .find("button")
         .contains("Alihkan ke CS Spesifik")
         .click(),
-      'Button "Alihkan ke CS Spesifik" Modal Handover'
+      'Button "Alihkan ke CS Spesifik" Modal Handover',
     );
     cy.softAssert(
       cy
         .opened_handover_modal()
         .find("p")
         .contains(
-          "Dengan memilih opsi ini, tiket pesan yang dipilih akan otomatis di alihkan kepada Customer Service yang telah anda tentukan."
+          "Dengan memilih opsi ini, tiket pesan yang dipilih akan otomatis di alihkan kepada Customer Service yang telah anda tentukan.",
         ),
-      'Text guide "Alihkan ke CS Spesifik" Modal Handover'
+      'Text guide "Alihkan ke CS Spesifik" Modal Handover',
     );
     cy.softAssert(
       cy.multiselect_agent_input_handover().click(),
-      "Modal Handover > Combobox pilih agent"
+      "Modal Handover > Combobox pilih agent",
     );
     cy.softAssert(
       cy.opened_handover_modal().find("p").contains("Pindahkan ke").click(),
-      "close combobox pilih agent"
+      "close combobox pilih agent",
     );
     cy.softAssert(
       cy.opened_handover_modal().find("button").contains("Simpan"),
-      "modal handover > get button simpan"
+      "modal handover > get button simpan",
     );
     cy.softAssert(
       cy.opened_handover_modal().find("button").contains("Batal").click(),
-      "modal handover > get button batal > click"
+      "modal handover > get button batal > click",
     );
     cy.softAssert(
       cy.resolved_chat_button().should("be.visible").contains("Resolved"),
-      "get resolved chat button"
+      "get resolved chat button",
     );
     //get detail room chat
     cy.softAssert(
       cy.inbox_tab_chat_detail().should("be.visible").contains("Chat Detail"),
-      "get tab chat detail inbox"
+      "get tab chat detail inbox",
     );
     cy.softAssert(
       cy.container_chat_detail().find("p").eq(0).contains("Nama WhatsApp"),
-      "get chat detail > nama customer"
+      "get chat detail > nama customer",
     );
     cy.softAssert(
       cy.container_chat_detail().find("p").eq(1),
-      "get chat detail > nama customer > value"
+      "get chat detail > nama customer > value",
     );
     cy.softAssert(
       cy.container_chat_detail().find("p").eq(2).contains("Divisi"),
-      "get chat detail > divisi"
+      "get chat detail > divisi",
     );
     cy.softAssert(
       cy.container_chat_detail().find("p").eq(3),
-      "get chat detail > divisi > value"
+      "get chat detail > divisi > value",
     );
     cy.softAssert(
       cy
@@ -749,7 +749,7 @@ class inboxPage {
         .find("p")
         .eq(4)
         .should("include.text", "Agent"),
-      "get chat detail > assigned agent"
+      "get chat detail > assigned agent",
     );
     cy.userLoginNameLabel().click();
     // cy.userLoginNameLabel() // Click on userLoginNameLabel and retrieve its text
@@ -764,28 +764,28 @@ class inboxPage {
         cy.softAssert(
           cy.container_chat_detail().find("div").eq(6),
           // .should('include.text', userLoginNameLabel)
-          "get chat detail > assigned agent"
+          "get chat detail > assigned agent",
         );
       });
     cy.softAssert(
       cy.container_chat_detail().find("button").eq(2).click(),
-      "get chat detail > add more agent > click"
+      "get chat detail > add more agent > click",
     );
     cy.softAssert(
       cy.inbox_chat_detail_add_agents_label().should("be.visible"),
-      'get chat detail > add more agent > label "add agent" '
+      'get chat detail > add more agent > label "add agent" ',
     );
     cy.softAssert(
       cy.inbox_chat_detail_add_agents_batal().should("be.visible"),
-      "get chat detail > add more agent > button simpan"
+      "get chat detail > add more agent > button simpan",
     );
     cy.softAssert(
       cy.inbox_chat_detail_add_agents_simpan().should("be.visible"),
-      "get chat detail > add more agent > button batal"
+      "get chat detail > add more agent > button batal",
     );
     cy.softAssert(
       cy.general_filter_Pilih_Agent().click(),
-      "get chat detail > add more agent > select agent"
+      "get chat detail > add more agent > select agent",
     );
     cy.wait(500);
     cy.document().trigger("keydown", { key: "Escape" });
@@ -800,21 +800,21 @@ class inboxPage {
         .eq(6)
         // .should('include.text','Label')
         .contains("Label"),
-      "get chat detail > label tag"
+      "get chat detail > label tag",
     );
     cy.softAssert(
       cy.container_chat_detail().find("div").eq(11).click(),
-      "get add label button inbox"
+      "get add label button inbox",
     );
     cy.softAssert(cy.contains("Add Label"), "add label text container");
     // cy.softAssert(cy.xpath('/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/h1[1]').contains('Add Label'),'add label Headtext container');
     cy.softAssert(
       cy
         .xpath(
-          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]"
+          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]",
         )
         .should("be.visible"),
-      "add label textbox input"
+      "add label textbox input",
     );
     cy.softAssert(cy.contains("Batal"), "add label Batal button");
     cy.softAssert(cy.contains("Simpan"), "add label Simpan button");
@@ -827,11 +827,11 @@ class inboxPage {
         .eq(7)
         // .should('include.text','Dibuat')
         .contains("Dibuat"),
-      "get chat detail > case created"
+      "get chat detail > case created",
     );
     cy.softAssert(
       cy.container_chat_detail().find("p").eq(8),
-      "get chat detail > case created > value"
+      "get chat detail > case created > value",
     );
     cy.softAssert(
       cy
@@ -840,11 +840,11 @@ class inboxPage {
         .eq(9)
         // .should('include.text','Dibuat')
         .contains("Case Start"),
-      "get chat detail > case started"
+      "get chat detail > case started",
     );
     cy.softAssert(
       cy.container_chat_detail().find("p").eq(10),
-      "get chat detail > case started > value"
+      "get chat detail > case started > value",
     );
     cy.softAssert(
       cy
@@ -853,11 +853,11 @@ class inboxPage {
         .eq(11)
         // .should('include.text','Dibuat')
         .contains("Case Solved"),
-      "get chat detail > case Solved"
+      "get chat detail > case Solved",
     );
     cy.softAssert(
       cy.container_chat_detail().find("p").eq(12),
-      "get chat detail > case Solved > value"
+      "get chat detail > case Solved > value",
     );
     cy.softAssert(
       cy
@@ -866,7 +866,7 @@ class inboxPage {
         .should("be.visible")
         .contains("Properties")
         .click(),
-      "get tab properties inbox"
+      "get tab properties inbox",
     );
     cy.get("body", { timeout: 2000 }).then(($body) => {
       cy.get('[data-cy="container-chat-detail"] div:eq(3)').then(($element) => {
@@ -888,15 +888,15 @@ class inboxPage {
     cy.softAssert(cy.inbox_comment_section(), "Comment section on inbox");
     cy.softAssert(
       cy.inbox_comment_section_textLabel(),
-      "Comment section on inbox > text Label"
+      "Comment section on inbox > text Label",
     );
     cy.softAssert(
       cy.inbox_comment_section_commentArea(),
-      "Comment section on inbox > comment area"
+      "Comment section on inbox > comment area",
     );
     cy.softAssert(
       cy.inbox_comment_section_commentInput().type("test typing"),
-      "Comment section on inbox > comment input"
+      "Comment section on inbox > comment input",
     );
     cy.softAssert(cy.inbox_roomHistory(), "get inbox room history section");
   }
@@ -952,7 +952,7 @@ class inboxPage {
     cy.intercept("GET", /\/api\/v1\/inbox\/.*/).as("idOneInbox");
 
     cy.softAssert(
-      cy.listChatInbox().eq(1).contains("+62 896 5505 7778").click()
+      cy.listChatInbox().eq(1).contains("+62 896 5505 7778").click(),
     );
 
     interceptResponse();
@@ -961,11 +961,11 @@ class inboxPage {
   select_roomChat_bySearch() {
     cy.softAssert(
       cy.searchbar().type("+62 896 5505 7778"),
-      "search room chat by number"
+      "search room chat by number",
     );
     cy.softAssert(
       cy.listChatInbox().contains("+62 896 5505 7778").click(),
-      "click room chat"
+      "click room chat",
     );
   }
 
@@ -982,12 +982,12 @@ class inboxPage {
               .its("length")
               .should("be.gte", 1),
             // .click()
-            "waiting for number +62 896 5505 7778"
+            "waiting for number +62 896 5505 7778",
           ).then(() => {
             cy.softAssert(
               // cy.listChatInbox().contains("+62 896 5505 7778").click(),
               cy.listChatInbox().eq(0).click(),
-              " then click the element"
+              " then click the element",
             );
           });
         } else if ($body.find(emptyState_chatListInbox).length) {
@@ -1006,7 +1006,7 @@ class inboxPage {
                   .listChatInbox()
                   .contains(formatCustomerNumber(customerNumber))
                   .click(),
-                "click customer number at ongoing"
+                "click customer number at ongoing",
               );
               // cy.contains(el_chatList,formatCustomerNumber(customerNumber))
               // .within(()=>{
@@ -1014,14 +1014,14 @@ class inboxPage {
               // })
               cy.softAssert(
                 cy.bulk_handoverChat().click(),
-                "get customer back to unassigned"
+                "get customer back to unassigned",
               );
               cy.button_simpan().click();
               cy.softAssert(
                 cy
                   .inboxUnassignedTab()
                   .should("have.attr", "data-state", "active"),
-                "validate unassigned tab have atribeute active"
+                "validate unassigned tab have atribeute active",
               );
               cy.get(el_chatList).click();
             } else {
@@ -1032,7 +1032,7 @@ class inboxPage {
                   .listChatInbox()
                   .contains(formatCustomerNumber(customerNumber))
                   .click(),
-                "a"
+                "a",
               );
               // cy.get('body',{timeout:2000}).then(($body)=>{
               //     cy.contains(el_chatList,formatCustomerNumber(customerNumber))
@@ -1042,23 +1042,23 @@ class inboxPage {
               // });
               cy.softAssert(
                 cy.btn_buka_kembali(),
-                "reopen chat room from " + formatCustomerNumber(customerNumber)
+                "reopen chat room from " + formatCustomerNumber(customerNumber),
               );
               cy.softAssert(
                 cy.inboxOngoingTab().should("have.attr", "data-tate", "active"),
-                ""
+                "",
               );
               cy.softAssert(
                 cy
                   .listChatInbox()
                   .contains(formatCustomerNumber(customerNumber))
                   .click(),
-                "a"
+                "a",
               );
               cy.get("body", { timeout: 2000 }).then(($body) => {
                 cy.contains(
                   el_chatList,
-                  formatCustomerNumber(customerNumber)
+                  formatCustomerNumber(customerNumber),
                 ).within(() => {
                   cy.softAssert(cy.checkbox_chatList());
                 });
@@ -1098,12 +1098,12 @@ class inboxPage {
         .eq(2)
         .should("include.text", randomText)
         .click(),
-      "a"
+      "a",
     );
     cy.wait(1000);
     cy.softAssert(
       cy.inbox_bubleMessage().should("include.text", randomText),
-      "a"
+      "a",
     );
   }
 
@@ -1114,7 +1114,7 @@ class inboxPage {
 
     cy.softAssert(cy.inbox_tab_properties().click(), "a");
     cy.softAssert(
-      cy.container_chat_detail().find("p").eq(0).contains("contact Name:")
+      cy.container_chat_detail().find("p").eq(0).contains("contact Name:"),
     );
     cy.container_chat_detail()
       .find("p")
@@ -1124,7 +1124,7 @@ class inboxPage {
         contactName = text.trim();
       });
     cy.softAssert(
-      cy.container_chat_detail().find("p").eq(2).contains("division")
+      cy.container_chat_detail().find("p").eq(2).contains("division"),
     );
     cy.container_chat_detail()
       .find("p")
@@ -1134,7 +1134,7 @@ class inboxPage {
         division = text.trim();
       });
     cy.softAssert(
-      cy.container_chat_detail().find("p").eq(4).contains("sender Name:")
+      cy.container_chat_detail().find("p").eq(4).contains("sender Name:"),
     );
     cy.container_chat_detail()
       .find("p")
@@ -1144,7 +1144,7 @@ class inboxPage {
         senderName = text.trim();
       });
     cy.softAssert(
-      cy.container_chat_detail().find("p").eq(6).contains("category:")
+      cy.container_chat_detail().find("p").eq(6).contains("category:"),
     );
     cy.container_chat_detail()
       .find("p")
@@ -1154,7 +1154,7 @@ class inboxPage {
         category = text.trim();
       });
     cy.softAssert(
-      cy.container_chat_detail().find("p").eq(8).contains("order Id:")
+      cy.container_chat_detail().find("p").eq(8).contains("order Id:"),
     );
     cy.container_chat_detail()
       .find("p")
@@ -1164,7 +1164,7 @@ class inboxPage {
         orderID = text.trim();
       });
     cy.softAssert(
-      cy.container_chat_detail().find("p").eq(10).contains("batch Id:")
+      cy.container_chat_detail().find("p").eq(10).contains("batch Id:"),
     );
     cy.container_chat_detail()
       .find("p")
@@ -1177,7 +1177,7 @@ class inboxPage {
     cy.visit("https://dev.satuinbox.com/broadcast/riwayat");
     cy.softAssert(
       cy.list_BroadcastHistory().contains(customer_number).click(),
-      "select broadcast histroy contains" + customer_number
+      "select broadcast histroy contains" + customer_number,
     );
 
     cy.properties_BroadcastHistory()
@@ -1194,7 +1194,7 @@ class inboxPage {
             .find("p")
             .eq(0)
             .should("have.text", value),
-          "this value is equal to :" + value
+          "this value is equal to :" + value,
         );
       });
 
@@ -1208,7 +1208,7 @@ class inboxPage {
         expect(value.trim()).to.equal(division);
         cy.softAssert(
           cy.properties_BroadcastHistory().find("p").eq(1).contains(division),
-          "this value is equal to :" + division
+          "this value is equal to :" + division,
         );
       });
 
@@ -1222,7 +1222,7 @@ class inboxPage {
         expect(value.trim()).to.equal(senderName);
         cy.softAssert(
           cy.properties_BroadcastHistory().find("p").eq(2).contains(senderName),
-          "this value is equal to :" + senderName
+          "this value is equal to :" + senderName,
         );
       });
 
@@ -1236,7 +1236,7 @@ class inboxPage {
         expect(value.trim()).to.equal(category);
         cy.softAssert(
           cy.properties_BroadcastHistory().find("p").eq(3).contains(category),
-          "this value is equal to :" + category
+          "this value is equal to :" + category,
         );
       });
 
@@ -1250,7 +1250,7 @@ class inboxPage {
         expect(value.trim()).to.equal(orderID);
         cy.softAssert(
           cy.properties_BroadcastHistory().find("p").eq(4).contains(orderID),
-          "this value is equal to :" + orderID
+          "this value is equal to :" + orderID,
         );
       });
 
@@ -1264,7 +1264,7 @@ class inboxPage {
         expect(value.trim()).to.equal(batchID);
         cy.softAssert(
           cy.properties_BroadcastHistory().find("p").eq(5).contains(batchID),
-          "this value is equal to :" + batchID
+          "this value is equal to :" + batchID,
         );
       });
   }
@@ -1273,33 +1273,33 @@ class inboxPage {
     cy.softAssert(cy.handover_chat_button().click(), "click handover button");
     cy.softAssert(
       cy.opened_handover_modal().should("be.visible"),
-      "wait handover form exist"
+      "wait handover form exist",
     );
     cy.softAssert(
       cy.multiselect_agent_input_handover().should("be.visible").click(),
-      "click agent selector"
+      "click agent selector",
     );
     cy.softAssert(cy.contains(agent).click(), "agent selected > ");
     // cy.document().trigger('keydown',{key:'Escape'});
     // cy.wait(1000);
     cy.softAssert(
       cy.opened_handover_modal().find("h2").contains("Handover").click(),
-      "a"
+      "a",
     );
     cy.softAssert(
       cy.opened_handover_modal().find("button").contains("Simpan").click(),
-      "save handover"
+      "save handover",
     );
     cy.softAssert(
       cy.inbox_chat_detail_all_agent().should("have.length", 1).contains(agent),
-      "b"
+      "b",
     );
     cy.wait(2000).reload();
     cy.softAssert(cy.inboxOngoingTab().click(), "navigate to inbox");
     cy.softAssert(cy.listChatInbox().contains("+62 896 5505 7778").click());
     cy.softAssert(
       cy.inbox_chat_detail_all_agent().should("have.length", 1).contains(agent),
-      "verify handover agent to success"
+      "verify handover agent to success",
     );
   }
 
@@ -1322,7 +1322,7 @@ class inboxPage {
     ) {
       cy.softAssert(
         cy.container_chat_detail().find("button").eq(3).click(),
-        "find forward pagination button"
+        "find forward pagination button",
       );
     }
     for (
@@ -1332,7 +1332,7 @@ class inboxPage {
     ) {
       cy.softAssert(
         cy.container_chat_detail().find("button").eq(2).click(),
-        "find backward pagination button"
+        "find backward pagination button",
       );
     }
   }
@@ -1359,7 +1359,7 @@ class inboxPage {
         const results = inboxResponse.body.results;
 
         const numberWhatsappCustomer = results.map(
-          (number) => number.numberWhatsappCustomer
+          (number) => number.numberWhatsappCustomer,
         );
 
         // cy.task("log", JSON.stringify(numberWhatsappCustomer));
@@ -1378,7 +1378,7 @@ class inboxPage {
                   if (state === "active") {
                     cy.softAssert(
                       cy.get('[data-cy="inbox-tab-unassigned"]'),
-                      "unassigned tab is active"
+                      "unassigned tab is active",
                     );
                   }
                 });
@@ -1388,7 +1388,7 @@ class inboxPage {
           cy.softAssert(cy.searchbar(), "filtering by search customer number");
           cy.softAssert(
             cy.searchbar().clear().type(number),
-            "typing number customer"
+            "typing number customer",
           );
           cy.wait(2000);
           cy.get("body", { timeout: 2000 }).then(($body) => {
@@ -1396,7 +1396,7 @@ class inboxPage {
               cy.log("no customer number found");
               cy.softAssert(
                 cy.inboxOngoingTab().click(),
-                "no customer number found"
+                "no customer number found",
               );
               cy.wait(2000);
             } else if (
@@ -1408,7 +1408,7 @@ class inboxPage {
                 cy
                   .listChatInbox()
                   .contains(formatCustomerNumber(number))
-                  .click()
+                  .click(),
               );
               cy.softAssert(cy.custumer_number().should("be.visible"));
               cy.wait(2000);
@@ -1416,11 +1416,11 @@ class inboxPage {
               cy.wait(2000);
             } else {
               cy.log(
-                "this customer :" + number + ", NOT FOUND at unassigned tab"
+                "this customer :" + number + ", NOT FOUND at unassigned tab",
               );
               cy.softAssert(
                 cy.inboxOngoingTab().click(),
-                "this customer :" + number + ", NOT FOUND at unassigned tab"
+                "this customer :" + number + ", NOT FOUND at unassigned tab",
               );
               cy.wait(2000);
             }
@@ -1435,7 +1435,7 @@ class inboxPage {
                     .listChatInbox()
                     .contains(formatCustomerNumber(number))
                     .click(),
-                  "customer number found at ongoing tab"
+                  "customer number found at ongoing tab",
                 );
                 cy.custumer_number().should("be.visible");
                 cy.wait(2000);
@@ -1443,11 +1443,11 @@ class inboxPage {
                 cy.wait(2000);
               } else {
                 cy.log(
-                  "this customer :" + number + ", NOT FOUND at ongoing tab"
+                  "this customer :" + number + ", NOT FOUND at ongoing tab",
                 );
                 cy.softAssert(
                   cy.inboxResolvedTab().click(),
-                  "this customer :" + number + ", NOT FOUND at ongoing tab"
+                  "this customer :" + number + ", NOT FOUND at ongoing tab",
                 );
                 cy.wait(2000);
               }
@@ -1460,11 +1460,11 @@ class inboxPage {
                 cy.log("customer number found at resolved tab");
                 cy.softAssert(
                   cy.listChatInbox().contains(formatCustomerNumber(number)),
-                  "customer number found at resolved tab"
+                  "customer number found at resolved tab",
                 );
               } else {
                 cy.log(
-                  "this customer :" + number + ", NOT FOUND at resolved tab"
+                  "this customer :" + number + ", NOT FOUND at resolved tab",
                 );
               }
             });
@@ -1596,7 +1596,7 @@ class inboxPage {
   filtering_byFilterAction() {
     cy.softAssert(
       cy.inbox_filter_button().click(),
-      "filtering inbox by filter action"
+      "filtering inbox by filter action",
     );
   }
 
@@ -1604,7 +1604,7 @@ class inboxPage {
     function formatNumber(customerNumber) {
       return customerNumber.replace(
         /(\d{2})(\d{3})(\d{4})(\d{4})/,
-        "$1 $2 $3 $4"
+        "$1 $2 $3 $4",
       );
     }
     cy.task("log", "getCustomerNumberList");
@@ -1632,14 +1632,14 @@ class inboxPage {
               .simpan_popupModal_min1()
               .click
               // {force: true}
-              ()
+              (),
           );
           cy.wait(2000);
           cy.softAssert(
-            cy.inboxOngoingTab().should("have.attr", "data-state", "active")
+            cy.inboxOngoingTab().should("have.attr", "data-state", "active"),
           );
           cy.softAssert(
-            cy.chat_list().contains(formatted_customer_number).click()
+            cy.chat_list().contains(formatted_customer_number).click(),
           );
           cy.softAssert(cy.userLoginNameLabel().click());
           cy.softAssert(
@@ -1648,7 +1648,7 @@ class inboxPage {
               .invoke("text")
               .then((text) => {
                 userLoginName = text.trim();
-              })
+              }),
           );
           cy.softAssert(
             cy
@@ -1660,9 +1660,9 @@ class inboxPage {
                 expect(value.trim()).to.equal(userLoginName);
                 cy.softAssert(
                   cy.inbox_chat_detail_all_agent().contains(userLoginName),
-                  "this value is equal to :" + userLoginName
+                  "this value is equal to :" + userLoginName,
                 );
-              })
+              }),
           );
         } else {
           cy.log("a");
@@ -1685,7 +1685,7 @@ class inboxPage {
     function formatNumber(customerNumber) {
       return customerNumber.replace(
         /(\d{2})(\d{3})(\d{4})(\d{4})/,
-        "$1 $2 $3 $4"
+        "$1 $2 $3 $4",
       );
     }
     cy.get("@customerNumValues").then((customerNumVal) => {
@@ -1714,7 +1714,7 @@ class inboxPage {
     }
     cy.softAssert(
       cy.dashboardNav(),
-      "END LOG : single_bulk_back_to_unassigned"
+      "END LOG : single_bulk_back_to_unassigned",
     );
   }
 
@@ -1791,7 +1791,7 @@ class inboxPage {
     function formatNumber(customerNumber) {
       return customerNumber.replace(
         /(\d{2})(\d{3})(\d{4})(\d{4})/,
-        "$1 $2 $3 $4"
+        "$1 $2 $3 $4",
       );
     }
     cy.task("log", "getCustomerNumberList");
@@ -1813,7 +1813,7 @@ class inboxPage {
     // const handoverAgent = "chicken admin"
     function bulkHandoverFromUnassigned(
       el_chatList,
-      formatted_customer_number
+      formatted_customer_number,
     ) {
       cy.request({
         method: "POST",
@@ -1831,7 +1831,7 @@ class inboxPage {
           const memberResponseResult = memberResponse.body.results;
 
           const filterMember = memberResponseResult.filter(
-            (member) => member.company?.division?._id === divisionID
+            (member) => member.company?.division?._id === divisionID,
           );
           const simplifiedMembers = filterMember.map((member) => ({
             fullname: member.fullname,
@@ -1856,14 +1856,14 @@ class inboxPage {
               .multiselect_agent_input_handover()
               .click()
               .clear()
-              .type(handoverAgent)
+              .type(handoverAgent),
           );
           cy.softAssert(cy.contains(handoverAgent).click());
           cy.softAssert(cy.opened_handover_modal().click());
           cy.softAssert(cy.button_simpan().click());
           cy.softAssert(cy.inboxOngoingTab().click());
           cy.softAssert(
-            cy.get(el_chatList).contains(formatted_customer_number).click()
+            cy.get(el_chatList).contains(formatted_customer_number).click(),
           );
           cy.softAssert(
             cy
@@ -1875,9 +1875,9 @@ class inboxPage {
                 expect(value.trim()).to.equal(handoverAgent);
                 cy.softAssert(
                   cy.inbox_chat_detail_all_agent().contains(handoverAgent),
-                  "this value is equal to :" + handoverAgent
+                  "this value is equal to :" + handoverAgent,
                 );
-              })
+              }),
           );
         } else {
           cy.wait(1500);
@@ -1889,7 +1889,7 @@ class inboxPage {
     bulkHandoverFromUnassigned();
     cy.softAssert(
       cy.dashboardNav(),
-      "END LOG : single_bulk_handover_unassigned"
+      "END LOG : single_bulk_handover_unassigned",
     );
   }
 
@@ -1901,14 +1901,14 @@ class inboxPage {
     cy.softAssert(cy.custumer_number().click());
     cy.softAssert(cy.get('input[placeholder="Ketik Nama Alias"]').clear());
     cy.softAssert(
-      cy.get('button[type="submit"]').contains("Save changes").click()
+      cy.get('button[type="submit"]').contains("Save changes").click(),
     );
     cy.wait(2000);
     cy.softAssert(
       cy
         .custumer_number()
         .find("div.text-sm")
-        .should("includes.text", customer_number)
+        .should("includes.text", customer_number),
     );
   }
 
@@ -1917,12 +1917,12 @@ class inboxPage {
     cy.softAssert(cy.custumer_number().click());
     cy.softAssert(cy.get('input[placeholder="Ketik Nama Alias"]').clear());
     cy.softAssert(
-      cy.get('button[type="submit"]').contains("Save changes").click()
+      cy.get('button[type="submit"]').contains("Save changes").click(),
     );
     cy.wait(1000);
     cy.softAssert(cy.alert_Aliasses());
     cy.softAssert(
-      cy.get('input[placeholder="Ketik Nama Alias"]').clear().type(valueType2)
+      cy.get('input[placeholder="Ketik Nama Alias"]').clear().type(valueType2),
     );
     cy.document().trigger("keydown", { key: "Escape" });
   }
@@ -1932,30 +1932,30 @@ class inboxPage {
     cy.softAssert(cy.custumer_number().click());
     // cy.softAssert(cy.contains('Ketik Nama Alias').type('asd'))
     cy.softAssert(
-      cy.get('input[placeholder="Ketik Nama Alias"]').clear().type(valueType)
+      cy.get('input[placeholder="Ketik Nama Alias"]').clear().type(valueType),
     );
     cy.softAssert(
-      cy.get('button[type="submit"]').contains("Save changes").click()
+      cy.get('button[type="submit"]').contains("Save changes").click(),
     );
     cy.wait(2000);
     cy.softAssert(
       cy
         .custumer_number()
         .find("div.text-sm")
-        .should("includes.text", valueType)
+        .should("includes.text", valueType),
     );
   }
 
   createComments() {
     cy.softAssert(
       cy.inbox_comment_section_commentInput().type("testing commenct section"),
-      "create comment at inbox"
+      "create comment at inbox",
     );
     cy.softAssert(
       cy
         .inbox_comment_section_commentInput()
         .trigger("keydown", { key: "Enter" }),
-      "send comment at inbox"
+      "send comment at inbox",
     );
     cy.softAssert(cy.inbox_comment_section_list({ timeout: 2000 }));
   }
@@ -1964,12 +1964,12 @@ class inboxPage {
   sendMessage_sendEnter() {
     cy.softAssert(cy.textbox_input_inbox().type(randomText));
     cy.softAssert(
-      cy.textbox_input_inbox().trigger("keydown", { key: "Enter" })
+      cy.textbox_input_inbox().trigger("keydown", { key: "Enter" }),
     );
     // cy.softAssert(cy.get('[data-cy*="buble-true"]').contains(randomText));
     cy.softAssert(
       cy.inbox_bubleMessage().contains(randomText),
-      "message sent via send enter key"
+      "message sent via send enter key",
     );
   }
   sendMessage_sendEnter_saveResponse() {
@@ -1994,7 +1994,7 @@ class inboxPage {
 
             cy.task(
               "log",
-              `response instance info : ${JSON.stringify(responseInstanceInfo)}`
+              `response instance info : ${JSON.stringify(responseInstanceInfo)}`,
             );
             cy.task("log", responseInstanceInfo);
 
@@ -2004,12 +2004,12 @@ class inboxPage {
     });
 
     cy.intercept("POST", /\/api\/v1\/message\/text\?key=.*/).as(
-      "saveResponseSendMessage"
+      "saveResponseSendMessage",
     );
 
     cy.softAssert(cy.textbox_input_inbox().type(randomText));
     cy.softAssert(
-      cy.textbox_input_inbox().trigger("keydown", { key: "Enter" })
+      cy.textbox_input_inbox().trigger("keydown", { key: "Enter" }),
     );
 
     cy.wait("@saveResponseSendMessage").then((interception) => {
@@ -2047,7 +2047,7 @@ class inboxPage {
 
     cy.softAssert(
       cy.inbox_bubleMessage().contains(randomText),
-      "message sent via send enter key"
+      "message sent via send enter key",
     );
   }
 
@@ -2059,7 +2059,7 @@ class inboxPage {
       let result = "";
       for (let i = 0; i < length; i++) {
         result += characters.charAt(
-          Math.floor(Math.random() * characters.length)
+          Math.floor(Math.random() * characters.length),
         );
       }
       return result;
@@ -2069,7 +2069,7 @@ class inboxPage {
     cy.buttonSendMessage().click();
     cy.softAssert(
       cy.inbox_bubleMessage().contains(randomText),
-      "message sent via click button"
+      "message sent via click button",
     );
   }
 
@@ -2089,11 +2089,11 @@ class inboxPage {
         .buttonAttachFile_Docs()
         .click()
         .attachFile(filepath, { subjectType: "input" }),
-      "attach media file > image"
+      "attach media file > image",
     );
     cy.softAssert(
       cy.textBoxArea_SendImg().trigger("keydown", { key: "Enter" }),
-      "action send image message via file upload"
+      "action send image message via file upload",
     );
   }
 
@@ -2104,7 +2104,7 @@ class inboxPage {
     const fileInput = 'input[type="file"]'; // Your file input selector
 
     cy.softAssert(
-      cy.dragNdropAreaInbox().attachFile(filepath, { subjectType: "input" })
+      cy.dragNdropAreaInbox().attachFile(filepath, { subjectType: "input" }),
     );
     // cy.softAssert(
     //   cy
@@ -2114,7 +2114,7 @@ class inboxPage {
     // );
     cy.softAssert(
       cy.textBoxArea_SendImg().trigger("keydown", { key: "Enter" }),
-      "action send image message via drag n drop"
+      "action send image message via drag n drop",
     );
   }
 
@@ -2125,7 +2125,7 @@ class inboxPage {
     const fileInput = 'input[type="file"]'; // Your file input selector
 
     cy.softAssert(
-      cy.dragNdropAreaInbox().attachFile(filepath, { subjectType: "input" })
+      cy.dragNdropAreaInbox().attachFile(filepath, { subjectType: "input" }),
     );
     // cy.softAssert(
     //   cy
@@ -2138,34 +2138,34 @@ class inboxPage {
         .textBoxArea_SendImg()
         .type(randomText)
         .trigger("keydown", { key: "Enter" }),
-      "action send image message via drag n drop"
+      "action send image message via drag n drop",
     );
   }
 
   inbox_add_agent() {
     cy.softAssert(
       cy.container_chat_detail().find("button").eq(2).click(),
-      "get chat detail > add more agent > click"
+      "get chat detail > add more agent > click",
     );
     cy.softAssert(
       cy.general_filter_Pilih_Agent().click(),
-      "get chat detail > add agent > select agent"
+      "get chat detail > add agent > select agent",
     );
     cy.wait(1000);
     cy.get("body", { timeout: 2000 }).then(($body) => {
       if ($body.find('[data-cy="data-list-1"]').length) {
         cy.softAssert(
           cy.data_list_1().click(),
-          "get chat detail > add agent > insert agent"
+          "get chat detail > add agent > insert agent",
         );
         cy.softAssert(
           cy.inbox_chat_detail_add_agents_simpan().click(),
-          "get chat detail > add agent > insert agent"
+          "get chat detail > add agent > insert agent",
         );
       } else {
         cy.softAssert(
           cy.dropdown_content_container_emptyState(),
-          "tidak ada data agent"
+          "tidak ada data agent",
         );
         // cy.softAssert(cy.log('tidak ada data agent'))
       }
@@ -2177,73 +2177,73 @@ class inboxPage {
     cy.softAssert(
       cy.inbox_chat_detail_all_agent(),
       // .click()
-      "get chat detail > get list agent"
+      "get chat detail > get list agent",
     );
   }
 
   inbox_remove_second_agent() {
     cy.softAssert(
       cy.inbox_chat_detail_all_agent(),
-      "get chat detail > get all assigned agent"
+      "get chat detail > get all assigned agent",
     );
     cy.softAssert(
       cy.inbox_chat_detail_secondAgent(),
-      "get chat detail > get second agent"
+      "get chat detail > get second agent",
     );
     cy.softAssert(
       cy.inbox_chat_detail_removeAgent(),
-      "get chat detail > get remove button"
+      "get chat detail > get remove button",
     );
     cy.softAssert(
       cy.inbox_chat_detail_removeAgent().eq(1).click(),
-      "get chat detail > remove second agent"
+      "get chat detail > remove second agent",
     );
   }
 
   inbox_validate_add_label() {
     cy.softAssert(
       cy.container_chat_detail().find("div").eq(11).click(),
-      "get add label button inbox"
+      "get add label button inbox",
     );
     cy.softAssert(
       cy
         .xpath(
-          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]"
+          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]",
         )
         .should("be.visible")
         .clear()
         .type("sc"),
-      "add label textbox input"
+      "add label textbox input",
     );
     cy.softAssert(
       cy.inbox_chat_detail_add_agents_simpan().should(
         // ('be.disabled')
-        "be.visible"
+        "be.visible",
       ),
-      "button simpan disabled, minimum 2 character"
+      "button simpan disabled, minimum 2 character",
     );
   }
 
   inbox_validate_add_label_oneCharacter() {
     cy.softAssert(
       cy.container_chat_detail().find("div").eq(11).click(),
-      "get add label button inbox"
+      "get add label button inbox",
     );
     cy.softAssert(
       cy
         .xpath(
-          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]"
+          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]",
         )
         .should("be.visible")
         .type("a"),
-      "add label textbox input"
+      "add label textbox input",
     );
     cy.softAssert(
       cy.inbox_chat_detail_add_agents_simpan().should(
         // ('have.attr', 'disabled')
-        "be.disabled"
+        "be.disabled",
       ),
-      "button simpan disabled, minimum 2 character"
+      "button simpan disabled, minimum 2 character",
     );
   }
 
@@ -2252,27 +2252,27 @@ class inboxPage {
 
     cy.softAssert(
       cy.container_chat_detail().find("div").eq(11).click(),
-      "get add label button inbox"
+      "get add label button inbox",
     );
     cy.softAssert(
       cy
         .xpath(
-          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]"
+          "/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/form[1]/div[1]/div[1]/input[1]",
         )
         .should("be.visible")
         .clear()
         .type(labelValue),
-      "add label textbox input"
+      "add label textbox input",
     );
     cy.softAssert(
       cy
         .inbox_chat_detail_add_agents_simpan()
         .should(
           // ('be.disabled')
-          "be.visible"
+          "be.visible",
         )
         .click(),
-      "button simpan disabled, minimum 2 character"
+      "button simpan disabled, minimum 2 character",
     );
     cy.document().trigger("keydown", { key: "Escape" });
     cy.softAssert(cy.inbox_container_label(), "k2");
@@ -2285,11 +2285,11 @@ class inboxPage {
       cy
         .notice_message()
         .should("include.text", "Room baru akan di buat jika "),
-      "get notice message"
+      "get notice message",
     );
     cy.softAssert(
       cy.reopen_chatRoom().should("be.visible").click(),
-      "click buka kembali"
+      "click buka kembali",
     );
   }
 
@@ -2439,7 +2439,7 @@ class inboxPage {
     // cy.viewport(1366, 768);
     // cy.viewport(1920, 1080);
     elementNavigation.defaultUrl();
-    elementNavigation.inboxNav().click();
+    // elementNavigation.inboxNav().click();
   }
   accessYourInbox() {
     this.accessConversation();
@@ -2462,17 +2462,26 @@ class inboxPage {
     this.accessConversation();
     elementConversation.inboxStarredNav().click();
     elementConversation.inboxStarredNav().should("have.class", "bg-white");
-    cy.url().should("include", "/spam");
+    cy.url().should("include", "/starred");
   }
   accessSpamConversation() {
     this.accessConversation();
     elementConversation.inboxSpamNav().click();
     elementConversation.inboxSpamNav().should("have.class", "bg-white");
-    cy.url().should("include", "/starred");
+    cy.url().should("include", "/spam");
+  }
+  accessJunkConversation() {
+    this.accessConversation();
+    elementConversation.inboxJunkNav().click();
+    elementConversation.inboxJunkNav().should("have.class", "bg-white");
+    cy.url().should("include", "/junk");
   }
   validateChatList_emptyState() {
     this.accessConversation();
-    elementConversation.chatListEmptyState().should("be.visible");
+    elementConversation
+      .chatListContainer()
+      .should("be.visible")
+      .contains(/Belum Ada Percakapan/i);
   }
 
   //──────── CHAT LIST PANEL ─────────────────────────────
@@ -2497,10 +2506,281 @@ class inboxPage {
     elementConversation.chatListNavPanelControlButton().should("be.visible");
     elementConversation.chatListSearchFilter().should("be.visible");
     elementConversation.chatListSearchFilter().click();
-    cy.error("after click cursor did not focus on input");
-    elementConversation.openFilterSearch().click();
+    elementConversation.openFilterSearch().type("testing input filter");
+    elementConversation.closeFilterSearch().click();
   }
-  access() {}
+  checkConversationFilter() {
+    this.accessConversation();
+    elementConversation.chatListFilterDeliveryMessageStatus().click();
+    cy.task("log", "close popup");
+    cy.wait(1000);
+    elementConversation.chatListFilterDeliveryMessageStatus().click();
+    elementConversation.chatListFilterReadConversation().click();
+    cy.task("log", "close popup");
+    cy.wait(1000);
+    elementConversation.chatListFilterReadConversation().click();
+    elementConversation.chatListFilterSort().click();
+    cy.task("log", "close popup");
+    cy.wait(1000);
+    elementConversation.chatListFilterSort().click();
+    elementConversation.chatListFilterVisibility().click();
+    cy.task("log", "close popup");
+    cy.wait(1000);
+    elementConversation.closePopupFIlterButton().click();
+    elementConversation.chatListFilterAdvance().click();
+    cy.task("log", "close popup");
+    cy.wait(1000);
+    elementConversation.closePopupFIlterButton().click();
+  }
+  openConversation() {
+    this.accessAllConversation();
+    // cy.viewport(1366, 768);
+    cy.viewport(1440, 900);
+    elementConversation.chatListNavPanelControlButton().click();
+    elementConversation
+      .chatListClientContainer(1, { timeout: 60000 })
+      .should("be.visible");
+    elementConversation.chatListClientContainer(1).click();
+    elementConversation.chatRoom().should("be.visible");
+
+    //check bubble inbound
+    cy.task("log", "CHECKING BUBBLE MESSAGE INBOUND");
+    elementConversation.chatSectionBubbleChatCustomer(0).should("be.visible");
+    elementConversation
+      .chatSectionBubbleChatCustomerMessage(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`TEXT NOT NULL: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("TEXT NULL");
+          // expect(value, "content is null or empty").to.be.empty;
+        }
+      });
+    elementConversation
+      .chatSectionBubbleChatCustomerName(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`TEXT NOT NULL: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("TEXT NULL");
+          // expect(value, "content is null or empty").to.be.empty;
+        }
+      });
+    cy.get("body").then(($body) => {
+      //get account channel number, for validating its a chat from whatsapp
+      const el = $body.find(`[data-cy="chat-list-1"] span`).eq(2);
+
+      if (el.length) {
+        // elementConversation.chatListClientAccountChannelNumber(1);
+        cy.task(
+          "log",
+          "accountChannel Number is visible, chat is from whatsapp",
+        );
+        elementConversation
+          .chatSectionBubbleChatCustomerNumber(0)
+          .should("be.visible")
+          .invoke("text")
+          .then((text) => {
+            const value = text?.trim();
+
+            if (value) {
+              cy.log(`NUMBER NOT NULL: ${value}`);
+              expect(value, "content not null").to.not.be.empty;
+            } else {
+              cy.log("NUMBER NOT VISIBLE");
+            }
+          });
+      } else {
+        cy.error("accountChannel Number is NOT visible");
+      }
+    });
+    elementConversation
+      .chatSectionBubbleChatCustomerMessage(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`MESSAGE NOT NULL: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("MESSAGE NOT VISIBLE");
+        }
+      });
+    elementConversation
+      .chatSectionBubbleChatCustomerMessageTimestamp(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`TIMESTAMP VISIBLE: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("TIMESTAMP NOT VISIBLE");
+        }
+      });
+
+    //check bubble outbond
+    cy.task("log", "CHECKING BUBBLE MESSAGE OUTBOND");
+    elementConversation.chatSectionBubbleChatAgent(0).should("be.visible");
+    elementConversation
+      .chatSectionBubbleChatAgentMessage(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`TEXT FROM USER-AGENT NOT NULL: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("TEXT FROM USER-AGENT NULL");
+        }
+      });
+    elementConversation
+      .chatSectionBubbleChatAgentName(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`USER-AGENT NAME NOT NULL: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("USER-AGENT NAME NULL");
+        }
+      });
+    elementConversation
+      .chatSectionBubbleChatAgentNumber(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`USER-AGENT NUMBER NOT NULL: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("USER-AGENT NUMBER NULL");
+        }
+      });
+    elementConversation
+      .chatSectionBubbleChatAgentTimestamp(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`USER-AGENT TIMESTAMP VISIBLE: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("USER-AGENT NOT VISIBLE");
+        }
+      });
+    //CHECK MESSAGE WITH STATUS READ
+    cy.task("log", "CHECKING BUBBLE MESSAGE WITH STATUS READ");
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus_read(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`MESSAGE FROM USER-AGENT HAVE STATUS = READ: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("MESSAGE FROM USER-AGENT HAVE STATUS != READ");
+        }
+      });
+
+    //OPEN CONVERSATION THAT HAVE MESSAGE STATUS IS DELIVERED
+    cy.task("log", "CHECKING BUBBLE MESSAGE WITH STATUS DELIVERED");
+    elementConversation.chatListClientContainer(2).click();
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`MESSAGE FROM USER-AGENT HAVE STATUS = DELIVERED: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("MESSAGE FROM USER-AGENT HAVE STATUS != DELIVERED");
+        }
+      });
+    // elementConversation.chatSectionBubbleChatAgentName()
+  }
+  compareConversationAccountChannelConnectivity() {
+    this.accessAllConversation();
+    cy.viewport(1440, 900);
+    elementConversation.chatListNavPanelControlButton().click();
+    elementConversation
+      .chatListClientContainer(1, { timeout: 60000 })
+      .should("be.visible");
+
+    cy.task("log", "OPEN CONVERSATION WITH CONNECTED ACCOUNT CHANNEL");
+    elementConversation.chatListClientContainer(1).click();
+    cy.get("body").then(($body) => {
+      const el = $body.find(`[data-cy="autogrowing-textarea"]`);
+
+      if (el.length) {
+        cy.task("log", "text input is visible");
+        elementConversation.chatSectionTextInput().should("be.visible");
+      } else {
+        cy.error("text input not visible");
+      }
+    });
+    elementConversation
+      .chatSectionTextInput()
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+        if (value) {
+          cy.log(`OPEN CONVERSATION WITH CONNECTED ACCOUNT CHANNEL: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("ACCOUNT CHANNEL DISCONNECTED");
+        }
+      });
+
+    cy.task("log", "OPEN CONVERSATION WITH");
+    cy.task("log", "---- DISCONNECTED ----");
+    cy.task("log", "-  ACCOUNT  CHANNEL  -");
+    elementConversation.chatListClientContainer(2).click();
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((text) => {
+        const value = text?.trim();
+
+        if (value) {
+          cy.log(`MESSAGE FROM USER-AGENT HAVE STATUS = DELIVERED: ${value}`);
+          expect(value, "content not null").to.not.be.empty;
+        } else {
+          cy.log("MESSAGE FROM USER-AGENT HAVE STATUS != DELIVERED");
+        }
+      });
+  }
 }
 
 function randomQuotes() {

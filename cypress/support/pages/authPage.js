@@ -156,6 +156,60 @@ class authPage {
     });
     cy.url().should("include", `/conversation/your-inbox`);
   }
+  loginDummy_testerDummy01() {
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      this.visitLoginPageV2();
+    } else {
+      this.visitLoginPage();
+    }
+    cy.wrap(this.loginBody).then((body) => {
+      elementAuth
+        .keyword({
+          timeout: 15000,
+        })
+        .type("testerdummy01");
+      // .type(body.identifier);
+      elementAuth
+        .password({
+          timeout: 15000,
+        })
+        .type("Asdqwe12@");
+      // .type(body.password);
+      elementAuth
+        .buttonLogin({
+          timeout: 15000,
+        })
+        .click();
+    });
+    cy.url().should("include", `/conversation/your-inbox`);
+  }
+  loginDummy_testerDummy02() {
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      this.visitLoginPageV2();
+    } else {
+      this.visitLoginPage();
+    }
+    cy.wrap(this.loginBody).then((body) => {
+      elementAuth
+        .keyword({
+          timeout: 15000,
+        })
+        .type("testerdummy02");
+      // .type(body.identifier);
+      elementAuth
+        .password({
+          timeout: 15000,
+        })
+        .type("Asdqwe12@");
+      // .type(body.password);
+      elementAuth
+        .buttonLogin({
+          timeout: 15000,
+        })
+        .click();
+    });
+    cy.url().should("include", `/conversation/your-inbox`);
+  }
 
   loginInvalidUsername() {
     this.visitLoginPage();
