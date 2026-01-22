@@ -16,9 +16,11 @@ cypress_scheduled_test:
   script:
     - npm ci
     # login to company tantaffgo, userlogin danny atmin satu, ENV PROD
-    - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatminsatu  npx cypress run --spec "cypress/e2e/01-v2_regression/01_authLogin.cy.js"
-    - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatminsatu  npx cypress run --spec "cypress/e2e/01-v2_regression/01_authRegister.cy.js"
-    - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatminsatu  npx cypress run --spec "cypress/e2e/01-v2_regression/01_authOnboarding.cy.js"
+    - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatmin01  npx cypress run --spec "cypress/e2e/01-v2_regression/01_authLogin.cy.js"
+
+    - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatmin01  npx cypress run --spec "cypress/e2e/01-v2_regression/01_authRegister.cy.js"
+
+    - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatmin01  npx cypress run --spec "cypress/e2e/01-v2_regression/01_authOnboarding.cy.js"
   rules:
     # - when: manual
     # jalan kalau di-push ke branch tertentu
