@@ -59,15 +59,35 @@ describe("testing LOGIN page", () => {
     authAction.elementCheckingV2LoginErrorState();
   });
 
-  it("try login with valid credentials", () => {
+  it.only("try login with valid credentials", () => {
     authAction.loginValidUsername();
   });
   it("try login with INVALID credentials", () => {
     authAction.loginInvalidUsername();
   });
+  it.only("try login with ROLE SUPERVISOR", () => {
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      const paramLogin = "mataayam01";
+      authAction.loginAsSupervisor(paramLogin);
+    }
+    if (baseUrl === "https://v2.satuinbox.com") {
+      const paramLogin = "danyspv01";
+      authAction.loginAsSupervisor(paramLogin);
+    }
+  });
+  it.only("try login with ROLE AGENT", () => {
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      const paramLogin = "leherayam01";
+      authAction.loginAsAgent(paramLogin);
+    }
+    if (baseUrl === "https://v2.satuinbox.com") {
+      const paramLogin = "danyagent01";
+      authAction.loginAsAgent(paramLogin);
+    }
+  });
 
   //access token validation
-  it.skip("Confirm that the access token truly becomes invalid after 15 minutes", () => {
+  it("Confirm that the access token truly becomes invalid after 15 minutes", () => {
     authAction.tokenValidationAfter15minutes();
   });
 });

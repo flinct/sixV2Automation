@@ -33,8 +33,8 @@ const indentifierRegres = "cyt ";
 
 const randomText = generateRandomText(6);
 const config = env_config(baseUrl);
-const selectedHeader = getHeaderByLoginType(config, baseUrl, loginType);
-const selectedBody = getLoginBodyByLoginType(config, baseUrl, loginType);
+// const selectedHeader = getHeaderByLoginType(config, baseUrl, loginType);
+// const selectedBody = getLoginBodyByLoginType(config, baseUrl, loginType);
 
 function logout() {
   cy.userLoginNameLabel().click();
@@ -95,6 +95,11 @@ class authPage {
   }
 
   //-----------------------V2---------------------------------
+  constructor() {
+    this.loginBody = getLoginBodyByLoginType(config, baseUrl, loginType);
+    this.header = getHeaderByLoginType(config, baseUrl, loginType);
+  }
+
   //login
   elementCheckingV2Login() {
     //test
@@ -127,34 +132,108 @@ class authPage {
     cy.softAssert(elementAuth.satuinboxLogo());
   }
 
-  constructor() {
-    this.loginBody = getLoginBodyByLoginType(config, baseUrl, loginType);
+  reGetConfigLogiType() {
+    const baseUrl = Cypress.config("baseUrl");
+    const config = env_config(baseUrl);
+
+    return getLoginBodyByLoginType(config, baseUrl, Cypress.env("loginType"));
   }
 
-  loginValidUsername() {
+  loginValidUsername(overrideLogin) {
+    if (overrideLogin) {
+      Cypress.env("loginType", overrideLogin);
+    }
+
+    const loginBody = this.reGetConfigLogiType();
+
     if (baseUrl === "https://dev-v2.satuinbox.com") {
       this.visitLoginPageV2();
     } else {
       this.visitLoginPage();
     }
-    cy.wrap(this.loginBody).then((body) => {
-      elementAuth
-        .keyword({
-          timeout: 15000,
-        })
-        .type(body.identifier);
-      elementAuth
-        .password({
-          timeout: 15000,
-        })
-        .type(body.password);
-      elementAuth
-        .buttonLogin({
-          timeout: 15000,
-        })
-        .click();
-    });
+    // cy.wrap(this.loginBody).then((body) => {
+    elementAuth
+      .keyword({
+        timeout: 15000,
+      })
+      .type(loginBody.identifier);
+    elementAuth
+      .password({
+        timeout: 15000,
+      })
+      .type(loginBody.password);
+    elementAuth
+      .buttonLogin({
+        timeout: 15000,
+      })
+      .click();
+    // });
     cy.url().should("include", `/conversation/your-inbox`);
+    cy.task("log", "-----SUCCESSFULL LOGIN------");
+  }
+  loginAsSupervisor(overrideLogin) {
+    if (overrideLogin) {
+      Cypress.env("loginType", overrideLogin);
+    }
+
+    const loginBody = this.reGetConfigLogiType();
+
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      this.visitLoginPageV2();
+    } else {
+      this.visitLoginPage();
+    }
+    // cy.wrap(this.loginBody).then((body) => {
+    elementAuth
+      .keyword({
+        timeout: 15000,
+      })
+      .type(loginBody.identifier);
+    elementAuth
+      .password({
+        timeout: 15000,
+      })
+      .type(loginBody.password);
+    elementAuth
+      .buttonLogin({
+        timeout: 15000,
+      })
+      .click();
+    // });
+    cy.url().should("include", `/conversation/your-inbox`);
+    cy.task("log", "-----SUCCESSFULL LOGIN as SPV------");
+  }
+  loginAsAgent(overrideLogin) {
+    if (overrideLogin) {
+      Cypress.env("loginType", overrideLogin);
+    }
+
+    const loginBody = this.reGetConfigLogiType();
+
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      this.visitLoginPageV2();
+    } else {
+      this.visitLoginPage();
+    }
+    // cy.wrap(this.loginBody).then((body) => {
+    elementAuth
+      .keyword({
+        timeout: 15000,
+      })
+      .type(loginBody.identifier);
+    elementAuth
+      .password({
+        timeout: 15000,
+      })
+      .type(loginBody.password);
+    elementAuth
+      .buttonLogin({
+        timeout: 15000,
+      })
+      .click();
+    // });
+    cy.url().should("include", `/conversation/your-inbox`);
+    cy.task("log", "-----SUCCESSFULL LOGIN as AGENT------");
   }
   loginDummy_testerDummy01() {
     if (baseUrl === "https://dev-v2.satuinbox.com") {
@@ -2352,7 +2431,7 @@ class authPage {
     cy.request({
       method: "POST",
       url: config.loginUrl,
-      body: selectedBody,
+      body: this.loginBody,
     }).then((responseLogin) => {
       const accessToken = responseLogin.body.accessToken;
       const refreshToken = responseLogin.body.refreshToken;

@@ -78,7 +78,6 @@ export function env_config(baseUrl) {
       password: "Asdqwe12@",
     },
     loginBody_CT: { keyword: "chickentester01", password: "asdqwe12" },
-    loginBody_CT2: { identifier: "chickentester01", password: "Asdqwe12@" },
     loginBody_ms2: { keyword: "messagelogdua", password: "Asdqwe12@" },
     loginBody_prodtestingjuli: {
       keyword: "prodtestingjuli",
@@ -96,18 +95,54 @@ export function env_config(baseUrl) {
       identifier: "helloworld01",
       password: "Asdqwe12@",
     },
+    loginBody_testerdummy01: {
+      identifier: "testerdummy01",
+      password: "Asdqwe12@",
+    },
+
+    //----------tantaffgo---------- prod
     loginBody_tantaffgo: {
       identifier: "tantaffgo01",
       password: "Asdqwe12@",
     },
     loginBody_danyatminsatu: {
+      //adm
       identifier: "danyatmin01",
       password: "Asdqwe12@",
     },
-    loginBody_testerdummy01: {
-      identifier: "testerdummy01",
+    loginBody_danyspvsatu: {
+      //spv
+      identifier: "danyspv01",
       password: "Asdqwe12@",
     },
+    loginBody_danyaagentsatu: {
+      //agent
+      identifier: "danyagent01",
+      password: "Asdqwe12@",
+    },
+    //----------tantaffgo----------
+
+    //-------chickentester-------- dev
+    loginBody_CT2: {
+      identifier: "chickentester01",
+      password: "Asdqwe12@",
+    },
+    loginBody_cekerayam01: {
+      //adm
+      identifier: "cekerayam01",
+      password: "Asdqwe12@",
+    },
+    loginBody_mataayam01: {
+      //spv
+      identifier: "mataayam01",
+      password: "f^(B2WdK3uh.p@!?",
+    },
+    loginBody_leherayam01: {
+      //agent
+      identifier: "leherayam01",
+      password: "5481p#9kKxb?M=!G",
+    },
+    //-------chickentester--------
 
     headers: {
       //goddummyprod
