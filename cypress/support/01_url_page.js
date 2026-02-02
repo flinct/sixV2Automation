@@ -99,6 +99,12 @@ export function env_config(baseUrl) {
       identifier: "testerdummy01",
       password: "Asdqwe12@",
     },
+    //---------tester dummy prod -------
+    loginBody_testerdummy01: {
+      identifier: "testerdummyprod01",
+      password: "Asdqwe12@",
+    },
+    //---------tester dummy prod -------
 
     //----------tantaffgo---------- prod
     loginBody_tantaffgo: {

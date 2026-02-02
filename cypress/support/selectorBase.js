@@ -34,6 +34,8 @@ function getHeaderByLoginType(config, baseUrl, loginType) {
     if (loginType === "danyatmin01") return config.loginBody_danyatminsatu;
     if (loginType === "danyspv01") return config.loginBody_danyspvsatu;
     if (loginType === "danyagent01") return config.loginBody_danyaagentsatu;
+    if (loginType === "testerdummyprod01")
+      return config.loginBody_testerdummyprod01;
   }
 
   throw new Error(`No headers found for baseUrl: ${baseUrl} `);
@@ -79,6 +81,8 @@ function getLoginBodyByLoginType(config, baseUrl, loginType) {
     if (loginType === "danyatmin01") return config.loginBody_danyatminsatu;
     if (loginType === "danyspv01") return config.loginBody_danyspvsatu;
     if (loginType === "danyagent01") return config.loginBody_danyaagentsatu;
+    if (loginType === "testerdummyprod01")
+      return config.loginBody_testerdummyprod01;
   }
 
   throw new Error(`No headers found for login type: ${loginType}`);

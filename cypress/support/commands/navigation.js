@@ -36,7 +36,9 @@ class elementNavigation {
   settingsNav() {
     // return cy.get('[data-cy="main-nav-settings"]').parent().find("p");
     // return cy.get('[data-cy="Sidebar-Navigation-List"]').find("button").eq(5);
-    return cy.get('a[href="/settings/organization/general"] button');
+    return cy
+      .get('[data-cy="Sidebar-Navigation"]')
+      .find('a[href="/settings/organization/general"] button');
   }
 
   profileNav() {
@@ -45,12 +47,19 @@ class elementNavigation {
   }
 
   //--------------ALL SETTING NAV------------------
-  teamNav() {
+  memberNav() {
     // return cy.get('[data-cy="main-nav-profile"]').parent().find("p");
     return cy
       .get('[data-cy="Setting-Sidebar-Navigation"]')
       .find("button")
       .contains("p", /anggota|members/i);
+  }
+
+  teamInboxNav() {
+    return cy
+      .get('[data-cy="Setting-Sidebar-Navigation"]')
+      .find("button")
+      .contains("p", /Kotak Masuk Tim|team-inbox/i);
   }
 }
 export default new elementNavigation();

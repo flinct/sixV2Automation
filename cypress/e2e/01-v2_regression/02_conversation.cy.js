@@ -52,9 +52,11 @@ describe("testing INBOX page", () => {
   });
 
   beforeEach(() => {
+    // authAction = new authPage();
+
     cy.session("loginSession", () => {
       // Adjust cookie names to match your app
-      authAction.loginDummy_testerDummy02();
+      authAction.loginValidUsername();
       cy.wait(2000);
       // cy.softAssert(cy.dashboardNav(), "a");
     });
@@ -101,8 +103,12 @@ describe("testing INBOX page", () => {
     cy.wait(2000);
     inboxAction.openConversation();
   });
-  it.only("opening a conversation - compare account channel connectivity impact to conversation", () => {
+  it("opening a conversation - compare account channel connectivity impact to conversation", () => {
     cy.wait(2000);
     inboxAction.compareConversationAccountChannelConnectivity();
+  });
+  it.only("simulate accesing widget from codepen", () => {
+    cy.wait(2000);
+    inboxAction.accessWdigetCodepen();
   });
 });

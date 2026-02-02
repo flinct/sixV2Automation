@@ -139,10 +139,11 @@ class authPage {
     return getLoginBodyByLoginType(config, baseUrl, Cypress.env("loginType"));
   }
 
-  loginValidUsername(overrideLogin) {
-    if (overrideLogin) {
-      Cypress.env("loginType", overrideLogin);
-    }
+  loginValidUsername() {
+    // loginValidUsername(overrideLogin) {
+    // if (overrideLogin) {
+    //   Cypress.env("loginType", overrideLogin);
+    // }
 
     const loginBody = this.reGetConfigLogiType();
 

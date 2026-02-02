@@ -16,6 +16,7 @@ import { id } from "common-tags";
 class teamPageAccess {
   visitDefault() {
     elementNavigation.defaultUrl();
+    cy.viewport(1366, 768);
   }
   accessTeamPage() {
     cy.url().then((url) => {
@@ -46,6 +47,27 @@ class teamPageAccess {
     cy.wait(1000);
     cy.focused().click();
     cy.contains(/Standard Office Hours/i).click({ force: true });
+  }
+  addMemberToTeam() {
+    this.visitDefault();
+    elementNavigation.settingsNav().click();
+    elementNavigation.teamInboxNav().click();
+
+    elementTeam.teamInboxTitle();
+    elementTeam.searchTeamName().type("cs");
+    elementTeam.elipsisIcon().click();
+    elementTeam.elipsisChildEdit().click();
+
+    elementTeam.editTeamInboxTitle();
+    elementTeam.editChannelTeamInbox().click();
+    elementTeam.searchChannelTeamInbox().type("complain");
+    elementTeam.selectChannelTeamInbox("complain").click();
+
+    elementTeam.editMemberTeamInbox().click();
+    elementTeam.searchMemberTeamInbox().type("chicken");
+    elementTeam.selectMemberTeamInbox("chicken").click();
+
+    elementTeam.buttonSaveTeamInboc();
   }
 }
 

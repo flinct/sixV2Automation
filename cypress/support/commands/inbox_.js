@@ -340,22 +340,12 @@ class elementConversation {
       .should("have.class", "text-green-600");
   }
 
-  chatSectionBubbleChatTimestamp(index) {
-    return cy.get(`[data-cy="chatSection-buble-chat-${index}-timestamp"]`);
-  }
-
-  chatSectionBubbleChatDeliveryStatus(index) {
-    return cy.get(
-      `[data-cy="chatSection-buble-chat-${index}-deliveryMessageStatus"]`,
-    );
-  }
-
   chatSectionTypingIndicator() {
     return cy.get('[data-cy="chatSection-buble-chat-typingIndicator"]');
   }
 
-  chatSectionTextbox() {
-    return cy.get('[data-cy="chatSection-textbox"]');
+  chatSectionTextInput() {
+    return cy.get('[data-cy="autogrowing-textarea"]');
   }
 
   chatSectionTextboxAttachButton() {

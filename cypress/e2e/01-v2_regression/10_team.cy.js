@@ -34,24 +34,24 @@ describe("testing INBOX page", () => {
   const baseUrl = Cypress.config("baseUrl");
   const loginType = Cypress.env("loginType");
 
-  Cypress.on("uncaught:exception", (err, runnable) => {
-    // cy.task(
-    //   "log asd",
-    //   `Unhandled exception: ${err.message || JSON.stringify(err)}`
-    // );
-    console.error("Unhandled exception:", err.message || JSON.stringify(err));
-    // if (err.message && err.message.includes("You cannot delete this user!")) {
-    //   cy.task("log", `Specific error caught: ${err.message}`);
-    // }
-    return false;
-  });
+  // Cypress.on("uncaught:exception", (err, runnable) => {
+  //   // cy.task(
+  //   //   "log asd",
+  //   //   `Unhandled exception: ${err.message || JSON.stringify(err)}`
+  //   // );
+  //   console.error("Unhandled exception:", err.message || JSON.stringify(err));
+  //   // if (err.message && err.message.includes("You cannot delete this user!")) {
+  //   //   cy.task("log", `Specific error caught: ${err.message}`);
+  //   // }
+  //   return false;
+  // });
 
-  before(() => {
-    const timestamp = new Date().toISOString();
-    Cypress.env("sessionLogTimestamp", timestamp);
-    Cypress.env("inboxLogs", []);
-    Cypress.env("messageLogs", []);
-  });
+  // before(() => {
+  //   const timestamp = new Date().toISOString();
+  //   Cypress.env("sessionLogTimestamp", timestamp);
+  //   Cypress.env("inboxLogs", []);
+  //   Cypress.env("messageLogs", []);
+  // });
 
   beforeEach(() => {
     cy.session("loginSession", () => {
@@ -67,8 +67,11 @@ describe("testing INBOX page", () => {
   //   inboxAction.writeCombinedLog();
   // });
 
-  it.only("invite member", () => {
+  it("add member to team", () => {
     teamAction.inviteNewMember();
+  });
+  it.only("add member to team", () => {
+    teamAction.addMemberToTeam();
   });
   it("invite member loop", () => {
     authAction.test();
