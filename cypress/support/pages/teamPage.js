@@ -59,15 +59,18 @@ class teamPageAccess {
     elementTeam.elipsisChildEdit().click();
 
     elementTeam.editTeamInboxTitle();
+    elementTeam.deleteChannelTeamInbox().click();
     elementTeam.editChannelTeamInbox().click();
-    elementTeam.searchChannelTeamInbox().type("complain");
-    elementTeam.selectChannelTeamInbox("complain").click();
+    elementTeam.searchChannelTeamInbox().type("cs");
+    elementTeam.selectChannelTeamInbox("cs").click();
 
+    cy.wait(1000);
+    elementTeam.deleteMemberTeamInbox().click();
     elementTeam.editMemberTeamInbox().click();
     elementTeam.searchMemberTeamInbox().type("chicken");
     elementTeam.selectMemberTeamInbox("chicken").click();
 
-    elementTeam.buttonSaveTeamInboc();
+    elementTeam.buttonSaveTeamInbox();
   }
 }
 
