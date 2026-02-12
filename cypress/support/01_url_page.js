@@ -60,6 +60,10 @@ export function env_config(baseUrl) {
     channelInvalidInputParam: `${base}/channel?asdqw12abc`,
     // approveOnboarding: `${base}api/company/${companyId}/approve`,
     approveOnboarding: (companyId) => `${base}/company/${companyId}/approve`,
+    getAccountChannel: `${base}/account-channel`,
+    getWhatsappWeb: `${base}/account-channel`,
+    instance: `${base}/account-channel/instance/`,
+    getTeam: `${base}/team/`,
 
     visit_user: "/setting/manage-team",
     visit_user_grup: "/setting/manage-group",
@@ -91,15 +95,19 @@ export function env_config(baseUrl) {
       keyword: "goddumstag",
       password: "Asdqwe12!",
     },
-    loginBody_helloWorld: {
-      identifier: "helloworld01",
-      password: "Asdqwe12@",
+
+    //---------goddummyprod2 SAP----------
+    loginBody_goddummyprod2: {
+      identifier: "goddummyprod2",
+      password: "Password1@",
     },
+    //---------goddummyprod2 SAP----------
+
+    //---------tester dummy prod -------
     loginBody_testerdummy01: {
       identifier: "testerdummy01",
       password: "Asdqwe12@",
     },
-    //---------tester dummy prod -------
     loginBody_testerdummy01: {
       identifier: "testerdummyprod01",
       password: "Asdqwe12@",

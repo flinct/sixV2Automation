@@ -204,713 +204,486 @@ https://satuinbox.com/api/v1/account-whatsapp?accountStatus=used&page=1&limit=25
 
 
 
-//sap
-https://apisanbox.coresyssap.com/ext/satuinbox/confirmation
-//sap pass
-// $2a$08$8uIzQhwFQL.izeHnUeDH1.nDpVc0fevJpKq.15Zyhpr14p/rgcHXa
-
-[{ //aggregate user to company
-  $lookup: {
-    from: "divisions",
-    localField: "division",
-    foreignField: "_id",
-    as: "divisionData"
-  }
-},
- {$match: {
-   "divisionData.company":ObjectId('689aa5cf0c03c57308eec36b')
- }},
- {$project: {
-   fullname:1,
-   username:1,
-   email:1
-  }
-  }] 
- 
-
-//SAP open create and scan akun whatsapp
-[
-  {
-    $lookup: {
-      from: "divisions",
-      localField: "division",
-      foreignField: "_id",
-      as: "divisionData"
-    }
-  },
-  {
-    $unwind: "$divisionData"
-  },
-  {
-    $match: {
-      "divisionData.company": ObjectId("67ee2ecf9f4f80b0902b3fc3"),
-      role: { $ne: "internalTeam" }
-    }
-  },
-  {
-    $set:{
-      "feature": {
-        "dashboard": {
-          "access": true
-        },
-        "inbox": {
-          "access": true
-        },
-        "broadcast": {
-          "access": true
-        },
-        "ticketing": {
-          "access": false,
-          "viewAll": false,
-          "viewSpecificByUserAgent": false,
-          "viewSpecificByDivision": false,
-          "create": false,
-          "import": false,
-          "export": false,
-          "bulkUpload": false,
-          "solve": false,
-          "reopen": false,
-          "reopenBulk": false,
-          "changePriority": false,
-          "delete": false,
-          "changeProblem": false,
-          "changeInstruction": false,
-          "setting": false,
-          "viewDetail": false,
-          "addTag": false,
-          "addMedia": false,
-          "sendMessageThread": false
-        },
-        "groupInbox": {
-          "access": false
-        },
-        "users": {
-          "access": true
-        },
-        "templateMessages": {
-          "access": true
-        },
-        "accountWhatsapp": {
-          "access": true,
-          "create": true,
-          "edit": true,
-          "delete": true,
-          "login": true,
-          "logout": false
-        },
-        "division": {
-          "access": true
-        },
-        "groupDivision": {
-          "access": true
-        },
-        "workingHour": {
-          "access": true
-        },
-        "contact": {
-          "access": true
-        },
-        "templateBroadcast": {
-          "access": true
-        },
-        "liveChat": {
-          "access": false,
-          "channelSettingChatWidgetSetting": false,
-          "channelSettingComingSoon": false,
-          "settingLivechatHandlerByDivision": false,
-          "settingLivechatHandlerByUserAgent": false,
-          "crossDivisionSetting": false,
-          "sendMessage": false,
-          "createTicketFromLivechat": false,
-          "viewAllContent": false,
-          "viewSpecificContent": false
-        }
-      }
-    }
-  }
-]
-  
-[
-  {
-    $lookup: {
-      from: "divisions",
-      localField: "division",
-      foreignField: "_id",
-      as: "divisionData"
-    }
-  },
-  {
-    $unwind: "$divisionData"
-  },
-  {
-    $match: {
-      "divisionData.company": ObjectId("67ee2ecf9f4f80b0902b3fc3"),
-      role: { $ne: "internalTeam" }
-    }
-  }
-]
-//company sap staging 67ee2ecf9f4f80b0902b3fc3
-//company sap prod 684a7dee68bd32a1f552e453
-  
-[
-  {
-    $lookup: {
-      from: "divisions",
-      localField: "division",
-      foreignField: "_id",
-      as: "divisionData"
-    }
-  },
-  {
-    $unwind: "$divisionData"
-  },
-  {
-    $match: {
-      "divisionData.company":ObjectId('684a7dee68bd32a1f552e453'),
-      "divisionData.divisionName":{
-        $in:[
-          /AMQ/i,
-      /MKW/i,
-      /CLN/i,
-      /PLM/i,
-      /FFQ/i,
-      /JBA/i,
-      /JSC/i,
-      /JUB/i,
-      /SBG/i,
-      /PDG/i,
-      /BTH/i,
-      /UPG/i,
-      /KDI/i,
-      /TGR/i,
-      /TNJ/i
-        ]
-      },
-    }
-  }
-]
-
-  
-,
-  {
-    $set:{
-      "feature": {
-        "dashboard": {
-          "access": true
-        },
-        "inbox": {
-          "access": true
-        },
-        "broadcast": {
-          "access": true
-        },
-        "ticketing": {
-          "access": false,
-          "viewAll": false,
-          "viewSpecificByUserAgent": false,
-          "viewSpecificByDivision": false,
-          "create": false,
-          "import": false,
-          "export": false,
-          "bulkUpload": false,
-          "solve": false,
-          "reopen": false,
-          "reopenBulk": false,
-          "changePriority": false,
-          "delete": false,
-          "changeProblem": false,
-          "changeInstruction": false,
-          "setting": false,
-          "viewDetail": false,
-          "addTag": false,
-          "addMedia": false,
-          "sendMessageThread": false
-        },
-        "groupInbox": {
-          "access": false
-        },
-        "users": {
-          "access": true
-        },
-        "templateMessages": {
-          "access": true
-        },
-        "accountWhatsapp": {
-          "access": true,
-          "create": true,
-          "edit": true,
-          "delete": true,
-          "login": true,
-          "logout": false
-        },
-        "division": {
-          "access": true
-        },
-        "groupDivision": {
-          "access": true
-        },
-        "workingHour": {
-          "access": true
-        },
-        "contact": {
-          "access": true
-        },
-        "templateBroadcast": {
-          "access": true
-        },
-        "liveChat": {
-          "access": false,
-          "channelSettingChatWidgetSetting": false,
-          "channelSettingComingSoon": false,
-          "settingLivechatHandlerByDivision": false,
-          "settingLivechatHandlerByUserAgent": false,
-          "crossDivisionSetting": false,
-          "sendMessage": false,
-          "createTicketFromLivechat": false,
-          "viewAllContent": false,
-          "viewSpecificContent": false
-        }
-      }
-    }
-}
-  
-
-
-"feature": {
-    "dashboard": {
-      "access": true
+//sosialchat
+https://api.socialchat.id/api/channel/698999a283706c6c354a3026
+{
+    "_id": "698999a283706c6c354a3026",
+    "name": "",
+    "channelId": "",
+    "channelType": "whatsapp-unofficial",
+    "isConnected": false,
+    "picture": "",
+    "status": "premium",
+    "label": {
+        "name": "vemme luxe",
+        "phone": "085122638155"
     },
-    "inbox": {
-      "access": true
+    "createdBy": {
+        "_id": "672d927a8526c2b034051a70",
+        "email": "flinctchristian@gmail.com"
     },
-    "broadcast": {
-      "access": true
+    "additionalData": {
+        "qrcode": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAAExElEQVR42uyZP67rrhPFB1HQhQ1EeBspLLGllO6go8yWkFx4G6BsYNxRWJyfxsl97/aJXfy+j+ZKvh8peJg/52D6t/5bSwGIlhzpbFhho+nOjjQSA8gnAYV0vMtuDBg1+0hE1zEkLqTPAirmxLY+52xINmlgAbTAFfNXAfWcl4SLyga8x6GdDTyYriMRK6CZqDrRFOhEoJBOD1uLR2Rb9NJCV8W3iX4d1tEAgPSw7jreJl7rvKTHxV3HafqdtJ8Br2Sz2Hwja4vOFIiGHOLv8jsYUFVKD3XzS7MKWBAVJA783uMJADkaDXN9YkmyO6I7pDqi7W78DqDq5gEqem7EnUaPx4XkLKiod04eD3S/BUDOwjANyCGyKj4aonfKHQ/QMM+JqWIzsJchG0QanmiGnXslxBlAHgOTG7JPzArZcB+KRrS1jN8BVBl9tFLkNPHax1vAWp9oE1Tx+RyAnN4okNp0MyxxaLRKR0iE91scD6g+Sn9Tz+yjtV0veJDTM5p17vUWHwOSWJOlKgDkLIKcBU1ka39t8gzAIzEV6bQyWG8hqqI3g5+hdgKg6ryZiKKRjb1ITsYLDXOcqL4T5gQAm4537le6EV2cByQnc4hw7zb4MUDOZxOtG+YFuDifA1sUImP7sJ0FkJ8boT5nRN4HHNaKLTQe3qV3CpApQBRrou5GE+niBqSGQj85+TFAOkXeGylIZQpxlQ0l9J/SOx5Qc56s3V8aF6Ib3S026bTvoXYGIPoUL8HMa/HNQEmfN7yH8BRA/kMENwARNMxLs6sMnAnk3i7pY6B70Ul1G8lYK6qYFZ45NPzoyROAOosj6Hrzideic+CLu5JJrPpbRx0OyHhJEcNzzmRRZ6S41qLbxLXo/B2AfDYPkSgUsIr4v0scJsPqb3UfDKg6A2wdkW9iFbLBLpMCUOfTgDwayT+/AC8dtcqGI9yr034OEI0+PbgMaHvKZaLu9NwM1R/1fzggKRfYOr2ZRjJJiGyXxoe/Z3E0QIO4A6arXuLu+gEenvKn1tdLnAA4LYN19yZ7tU13dKKQ7I8y/xjYbXWkAZtptisgMUtQZKCMZwFVMp3rU45krRtN97VfdaRfNzmHA13PkdB19g2oIllJHAr2Z98Bit4ma53GAgnKbborFAmNe8+s4wEasm9kpdSn3R2kiLdUOw8gnyeLTn5JxGKCRD8QTTgRGGa0Ow8yzkBq8wlrIS8tqH8JUHsKMJ7ZJNhCBlEkRUjoaqOTgE46BhlqN2NZzY2ChRC2/iTt4YCsAMYmXU6JcI1iBsn8ks0fA34G70kWWdV8Cw+FpzSaAdtJgAyUKTCem3gPeXbf1Wmi4nQ+BxDNEO0uFydprl5arM4h/im94wGFWXQUXUeTrK3Zt7sY4AS8puxXgE0DILHVtF9HS7Pz++DcTgL2e9qH+IJsGKJV7yLJQ2JV/qT9wcD+FYa4DzJYbZ0XxLXTGCL/uV74GNhv3eG02Op1/9nLIAOFVfk73A8GKuYEdBplkxKBx4qnHAlqPhNg8SlL3PWD4d3zJlvrr880xwMgbOPNSNRMJKZhE3k3fAsopCNh2C/uLOY22fWVHCj6LABAgh02v4DJjTfzUGIGg62/PtMcC/xb/z/rfwEAAP//IYB3zoarkZ0AAAAASUVORK5CYII=",
+        "virtualMachineId": "690dc17cea7d56aaf7f29684"
     },
-    "ticketing": {
-      "access": false,
-      "viewAll": false,
-      "viewSpecificByUserAgent": false,
-      "viewSpecificByDivision": false,
-      "create": false,
-      "import": false,
-      "export": false,
-      "bulkUpload": false,
-      "solve": false,
-      "reopen": false,
-      "reopenBulk": false,
-      "changePriority": false,
-      "delete": false,
-      "changeProblem": false,
-      "changeInstruction": false,
-      "setting": false,
-      "viewDetail": false,
-      "addTag": false,
-      "addMedia": false,
-      "sendMessageThread": false
-    },
-    "groupInbox": {
-      "access": false
-    },
-    "users": {
-      "access": true
-    },
-    "templateMessages": {
-      "access": true
-    },
-    "accountWhatsapp": {
-      "access": true,
-      "create": true,
-      "edit": true,
-      "delete": true,
-      "login": true,
-      "logout": false
-    },
-    "division": {
-      "access": true
-    },
-    "groupDivision": {
-      "access": true
-    },
-    "workingHour": {
-      "access": true
-    },
-    "contact": {
-      "access": true
-    },
-    "templateBroadcast": {
-      "access": true
-    },
-    "liveChat": {
-      "access": false,
-      "channelSettingChatWidgetSetting": false,
-      "channelSettingComingSoon": false,
-      "settingLivechatHandlerByDivision": false,
-      "settingLivechatHandlerByUserAgent": false,
-      "crossDivisionSetting": false,
-      "sendMessage": false,
-      "createTicketFromLivechat": false,
-      "viewAllContent": false,
-      "viewSpecificContent": false
-    }
-  
-  
-  
-  registerAndResetWithMailTm() {
-      const mailSlurpApiKey =
-        "sk_mFLuOb6wN19FJHQy_HL8T4acs2vp4caUR6vCeVM1p8ay90Xh9jQn6VzmWIjBZLo4qDGJ5cCGadocsXpiw";
-  
-      const mailslurpBaseUrl = "https://api.mailslurp.com";
-      const inbox_id = "24ffd7ef-1529-4f76-945d-9cd97a6463712";
-      // const inbox_id = "24ffd7ef-1529-4f76-945d-9cd97a646371";
-      const mailslurpGetInboundEmailList =
-        mailslurpBaseUrl + "/inboxes/" + inbox_id + "/emails/paginated";
-      const mailslurpCreateNewInbox = mailslurpBaseUrl + "/inboxes/withDefaults";
-      const mailslurpGetInboxList =
-        mailslurpBaseUrl + "/inboxes?size=100&sort=ASC";
-      const getEmailAndRead = mailslurpBaseUrl+"/waitForLatestEmail?inboxId=5afaf504-bfbe-485d-80e2-98604cad3d07&timeout=6000&unreadOnly=true"
-  
-      const firstTextMailAndName = "registermailslurp " + randomText;
-  
-      // const firstTextMailAndName = "registermailtm" + randomNumber;
-      const mailTmGetDomains = "https://api.mail.tm/domains";
-      const mailTmGetAccount = "https://api.mail.tm/accounts";
-      const mailTmGetToken = "https://api.mail.tm/token";
-      const mailTmGetAllMsg = "https://api.mail.tm/messages";
-      const mailTmGetMsgById = "https://api.mail.tm/messages/";
-      const password = "Asdqwe12@";
-      const newpassword = "newasdqwe12";
-  
-      //check inbox is expired?
-      // cy.log(mailslurpGetInboundEmailList);
-      cy.request({
-        method: "GET",
-        url: mailslurpGetInboxList,
-        headers: {
-          "x-api-key": mailSlurpApiKey,
+    "createdAt": "2026-02-09T08:24:02.326Z",
+    "updatedAt": "2026-02-09T08:43:08.377Z",
+    "__v": 0,
+    "disconnectedAt": "2026-02-09T08:43:08.377Z",
+    "autoResponse": {
+        "isActive": {
+            "online": false,
+            "offline": false
         },
-        failOnStatusCode: false,
-      }).then((response) => {
-        const responseStatus = response.status;
-        const inbox = response.body.find((item) => item.expiresAt === null);
-        expect(inbox, "Inbox with expiresAt null").to.exist;
-  
-        const inboxId = inbox.id;
-        const inboxEmail = inbox.emailAddress;
-        cy.wrap(inbox.id).as("inboxId");
-        cy.wrap(inbox.emailAddress).as("inboxEmail");
-  
-        cy.task("log", `Inbox ID: ${inboxId}`);
-        cy.task("log", `Inbox Email: ${inboxEmail}`);
-  
-        cy.wrap(responseStatus).as("responseStatusInboundEmailList");
-        if (responseStatus === 200) {
-          cy.task("log", JSON.stringify(response.body));
-        } else {
-          cy.log("b");
-          cy.request({
-            method: "POST",
-            url: mailslurpCreateNewInbox,
-            headers: {
-              "x-api-key": mailSlurpApiKey,
+        "times": [
+            {
+                "type": "offline",
+                "day": 0,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
             },
-          }).then((responseNewInbox) => {
-            const getNewInboxId = responseNewInbox.body.id;
-  
-            cy.wrap(getNewInboxId).as("newInboxId");
-          });
-        }
-      });
-  
-      // cy.wait(3000);
-      // //register at satuinbox with created temp email
-      cy.log(firstTextMailAndName);
-      const trimFromFullName = firstTextMailAndName.replace(/\s+/g, "");
-      cy.log(trimFromFullName);
-      cy.get("@responseStatusInboundEmailList").then((status) => {
-        if (status === 200) {
-        }
-        cy.wait(2000);
-        cy.visit("/login");
-        elementAuth.hyperlinkRegister().click();
-        elementAuth.regFullname().type(firstTextMailAndName);
-        elementAuth.regUsername().type(trimFromFullName);
-        cy.get("@inboxEmail").then((inboxEmail) => {
-          elementAuth.regEmail().type(inboxEmail);
-        });
-        elementAuth.regPhone().type("628" + randomPhoneNumber);
-        elementAuth.regPassword().clear().type("Asdqwe12@");
-        elementAuth.regPasswordConfirm().clear().type("Asdqwe12@");
-        elementAuth.buttonDaftar()
-          .click();
-        cy.wait(5000);
-        elementAuth
-          .successTitle()
-          .should("be.visible")
-        cy.get("@inboxEmail").then((inboxEmail) => {
-          elementAuth
-            .registeredUserEmail()
-            .should("be.visible")
-            .contains(inboxEmail);
-        })
-        //   elementAuth.resendEmail().should("be.visible");
-        //   // elementAuth.resendEmail_sentState().should('be.visible')
-        //   cy.wait(5000);
-        //   // cy.get("#fullname").type(firstTextMailAndName);
-        //   // cy.get("#email").type(tempMail);
-        //   // cy.contains("button", "Daftar").click();
-      });
-  
-      // //get all message from temp email
-      cy.wait(5000);
-      function waitForEmail(token, maxRetry = 10, delay = 3000) {
-        if (maxRetry === 0)
-          throw new Error("Email belum diterima setelah beberapa kali percobaan");
-  
-        return cy
-          .request({
-            method: "GET",
-            url: mailTmGetAllMsg,
-            headers: {
-              Authorization: `Bearer ${token}`,
+            {
+                "type": "online",
+                "day": 1,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
             },
-            failOnStatusCode: false,
-          })
-          .then((res) => {
-            const messages = res.body["hydra:member"];
-            if (messages && messages.length > 0) {
-              return messages[0].id;
-            } else {
-              cy.wait(delay);
-              return waitForEmail(token, maxRetry - 1, delay);
+            {
+                "type": "online",
+                "day": 2,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 3,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 4,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 5,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "offline",
+                "day": 6,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
             }
-          });
-      }
-  
-      // cy.get("@accessToken").then((token) => {
-      //   cy.task("log", "waiting inbox from satuinbox.....");
-      //   waitForEmail(token).then((messageId) => {
-      //     cy.task("log", "get inbox from satuinbox with ID :" + messageId);
-      //     cy.task("log", "opening inbox.......");
-  
-      //     cy.request({
-      //       method: "GET",
-      //       url: mailTmGetMsgById + messageId,
-      //       headers: {
-      //         Authorization: `Bearer ${token}`,
-      //       },
-      //     }).then((searchLink) => {
-      //       const htmlContent = searchLink.body.html?.[0];
-      //       const regex = /href="([^"]+)"/;
-      //       const match = htmlContent?.match(regex);
-      //       if (match) {
-      //         const verificationUrl = match[1];
-      //         cy.task("log", "access verification link from");
-      //         cy.visit(verificationUrl); // lanjutkan ke form set password
-      //       }
-      //     });
-      //   });
-      // });
-  
-      // //setup username and password
-      // cy.task("log", "setup username, company, password");
-      // cy.wait(2500);
-      // // cy.softAssert(
-      // //   cy.get("#username").type(firstTextMailAndName),
-      // //   "type username"
-      // // );
-      // elementAuth.greetingsToUsers().hardAssert(firstTextMailAndName);
-      // elementAuth.username().type(firstTextMailAndName);
-      // cy.wait(500);
-      // elementAuth.companyName().type(firstTextMailAndName);
-      // // cy.softAssert(
-      // //   cy.get("#company_name").type(firstTextMailAndName),
-      // //   "type company name"
-      // // );
-      // cy.wait(500);
-      // elementAuth.password().type(password);
-      // // cy.softAssert(cy.get("#password").type(password), "type password");
-      // cy.wait(500);
-      // elementAuth.buttonDaftar().click();
-      // // cy.softAssert(cy.registerButton().click(), "click register");
-  
-      // //verify url then login
-      // cy.task("log", "login with new registered username");
-      // cy.wait(1000);
-      // cy.url().should("include", "/login");
-      // cy.viewport(1366, 768);
-      // // cy.get("#keyword").type(firstTextMailAndName);
-      // // cy.get("#password").type(password);
-      // // cy.get(".bg-primary").click();
-      // elementAuth.keyword().type(firstTextMailAndName);
-      // elementAuth.password().type(password);
-      // elementAuth.buttonLogin().click();
-  
-      // //try to reset password
-      // cy.task("log", "do logout then reset password");
-      // cy.wait(1000);
-      // logout();
-      // cy.wait(1000);
-      // cy.get("@tempEmail").then((tempMail) => {
-      //   cy.get("@accessToken").then((token) => {
-      //     //input email for reset password
-      //     cy.softAssert(
-      //       cy
-      //         .get(
-      //           'a[href="/reset-password"] > p.text-sm.font-medium.text-blue-600'
-      //         )
-      //         .click(),
-      //       "click reset password"
-      //     );
-      //     cy.softAssert(cy.get("#email").type(tempMail));
-      //     cy.wait(500);
-      //     cy.softAssert(
-      //       cy.contains("button", "Kirim link pemulihan").click(),
-      //       "klik button Kirim link pemulihan"
-      //     );
-      //     cy.wait(1000);
-      //     //get all message
-      //     // function waitForSecondEmail(token, maxRetry = 10, delay = 3000) {
-      //     function waitForSecondEmail(
-      //       token,
-      //       subjectKeyword,
-      //       maxRetry = 10,
-      //       delay = 3000
-      //     ) {
-      //       if (maxRetry === 0)
-      //         throw new Error(
-      //           "Email belum diterima setelah beberapa kali percobaan"
-      //         );
-  
-      //       return cy
-      //         .request({
-      //           method: "GET",
-      //           url: mailTmGetAllMsg,
-      //           headers: {
-      //             Authorization: `Bearer ${token}`,
-      //           },
-      //           failOnStatusCode: false,
-      //         })
-      //         .then((secondRes) => {
-      //           const secondMessages = secondRes.body["hydra:member"];
-      //           const targetMsg = secondMessages.find((msg) =>
-      //             msg.subject.toLowerCase().includes(subjectKeyword.toLowerCase())
-      //           );
-  
-      //           if (targetMsg) {
-      //             return targetMsg.id;
-      //           } else {
-      //             cy.wait(delay);
-      //             return waitForSecondEmail(
-      //               token,
-      //               subjectKeyword,
-      //               maxRetry - 1,
-      //               delay
-      //             );
-      //           }
-      //         });
-      //     }
-  
-      //     //get seccond message
-      //     cy.task("log", "waiting second inbox from satuinbox.....");
-      //     // waitForSecondEmail(token).then((secondMessages) => {
-      //     waitForSecondEmail(token, "Reset password").then((secondMessages) => {
-      //       cy.task("log", "get inbox from satuinbox with ID :" + secondMessages);
-      //       cy.task("log", "opening inbox.......");
-  
-      //       cy.request({
-      //         method: "GET",
-      //         url: mailTmGetMsgById + secondMessages,
-      //         headers: {
-      //           Authorization: `Bearer ${token}`,
-      //         },
-      //       }).then((searchLink) => {
-      //         const htmlContent = searchLink.body.html?.[0];
-      //         const regex = /href="([^"]+)"/;
-      //         const match = htmlContent?.match(regex);
-      //         if (match) {
-      //           const verificationUrl2 = match[1];
-      //           cy.task(
-      //             "log",
-      //             "access verification link from: " + verificationUrl2
-      //           );
-      //           cy.visit(verificationUrl2); // lanjutkan ke form reset password
-      //         }
-      //       });
-      //     });
-  
-      //     //setup new password
-      //     cy.task("log", "setup new password");
-      //     cy.wait(2000);
-      //     cy.softAssert(
-      //       cy.get("#password").type(newpassword),
-      //       "type new password"
-      //     );
-      //     cy.wait(500);
-      //     cy.softAssert(
-      //       cy.get("#confirmPassword").type(newpassword),
-      //       "type confirm new password"
-      //     );
-      //     cy.wait(500);
-      //     cy.softAssert(
-      //       cy.contains("button", "Konfirmasi").click(),
-      //       "click button konfirmasi"
-      //     );
-      //     cy.wait(500);
-      //     cy.softAssert(
-      //       cy.contains("button", "Buka Halaman Login").click(),
-      //       "click button Buka Halaman Login"
-      //     );
-  
-      //     //cek login with new password
-      //     cy.task("log", "login with new registered username");
-      //     cy.wait(1000);
-      //     cy.url().should("include", "/login");
-      //     cy.viewport(1366, 768);
-      //     elementAuth.keyword().type(firstTextMailAndName);
-      //     elementAuth.password().type(newpassword);
-      //     elementAuth.buttonLogin().click();
-      //     // cy.get("#keyword").type(firstTextMailAndName);
-      //     // cy.get("#password").type(newpassword);
-      //     // cy.get(".bg-primary").click();
-      //   });
-      // });
-  }
-  
-  {
-  "tickets": [
-    {
-      //optional
-      "conversationId": "66f28db6a83f4e1c9b41c7a9", 
-      "messageIds": [
-        "6720d5c8a1b4b91e6c3d44a7",
-        "6720d5c8a1b4b91e6c3d44a8"
-      ],
-      "teamId": "6720d5c8a1b4b91e6c3d44a9",
-      "memberIds": [
-        "6720d5c8a1b4b91e6c3d44a0"
-      ],
-      "accountChannelCanReply": "6720d5c8a1b4b91e6c3d44a1",
-      "primaryMessage": "6720d5c8a1b4b91e6c3d44a1",
-      optional
-      //
-      
-      "ticketTypeId": "66f28db6a83f4e1c9b41c7a9",
-      "title": "Customer Support Request",
-      "description": "Customer needs help with order #12345",
-      "customAttributes": [
-        {
-          "title": "Full Name", //sesuai ticket type
-          "value": "John Doe",
-          "attachment": { //optional
-            "type": "image",
-            "url": "https://cdn.satuinbox.com/files/image.jpg",
-            "filename": "profile-picture.jpg",
-            "mimeType": "image/jpeg",
-            "size": 1024000,
-            "mediaResourceKey": "media_abc123xyz"
-          }
-        }
-      ]
+        ],
+        "timezone": {
+            "code": "GMT",
+            "region": "Asia/Jakarta",
+            "offsetMinute": 420,
+            "formatHour": "+07:00"
+        },
+        "text": {
+            "online": "",
+            "offline": ""
+        },
+        "createdBy": {
+            "_id": "672d927a8526c2b034051a70",
+            "email": "flinctchristian@gmail.com"
+        },
+        "updatedAt": "2026-02-09T08:43:25.768Z"
+    },
+    "agentRotatorDivision": {
+        "text": "Terima kasih telah menghubungi kami! Untuk membantu Anda lebih lanjut, silakan ketik nomor sesuai divisi yang ingin Anda hubungi:\n{agents}"
     }
-  ]
 }
+
+//connected
+{
+    "_id": "698999a283706c6c354a3026",
+    "name": "",
+    "channelId": "6285122638155:6@s.whatsapp.net",
+    "channelType": "whatsapp-unofficial",
+    "isConnected": true,
+    "picture": "",
+    "status": "premium",
+    "label": {
+        "name": "vemme luxe",
+        "phone": "085122638155"
+    },
+    "createdBy": {
+        "_id": "672d927a8526c2b034051a70",
+        "email": "flinctchristian@gmail.com"
+    },
+    "additionalData": {
+        "virtualMachineId": "690dc17cea7d56aaf7f29684"
+    },
+    "createdAt": "2026-02-09T08:24:02.326Z",
+    "updatedAt": "2026-02-09T08:43:26.131Z",
+    "__v": 0,
+    "autoResponse": {
+        "isActive": {
+            "online": false,
+            "offline": false
+        },
+        "times": [
+            {
+                "type": "offline",
+                "day": 0,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 1,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 2,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 3,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 4,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "online",
+                "day": 5,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            },
+            {
+                "type": "offline",
+                "day": 6,
+                "from": {
+                    "hour": 9,
+                    "minute": 0
+                },
+                "to": {
+                    "hour": 17,
+                    "minute": 0
+                }
+            }
+        ],
+        "timezone": {
+            "code": "GMT",
+            "region": "Asia/Jakarta",
+            "offsetMinute": 420,
+            "formatHour": "+07:00"
+        },
+        "text": {
+            "online": "",
+            "offline": ""
+        },
+        "createdBy": {
+            "_id": "672d927a8526c2b034051a70",
+            "email": "flinctchristian@gmail.com"
+        },
+        "updatedAt": "2026-02-09T08:43:28.796Z"
+    },
+    "agentRotatorDivision": {
+        "text": "Terima kasih telah menghubungi kami! Untuk membantu Anda lebih lanjut, silakan ketik nomor sesuai divisi yang ingin Anda hubungi:\n{agents}"
+    }
+}
+
+//get list
+
+https://api.socialchat.id/api/channel?page=1&limit=12&search=&channelTypes[]=whatsapp-unofficial
+{
+    "docs": [
+        {
+            "_id": "698999a283706c6c354a3026",
+            "name": "",
+            "channelId": "6285122638155:6@s.whatsapp.net",
+            "channelType": "whatsapp-unofficial",
+            "isConnected": true,
+            "picture": "",
+            "status": "premium",
+            "label": {
+                "name": "vemme luxe",
+                "phone": "085122638155"
+            },
+            "createdBy": {
+                "_id": "672d927a8526c2b034051a70",
+                "email": "flinctchristian@gmail.com"
+            },
+            "additionalData": {
+                "virtualMachineId": "690dc17cea7d56aaf7f29684"
+            },
+            "createdAt": "2026-02-09T08:24:02.326Z",
+            "updatedAt": "2026-02-09T08:43:26.131Z",
+            "__v": 0,
+            "autoResponse": {
+                "isActive": {
+                    "online": false,
+                    "offline": false
+                },
+                "times": [
+                    {
+                        "type": "offline",
+                        "day": 0,
+                        "from": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "to": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    },
+                    {
+                        "type": "online",
+                        "day": 1,
+                        "from": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "to": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    },
+                    {
+                        "type": "online",
+                        "day": 2,
+                        "from": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "to": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    },
+                    {
+                        "type": "online",
+                        "day": 3,
+                        "from": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "to": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    },
+                    {
+                        "type": "online",
+                        "day": 4,
+                        "from": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "to": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    },
+                    {
+                        "type": "online",
+                        "day": 5,
+                        "from": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "to": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    },
+                    {
+                        "type": "offline",
+                        "day": 6,
+                        "from": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "to": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    }
+                ],
+                "timezone": {
+                    "code": "GMT",
+                    "region": "Asia/Jakarta",
+                    "offsetMinute": 420,
+                    "formatHour": "+07:00"
+                },
+                "text": {
+                    "online": "",
+                    "offline": ""
+                },
+                "createdBy": {
+                    "_id": "672d927a8526c2b034051a70",
+                    "email": "flinctchristian@gmail.com"
+                },
+                "updatedAt": "2026-02-09T08:43:28.914Z"
+            },
+            "rotationAgents": [],
+            "agentRotatorDivision": {
+                "text": "Terima kasih telah menghubungi kami! Untuk membantu Anda lebih lanjut, silakan ketik nomor sesuai divisi yang ingin Anda hubungi:\n{agents}"
+            }
+        }
+    ],
+    "totalDocs": 1,
+    "limit": 12,
+    "totalPages": 1,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": false,
+    "prevPage": null,
+    "nextPage": null
+}
+
+flow check baru
+getAccountChannel=api/accountChannel
+instance=/account-channel/instance (method get)
+instance=/account-channel/instance (method post)
+getTeam=api/team
+
+1. hit getAccountChannel, jika idChannel ditemukan, cek connectionStatus, jika connectionStatus=inactive log sebagai "disconnected account"
+
+2. hit getAccountChannel, jika idChannel ditemukan, cek connectionStatus, jika connectionStatus = active, hit init(method get), jika init status 200 log sebagai "account is active", lalu hit getTeam, jika status 200 bandingkan, jika  accountChannelId dari response = idChannel, log sebagai "account channel active, team is paired"
+
+3. hit getAccountChannel, jika idChannel ditemukan, cek connectionStatus, jika connectionStatus = active, hit init(method get), jika init status 200 log sebagai "account is active", lalu hit getTeam, jika status 200 bandingkan, jika  accountChannelId dari response != idChannel atau idChannel = kosong, log sebagai "account channel active, team not paired, need pairing"
+
+4. hit getAccountChannel, jika idChannel ditemukan, cek connectionStatus, jika connectionStatus = active, hit init(method get), jika init status 500 / 400 log sebagai "need re-init", hit init(method post), status harus 200, lalu hit getTeam, jika status 200 bandingkan, jika  accountChannelId dari response = idChannel, log sebagai "success re-init channel, team is paired"
+
+5. hit getAccountChannel, jika idChannel ditemukan, cek connectionStatus, jika connectionStatus=active, hit init (method get), jika init status 500/400 log sebagai "need re-init", hit init (method post), status harus 200, lalu hit getTeam, jika status 200 bandingkan, jika  accountChannelId dari response != idChannel atau idChannel = kosong, log sebagai "success re-init channel, team not paired, need pairing"
+
+6. hit getAccountChannel, jika idChannel tidak ditemukan log sebagai "no account channel"
+
+//settings
+https://dev-v2.satuinbox.com/settings/organization/general
+
+//general
+https://dev-v2.satuinbox.com/settings/organization/general
+https://dev-v2.satuinbox.com/settings/organization/roles
+https://dev-v2.satuinbox.com/settings/organization/members
+https://dev-v2.satuinbox.com/settings/organization/shift-hours
+https://dev-v2.satuinbox.com/settings/organization/tags
+https://dev-v2.satuinbox.com/settings/organization/change-password
+
+//teamInbox
+https://dev-v2.satuinbox.com/settings/inbox/team-inbox
+https://dev-v2.satuinbox.com/settings/inbox/assignments
+https://dev-v2.satuinbox.com/settings/inbox/macros
+https://dev-v2.satuinbox.com/settings/inbox/tickets
+https://dev-v2.satuinbox.com/settings/inbox/sla
+
+//channel
+https://dev-v2.satuinbox.com/settings/channels/widget
+https://dev-v2.satuinbox.com/settings/channels/whatsapp-web
+https://dev-v2.satuinbox.com/settings/channels/addon
+
+//subscription
+https://dev-v2.satuinbox.com/settings/subscriptions/billing
+
+//dev mode
+https://dev-v2.satuinbox.com/settings/developer/webhook
+https://dev-v2.satuinbox.com/settings/developer/shipping-credentials
+
+//conversation
+https://dev-v2.satuinbox.com/conversation
+
+//ticket
+https://dev-v2.satuinbox.com/ticketing
+
+//broadcast
+https://dev-v2.satuinbox.com/broadcast/messages
+
+//statistics
+https://dev-v2.satuinbox.com/statistic
