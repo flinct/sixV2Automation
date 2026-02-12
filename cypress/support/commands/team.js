@@ -51,12 +51,13 @@ class elementTeam {
       .contains(/Edit Kotak Masuk Tim/i);
   }
 
-  buttonSaveTeamInboc() {
+  buttonSaveTeamInbox() {
     cy.contains("button", "Simpan");
   }
   editTeamInboxTitle() {
     return cy.get("h3").contains(/Kotak Masuk Tim|team-inbox/i);
   }
+
   editChannelTeamInbox() {
     return cy.get("button").contains(/Pilih saluran untuk terhubung/i);
   }
@@ -64,7 +65,14 @@ class elementTeam {
     return cy.get("input[cmdk-input]");
   }
   selectChannelTeamInbox(value) {
-    return cy.get("[cmdk-item]").find("span").contains(value);
+    return cy
+      .get("[cmdk-item]")
+      .find("span")
+      .contains(new RegExp(value, "i"))
+      .parents("[cmdk-item]");
+  }
+  deleteChannelTeamInbox() {
+    return cy.contains("button", /hapus/i).eq(0);
   }
 
   editMemberTeamInbox() {
@@ -77,8 +85,26 @@ class elementTeam {
     return cy
       .get("[cmdk-item]")
       .find("span")
-      .contains(value)
+      .contains(new RegExp(value, "i"))
       .parents("[cmdk-item]");
+    // return cy.contains(/${value});
+  }
+  deleteMemberTeamInbox() {
+    return (
+      cy
+        .contains("button", /Tambah anggota tim ke kotak masuk/i)
+        // return cy.get("button");
+        // .contains(/anggota/i)
+        // .eq(1)
+        .parent()
+        .parent()
+        .find("div")
+        .eq(2)
+        .find("button")
+        .contains(/hapus/i)
+    );
+    // return cy.xpath("//tr[1]/td[3]//button");
+    // return cy.contains(/hapus/i);
   }
 }
 export default new elementTeam();
