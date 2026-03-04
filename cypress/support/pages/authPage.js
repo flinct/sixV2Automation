@@ -8,6 +8,7 @@ import {
 import { log, timeout } from "async";
 import { env_config } from "../01_url_page.js";
 import "cypress-mailslurp";
+import { includes } from "lodash";
 const baseUrl = Cypress.config("baseUrl");
 const loginType = Cypress.env("loginType");
 const randomNumber = Math.floor(10000000 + Math.random() * 10000000);
@@ -70,6 +71,12 @@ class authPage {
   //   }
   //   cy.wait(1000);
   // }
+
+  logout() {
+    elementAuth.logout().click({ force: true });
+    cy.contains(/keluar|logout/i).click();
+    cy.url().should("includes", "/login");
+  }
 
   visitLoginPage() {
     cy.visit(baseUrl + "/login");
@@ -205,6 +212,38 @@ class authPage {
     cy.task("log", "-----SUCCESSFULL LOGIN as SPV------");
   }
   loginAsAgent(overrideLogin) {
+    if (overrideLogin) {
+      Cypress.env("loginType", overrideLogin);
+    }
+
+    const loginBody = this.reGetConfigLogiType();
+
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      this.visitLoginPageV2();
+    } else {
+      this.visitLoginPage();
+    }
+    // cy.wrap(this.loginBody).then((body) => {
+    elementAuth
+      .keyword({
+        timeout: 15000,
+      })
+      .type(loginBody.identifier);
+    elementAuth
+      .password({
+        timeout: 15000,
+      })
+      .type(loginBody.password);
+    elementAuth
+      .buttonLogin({
+        timeout: 15000,
+      })
+      .click();
+    // });
+    cy.url().should("include", `/conversation/your-inbox`);
+    cy.task("log", "-----SUCCESSFULL LOGIN as AGENT------");
+  }
+  loginOverride(overrideLogin) {
     if (overrideLogin) {
       Cypress.env("loginType", overrideLogin);
     }

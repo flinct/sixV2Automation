@@ -14,6 +14,7 @@
     "mochawesome-merge": "^4.4.1",
     "mochawesome-report-generator": "^6.2.0",
     "mongodb": "^6.20.0",
+    "socket.io-client": "^4.8.3",
     "stream-browserify": "^3.0.0",
     "xlsx": "^0.18.5"
   },

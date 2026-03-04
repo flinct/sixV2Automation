@@ -31,6 +31,7 @@ export function env_config(baseUrl) {
     throw new Error(`Unknown baseUrl: ${baseUrl}`);
   }
   return {
+    //--------------API-----------------
     loginUrl: `${base}/auth/login`,
     currentProfile: `${base}/auth/me`,
     getAllNomorWhatsapp: `${base}/open/account-whatsapp?limit=300`, //OPEN API
@@ -64,7 +65,9 @@ export function env_config(baseUrl) {
     getWhatsappWeb: `${base}/account-channel`,
     instance: `${base}/account-channel/instance/`,
     getTeam: `${base}/team/`,
+    //--------------API-----------------
 
+    //--------------PATH-----------------
     visit_user: "/setting/manage-team",
     visit_user_grup: "/setting/manage-group",
     visit_register: "/register",
@@ -74,6 +77,29 @@ export function env_config(baseUrl) {
     visit_ticket: "/ticket",
     visit_liveChat: "/live-chat",
     inbox: "/inbox",
+    //----V2-----
+    visitGeneralSetting: "/settings/organization/general",
+    visitRole: "/settings/organization/roles",
+    visitMembers: "/settings/organization/members",
+    visitShift: "/settings/organization/shift-hours",
+    visitTags: "/settings/organization/tags",
+    visitChangePass: "/settings/organization/change-password",
+    visitTeaminbox: "/settings/inbox/team-inbox",
+    visitAssignment: "/settings/inbox/assignments",
+    visitMacros: "/settings/inbox/macros",
+    visitTicketTypes: "/settings/inbox/tickets",
+    visitSLA: "/settings/inbox/sla",
+    visitWidgetSetting: "/settings/channels/widget",
+    visitWhatsappwebSetting: "/settings/channels/whatsapp-web",
+    visitAddons: "/settings/channels/addon",
+    visitSubscription: "/settings/subscriptions/billing",
+    visitWebhookSetting: "/settings/developer/webhook",
+    visitTrackingSetting: "/settings/developer/shipping-credentials",
+    visitConversation: "/conversation",
+    visitTicket: "/ticketing",
+    visitBroadcast: "/broadcast/messages",
+    visitStatistic: "/statistic",
+    //--------------PATH-----------------
 
     loginBody: { keyword: "goddummyprod", password: "TongTji89" },
     loginBody_GD_dev: { keyword: "goddummy", password: "asdqwe12" },
@@ -157,6 +183,52 @@ export function env_config(baseUrl) {
       password: "5481p#9kKxb?M=!G",
     },
     //-------chickentester--------
+
+    //-------roleValidation--------
+    //dev
+    loginBody_supervisor: {
+      //agent
+      identifier: "pusatadmin10",
+      password: "Password1@",
+    },
+    loginBody_agent: {
+      //agent
+      identifier: "aprilch",
+      password: "Password1@",
+    },
+    loginBody_crm: {
+      //agent
+      identifier: "crmagent01",
+      password: "Password1@",
+    },
+    loginBody_tlc: {
+      //agent
+      identifier: "jbaagent01",
+      password: "Password1@",
+    },
+
+    //prod
+    loginBody_supervisorProd: {
+      //agent
+      identifier: "pusatadmin10",
+      password: "Password1@",
+    },
+    loginBody_agentProd: {
+      //agent
+      identifier: "aprilch",
+      password: "Password1@",
+    },
+    loginBody_crmProd: {
+      //agent
+      identifier: "crmagent01",
+      password: "Password1@",
+    },
+    loginBody_tlcProd: {
+      //agent
+      identifier: "jbaagent01",
+      password: "Password1@",
+    },
+    //-------roleValidation--------
 
     headers: {
       //goddummyprod

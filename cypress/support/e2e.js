@@ -17,6 +17,7 @@
 import "./commands";
 import "cypress-mochawesome-reporter/register";
 import "cypress-file-upload";
+import "./socket";
 const addContext = require("mochawesome/addContext");
 
 // import 'cypress-real-events/support';
@@ -34,7 +35,7 @@ Cypress.on("uncaught:exception", (err, runnable) => {
   // Prevent Cypress from failing the test on this specific error
   if (
     err.message.includes(
-      "ResizeObserver loop completed with undelivered notifications"
+      "ResizeObserver loop completed with undelivered notifications",
     )
   ) {
     return false; // Returning false prevents Cypress from failing the test

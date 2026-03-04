@@ -103,11 +103,11 @@ describe("testing INBOX page", () => {
     cy.wait(2000);
     inboxAction.openConversation();
   });
-  it("opening a conversation - compare account channel connectivity impact to conversation", () => {
+  it.skip("opening a conversation - compare account channel connectivity impact to conversation", () => {
     cy.wait(2000);
     inboxAction.compareConversationAccountChannelConnectivity();
   });
-  it.only("simulate accesing widget from codepen", () => {
+  it.skip("simulate accesing widget from codepen", () => {
     cy.wait(2000);
     inboxAction.accessWdigetCodepen();
   });

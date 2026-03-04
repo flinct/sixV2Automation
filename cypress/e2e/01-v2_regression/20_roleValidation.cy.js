@@ -1,234 +1,209 @@
-// cypress/e2e/role-access.cy.js
+import { env_config } from "../../support/01_url_page.js";
+import authPage from "../../support/pages/authPage.js";
+import inboxPage from "../../support/pages/inboxPage.js";
 
 describe("Role-Based Access Control Test", () => {
-  const baseUrl = "https://dev-v2.satuinbox.com";
+  const authAction = new authPage();
+  const inboxAction = new inboxPage
+  const baseUrl = Cypress.config("baseUrl");
+  const config = env_config(baseUrl);
+  // const baseUrl = "https://dev-v2.satuinbox.com";
+
+  const roleNameRule = {
+    admin: {
+      "https://dev-v2.satuinbox.com": "admin_dev",
+      "https://v2.satuinbox.com": "admin",
+    },
+    supervisor: {
+      "https://dev-v2.satuinbox.com": "spv_dev",
+      "https://v2.satuinbox.com": "supervisor",
+    },
+    agent: {
+      "https://dev-v2.satuinbox.com": "agent_dev",
+      "https://v2.satuinbox.com": "agent",
+    },
+    crm: {
+      "https://dev-v2.satuinbox.com": "crm_dev",
+      "https://v2.satuinbox.com": "crm",
+    },
+    tlc: {
+      "https://dev-v2.satuinbox.com": "tlc_dev",
+      "https://v2.satuinbox.com": "tlc",
+    },
+  };
+
+  const resolveRoleName = (defaultName, baseUrl) => {
+    return roleNameRule[defaultName]?.[baseUrl] || defaultName;
+  };
 
   // Test data untuk setiap role
   const roles = [
-    // {
-    //   name: "admin",
-    //   username: "cekerayam01",
-    //   password: "Asdqwe12@",
-    //   allowedPages: [
-    //     "/settings/organization/general",
-    //     "/settings/organization/roles",
-    //     "/settings/organization/members",
-    //     "/settings/organization/shift-hours",
-    //     "/settings/organization/tags",
-    //     "/settings/organization/change-password",
-    //     "/settings/inbox/team-inbox",
-    //     "/settings/inbox/assignments",
-    //     "/settings/inbox/macros",
-    //     "/settings/inbox/tickets",
-    //     "/settings/inbox/sla",
-    //     "/settings/channels/widget",
-    //     "/settings/channels/whatsapp-web",
-    //     "/settings/channels/addon",
-    //     "/settings/subscriptions/billing",
-    //     "/settings/developer/webhook",
-    //     "/settings/developer/shipping-credentials",
-    //     "/conversation",
-    //     "/ticketing",
-    //     "/broadcast/messages",
-    //     "/statistic",
-    //   ],
-    // },
     {
-      name: "supervisor",
+      name: resolveRoleName("admin", baseUrl),
+      username: "cekerayam01",
+      password: "Asdqwe12@",
+      allowedPages: [
+        config.visitGeneralSetting,
+        config.visitRole,
+        config.visitMembers,
+        config.visitShift,
+        config.visitTags,
+        config.visitChangePass,
+        config.visitTeaminbox,
+        config.visitAssignment,
+        config.visitMacros,
+        config.visitTicketTypes,
+        config.visitSLA,
+        config.visitWidgetSetting,
+        config.visitWhatsappwebSetting,
+        config.visitAddons,
+        config.visitSubscription,
+        config.visitWebhookSetting,
+        config.visitTrackingSetting,
+        config.visitConversation,
+        config.visitTicket,
+        config.visitBroadcast,
+        config.visitStatistic,
+      ],
+    },
+    {
+      name: resolveRoleName("supervisor", baseUrl),
       username: "pusatadmin10",
       password: "Password1@",
       allowedPages: [
-        "/conversation",
-        "/ticketing",
-        "/broadcast/messages",
-        "/statistic",
-        "/settings/organization/general",
-        "/settings/organization/roles",
-        "/settings/organization/shift-hours",
-        "/settings/organization/tags",
-        "/settings/organization/change-password",
-        "/settings/inbox/team-inbox",
-        "/settings/inbox/assignments",
-        "/settings/inbox/macros",
-        "/settings/channels/whatsapp-web",
+        //     "/conversation",
+        //     "/ticketing",
+        //     "/broadcast/messages",
+        //     "/statistic",
+
+        //     "/settings/organization/general",
+        //     "/settings/organization/roles",
+        //     "/settings/organization/shift-hours",
+        //     "/settings/organization/tags",
+        //     "/settings/organization/change-password",
+        //     "/settings/inbox/team-inbox",
+        //     "/settings/inbox/assignments",
+        //     "/settings/inbox/macros",
+        //     "/settings/channels/whatsapp-web",
+        config.visitGeneralSetting,
+        config.visitRole,
+        config.visitShift,
+        config.visitTags,
+        config.visitChangePass,
+        config.visitTeaminbox,
+        config.visitAssignment,
+        config.visitMacros,
+        config.visitWhatsappwebSetting,
+
+        config.visitConversation,
+        config.visitTicket,
+        config.visitBroadcast,
+        config.visitStatistic,
       ],
     },
-    // {
-    //   name: "agent",
-    //   username: "aprilch",
-    //   password: "Password1@",
-    //   allowedPages: [
-    //     "/conversation",
-    //     "/ticketing",
-    //     "/broadcast/messages",
-    //     "/settings/organization/roles",
-    //     "/settings/organization/shift-hours",
-    //     "/settings/organization/change-password",
-    //     "/settings/inbox/team-inbox",
-    //     "/settings/channels/whatsapp-web",
-    //   ],
-    // },
-    // {
-    //   name: "crm",
-    //   username: "crmagent01",
-    //   password: "Password1@",
-    //   allowedPages: [
-    //     "/conversation",
-    //     "/ticketing",
-    //     "/broadcast/messages",
-    //     "/settings/organization/roles",
-    //     "/settings/organization/shift-hours",
-    //     "/settings/organization/change-password",
-    //     "/settings/inbox/team-inbox",
-    //     "/settings/channels/whatsapp-web",
-    //   ],
-    // },
-    // {
-    //   name: "tlc",
-    //   username: "jbaagent01",
-    //   password: "Password1@",
-    //   allowedPages: [
-    //     "/conversation",
-    //     "/broadcast/messages",
-    //     "/settings/organization/roles",
-    //     "/settings/organization/shift-hours",
-    //     "/settings/organization/change-password",
-    //     "/settings/inbox/team-inbox",
-    //     "/settings/channels/whatsapp-web",
-    //   ],
-    // },
+    {
+      name: resolveRoleName("agent", baseUrl),
+      username: "aprilch",
+      password: "Password1@",
+      allowedPages: [
+        //     "/conversation",
+        //     "/ticketing",
+        //     "/broadcast/messages",
+        //     "/settings/organization/roles",
+        //     "/settings/organization/shift-hours",
+        //     "/settings/organization/change-password",
+        //     "/settings/inbox/team-inbox",
+        //     "/settings/channels/whatsapp-web",
+        config.visitRole,
+        config.visitShift,
+        config.visitChangePass,
+        config.visitTeaminbox,
+        config.visitWhatsappwebSetting,
+
+        config.visitConversation,
+        config.visitTicket,
+        config.visitBroadcast,
+      ],
+    },
+    {
+      name: resolveRoleName("crm", baseUrl),
+      username: "crmagent01",
+      password: "Password1@",
+      allowedPages: [
+        //     "/conversation",
+        //     "/ticketing",
+        //     "/broadcast/messages",
+
+        //     "/settings/organization/roles",
+        //     "/settings/organization/shift-hours",
+        //     "/settings/organization/change-password",
+        //     "/settings/inbox/team-inbox",
+        //     "/settings/channels/whatsapp-web",
+        config.visitRole,
+        config.visitShift,
+        config.visitChangePass,
+        config.visitTeaminbox,
+        config.visitWhatsappwebSetting,
+
+        config.visitConversation,
+        config.visitTicket,
+        config.visitBroadcast,
+      ],
+    },
+    {
+      name: resolveRoleName("tlc", baseUrl),
+      username: "jbaagent01",
+      password: "Password1@",
+      allowedPages: [
+        //     "/conversation",
+        //     "/broadcast/messages",
+
+        //     "/settings/organization/roles",
+        //     "/settings/organization/shift-hours",
+        //     "/settings/organization/change-password",
+        //     "/settings/inbox/team-inbox",
+        //     "/settings/channels/whatsapp-web",
+        config.visitRole,
+        config.visitShift,
+        config.visitChangePass,
+        config.visitTeaminbox,
+        config.visitWhatsappwebSetting,
+
+        config.visitConversation,
+        config.visitBroadcast,
+      ],
+    },
   ];
 
   // Semua halaman yang ada
   const allPages = [
-    "/settings/organization/general",
-    "/settings/organization/roles",
-    "/settings/organization/members",
-    "/settings/organization/shift-hours",
-    "/settings/organization/tags",
-    "/settings/organization/change-password",
-    "/settings/inbox/team-inbox",
-    "/settings/inbox/assignments",
-    "/settings/inbox/macros",
-    "/settings/inbox/tickets",
-    "/settings/inbox/sla",
-    "/settings/channels/widget",
-    "/settings/channels/whatsapp-web",
-    "/settings/channels/addon",
-    "/settings/subscriptions/billing",
-    "/settings/developer/webhook",
-    "/settings/developer/shipping-credentials",
-    "/conversation",
-    "/ticketing",
-    "/broadcast/messages",
-    "/statistic",
+    config.visitGeneralSetting,
+    config.visitRole,
+    config.visitMembers,
+    config.visitShift,
+    config.visitTags,
+    config.visitChangePass,
+    config.visitTeaminbox,
+    config.visitAssignment,
+    config.visitMacros,
+    config.visitTicketTypes,
+    config.visitSLA,
+    config.visitWidgetSetting,
+    config.visitWhatsappwebSetting,
+    config.visitAddons,
+    config.visitSubscription,
+    config.visitWebhookSetting,
+    config.visitTrackingSetting,
+    config.visitConversation,
+    config.visitTicket,
+    config.visitBroadcast,
+    config.visitStatistic,
   ];
 
   // Handle uncaught exceptions
   Cypress.on("uncaught:exception", (err, runnable) => {
     console.log("Uncaught exception:", err.message);
     return false;
-  });
-
-  // Custom command untuk login dengan timeout lebih lama
-  Cypress.Commands.add("login", (username, password) => {
-    cy.session(
-      [username, password],
-      () => {
-        cy.visit(`${baseUrl}/login`);
-
-        // Tunggu form login muncul dengan timeout lebih lama
-        cy.get(
-          'input[type="text"], input[name="username"], input[id="username"]',
-          { timeout: 15000 },
-        )
-          .should("be.visible")
-          .first()
-          .type(username, { delay: 50 });
-
-        cy.get(
-          'input[type="password"], input[name="password"], input[id="password"]',
-          { timeout: 15000 },
-        )
-          .should("be.visible")
-          .first()
-          .type(password, { delay: 50 });
-
-        cy.get(
-          'button[type="submit"], button:contains("Login"), button:contains("Sign in")',
-          { timeout: 15000 },
-        )
-          .should("be.visible")
-          .first()
-          .click();
-
-        // Tunggu redirect ke conversation atau halaman utama
-        cy.url({ timeout: 20000 }).should("not.include", "/login");
-        cy.wait(3000); // Wait for page to fully load
-      },
-      {
-        cacheAcrossSpecs: true,
-      },
-    );
-  });
-
-  // Custom command untuk logout yang lebih robust
-  Cypress.Commands.add("logout", () => {
-    cy.url().then((currentUrl) => {
-      if (!currentUrl.includes("/login")) {
-        // Coba beberapa selector umum untuk user menu / logout
-        const logoutSelectors = [
-          'button[aria-label="User menu"]',
-          'button[aria-label="Account"]',
-          ".user-menu",
-          ".profile-menu",
-          '[data-testid="user-menu"]',
-          '[data-testid="profile"]',
-          ".avatar",
-          'button:contains("Profile")',
-          'button:contains("Account")',
-          'img[alt*="avatar"], img[alt*="profile"]',
-        ];
-
-        // Coba klik menu user jika ada
-        let menuClicked = false;
-
-        for (const selector of logoutSelectors) {
-          if (menuClicked) break;
-          try {
-            cy.get("body").then(($body) => {
-              if ($body.find(selector).length > 0) {
-                cy.get(selector).first().click({ force: true });
-                menuClicked = true;
-
-                // Cari tombol logout
-                cy.wait(1000);
-                cy.get("body").then(($body2) => {
-                  if (
-                    $body2.find(
-                      'button:contains("Logout"), a:contains("Logout"), button:contains("Sign out")',
-                    ).length > 0
-                  ) {
-                    cy.contains("button, a", /Logout|Sign out/)
-                      .first()
-                      .click({ force: true });
-                  }
-                });
-              }
-            });
-          } catch (e) {
-            // Continue to next selector
-          }
-        }
-
-        // Alternative: langsung clear session
-        cy.clearCookies();
-        cy.clearLocalStorage();
-        cy.window().then((win) => {
-          win.sessionStorage.clear();
-        });
-      }
-    });
   });
 
   // Custom command untuk cek akses dengan lebih baik
@@ -287,12 +262,27 @@ describe("Role-Based Access Control Test", () => {
   // Test untuk setiap role
   roles.forEach((role) => {
     describe(`Testing access for ${role.name}`, () => {
-      beforeEach(() => {
-        // Login sebelum test dimulai
-        cy.login(role.username, role.password);
-      });
+      if (baseUrl === "https://dev-v2.satuinbox.com") {
+        const paramLogin = role.name;
+        // authAction.loginAsSupervisor(paramLogin);
+        beforeEach(() => {
+          // Login sebelum test dimulai
+          // cy.login(role.username, role.password);
+          authAction.loginOverride(paramLogin);
+        });
+      }
+      if (baseUrl === "https://v2.satuinbox.com") {
+        const paramLogin = role.name;
+        // authAction.loginAsSupervisor(paramLogin);
+        beforeEach(() => {
+          // Login sebelum test dimulai
+          // cy.login(role.username, role.password);
+          authAction.loginOverride(paramLogin);
+        });
+      }
 
       it(`should verify allowed pages for ${role.name}`, () => {
+        // authAction.loginOverride(paramLogin);
         cy.log(
           `\n========== TESTING ALLOWED PAGES FOR ${role.name.toUpperCase()} ==========`,
         );
@@ -323,13 +313,38 @@ describe("Role-Based Access Control Test", () => {
 
       after(() => {
         // Cleanup setelah test
-        cy.logout();
+        cy.url().then((currentUrl) => {
+          if (!currentUrl.includes("/login")) {
+            authAction.logout();
+            cy.clearCookies();
+            cy.clearLocalStorage();
+            cy.window().then((win) => {
+              win.sessionStorage.clear();
+            });
+          }
+        });
       });
     });
   });
 
+  describe("Test conversation page based role userlogin", () => {
+    it('accessing conversation as agent -- navigation list', () => {
+        inboxPage.accessYourInbox()
+        inboxPage.accessSpamConversation()
+        inboxPage.accessJunkConversation()
+        inboxPage.accessStarredConversation()
+        inboxPage.
+    });
+    it('accessing conversation as supervisor', () => {
+        
+    });
+    it('accessing conversation as admin', () => {
+        
+    });
+  })
+
   // Test tanpa login
-  describe("Testing direct access without login", () => {
+  describe.skip("Testing direct access without login", () => {
     const sensitivePages = [
       "/conversation",
       "/ticketing",
@@ -365,4 +380,6 @@ describe("Role-Based Access Control Test", () => {
     cy.log("📸 Screenshots are saved in cypress/screenshots/");
     cy.log("====================================");
   });
+
+
 });

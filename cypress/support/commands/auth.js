@@ -4,6 +4,14 @@ class elementAuth {
     return cy.get('[data-cy="Satuinbox-Logo"]');
   }
 
+  logout() {
+    return cy.get('[data-cy="Sidebar-Navigation"]').find("div").eq(2);
+    // .find('a[href*="/settings/organization/general"]')
+    // .parent()
+    // .find("div")
+    // .eq(1);
+  }
+
   //login element
   //MAIN ELEMENT
   keyword() {
