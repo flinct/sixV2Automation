@@ -1,10 +1,13 @@
 import { io } from "socket.io-client";
+import { env_config } from "../01_url_page.js";
+const baseUrl = Cypress.config("baseUrl");
+const config = env_config(baseUrl);
 
 let socketInstance = null;
 
 Cypress.Commands.add("connectSocket", (token, baseUrl) => {
   return new Cypress.Promise((resolve) => {
-    socketInstance = io(`${baseUrl}conversations`, {
+    socketInstance = io(config.conversationSocket, {
       // socketInstance = io("https://dev-v2-api.satuinbox.com/conversations", {
       // socketInstance = io("https://unwinded-diann-protrusile.ngrok-free.dev/", {
       transports: ["websocket"],
@@ -14,7 +17,7 @@ Cypress.Commands.add("connectSocket", (token, baseUrl) => {
         Origin: "https://dev-v2.satuinbox.com",
       },
     });
-    Cypress.log({ name: "SOCKET URL", message: `${baseUrl}conversations` });
+    Cypress.log({ name: "SOCKET URL", message: `${baseUrl}/conversations` });
 
     socketInstance.on("connect", () => {
       Cypress.log({ name: "SOCKET", message: "Connected" });

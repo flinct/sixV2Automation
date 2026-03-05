@@ -273,7 +273,7 @@ import conversationSocketPage from "../../support/pages/conversationSocketPage.j
 
 describe("Conversation and Socket Test - POM Structure", () => {
   const socketAction = new conversationSocketPage();
-  const iterations = 1; // Change as needed
+  const iterations = 200; // Change as needed
 
   for (let i = 0; i < iterations; i++) {
     it(`should complete full flow for iteration ${i + 1}`, () => {

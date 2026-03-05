@@ -1,3 +1,5 @@
+// import { cli } from "cypress";
+
 export function env_config(baseUrl) {
   // cy.log(baseUrl);
   let base;
@@ -14,11 +16,11 @@ export function env_config(baseUrl) {
     // return base;
   }
   if (baseUrl === "https://dev-v2.satuinbox.com") {
-    base = "https://dev-v2-api.satuinbox.com/api";
+    base = "https://dev-v2-api.satuinbox.com/";
     // return base;
   }
   if (baseUrl === "https://v2.satuinbox.com") {
-    base = "https://v2-api.satuinbox.com/api";
+    base = "https://v2-api.satuinbox.com/";
     // return base;
   }
   if (
@@ -32,39 +34,42 @@ export function env_config(baseUrl) {
   }
   return {
     //--------------API-----------------
-    loginUrl: `${base}/auth/login`,
-    currentProfile: `${base}/auth/me`,
+    loginUrl: `${base}api/auth/login`,
+    currentProfile: `${base}api/auth/me`,
     getAllNomorWhatsapp: `${base}/open/account-whatsapp?limit=300`, //OPEN API
     getAllNomorWhatsapp_active: `${base}/open/account-whatsapp?statusNumberWhatsapp=active&limit=300`, //OPEN API //with active filter
     openAPI_broadcast: `${base}/open/broadcast?accountNumberWhatsapp=`,
-    whatsappUrl: `${base}/account-whatsapp?limit=9000`,
-    whatsappUrl_filterJabodetabek: `${base}/account-whatsapp?accountStatus=used&page=1&limit=999&populate=division.agents&statusNumberWhatsapp=active&division=`, // for search active account without filtering
-    whatsappUrl_filterJabodetabek2: `${base}/account-whatsapp?accountStatus=used&page=1&limit=999&populate=division.agents&division=`, //without statusNumberWhatsapp=active
-    whatsappUrl_filterJabodetabek3: `${base}/account-whatsapp?page=1&limit=999&populate=division.agents&division=`, //without statusNumberWhatsapp=active accountStatus=used
-    sendMessageUrl: `${base}/message/text?key=`,
+    whatsappUrl: `${base}api/account-whatsapp?limit=9000`,
+    whatsappUrl_filterJabodetabek: `${base}api/account-whatsapp?accountStatus=used&page=1&limit=999&populate=division.agents&statusNumberWhatsapp=active&division=`, // for search active account without filtering
+    whatsappUrl_filterJabodetabek2: `${base}api/account-whatsapp?accountStatus=used&page=1&limit=999&populate=division.agents&division=`, //without statusNumberWhatsapp=active
+    whatsappUrl_filterJabodetabek3: `${base}api/account-whatsapp?page=1&limit=999&populate=division.agents&division=`, //without statusNumberWhatsapp=active accountStatus=used
+    sendMessageUrl: `${base}api/message/text?key=`,
     sendBroadcastUrl: `${base}/open/broadcast?account_number_whatsapp=`,
-    getAll_Inbox: `${base}/inbox/`,
-    createTicketing: `${base}/ticketing`,
+    getAll_Inbox: `${base}api/inbox/`,
+    createTicketing: `${base}api/ticketing`,
     openAPI_createTicketing: `${base}/open/ticketing`,
     openAPI_createBULKTicketing: `${base}/open/ticketing/bulk`,
     instanceInfo: `${base}/open/instance/info?key=`,
     instanceInfoLocal: `${base}/instance/info?key=`,
     initInstance: `${base}/open/whatsapp/init?force=true&whatsappNumber=`,
     initInstanceLocal: `${base}/whatsapp/init?force=true&whatsappNumber=`,
-    getAllDivision: `${base}/division?sortBy=name_division:asc&limit=999&populate=agents  `,
-    privacyPolicy: `${base}/privacy-policy`,
-    termOfUse: `${base}/term-of-use`,
-    platform: `${base}/platform`,
-    channel: `${base}/channel`,
-    channelById: `${base}/channel/`,
-    channelInvalidValueParam: `${base}/channel?limit=abc`,
-    channelInvalidInputParam: `${base}/channel?asdqw12abc`,
+    getAllDivision: `${base}api/division?sortBy=name_division:asc&limit=999&populate=agents  `,
+    privacyPolicy: `${base}api/privacy-policy`,
+    termOfUse: `${base}api/term-of-use`,
+    platform: `${base}api/platform`,
+    channel: `${base}api/channel`,
+    channelById: `${base}api/channel/`,
+    channelInvalidValueParam: `${base}api/channel?limit=abc`,
+    channelInvalidInputParam: `${base}api/channel?asdqw12abc`,
     // approveOnboarding: `${base}api/company/${companyId}/approve`,
-    approveOnboarding: (companyId) => `${base}/company/${companyId}/approve`,
-    getAccountChannel: `${base}/account-channel`,
-    getWhatsappWeb: `${base}/account-channel`,
-    instance: `${base}/account-channel/instance/`,
-    getTeam: `${base}/team/`,
+    approveOnboarding: (companyId) => `${base}api/company/${companyId}/approve`,
+    getAccountChannel: `${base}api/account-channel`,
+    getWhatsappWeb: `${base}api/account-channel`,
+    instance: `${base}api/account-channel/instance/`,
+    getTeam: `${base}api/team/`,
+    clientContact: `${base}open-api/client-contact`,
+    submitTopic: `${base}open-api/conversation/submit/topic`,
+    conversationSocket: `${base}conversations`,
     //--------------API-----------------
 
     //--------------PATH-----------------

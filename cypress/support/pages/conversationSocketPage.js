@@ -12,20 +12,18 @@ const baseUrl = Cypress.config("baseUrl");
 // const baseUrl = "https://unwinded-diann-protrusile.ngrok-free.dev/"; // local alfaz;
 const loginType = Cypress.env("loginType");
 
-// const config = env_config(baseUrl);
+const config = env_config(baseUrl);
 
 // support/pages/conversationSocketPage.js
 class conversationSocketPage {
   constructor() {
-    // Menggunakan baseUrl dari konfigurasi Cypress, fallback ke default jika perlu
-    this.baseUrl =
-      Cypress.config("baseUrl") || "https://dev-v2-api.satuinbox.com/";
+    this.baseUrl = Cypress.config("baseUrl");
     this.config = this.resolveEnvironmentConfig(this.baseUrl);
   }
 
   // Helper: Menentukan konfigurasi berdasarkan environment
-  resolveEnvironmentConfig(url) {
-    if (url.includes("ngrok-free.dev")) {
+  resolveEnvironmentConfig(baseUrl) {
+    if (baseUrl.includes("ngrok-free.dev")) {
       return {
         channelId: "694222d0c553d64073737291",
         signatureKey: "sk_mi83pedn_PmN_rMg_OpaV0ecMFtfheZZXoLcdf8N7",
@@ -37,7 +35,9 @@ class conversationSocketPage {
           },
         ],
       };
-    } else if (url.includes("dev-v2-api.satuinbox.com")) {
+    }
+
+    if (baseUrl.includes("dev-v2.satuinbox.com")) {
       return {
         channelId: "692fe8eaaff05e8a1623e0d3",
         signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
@@ -49,9 +49,9 @@ class conversationSocketPage {
           { id: "6964ab6929de985a0fe73e48", topic: "kipas angin" },
         ],
       };
-    } else {
-      throw new Error("Unknown baseUrl – cannot determine environment");
     }
+
+    throw new Error(`Unknown baseUrl: ${baseUrl}`);
   }
 
   // Helper: Generate Random Data
@@ -203,7 +203,7 @@ class conversationSocketPage {
   createClientContact(guestName, referenceId) {
     return cy.request({
       method: "POST",
-      url: `${this.baseUrl}open-api/client-contact`,
+      url: config.clientContact,
       headers: { "x-signature-key": this.config.signatureKey },
       body: {
         channelId: this.config.channelId,
@@ -223,7 +223,7 @@ class conversationSocketPage {
   submitTopic(clientContactId, accountChannelId, topicName) {
     return cy.request({
       method: "POST",
-      url: `${this.baseUrl}open-api/conversation/submit/topic`,
+      url: config.submitTopic,
       headers: { "x-signature-key": this.config.signatureKey },
       body: {
         accountChannelId: accountChannelId,
@@ -267,13 +267,14 @@ class conversationSocketPage {
       (response) => {
         expect(response.status).to.be.oneOf([200, 201]);
         const clientContactId = response.body.id;
-        cy.wait(2000);
+        cy.log(JSON.stringify(response.body));
+        cy.wait(200);
 
         this.submitTopic(clientContactId, accountChannelId, topicName).then(
           (resp2) => {
             expect(resp2.status).to.be.oneOf([200, 201]);
             cy.log(`Iteration ${iterationIndex + 1}: submit/topic successful`);
-            cy.wait(2000);
+            cy.wait(200);
 
             // 4. Socket Interactions using Custom Commands
             cy.connectSocket(this.config.signatureKey, this.baseUrl);
