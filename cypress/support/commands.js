@@ -27,6 +27,7 @@ import "./commands/ticketing";
 import "./commands/broadcast";
 import "./commands/termAndPolicy";
 import "./commands/notification";
+import "./commands/socket";
 
 // // Versi untuk chaining setelah cy.get()
 let successLogs = [];
@@ -47,14 +48,14 @@ Cypress.Commands.add(
       } catch (error) {
         cy.task(
           "log",
-          `❌ Failed: ${message || expectedText} - ${error.message}`
+          `❌ Failed: ${message || expectedText} - ${error.message}`,
         );
         failedLogs.push(
-          `❌ Failed: ${message || expectedText} - ${error.message}`
+          `❌ Failed: ${message || expectedText} - ${error.message}`,
         );
       }
     });
-  }
+  },
 );
 
 // versi hardSoftAssert → stop test kalau gagal
@@ -137,7 +138,7 @@ Cypress.Commands.add(
 
     // Start the recursive scroll
     scrollAndCheck();
-  }
+  },
 );
 
 Cypress.Commands.add("error", (message) => {
@@ -179,7 +180,7 @@ Cypress.Commands.add("dropdown_content_container_emptyState", () => {
 Cypress.Commands.add("combo_filter", () => {
   // cy.get('[data-cy="dropdown-content"]');
   cy.xpath(
-    "/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/button[1]"
+    "/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/button[1]",
   );
 });
 
@@ -201,7 +202,7 @@ Cypress.Commands.add("contact_head_label", () => {
 });
 Cypress.Commands.add("contact_sub_label", () => {
   cy.xpath(
-    "/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[1]/h3[1]/p[1]"
+    "/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[1]/h3[1]/p[1]",
   );
 });
 Cypress.Commands.add("contact_tab_contact", () => {
@@ -342,7 +343,7 @@ Cypress.Commands.add("modalAtur_Role_desc", () => {
     .filter(":visible")
     .find("div")
     .contains(
-      "Tetapkan role pengguna sesuai kebutuhan. Pastikan setiap anggota memiliki akses yang tepat."
+      "Tetapkan role pengguna sesuai kebutuhan. Pastikan setiap anggota memiliki akses yang tepat.",
     );
 });
 Cypress.Commands.add("modalAtur_Divisi_desc", () => {
@@ -350,7 +351,7 @@ Cypress.Commands.add("modalAtur_Divisi_desc", () => {
     .filter(":visible")
     .find("div")
     .contains(
-      "Anggota grup diberikan izin, batasan, dan akses produk yang sama."
+      "Anggota grup diberikan izin, batasan, dan akses produk yang sama.",
     );
 });
 Cypress.Commands.add("modalAturRole_selectRole", () => {
@@ -414,7 +415,7 @@ Cypress.Commands.add("deleteModalTitle", () => {
 });
 Cypress.Commands.add("deleteModalDescription", () => {
   cy.get('div[role="dialog"][data-state="open"] p').contains(
-    "Apakah anda yakin untuk menghapus Akun Anggota ini?"
+    "Apakah anda yakin untuk menghapus Akun Anggota ini?",
   );
 });
 Cypress.Commands.add("deleteModalMemberName", () => {
@@ -434,13 +435,13 @@ Cypress.Commands.add("deleteModalDeleteButton", () => {
 });
 Cypress.Commands.add("deleteModalCloseButton", () => {
   cy.get(
-    'div[role="dialog"][data-state="open"] button[data-cy="close-modal-btn"]'
+    'div[role="dialog"][data-state="open"] button[data-cy="close-modal-btn"]',
   );
 });
 
 Cypress.Commands.add("manageTeam_modal", () => {
   cy.get('div[role="dialog"][data-state="open"][tabindex="-1"]').contains(
-    "Tambah Anggota" //add child user
+    "Tambah Anggota", //add child user
   );
 });
 Cypress.Commands.add("manageTeam_TextboxFullname", () => {
@@ -488,7 +489,7 @@ Cypress.Commands.add("userDIvisiDataList3", () => {
 });
 Cypress.Commands.add("paginationButton_10", () => {
   cy.get(
-    'button[role="combobox"][data-state="closed"][aria-controls^="radix-"]'
+    'button[role="combobox"][data-state="closed"][aria-controls^="radix-"]',
   ).contains("10");
 });
 Cypress.Commands.add("popperContentWrapper", () => {
@@ -512,32 +513,32 @@ Cypress.Commands.add("passwordOnAddUserLogin", () => {
 });
 Cypress.Commands.add("roleOnAddUserLogin", () => {
   cy.get(
-    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(5) > button'
+    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(5) > button',
   );
 });
 Cypress.Commands.add("comboboxPilihDivisiOnAddUserLogin", () => {
   cy.get(
-    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(6) > div > button.inline-flex.items-center.whitespace-nowrap.rounded-md.text-sm.font-medium.ring-offset-background.transition-colors.focus-visible\\:outline-none.focus-visible\\:ring-2.focus-visible\\:ring-ring.focus-visible\\:ring-offset-2.disabled\\:pointer-events-none.disabled\\:opacity-100.disabled\\:bg-gray-200.disabled\\:text-gray-400.border.border-input.bg-background.hover\\:bg-accent.hover\\:text-accent-foreground.h-10.px-4.py-2.w-full.justify-between.truncate.rounded-br-none.rounded-tr-none.border-r-0'
+    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(6) > div > button.inline-flex.items-center.whitespace-nowrap.rounded-md.text-sm.font-medium.ring-offset-background.transition-colors.focus-visible\\:outline-none.focus-visible\\:ring-2.focus-visible\\:ring-ring.focus-visible\\:ring-offset-2.disabled\\:pointer-events-none.disabled\\:opacity-100.disabled\\:bg-gray-200.disabled\\:text-gray-400.border.border-input.bg-background.hover\\:bg-accent.hover\\:text-accent-foreground.h-10.px-4.py-2.w-full.justify-between.truncate.rounded-br-none.rounded-tr-none.border-r-0',
   );
 });
 Cypress.Commands.add("comboboxPilihDivisiOnHalamanKelolaTim", () => {
   cy.get(
-    "body > main > main > section > div.custom-scrollbar.flex-1.overflow-y-auto > div > div.p-8.pt-0.-mt-3 > div.flex.items-center.justify-between > div.flex.items-center.gap-3 > div.flex.w-full.items-center > button"
+    "body > main > main > section > div.custom-scrollbar.flex-1.overflow-y-auto > div > div.p-8.pt-0.-mt-3 > div.flex.items-center.justify-between > div.flex.items-center.gap-3 > div.flex.w-full.items-center > button",
   );
 });
 Cypress.Commands.add("searchOnHalamanKelolaTim", () => {
   cy.get(
-    "body > main > main > section > div.custom-scrollbar.flex-1.overflow-y-auto > div > div.p-8.pt-0.-mt-3 > div.flex.items-center.justify-between > div.flex.items-center.gap-3 > div.relative.flex.items-center > input"
+    "body > main > main > section > div.custom-scrollbar.flex-1.overflow-y-auto > div > div.p-8.pt-0.-mt-3 > div.flex.items-center.justify-between > div.flex.items-center.gap-3 > div.relative.flex.items-center > input",
   );
 });
 Cypress.Commands.add("editButtonOnHalamanKelolaTim", () => {
   cy.xpath(
-    '/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[6]/div[1]/button[1]/*[name()="svg"][1]'
+    '/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[6]/div[1]/button[1]/*[name()="svg"][1]',
   );
 });
 Cypress.Commands.add("roleOnEditUserLogin", () => {
   cy.get(
-    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(5) > button'
+    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(5) > button',
   );
 });
 Cypress.Commands.add("backButton_inDetail", () => {
@@ -555,7 +556,7 @@ Cypress.Commands.add("profileCard", () => {
 });
 Cypress.Commands.add("profileName", () => cy.get("div h3").eq(0));
 Cypress.Commands.add("profileRole", () =>
-  cy.get("div.inline-flex.bg-blue-100")
+  cy.get("div.inline-flex.bg-blue-100"),
 );
 Cypress.Commands.add("profileEmail", () => cy.get("div h3").eq(1));
 Cypress.Commands.add("profileDivision", () => cy.get("div h3").eq(2));
@@ -566,37 +567,37 @@ Cypress.Commands.add("broadcastCMS", () => cy.contains("div", "Broadcast"));
 Cypress.Commands.add("ticketCMS", () => cy.contains("div", "Ticketing"));
 Cypress.Commands.add("groupInboxCMS", () => cy.contains("div", "Group Inbox"));
 Cypress.Commands.add("templatePesanCMS", () =>
-  cy.contains("div", "Template Pesan")
+  cy.contains("div", "Template Pesan"),
 );
 Cypress.Commands.add("akunWhatsappCMS", () =>
-  cy.contains("div", "Akun Whatsapp")
+  cy.contains("div", "Akun Whatsapp"),
 );
 Cypress.Commands.add("divisionCMS", () => cy.contains("div", "Division"));
 Cypress.Commands.add("kelolaGroupCMS", () =>
-  cy.contains("div", "Kelola Group")
+  cy.contains("div", "Kelola Group"),
 );
 Cypress.Commands.add("jamCMS", () => cy.contains("div", "Jam Kerja"));
 Cypress.Commands.add("contactCMS", () => cy.contains("div", "Contact"));
 Cypress.Commands.add("templateBroadcastCMS", () =>
-  cy.contains("div", "Template Broadcast")
+  cy.contains("div", "Template Broadcast"),
 );
 Cypress.Commands.add("moreOpt_detailUser", () =>
   cy.xpath(
-    `/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[1]/button[1]/button[1]/*[name()='svg'][1]`
-  )
+    `/html[1]/body[1]/main[1]/main[1]/section[1]/div[2]/div[1]/div[1]/button[1]/button[1]/*[name()='svg'][1]`,
+  ),
 );
 Cypress.Commands.add("ubahRole_detailUser", () =>
-  cy.xpath(`/html[1]/body[1]/div[1]/div[1]/button[1]`)
+  cy.xpath(`/html[1]/body[1]/div[1]/div[1]/button[1]`),
 );
 Cypress.Commands.add("ubahDivisi_detailUser", () =>
-  cy.xpath(`/html[1]/body[1]/div[1]/div[1]/button[2]`)
+  cy.xpath(`/html[1]/body[1]/div[1]/div[1]/button[2]`),
 );
 Cypress.Commands.add("deleteUser_detailUser", () => cy.xpath(``));
 
 //AKUN WHATSAPP
 Cypress.Commands.add("roleOnEditUserLogin", () => {
   cy.get(
-    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(5) > button'
+    '[id^="radix-"] > div.custom-scrollbar.max-h-\\[calc\\(100vh-130px\\)\\].overflow-y-auto.px-7 > form > div:nth-child(5) > button',
   );
 });
 Cypress.Commands.add("statusAkunWhatsapp", () => {
@@ -636,7 +637,7 @@ Cypress.Commands.add("empty-state", () => {
 Cypress.Commands.add("searchbarInbox_2_0", () => {
   // cy.get('');
   cy.xpath(
-    "/html[1]/body[1]/main[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/input[1]"
+    "/html[1]/body[1]/main[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/input[1]",
   );
 });
 Cypress.Commands.add("inbox_tanggal", () => {

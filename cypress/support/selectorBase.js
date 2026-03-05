@@ -1,5 +1,5 @@
 function getHeaderByLoginType(config, baseUrl, loginType) {
-  if (baseUrl === "https://app.satuinbox.com") {
+  if (baseUrl === "https://unwinded-diann-protrusile.ngrok-free.dev/") {
     if (loginType === "goddummyprod") return config.headers;
     if (loginType === "testing270520252")
       return config.headers_testing270520252;
@@ -9,22 +9,6 @@ function getHeaderByLoginType(config, baseUrl, loginType) {
     if (loginType === "chickentester") return config.headers_CT;
   }
 
-  if (baseUrl === "https://staging.satuinbox.com") {
-    if (loginType === "chickentester") return config.headers_CT_staging;
-    if (loginType === "goddevsa1") return config.headers_GD;
-    if (loginType === "goddummy") return config.headers_GD;
-    if (loginType === "messagelogsatu") return config.headers_ms1;
-    if (loginType === "messagelogdua") return config.headers_ms2;
-    if (loginType === "goddumstag") return config.headers_goddumstag;
-  }
-
-  if (baseUrl === "https://dev.satuinbox.com") {
-    if (loginType === "chickentester") return config.headers_CT;
-    if (loginType === "goddevsa1") return config.headers_GD;
-    if (loginType === "goddummy") return config.headers_GD;
-    if (loginType === "messagelogsatu") return config.headers_ms1;
-    if (loginType === "messagelogdua") return config.headers_ms2;
-  }
   if (baseUrl === "https://dev-v2.satuinbox.com") {
     if (loginType === "chickentester") return config.loginBody_CT2;
     if (loginType === "cekerayam01") return config.loginBody_cekerayam01;
@@ -52,7 +36,7 @@ function getHeaderByLoginType(config, baseUrl, loginType) {
 }
 
 function getLoginBodyByLoginType(config, baseUrl, loginType) {
-  if (baseUrl === "https://app.satuinbox.com") {
+  if (baseUrl === "https://unwinded-diann-protrusile.ngrok-free.dev/") {
     if (loginType === "goddummyprod") return config.loginBody;
     if (loginType === "testing270520252")
       return config.loginBody_testing270520252;
@@ -63,23 +47,6 @@ function getLoginBodyByLoginType(config, baseUrl, loginType) {
     if (loginType === "chickentester") return config.headers_CT;
   }
 
-  if (baseUrl === "https://staging.satuinbox.com") {
-    if (loginType === "chickentester") return config.loginBody_CT;
-    if (loginType === "goddevsa1") return config.loginBody_SAP;
-    if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
-    if (loginType === "goddummy") return config.loginBody_GD_dev;
-    if (loginType === "messagelogdua") return config.loginBody_ms2;
-    if (loginType === "goddumstag") return config.loginBody_goddumstag;
-  }
-
-  if (baseUrl === "https://dev.satuinbox.com") {
-    if (loginType === "chickentester") return config.loginBody_CT;
-    if (loginType === "goddevsa1") return config.loginBody_SAP;
-    if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
-    if (loginType === "goddummy") return config.loginBody_GD_dev;
-    if (loginType === "messagelogdua") return config.loginBody_ms2;
-    if (loginType === "spongebobkotak") return config.loginBody_bikini;
-  }
   if (baseUrl === "https://dev-v2.satuinbox.com") {
     if (loginType === "chickentester") return config.loginBody_CT2;
     if (loginType === "cekerayam01") return config.loginBody_cekerayam01;

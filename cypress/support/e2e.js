@@ -17,7 +17,6 @@
 import "./commands";
 import "cypress-mochawesome-reporter/register";
 import "cypress-file-upload";
-import "./socket";
 const addContext = require("mochawesome/addContext");
 
 // import 'cypress-real-events/support';

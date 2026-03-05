@@ -1,0 +1,218 @@
+{
+  "success_paired": [
+    {
+      "tlc": "lop",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB LOP"
+    },
+    {
+      "tlc": "jog",
+      "accountChannelStatus": "found",
+      "connectionStatus": "suspended",
+      "initStatus": "re-init successfully",
+      "teamStatus": "paired",
+      "finalStatus": "success re-init channel, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB JOG"
+    },
+    {
+      "tlc": "lka",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB LKA"
+    },
+    {
+      "tlc": "soc",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB SOC"
+    },
+    {
+      "tlc": "pkl",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB PKL"
+    },
+    {
+      "tlc": "bru",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB BRU"
+    },
+    {
+      "tlc": "dpk",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB DPK"
+    },
+    {
+      "tlc": "tub",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "SUB HUB TUB"
+    },
+    {
+      "tlc": "bpn",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB BPN"
+    },
+    {
+      "tlc": "ppu",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB PPU"
+    },
+    {
+      "tlc": "jbg",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB JBG"
+    },
+    {
+      "tlc": "dps",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB DPS"
+    },
+    {
+      "tlc": "kdi",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB KDI"
+    },
+    {
+      "tlc": "msh",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "paired",
+      "finalStatus": "account channel active, team is paired",
+      "category": "success_paired",
+      "teamName": "HUB MSH"
+    }
+  ],
+  "need_pairing": [
+    {
+      "tlc": "tli",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "not paired",
+      "finalStatus": "account channel active, team not paired, need pairing",
+      "category": "need_pairing",
+      "teamName": "HUB TLI"
+    },
+    {
+      "tlc": "tnb",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "not paired",
+      "finalStatus": "account channel active, team not paired, need pairing",
+      "category": "need_pairing",
+      "teamName": "HUB TNB"
+    },
+    {
+      "tlc": "kdr",
+      "accountChannelStatus": "found",
+      "connectionStatus": "active",
+      "initStatus": "active",
+      "teamStatus": "not paired",
+      "finalStatus": "account channel active, team not paired, need pairing",
+      "category": "need_pairing",
+      "teamName": "HUB KDR"
+    }
+  ],
+  "disconnected": [
+    {
+      "tlc": "lbj",
+      "accountChannelStatus": "found",
+      "connectionStatus": "inactive",
+      "initStatus": "",
+      "teamStatus": "",
+      "finalStatus": "disconnected account",
+      "category": "disconnected"
+    }
+  ],
+  "not_found": [
+    {
+      "tlc": "bej",
+      "accountChannelStatus": "not found",
+      "connectionStatus": "unknown",
+      "initStatus": "",
+      "teamStatus": "",
+      "finalStatus": "no account channel",
+      "category": "not_found"
+    },
+    {
+      "tlc": "ksr",
+      "accountChannelStatus": "not found",
+      "connectionStatus": "unknown",
+      "initStatus": "",
+      "teamStatus": "",
+      "finalStatus": "no account channel",
+      "category": "not_found"
+    }
+  ],
+  "team_not_found": [],
+  "errors": [],
+  "summary": {
+    "total": 20,
+    "success_paired": 14,
+    "need_pairing": 3,
+    "disconnected": 1,
+    "not_found": 2,
+    "team_not_found": 0,
+    "errors": 0
+  }
+}

@@ -1,0 +1,799 @@
+
+        <!DOCTYPE html>
+        <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Channel Instance Flow Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background-color: #f8fafc;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    
+    h1 {
+      color: #2d3748;
+      margin: 0;
+      font-size: 32px;
+    }
+    
+    .subtitle {
+      color: #718096;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-tab {
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: white;
+      border: 2px solid #e2e8f0;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    
+    .filter-tab:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .filter-tab.active {
+      border-color: #4299e1;
+      background: #4299e1;
+      color: white;
+    }
+    
+    .count-badge {
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    
+    .summary-card {
+      padding: 18px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    
+    .summary-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .card-success { border-top: 4px solid #38a169; }
+    .card-warning { border-top: 4px solid #d69e2e; }
+    .card-error { border-top: 4px solid #e53e3e; }
+    .card-info { border-top: 4px solid #3498db; }
+    .card-gray { border-top: 4px solid #95a5a6; }
+    .card-purple { border-top: 4px solid #9b59b6; }
+    
+    .card-value {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 8px 0;
+    }
+    
+    .card-label {
+      font-size: 12px;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    
+    .category-section {
+      margin-bottom: 30px;
+      border: 2px solid;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+    }
+    
+    .category-section.active {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+    
+    .category-header {
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .category-header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #2d3748;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      background: #f7fafc;
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 600;
+      color: #4a5568;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #edf2f7;
+    }
+    
+    tr:hover {
+      background: #f7fafc;
+    }
+    
+    .tlc-name {
+      font-weight: 600;
+      color: #2d3748;
+    }
+    
+    .status-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+    
+    .badge-success, .badge-warning, .badge-error, .badge-notfound, .badge-info {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    
+    .badge-success { background: #c6f6d5; color: #22543d; }
+    .badge-warning { background: #feebc8; color: #744210; }
+    .badge-error { background: #fed7d7; color: #742a2a; }
+    .badge-notfound { background: #f1f5f9; color: #475569; }
+    .badge-info { background: #dbeafe; color: #1e40af; }
+    
+    .status-text {
+      font-weight: 500;
+      color: #4a5568;
+      font-size: 14px;
+    }
+    
+    .details small {
+      color: #718096;
+      font-size: 11px;
+      display: block;
+      margin-top: 4px;
+    }
+    
+    .number {
+      font-weight: 600;
+      color: #718096;
+      text-align: center;
+      width: 50px;
+    }
+    
+    .empty-category {
+      text-align: center;
+      padding: 30px;
+      background: #f7fafc;
+      border-radius: 10px;
+      color: #718096;
+    }
+    
+    .footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+      color: #718096;
+      font-size: 13px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .filter-tabs {
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+      
+      .filter-tab {
+        white-space: nowrap;
+        padding: 8px 15px;
+        font-size: 13px;
+      }
+      
+      th, td {
+        padding: 10px 12px;
+      }
+      
+      .status-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>📊 Channel Instance Flow Report</h1>
+              <div class="subtitle">Laporan berdasarkan 6 flow check yang ditentukan</div>
+            </div>
+            
+            <div class="summary-cards">
+              <div class="summary-card card-success">
+                <div class="card-value">14</div>
+                <div class="card-label">Success Paired</div>
+                <small>Flow 2 & 4</small>
+              </div>
+              <div class="summary-card card-warning">
+                <div class="card-value">3</div>
+                <div class="card-label">Need Pairing</div>
+                <small>Flow 3 & 5</small>
+              </div>
+              <div class="summary-card card-error">
+                <div class="card-value">1</div>
+                <div class="card-label">Disconnected</div>
+                <small>Flow 1</small>
+              </div>
+              <div class="summary-card card-gray">
+                <div class="card-value">2</div>
+                <div class="card-label">Not Found</div>
+                <small>Flow 6</small>
+              </div>
+              <div class="summary-card card-info">
+                <div class="card-value">0</div>
+                <div class="card-label">Team Not Found</div>
+                <small>Team check</small>
+              </div>
+              <div class="summary-card card-purple">
+                <div class="card-value">20</div>
+                <div class="card-label">Total</div>
+                <small>Semua akun</small>
+              </div>
+            </div>
+            
+            <div class="filter-tabs" id="filterTabs">
+              <div class="filter-tab active" data-filter="all">
+                <span>Semua</span>
+                <span class="count-badge" style="background: #4299e1">20</span>
+              </div>
+              <div class="filter-tab" data-filter="success">
+                <span>Success Paired</span>
+                <span class="count-badge" style="background: #38a169">14</span>
+              </div>
+              <div class="filter-tab" data-filter="pairing">
+                <span>Need Pairing</span>
+                <span class="count-badge" style="background: #d69e2e">3</span>
+              </div>
+              <div class="filter-tab" data-filter="disconnected">
+                <span>Disconnected</span>
+                <span class="count-badge" style="background: #e53e3e">1</span>
+              </div>
+              <div class="filter-tab" data-filter="notfound">
+                <span>Not Found</span>
+                <span class="count-badge" style="background: #95a5a6">2</span>
+              </div>
+              <div class="filter-tab" data-filter="team">
+                <span>Team Not Found</span>
+                <span class="count-badge" style="background: #3498db">0</span>
+              </div>
+            </div>
+            
+            <!-- Success Paired Section (Flow 2 & 4) -->
+            
+          <div class="category-section" style="border-color: #38a169">
+            <div class="category-header" style="background: #38a16920">
+              <h3>✅ SUCCESS PAIRED (Flow 2 & 4)</h3>
+              <span class="count-badge" style="background: #38a169">14</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th width="50">#</th>
+                  <th>TLC Name</th>
+                  <th>Status & Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              <tr>
+                <td class="number">1</td>
+                <td class="tlc-name">lop</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB LOP</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">2</td>
+                <td class="tlc-name">jog</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">success re-init channel, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB JOG</small>
+                  <div class="details">
+                    <small>Account: found | Connection: suspended | Init: re-init successfully | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">3</td>
+                <td class="tlc-name">lka</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB LKA</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">4</td>
+                <td class="tlc-name">soc</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB SOC</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">5</td>
+                <td class="tlc-name">pkl</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB PKL</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">6</td>
+                <td class="tlc-name">bru</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB BRU</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">7</td>
+                <td class="tlc-name">dpk</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB DPK</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">8</td>
+                <td class="tlc-name">tub</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: SUB HUB TUB</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">9</td>
+                <td class="tlc-name">bpn</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB BPN</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">10</td>
+                <td class="tlc-name">ppu</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB PPU</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">11</td>
+                <td class="tlc-name">jbg</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB JBG</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">12</td>
+                <td class="tlc-name">dps</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB DPS</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">13</td>
+                <td class="tlc-name">kdi</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB KDI</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">14</td>
+                <td class="tlc-name">msh</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-success">✓ Paired</span>
+                    <span class="status-text">account channel active, team is paired</span>
+                  </div>
+                  <br><small style="color: #38a169">Team: HUB MSH</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        
+            
+            <!-- Need Pairing Section (Flow 3 & 5) -->
+            
+          <div class="category-section" style="border-color: #d69e2e">
+            <div class="category-header" style="background: #d69e2e20">
+              <h3>🔗 NEED PAIRING (Flow 3 & 5)</h3>
+              <span class="count-badge" style="background: #d69e2e">3</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th width="50">#</th>
+                  <th>TLC Name</th>
+                  <th>Status & Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              <tr>
+                <td class="number">1</td>
+                <td class="tlc-name">tli</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-warning">🔗 Need Pairing</span>
+                    <span class="status-text">account channel active, team not paired, need pairing</span>
+                  </div>
+                  <br><small style="color: #d69e2e">Available Team: HUB TLI</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: not paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">2</td>
+                <td class="tlc-name">tnb</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-warning">🔗 Need Pairing</span>
+                    <span class="status-text">account channel active, team not paired, need pairing</span>
+                  </div>
+                  <br><small style="color: #d69e2e">Available Team: HUB TNB</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: not paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">3</td>
+                <td class="tlc-name">kdr</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-warning">🔗 Need Pairing</span>
+                    <span class="status-text">account channel active, team not paired, need pairing</span>
+                  </div>
+                  <br><small style="color: #d69e2e">Available Team: HUB KDR</small>
+                  <div class="details">
+                    <small>Account: found | Connection: active | Init: active | Team: not paired</small>
+                  </div>
+                </td>
+              </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        
+            
+            <!-- Disconnected Section (Flow 1) -->
+            
+          <div class="category-section" style="border-color: #e53e3e">
+            <div class="category-header" style="background: #e53e3e20">
+              <h3>🔌 DISCONNECTED (Flow 1)</h3>
+              <span class="count-badge" style="background: #e53e3e">1</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th width="50">#</th>
+                  <th>TLC Name</th>
+                  <th>Status & Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              <tr>
+                <td class="number">1</td>
+                <td class="tlc-name">lbj</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-error">🔌 Disconnected</span>
+                    <span class="status-text">disconnected account</span>
+                  </div>
+                  
+                  <div class="details">
+                    <small>Account: found | Connection: inactive | Init:  | Team: </small>
+                  </div>
+                </td>
+              </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        
+            
+            <!-- Not Found Section (Flow 6) -->
+            
+          <div class="category-section" style="border-color: #95a5a6">
+            <div class="category-header" style="background: #95a5a620">
+              <h3>❌ NOT FOUND (Flow 6)</h3>
+              <span class="count-badge" style="background: #95a5a6">2</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th width="50">#</th>
+                  <th>TLC Name</th>
+                  <th>Status & Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              <tr>
+                <td class="number">1</td>
+                <td class="tlc-name">bej</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-notfound">❌ Not Found</span>
+                    <span class="status-text">no account channel</span>
+                  </div>
+                  
+                  <div class="details">
+                    <small>Account: not found | Connection: unknown | Init:  | Team: </small>
+                  </div>
+                </td>
+              </tr>
+            
+              <tr>
+                <td class="number">2</td>
+                <td class="tlc-name">ksr</td>
+                <td>
+                  <div class="status-container">
+                    <span class="badge-notfound">❌ Not Found</span>
+                    <span class="status-text">no account channel</span>
+                  </div>
+                  
+                  <div class="details">
+                    <small>Account: not found | Connection: unknown | Init:  | Team: </small>
+                  </div>
+                </td>
+              </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        
+            
+            <!-- Team Not Found Section -->
+            <div class="empty-category">
+                    <h3>👥 TEAM NOT FOUND</h3>
+                    <p>Tidak ada data</p>
+                  </div>
+            
+            
+            
+            <div class="footer">
+              Laporan dihasilkan pada Kamis, 5 Maret 2026 pukul 13.57 • Total 20 akun diproses • Berdasarkan 6 flow check
+            </div>
+          </div>
+          
+          <script>
+            // JavaScript untuk filter tabs
+            document.addEventListener('DOMContentLoaded', function() {
+              const tabs = document.querySelectorAll('.filter-tab');
+              const sections = document.querySelectorAll('.category-section');
+              
+              // Tampilkan semua data secara default
+              sections.forEach(section => {
+                if (!section.classList.contains('empty-category')) {
+                  section.classList.add('active');
+                }
+              });
+              
+              tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                  // Update active tab
+                  tabs.forEach(t => t.classList.remove('active'));
+                  this.classList.add('active');
+                  
+                  const filter = this.getAttribute('data-filter');
+                  
+                  // Tampilkan/sembunyikan section berdasarkan filter
+                  sections.forEach(section => {
+                    section.classList.remove('active');
+                    
+                    if (filter === 'all') {
+                      if (!section.classList.contains('empty-category')) {
+                        section.classList.add('active');
+                      }
+                    } else if (filter === 'success') {
+                      if (section.querySelector('h3')?.textContent.includes('SUCCESS PAIRED')) {
+                        section.classList.add('active');
+                      }
+                    } else if (filter === 'pairing') {
+                      if (section.querySelector('h3')?.textContent.includes('NEED PAIRING')) {
+                        section.classList.add('active');
+                      }
+                    } else if (filter === 'disconnected') {
+                      if (section.querySelector('h3')?.textContent.includes('DISCONNECTED')) {
+                        section.classList.add('active');
+                      }
+                    } else if (filter === 'notfound') {
+                      if (section.querySelector('h3')?.textContent.includes('NOT FOUND')) {
+                        section.classList.add('active');
+                      }
+                    } else if (filter === 'team') {
+                      if (section.querySelector('h3')?.textContent.includes('TEAM NOT FOUND')) {
+                        section.classList.add('active');
+                      }
+                    }
+                  });
+                });
+              });
+            });
+          </script>
+        </body>
+        </html>
+      
