@@ -51,6 +51,20 @@ class conversationSocketPage {
       };
     }
 
+    if (baseUrl.includes("v2.satuinbox.com")) {
+      return {
+        channelId: "692fe8eaaff05e8a1623e0d3",
+        signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
+        accountChannels: [
+          { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
+          { id: "69649c6b905d65859c36f81c", topic: "remote control" },
+          { id: "697845cf1782f1bd889b6bfc", topic: "CS harga" },
+          { id: "6964931c905d65859c36f618", topic: "kipas angin" },
+          { id: "69a9c8c86e7924748d4af383", topic: "Hayoh kumaha" },
+        ],
+      };
+    }
+
     throw new Error(`Unknown baseUrl: ${baseUrl}`);
   }
 
