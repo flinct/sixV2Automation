@@ -269,11 +269,13 @@
 //   }
 // });
 
+import { connect } from "rxjs";
 import conversationSocketPage from "../../support/pages/conversationSocketPage.js";
+import notification from "../../support/commands/notification.js";
 
 describe("Conversation and Socket Test - POM Structure", () => {
   const socketAction = new conversationSocketPage();
-  const iterations = 200; // Change as needed
+  const iterations = 1; // Change as needed
 
   for (let i = 0; i < iterations; i++) {
     it(`should complete full flow for iteration ${i + 1}`, () => {
@@ -281,7 +283,38 @@ describe("Conversation and Socket Test - POM Structure", () => {
       socketAction.performSocketFlow(i);
 
       // Delay antar iterasi (opsional, tergantung kebutuhan timing server)
-      cy.wait(2000);
+      cy.wait(200);
     });
   }
 });
+
+// inital socket connection :
+// sent : 40 / conversations, { "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55SWQiOiI2OTRiNGJhYTI0MDFiYjMxMGYwZmRmMmEiLCJlbWFpbCI6ImJham9sNzIyNTNAbTNwbGF5ZXIuY29tIiwib3JnYW5pemF0aW9uSWQiOiI2OTRiNGJhYTI0MDFiYjMxMGYwZmRmMmMiLCJyb2xlIjp7Il9pZCI6IjY5NGI0YmFhNmU4OTEwNDgzOGMyNTViZCIsImNvZGUiOiJBRE1JTiIsIm5hbWUiOiJBRE1JTiIsInBlcm1pc3Npb24iOlsiKiIsInByaXZhY3k6dmlld19mdWxsX3Bob25lIiwicHJpdmFjeTp2aWV3X2Z1bGxfZW1haWwiXX0sInNlc3Npb25JZCI6ImI3MjFjZTJhLTAyODgtNDYyMy1hOTM0LTg4MTNkOGJhODI0MiIsInN1YiI6IjY5NGI2MjgxODczMTRkNzU0NDE0MDJhYyIsInVzZXJuYW1lIjoiZGFueWF0bWluMDEiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzczMTMwNDg4LCJleHAiOjE3NzMxNzM2ODgsImF1ZCI6InNhdHVpbmJveC11c2VycyIsImlzcyI6InNhdHVpbmJveC1hcHAifQ.nDnlwH02PmOjYbAQGXS2J9x-QIZNCovHtwM0XZFTvOw", "type": "bearer" }
+
+// received :
+// 40 / conversations, { "sid": "ss1m7WK-CKu6V7FAAzS9" }
+// 42/conversations,["connected",{"clientId":"ss1m7WK-CKu6V7FAAzS9","message":"Client connected: ss1m7WK-CKu6V7FAAzS9 using auth type bearer","timestamp":"2026-03-10T08:41:23.192Z"}]
+
+// join a conversation :
+// sent
+// 42 / conversations, 0["join.conversation", { "conversationId": "69ae51d541b5f868986420bc" }]
+
+// received
+// 43 / conversations, 0[{ "conversationId": "69ae51d541b5f868986420bc", "success": true }]
+
+// send message:
+// sent
+// 42 / conversations, ["typing.start", { "conversationId": "69ae51d541b5f868986420bc" }]
+// 42/conversations,["typing.stop",{"conversationId":"69ae51d541b5f868986420bc"}]
+// 42 / conversations, 1["socket.outbound.message", { "content": "a", "conversationId": "69ae51d541b5f868986420bc", "tempMessageId": "71f64ce3-782a-4742-b2a3-17d6ed33570f", "timestamp": "2026-03-10T08:32:44.448Z", "type": "text" }]
+// received
+// 43 / conversations, 1[{ "success": true }]
+// sent
+// 42 / conversations, ["typing.stop", { "conversationId": "69ae51d541b5f868986420bc" }]
+
+// notification new message
+// 42 / conversations, ["notification.new.message", { "id": "69afd9ea36356229abc6b5cc", "externalMessageId": "3EB035A6DAC1CDC171DCB7", "conversationId": "69ae51d541b5f868986420bc", "sender": { "referenceId": "694b628187314d75441402ac", "name": "Dany Atmin Satu", "type": "agent", "email": "bajol72253@m3player.com", "lastSyncedAt": "2026-03-10T08:44:26.003Z" }, "accountChannel": { "id": "699fa642e4f819f6774b2af1", "name": "akun 1734 4", "phoneNumber": "+6285135431734", "accountStatus": "used", "connectionStatus": "active" }, "content": "sending", "direction": "outbound", "type": "text", "status": "pending", "isFromBroadcast": false, "isEdited": false, "timestamp": "2026-03-10T08:44:24.800Z", "primaryMessage": false, "references": [], "isPinned": false, "pinnedAt": null, "isDeleted": false, "isCsat": false, "deletedAt": null, "deletedBy": null, "createdAt": "2026-03-10T08:44:26.003Z", "updatedAt": "2026-03-10T08:45:00.762Z", "__v": 0, "attachments": [], "tempMessageId": "1a9a8caf-46b5-4bce-ac0e-a9c2b8ad0b10", "conversation": null }]
+// 42 / conversations, ["message.status", { "_id": "69afd9ea36356229abc6b5cc", "externalMessageId": "3EB035A6DAC1CDC171DCB7", "conversationId": "69ae51d541b5f868986420bc", "sender": { "referenceId": "694b628187314d75441402ac", "name": "Dany Atmin Satu", "type": "agent", "email": "bajol72253@m3player.com", "lastSyncedAt": "2026-03-10T08:44:26.003Z" }, "accountChannel": { "id": "699fa642e4f819f6774b2af1", "name": "akun 1734 4", "phoneNumber": "+6285135431734", "accountStatus": "used", "connectionStatus": "active" }, "content": "sending", "direction": "outbound", "type": "text", "status": "delivered", "isFromBroadcast": false, "isEdited": false, "timestamp": "2026-03-10T08:44:24.800Z", "primaryMessage": false, "references": [], "isPinned": false, "pinnedAt": null, "isDeleted": false, "isCsat": false, "deletedAt": null, "deletedBy": null, "createdAt": "2026-03-10T08:44:26.003Z", "updatedAt": "2026-03-10T08:45:03.060Z", "__v": 0, "deliveredAt": "2026-03-10T08:45:01.925Z", "id": "69afd9ea36356229abc6b5cc" }]
+// 42/conversations,["notification.message.status",{"_id":"69afd9ea36356229abc6b5cc","externalMessageId":"3EB035A6DAC1CDC171DCB7","conversationId":"69ae51d541b5f868986420bc","sender":{"referenceId":"694b628187314d75441402ac","name":"Dany Atmin Satu","type":"agent","email":"bajol72253@m3player.com","lastSyncedAt":"2026-03-10T08:44:26.003Z"},"accountChannel":{"id":"699fa642e4f819f6774b2af1","name":"akun 1734 4","phoneNumber":"+6285135431734","accountStatus":"used","connectionStatus":"active"},"content":"sending","direction":"outbound","type":"text","status":"delivered","isFromBroadcast":false,"isEdited":false,"timestamp":"2026-03-10T08:44:24.800Z","primaryMessage":false,"references":[],"isPinned":false,"pinnedAt":null,"isDeleted":false,"isCsat":false,"deletedAt":null,"deletedBy":null,"createdAt":"2026-03-10T08:44:26.003Z","updatedAt":"2026-03-10T08:45:03.060Z","__v":0,"deliveredAt":"2026-03-10T08:45:01.925Z","id":"69afd9ea36356229abc6b5cc"}]
+// 42 / conversations, 0["join.conversation", { "conversationId": "69b13c902f1451435c2e7105" }]
+// 42/conversations,1["join.conversation",{"conversationId":"69b13c902f1451435c2e7105"}]

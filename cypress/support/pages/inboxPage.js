@@ -2784,6 +2784,8 @@ class inboxPage {
   accessWdigetCodepen() {
     cy.visit("https://codepen.io/pen/");
   }
+
+  validateAccessConversationTeamAsAgent() {}
 }
 
 function randomQuotes() {

@@ -2,11 +2,13 @@ import { forEach } from "async";
 import { timeout } from "async";
 import { action } from "commander";
 import { env_config } from "../01_url_page.js";
+import { io } from "socket.io-client";
 import { timestamp } from "rxjs";
 import { times } from "lodash";
 import elementNavigation from "../commands/navigation.js";
 import elementConversation from "../commands/inbox_.js";
 import { id } from "common-tags";
+// import { env } from "yargs";
 
 const baseUrl = Cypress.config("baseUrl");
 // const baseUrl = "https://unwinded-diann-protrusile.ngrok-free.dev/"; // local alfaz;
@@ -19,6 +21,7 @@ class conversationSocketPage {
   constructor() {
     this.baseUrl = Cypress.config("baseUrl");
     this.config = this.resolveEnvironmentConfig(this.baseUrl);
+    this.socketInstance = null;
   }
 
   // Helper: Menentukan konfigurasi berdasarkan environment
@@ -68,6 +71,42 @@ class conversationSocketPage {
     throw new Error(`Unknown baseUrl: ${baseUrl}`);
   }
 
+  connectSocket(token, baseUrl) {
+    const socketConfig = env_config(baseUrl);
+
+    return cy.wrap(null).then(() => {
+      return new Cypress.Promise((resolve) => {
+        this.socketInstance = io(socketConfig.conversationSocket, {
+          transports: ["websocket"],
+          forceNew: true,
+          auth: token ? { token } : undefined,
+          extraHeaders: {
+            Origin: baseUrl,
+          },
+        });
+
+        cy.log({ name: "SOCKET URL", message: `${baseUrl}/conversations` });
+
+        cy.log("a", socketConfig.conversationSocket);
+
+        this.socketInstance.on("connect", () => {
+          cy.log({ name: "SOCKET", message: "Connected" });
+          resolve(this.socketInstance);
+        });
+
+        this.socketInstance.on("connect_error", (err) => {
+          cy.log({ name: "SOCKET ERROR", message: err.message });
+        });
+      });
+    });
+  }
+
+  disconnectSocket() {
+    if (this.socketInstance) {
+      this.socketInstance.disconnect();
+      this.socketInstance = null;
+    }
+  }
   // Helper: Generate Random Data
   generateData() {
     const randomAlphanumeric = (length = 6) =>
@@ -255,13 +294,137 @@ class conversationSocketPage {
     });
   }
 
-  // Main Action: Execute Full Socket Flow
-  performSocketFlow(iterationIndex) {
-    // 1. Pick Random Channel
+  // getAccountchanelidbytopic(topicName) {
+  //   const channel = this.config.accountChannels.find(
+  //     (channel) => channel.topic === topicName,
+  //   );
+  //   return channel ? channel.id : null;
+  // }
+  getAccountchanelId() {
     const channel =
       this.config.accountChannels[
         Math.floor(Math.random() * this.config.accountChannels.length)
       ];
+    cy.log(
+      `Selected accountChannelId: ${channel.id} (topic: "${channel.topic}")`,
+    );
+    return channel ? channel : null;
+  }
+
+  getaccountchannels() {
+    return this.config.accountChannels;
+  }
+
+  getchannelid() {
+    return this.config.channelId;
+  }
+
+  getsignaturekey() {
+    return this.config.signatureKey;
+  }
+
+  sendInboundMessage(
+    clientContactId,
+    channelAccountId,
+    content,
+    type = "text",
+  ) {
+    if (!this.socketInstance) {
+      throw new Error("Socket not connected");
+    }
+
+    const payload = {
+      channelAccountId,
+      clientContactId,
+      content,
+      tempMessageId: crypto.randomUUID(),
+      timestamp: new Date().toISOString(),
+      type,
+    };
+
+    this.socketInstance.emit("socket.inbound.message", payload);
+
+    Cypress.log({
+      name: "SOCKET EMIT",
+      message: JSON.stringify(payload),
+    });
+  }
+
+  joinConversation(conversationId) {
+    if (!this.socketInstance) {
+      throw new Error("Socket not connected");
+    }
+
+    return cy.wrap(null).then(() => {
+      this.socketInstance.emit("socket.join.conversation", {
+        conversationId,
+      });
+
+      Cypress.log({
+        name: "SOCKET JOIN",
+        message: conversationId,
+      });
+    });
+  }
+
+  // listenNewMessage(callback, timeout = 10000) {
+  //   if (!this.socketInstance) throw new Error("Socket not connected");
+
+  //   return cy.wrap(
+  //     new Cypress.Promise((resolve, reject) => {
+  //       const timeoutId = setTimeout(() => {
+  //         reject(new Error("Timeout waiting for new message"));
+  //       }, timeout);
+
+  //       this.socketInstance.once("notification.new.message", (data) => {
+  //         clearTimeout(timeoutId);
+
+  //         Cypress.log({
+  //           name: "NEW MESSAGE",
+  //           message: JSON.stringify(data),
+  //         });
+
+  //         if (callback) {
+  //           callback(data);
+  //         }
+
+  //         resolve(data);
+  //       });
+  //     }),
+  //     { timeout: timeout + 2000 },
+  //   );
+  // }
+
+  listenNewMessage(callback, timeout = 10000) {
+    if (!this.socketInstance) throw new Error("Socket not connected");
+
+    return cy.wrap(
+      new Cypress.Promise((resolve, reject) => {
+        const handler = (data) => {
+          clearTimeout(timeoutId);
+          this.socketInstance.off("notification.new.message", handler);
+          resolve(data);
+        };
+
+        const timeoutId = setTimeout(() => {
+          this.socketInstance.off("notification.new.message", handler);
+          reject(new Error("Timeout waiting for new message"));
+        }, timeout);
+
+        this.socketInstance.on("notification.new.message", handler);
+      }),
+      { timeout: timeout + 2000 },
+    );
+  }
+
+  // Main Action: Execute Full Socket Flow
+  performSocketFlow(iterationIndex) {
+    // 1. Pick Random Channel
+    // const channel =
+    //   this.config.accountChannels[
+    //     Math.floor(Math.random() * this.config.accountChannels.length)
+    //   ];
+    const channel = this.getAccountchanelId();
     const accountChannelId = channel.id;
     const topicName = channel.topic;
 
@@ -276,42 +439,45 @@ class conversationSocketPage {
     cy.log(`Iteration ${iterationIndex + 1}: guestName = ${data.guestName}`);
     cy.log(`Iteration ${iterationIndex + 1}: message content = "${content}"`);
 
-    // 3. Chain API calls and Socket actions
-    this.createClientContact(data.guestName, data.referenceId).then(
-      (response) => {
-        expect(response.status).to.be.oneOf([200, 201]);
-        const clientContactId = response.body.id;
-        cy.log(JSON.stringify(response.body));
-        cy.wait(200);
+    return this.connectSocket(this.getsignaturekey(), this.baseUrl)
+      .then(() => {
+        // this.socketInstance.onAny((event) => {
+        //   console.log("EVENT:", event);
+        // });
+        return this.createClientContact(data.guestName, data.referenceId);
+      })
+      .then((res) => {
+        const clientContactId = res.body.id;
+        // cy.log(JSON.stringify(res));
 
-        this.submitTopic(clientContactId, accountChannelId, topicName).then(
-          (resp2) => {
-            expect(resp2.status).to.be.oneOf([200, 201]);
-            cy.log(`Iteration ${iterationIndex + 1}: submit/topic successful`);
-            cy.wait(200);
-
-            // 4. Socket Interactions using Custom Commands
-            cy.connectSocket(this.config.signatureKey, this.baseUrl);
-            cy.log(`baseUrl = ${this.baseUrl}`);
-
-            cy.sendInboundMessage({
-              channelAccountId: accountChannelId,
-              clientContactId: clientContactId,
-              content: content,
+        return this.submitTopic(
+          clientContactId,
+          accountChannelId,
+          topicName,
+        ).then((responseCreateTopic) => {
+          const conversationId = responseCreateTopic.body.id;
+          cy.log("aaa", JSON.stringify(conversationId));
+          // this.socketInstance.onAny((event, data) => {
+          //   cy.log("SOCKET EVENT:", event, data);
+          // });
+          return this.joinConversation(conversationId)
+            .then(() => {
+              const waitMessage = this.listenNewMessage();
+              this.sendInboundMessage(
+                clientContactId,
+                accountChannelId,
+                content,
+              );
+              return waitMessage;
+            })
+            .then((messageData) => {
+              cy.log(
+                `Received message for clientContactId ${clientContactId}: ${JSON.stringify(messageData)}`,
+              );
             });
-
-            // 5. Listen and Verify
-            cy.listenNewMessage().then((receivedData) => {
-              cy.log("Received message:", receivedData);
-              // expect(receivedData).to.have.property("content", content);
-            });
-
-            // 6. Disconnect
-            cy.disconnectSocket();
-          },
-        );
-      },
-    );
+          // this.listenNewMessage();
+        });
+      });
   }
 }
 

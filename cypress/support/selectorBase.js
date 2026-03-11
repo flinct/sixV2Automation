@@ -23,8 +23,8 @@ function getHeaderByLoginType(config, baseUrl, loginType) {
     if (loginType === "tlc_dev") return config.loginBody_tlc;
   }
   if (baseUrl === "https://v2.satuinbox.com") {
-    if (loginType === "tantaffgo") return config.loginBody_tantaffgo;
-    if (loginType === "danyatmin01") return config.loginBody_danyatminsatu;
+    if (loginType === "tantaffgo") return config.header_tantaffgo;
+    if (loginType === "danyatmin01") return config.header_tantaffgo;
     if (loginType === "danyspv01") return config.loginBody_danyspvsatu;
     if (loginType === "danyagent01") return config.loginBody_danyaagentsatu;
     if (loginType === "testerdummyprod01")

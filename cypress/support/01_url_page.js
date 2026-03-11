@@ -33,25 +33,32 @@ export function env_config(baseUrl) {
     throw new Error(`Unknown baseUrl: ${baseUrl}`);
   }
   return {
+    //--------------OPEN API-----------------
+    // getAllNomorWhatsapp: `${base}/open/account-whatsapp?limit=300`, //OPEN API
+    getAllNomorWhatsapp: `${base}open-api/broadcast/team-inboxes?limit=200`, //get account channel from team inboxes for broadcast
+    getAllNomorWhatsapp_active: `${base}open/account-whatsapp?statusNumberWhatsapp=active&limit=300`, //OPEN API //with active filter
+    openAPI_broadcast: `${base}/open/broadcast?accountNumberWhatsapp=`,
+    sendBroadcastUrl: `${base}open-api/broadcast`,
+    openAPI_createTicketing: `${base}/open/ticketing`,
+    openAPI_createBULKTicketing: `${base}/open/ticketing/bulk`,
+    instanceInfo: `${base}/open/instance/info?key=`,
+    initInstance: `${base}/open/whatsapp/init?force=true&whatsappNumber=`,
+    clientContact: `${base}open-api/client-contact`,
+    submitTopic: `${base}open-api/conversation/submit/topic`,
+
+    //--------------OPEN API-----------------
+
     //--------------API-----------------
     loginUrl: `${base}api/auth/login`,
     currentProfile: `${base}api/auth/me`,
-    getAllNomorWhatsapp: `${base}/open/account-whatsapp?limit=300`, //OPEN API
-    getAllNomorWhatsapp_active: `${base}/open/account-whatsapp?statusNumberWhatsapp=active&limit=300`, //OPEN API //with active filter
-    openAPI_broadcast: `${base}/open/broadcast?accountNumberWhatsapp=`,
     whatsappUrl: `${base}api/account-whatsapp?limit=9000`,
     whatsappUrl_filterJabodetabek: `${base}api/account-whatsapp?accountStatus=used&page=1&limit=999&populate=division.agents&statusNumberWhatsapp=active&division=`, // for search active account without filtering
     whatsappUrl_filterJabodetabek2: `${base}api/account-whatsapp?accountStatus=used&page=1&limit=999&populate=division.agents&division=`, //without statusNumberWhatsapp=active
     whatsappUrl_filterJabodetabek3: `${base}api/account-whatsapp?page=1&limit=999&populate=division.agents&division=`, //without statusNumberWhatsapp=active accountStatus=used
     sendMessageUrl: `${base}api/message/text?key=`,
-    sendBroadcastUrl: `${base}/open/broadcast?account_number_whatsapp=`,
     getAll_Inbox: `${base}api/inbox/`,
     createTicketing: `${base}api/ticketing`,
-    openAPI_createTicketing: `${base}/open/ticketing`,
-    openAPI_createBULKTicketing: `${base}/open/ticketing/bulk`,
-    instanceInfo: `${base}/open/instance/info?key=`,
     instanceInfoLocal: `${base}/instance/info?key=`,
-    initInstance: `${base}/open/whatsapp/init?force=true&whatsappNumber=`,
     initInstanceLocal: `${base}/whatsapp/init?force=true&whatsappNumber=`,
     getAllDivision: `${base}api/division?sortBy=name_division:asc&limit=999&populate=agents  `,
     privacyPolicy: `${base}api/privacy-policy`,
@@ -67,8 +74,6 @@ export function env_config(baseUrl) {
     getWhatsappWeb: `${base}api/account-channel`,
     instance: `${base}api/account-channel/instance/`,
     getTeam: `${base}api/team/`,
-    clientContact: `${base}open-api/client-contact`,
-    submitTopic: `${base}open-api/conversation/submit/topic`,
     conversationSocket: `${base}conversations`,
     //--------------API-----------------
 
@@ -241,43 +246,9 @@ export function env_config(baseUrl) {
         // "ae1bd41cfbe437bb5755068ab5d2038aa240660d87c5cdca0f69001a3a52e3c5",
         "10f1d5e1eb1ea0cb632f2d02edf2ccf896efb73123e7b3f484db5cb52a19dbc6",
     },
-    headers_testing270520252: {
-      //testing270520252
-      "x-api-key":
-        "754b5fcd5e5a5cd7f2f416957a9d228efbf4f788347d37ae51f6b5e2873a6347",
+    header_tantaffgo: {
+      "x-signature-key": "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
     },
-    headers_GD: {
-      "x-api-key":
-        "7058d1c05c763aaa5d5744baf5c371ae01ed38455d90eb29dd16ccd4bcb47d17",
-    },
-    headers_CT: {
-      "x-api-key":
-        "a7d468050c774ebbda4765a4a1edd01889ba7f1d4c12aa9c6aeb65142cf29834",
-    }, //chickentester dev
-    headers_CT_staging: {
-      "x-api-key":
-        "E0ZZ5qfdTfNj5msRVvY9nUfPCjOaU9SgtmStXj0S1DS4rwP6XO0iaVpb1yLu4gu0",
-    },
-    headers_ms1: {
-      "x-api-key":
-        "1dcc58cdd4ccb4a56b20ed367ef2c4addc3ed951a2e59c01118e787333255d91",
-    }, //messagelogsatu
-    headers_ms2: {
-      "x-api-key":
-        "3c9fbf9f3f3c84106c3eca82e8360692ae352410bc53a86310754bdc3e5c2541",
-    }, //messagelogsatu
-    headers_prodtestingjuli: {
-      "x-api-key":
-        "a1a66b07b4a9820d2a1de4b25a25e133f73615b6acb96b13f635fe1011db8063",
-    }, //prodtestingjuli
-    headers_prodtestingakun1dua: {
-      "x-api-key":
-        "b6ea86dc861c927f1817593074ed5b709bcc474037a381bda87f92533243d7db",
-    }, //prodtestingakun1dua
-    headers_goddumstag: {
-      "x-api-key":
-        "30914e3ab4bd0a8bf92f47cc0067024a59dae88ca826eb67f9ff012539ed210d",
-    }, //goddumstag
     randomGlobalDelay: Math.floor(Math.random() * 1800000) + 60000, //1 menit + random wait time
     randomGlobalDelayStaging: Math.floor(Math.random() * 2000) + 10000, //1 menit + random wait time
     parentNumber: "6285147211094",
