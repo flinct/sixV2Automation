@@ -71,7 +71,15 @@ export function env_config(baseUrl) {
     // approveOnboarding: `${base}api/company/${companyId}/approve`,
     approveOnboarding: (companyId) => `${base}api/company/${companyId}/approve`,
     getAccountChannel: `${base}api/account-channel`,
+    getAccountChannelFilterActive: `${base}api/account-channel?limit=200&connectionStatus=active`,
     getWhatsappWeb: `${base}api/account-channel`,
+
+    // WhatsApp Web instance endpoints (Baileys) via omnichannel service
+    // Note: these are newer endpoints; keep the legacy open/* endpoints above for backward compatibility.
+    initInstanceV2: `${base}api/account-channel/instance`,
+    getQrInstanceV2: `${base}api/account-channel/instance/qr/:id`,
+    instanceInfoV2: `${base}api/account-channel/instance/:id`,
+
     instance: `${base}api/account-channel/instance/`,
     getTeam: `${base}api/team/`,
     conversationSocket: `${base}conversations`,
