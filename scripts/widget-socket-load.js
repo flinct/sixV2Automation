@@ -7,7 +7,8 @@
  * Env vars (required unless default noted):
  * - BASE_URL: e.g. https://dev-v2.satuinbox.com or https://v2.satuinbox.com
  * - SIGNATURE_KEY: widget x-signature-key (open-api)
- * - X_API_KEY: x-api-key (for api/account-channel list)  [required if using active-channel discovery]
+ * - X_API_KEY: x-api-key (for api/account-channel list)  [optional]
+ *   If omitted, set WIDGET_ACCOUNT_CHANNEL_IDS to a comma-separated list of widget accountChannelId values.
  *
  * Optional:
  * - AGENTS: number of parallel agents (default 5)
@@ -296,15 +297,34 @@ async function main() {
   const SOCKET_AUTH_MODE = process.env.SOCKET_AUTH_MODE || 'signatureKey';
   const DEBUG_ALL_EVENTS = (process.env.DEBUG_ALL_EVENTS || '').toLowerCase() === 'true';
 
+  // Account-channel discovery:
+  // - If X_API_KEY is provided, we can fetch active widget accountChannels from `api/account-channel`.
+  // - If not, user must provide WIDGET_ACCOUNT_CHANNEL_IDS (comma-separated).
   const xApiKey = process.env.X_API_KEY;
-  if (!xApiKey) {
-    throw new Error('Missing X_API_KEY (needed to fetch active account channels)');
+
+  let widgetAccountChannelIds;
+
+  if (xApiKey) {
+    const widgetChannels = await fetchActiveWidgetAccountChannels({ apiBase, xApiKey });
+    if (widgetChannels.length === 0) throw new Error('No active Widget account channels found');
+    widgetAccountChannelIds = widgetChannels.map((c) => c.id);
+    console.log(`widgetChannels(active via api/account-channel): ${widgetAccountChannelIds.length}`);
+  } else {
+    widgetAccountChannelIds = (process.env.WIDGET_ACCOUNT_CHANNEL_IDS || '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    if (widgetAccountChannelIds.length === 0) {
+      throw new Error(
+        'Missing X_API_KEY and WIDGET_ACCOUNT_CHANNEL_IDS. Provide one of them to choose widget accountChannelId values.',
+      );
+    }
+    console.log(`widgetChannels(from WIDGET_ACCOUNT_CHANNEL_IDS): ${widgetAccountChannelIds.length}`);
   }
 
-  const widgetChannels = await fetchActiveWidgetAccountChannels({ apiBase, xApiKey });
-  if (widgetChannels.length === 0) throw new Error('No active Widget account channels found');
-
-  const pickChannel = () => widgetChannels[Math.floor(Math.random() * widgetChannels.length)];
+  const pickAccountChannelId = () =>
+    widgetAccountChannelIds[Math.floor(Math.random() * widgetAccountChannelIds.length)];
 
   const longLivedCount = Math.max(0, AGENTS - CHURN_AGENTS);
 
@@ -312,7 +332,7 @@ async function main() {
   console.log({ baseUrl, apiBase, socketUrl });
   console.log({ AGENTS, CHURN_AGENTS, longLivedCount, MESSAGES_PER_AGENT, CYCLES });
   console.log({ JOIN_EVENT, INBOUND_EVENT, NEW_MESSAGE_EVENT, SOCKET_AUTH_MODE });
-  console.log(`widgetChannels(active): ${widgetChannels.length}`);
+  // widget channel count is logged above depending on discovery mode
 
   // long-lived agents: keep connected for entire run
   const longLived = Array.from({ length: longLivedCount }).map((_, idx) =>
@@ -351,8 +371,7 @@ async function main() {
   console.log(`Connected long-lived agents: ${longLived.length}`);
 
   async function runOneFlow(agent) {
-    const widget = pickChannel();
-    const accountChannelId = widget.id;
+    const accountChannelId = pickAccountChannelId();
     const topicName = `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
 
     // channelId is not available in account-channel item; for widget open-api client-contact you use channelId (widget channelId),

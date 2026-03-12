@@ -11,7 +11,9 @@ describe("Load tests (Node scripts)", () => {
 
       // Prefer `CYPRESS_*` vars (set via CLI) so they show up in Cypress.env()
       SIGNATURE_KEY: Cypress.env("SIGNATURE_KEY"),
+      // optional (only if you want the script to auto-discover active widget accountChannelId)
       X_API_KEY: Cypress.env("X_API_KEY"),
+      WIDGET_ACCOUNT_CHANNEL_IDS: Cypress.env("WIDGET_ACCOUNT_CHANNEL_IDS"),
       WIDGET_CHANNEL_ID: Cypress.env("WIDGET_CHANNEL_ID"),
 
       // Tuning
