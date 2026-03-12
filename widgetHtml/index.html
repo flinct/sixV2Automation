@@ -1,0 +1,1466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Platform - Login & Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      .fade-in {
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .button-hover {
+        transition: all 0.3s ease;
+      }
+
+      .button-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-button {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .chat-button::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.6s,
+          height 0.6s;
+      }
+
+      .chat-button:active::before {
+        width: 300px;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <div
+      id="loginSection"
+      class="min-h-screen flex items-center justify-center px-4"
+    >
+      <div class="max-w-md w-full space-y-8 fade-in">
+        <div class="text-center">
+          <div
+            class="mx-auto h-16 w-16 bg-indigo-600 rounded-full flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-comments text-white text-2xl"></i>
+          </div>
+          <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+            Welcome to Satuinbox
+          </h2>
+          <p class="mt-2 text-sm text-gray-600">
+            Sign in to access your dashboard
+          </p>
+        </div>
+        <select
+          id="baseUrlSelector"
+          class="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+        >
+          <option value="dev">Development</option>
+          <option value="staging">Staging</option>
+          <option value="production">Production</option>
+        </select>
+        <form
+          id="loginForm"
+          class="mt-8 space-y-6 bg-white p-8 rounded-xl shadow-lg"
+        >
+          <div class="space-y-4">
+            <div>
+              <label
+                for="username"
+                class="block text-sm font-medium text-gray-700"
+                >Username</label
+              >
+              <input
+                id="username"
+                name="username"
+                type="text"
+                required
+                class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Enter your username"
+              />
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-700"
+                >Password</label
+              >
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Enter your password"
+              />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+              <label for="remember-me" class="ml-2 block text-sm text-gray-900"
+                >Remember me</label
+              >
+            </div>
+
+            <div class="text-sm">
+              <a
+                id="forgotSession"
+                href="#"
+                class="font-medium text-indigo-600 hover:text-indigo-500"
+                >Forgot your SESSION</a
+              >
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 button-hover"
+            >
+              <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                <i
+                  class="fas fa-sign-in-alt text-indigo-500 group-hover:text-indigo-400"
+                ></i>
+              </span>
+              Sign in
+            </button>
+          </div>
+
+          <div id="loginError" class="hidden text-red-600 text-sm text-center">
+            <i class="fas fa-exclamation-circle mr-1"></i>
+            Invalid username or password
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardSection" class="hidden min-h-screen">
+      <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+              <div
+                class="h-10 w-10 bg-indigo-600 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-comments text-white text-xl"></i>
+              </div>
+              <h1 class="ml-3 text-xl font-semibold text-gray-900">
+                Chat Dashboard
+              </h1>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <!-- Environment Selector -->
+              <div class="relative">
+                <select
+                  id="baseUrlSelector"
+                  class="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                >
+                  <option value="dev">Development</option>
+                  <option value="staging">Staging</option>
+                  <option value="production">Production</option>
+                </select>
+                <div
+                  class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+                >
+                  <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-3">
+                <div class="text-right">
+                  <p
+                    class="text-sm font-medium text-gray-900"
+                    id="userFullname"
+                  >
+                    User Name
+                  </p>
+                  <p class="text-xs text-gray-500" id="userRole">Role</p>
+                </div>
+                <img
+                  class="h-8 w-8 rounded-full"
+                  src="https://picsum.photos/seed/user123/32/32.jpg"
+                  alt="User avatar"
+                />
+              </div>
+
+              <button
+                id="logoutBtn"
+                class="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 button-hover"
+              >
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Environment Indicator -->
+        <div class="mb-6">
+          <div
+            id="envIndicator"
+            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+          >
+            <i
+              class="fas fa-circle text-blue-500 mr-1"
+              style="font-size: 6px"
+            ></i>
+            Development Environment
+          </div>
+        </div>
+
+        <!-- User Info Card -->
+        <div
+          class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8"
+        >
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">
+            User Information
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <p class="text-sm text-gray-500">Customer ID</p>
+              <p class="font-medium text-gray-900" id="displayCustomerId">-</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Full Name</p>
+              <p class="font-medium text-gray-900" id="displayFullname">-</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Email</p>
+              <p class="font-medium text-gray-900" id="displayEmail">-</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Username</p>
+              <p class="font-medium text-gray-900" id="displayUsername">-</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Phone Number</p>
+              <p class="font-medium text-gray-900" id="displayPhoneNumber">-</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Role</p>
+              <p class="font-medium text-gray-900" id="displayRole">-</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center mb-6">
+              <div
+                class="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-store text-green-600"></i>
+              </div>
+              <h2 class="ml-3 text-lg font-semibold text-gray-900">
+                Command FAB
+              </h2>
+            </div>
+
+            <!-- Change from space-y-3 to flex flex-wrap gap-3 -->
+            <div class="flex flex-wrap gap-3">
+              <button
+                class="chat-button flex-1 min-w-[200px] flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick=""
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">SET</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+
+              <button
+                class="chat-button flex-1 min-w-[200px] flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick=""
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">REMOVE</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+              <button
+                class="chat-button flex-1 min-w-[200px] flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="button_hide()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">HIDE</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+              <button
+                class="chat-button flex-1 min-w-[200px] flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="button_show()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">SHOW</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+              <button
+                class="chat-button flex-1 min-w-[200px] flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick=""
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">DESTROY</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+              <button
+                class="chat-button flex-1 min-w-[200px] flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="button_toggleOpen()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">TOGGLE ON</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+              <button
+                class="chat-button flex-1 min-w-[200px] flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="button_toggleClose()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">TOGGLE OFF</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Chat to Seller Section -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center mb-6">
+              <div
+                class="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-store text-green-600"></i>
+              </div>
+              <h2 class="ml-3 text-lg font-semibold text-gray-900">
+                Chat to Seller
+              </h2>
+            </div>
+
+            <div class="space-y-3">
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="button_onclick()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Seller 1</p>
+                    <p class="text-sm text-gray-500">Electronics Store</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="button_onclick2()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Seller 2</p>
+                    <p class="text-sm text-gray-500">Fashion Boutique</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="button_onclick3()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Seller 3</p>
+                    <p class="text-sm text-gray-500">Home & Garden</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat to Buyer Section -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center mb-6">
+              <div
+                class="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-shopping-cart text-blue-600"></i>
+              </div>
+              <h2 class="ml-3 text-lg font-semibold text-gray-900">
+                Chat to Buyer
+              </h2>
+            </div>
+
+            <div class="space-y-3">
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 text-left button-hover group"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-blue-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-blue-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Buyer 1</p>
+                    <p class="text-sm text-gray-500">Premium Customer</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-blue-600"
+                ></i>
+              </button>
+
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 text-left button-hover group"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-blue-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-blue-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Buyer 2</p>
+                    <p class="text-sm text-gray-500">New Customer</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-blue-600"
+                ></i>
+              </button>
+
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 text-left button-hover group"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-blue-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-blue-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Buyer 3</p>
+                    <p class="text-sm text-gray-500">Regular Customer</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-blue-600"
+                ></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center mb-6">
+              <div
+                class="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-store text-green-600"></i>
+              </div>
+              <h2 class="ml-3 text-lg font-semibold text-gray-900">
+                Push Session Seller
+              </h2>
+            </div>
+
+            <div class="space-y-3">
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="sessionPush()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Seller 1</p>
+                    <p class="text-sm text-gray-500">PUSH SESSION</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="sessionPush2()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Seller 2</p>
+                    <p class="text-sm text-gray-500">PUSH SESSION</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+
+              <button
+                class="chat-button w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 text-left button-hover group"
+                onclick="sessionPush3()"
+              >
+                <div class="flex items-center">
+                  <div
+                    class="h-10 w-10 bg-green-200 rounded-full flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-green-700"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium text-gray-900">Seller 3</p>
+                    <p class="text-sm text-gray-500">PUSH SESSION</p>
+                  </div>
+                </div>
+                <i
+                  class="fas fa-chevron-right text-gray-400 group-hover:text-green-600"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+              <div
+                class="h-12 w-12 bg-indigo-100 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-comments text-indigo-600 text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-600">Total Chats</p>
+                <p class="text-2xl font-semibold text-gray-900">24</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+              <div
+                class="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-600">Active Chats</p>
+                <p class="text-2xl font-semibold text-gray-900">8</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center">
+              <div
+                class="h-12 w-12 bg-yellow-100 rounded-lg flex items-center justify-center"
+              >
+                <i class="fas fa-clock text-yellow-600 text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-600">Pending</p>
+                <p class="text-2xl font-semibold text-gray-900">3</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- <div
+      id="toast"
+      class="hidden fixed bottom-4 left-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 fade-in"
+    >
+      <i class="fas fa-check-circle"></i>
+      <span id="toastMessage">Success!</span>
+    </div> -->
+    <div
+      id="toast"
+      class="hidden fixed top-4 left-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 fade-in z-50"
+    >
+      <i class="fas fa-check-circle"></i>
+      <span id="toastMessage">Success!</span>
+    </div>
+
+    <script>
+      let selector = "chicken tester dev v2";
+      // let selector = "testaka";
+      // let selector = "prodtestingjuli";
+      // let selector = "goddummyproddev"; //dev
+      // let selector = "goddummyprod";
+      // let selector = "testedDummy02 dev v2";
+      // let selector = "satuinbox01 v2prod";
+      // let selector = "tantaffgo";
+      // let selector = "satuinboxlincah"; //dev - v2;
+      // let selector = "satuinboxlincahprod"; //PROD - v2;
+      // let selector = "evercoss dev";
+      // let selector = "evercoss";
+      // let selector = "paxel";
+
+      let baseUrl = "";
+      let licenseKeyVal = "";
+      if (selector === "chicken tester dev v2") {
+        baseUrl = "https://dev-v2-widget.satuinbox.com";
+        licenseKeyVal =
+          // "$2b$10$rbwgJQozp/0UdtIIryx3uOjY5gMWBNu9vqSQmgkgSY7CAhw0S726W"; //chicken tester dev v2
+          "$2b$10$Gn28lBaT/bN022CT3cyC5On1vi1cYRhnRUQ6Mfy5v1X3NFtVqmBO2"; //chicken tester dev v2
+      }
+      if (selector === "prodtestingjuli") {
+        baseUrl = "https://app.satuinbox.com";
+        licenseKeyVal =
+          "$2a$08$HBKd/erQxMROCAACAkxozeg72JVnWxQw7m6m.5zKnZ.srF0YQR1sy"; //prodtestingjuli v1
+      }
+      if (selector === "goddummyproddev") {
+        baseUrl = "https://dev-v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$hIIyYcItJ.3MApjIMCmCrOz9o3qBJ1kcowfnFnFrZa3AZA7.8ZMF6"; //goddummyprod dev v2
+      }
+      if (selector === "testaka") {
+        baseUrl = "https://dev-v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$./Y9EK7evguRbRdOsitbyuLDlLVbSjkrlYiUV6NRMzqgXcxeA0fKq";
+      }
+      if (selector === "paxel") {
+        baseUrl = "https://v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$7Thnr.0KeE2EvIDHmOA3NONVFxm75xZGVInT9ziZkSdOvmI025JtO"; //paxel
+      }
+      if (selector === "goddummyprod") {
+        baseUrl = "https://v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$rNTA/pmSH0feb03ZD9UuyuEJI6S1GIZ/De0CoAUV7VoC3f8GGqcke"; //goddummyprod
+      }
+      if (selector === "satuinbox01 v2prod") {
+        baseUrl = "https://v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$txlAjtPectF0RxR1XUrVU.hztBrZrtwDrN/qh78XD9lI3J3tIZ1Te"; //satuinbox01 v2prod
+      }
+      if (selector === "tantaffgo") {
+        baseUrl = "https://v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$v8kT/OueCG9dL8fOBt4E3.BmSFKjUakKSTkJbDxQo69cpZTa0rIQC"; //tantaffgo v2prod
+      }
+      if (selector === "evercoss dev") {
+        baseUrl = "https://dev-v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$LBPISKe/LHJTQwn8Ct2zqextjga.PmT11EMnUl.Qx1zoV7qErzziO"; //evercoss dev
+      }
+      if (selector === "evercoss") {
+        baseUrl = "https://v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$8lC8rx/h6WOGeXbl06Hma.oo2eQA7sfe0QhLFFGx.ZlbzV41WmGVW"; //evercoss dev
+      }
+      if (selector === "satuinboxlincah") {
+        baseUrl = "https://dev-v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$uG8NHEimkSS8fq9PmEYTMuWORgCkiu11Y057NGWiB3McHoRQUNaGe"; //evercoss dev
+      }
+      if (selector === "satuinboxlincahprod") {
+        baseUrl = "https://v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$qRFDSEZd4rx5PktmsGLto.k8qvn.gZ62s/u6lmK4gYUKjzCB77DlK"; //evercoss dev
+      }
+      if (selector === "testedDummy02 dev v2") {
+        baseUrl = "https://dev-v2-widget.satuinbox.com";
+        licenseKeyVal =
+          "$2b$10$62CNIwDhhS.jCvcG04cTCe8oWuxcSb6jrx2yG3xgC8xUyyxEjB4lq"; //testedDummy02 dev v2
+      }
+      // let baseUrl = "https://dev.satuinbox.com";
+      // let baseUrl = "https://v2-widget.satuinbox.com";
+      // let baseUrl = "https://dev-v2-widget.satuinbox.com";
+      // let baseUrl = "https://staging.satuinbox.com";
+      // let baseUrl = "https://app.satuinbox.com";
+      window.$satuinbox = window.$satuinbox ?? [];
+      window.satuinboxWidgetConfig = window.satuinboxWidgetConfig ?? {};
+      window.satuinboxWidgetConfig.allowedOrigin = baseUrl;
+      // window.satuinboxWidgetConfig.allowedOrigin ="https://v2-widget.satuinbox.com";
+      // window.satuinboxWidgetConfig.allowedOrigin ="https://dev-v2-widget.satuinbox.com";
+      window.satuinboxWidgetConfig.productName = "satuinbox";
+      window.satuinboxWidgetConfig.version = "1";
+      window.satuinboxWidgetConfig.licenseKey = licenseKeyVal;
+      // window.satuinboxWidgetConfig.licenseKey =
+      // "$2a$08$IsBZ7JHolrvC9jle9Y1XCOc/WC9b3.smzltgxLHZ/qO6MiaHzQSw6"; //message log dua
+      // "$2a$08$sGyYvG.tLlRj9FRjaqaBIeMhWW/S6nNDx/TD8yEYW21sus9wHR2LS"; //chicken tester dev
+      // "$2a$08$ryd3BeS25FAsd0rg42z87e/vyRIofQuonFqP3Ks.uuwDB2Qom4k7C"; //devtestingakun1tiga
+      // "$2a$08$AFjIPnKFA4Bn8rR6XTzSE.EKljL0DTHmsVQmU3OUDpyGpKNjih.DG"; //chicken tester staging
+      // "$2a$08$jmUb1noIirDNM0RCiAEgcuYErviIm2znYs4CDsvDTo2ybyD8jg7yy"; //cow tester staging
+      // "$2a$08$VwM1bLdMUZGNeGapmU563eRj3vRWJ9KHR3khu5h.QIY5Wi03bA/sC"; //stagtestingakun1
+      // "$2a$08$HBKd/erQxMROCAACAkxozeg72JVnWxQw7m6m.5zKnZ.srF0YQR1sy"; //prodtestingjuli
+      // "$2a$08$Kacx/BxwDTp1a0Rs1fu3sebQxPKQLwEv4aqR2kPg2mDe19T6DyR7i"; //testing270520252
+      // "$2a$08$ru3Y7mcQVSGC3CK.ygbUBeNc/K3JypZ5X52it4a4YvbJuprH9sLDi"; //satuinboxlincah
+      // "$2b$10$rbwgJQozp/0UdtIIryx3uOjY5gMWBNu9vqSQmgkgSY7CAhw0S726W"; //chicken tester dev v2
+      // "$2b$10$vf.GQElZY4YacVma/.Sb4utv3ASU1/XE47QcX9y9vq3khU8z4t4wi"; //rizal 123
+      // "$2b$10$vf.GQElZY4YacVma/.Sb4utv3ASU1/XE47QcX9y9vq3khU8z4t4wi"; //satuinbox01 v2prod
+
+      const loginSection = document.getElementById("loginSection");
+      const dashboardSection = document.getElementById("dashboardSection");
+      const loginForm = document.getElementById("loginForm");
+      const loginError = document.getElementById("loginError");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const baseUrlSelector = document.getElementById("baseUrlSelector");
+      const envIndicator = document.getElementById("envIndicator");
+      const userFullname = document.getElementById("userFullname");
+      const userRole = document.getElementById("userRole");
+      const toast = document.getElementById("toast");
+      const toastMessage = document.getElementById("toastMessage");
+
+      const displayCustomerId = document.getElementById("displayCustomerId");
+      const displayFullname = document.getElementById("displayFullname");
+      const displayEmail = document.getElementById("displayEmail");
+      const displayUsername = document.getElementById("displayUsername");
+      const displayPhoneNumber = document.getElementById("displayPhoneNumber");
+      const displayRole = document.getElementById("displayRole");
+
+      const environments = {
+        dev: {
+          label: "Development Environment",
+          color: "blue",
+          baseUrl: "https://dev.satuinbox.com",
+        },
+        staging: {
+          label: "Staging Environment",
+          color: "yellow",
+          baseUrl: "https://staging.satuinbox.com",
+        },
+        production: {
+          label: "Production Environment",
+          color: "green",
+          baseUrl: "https://app.satuinbox.com",
+        },
+        dev2: {
+          label: "Dev-v2 Environment",
+          color: "pink",
+          baseUrl: "https://dev-v2.satuinbox.com",
+        },
+        dev2: {
+          label: "Prod v2 Environment",
+          color: "green",
+          baseUrl: "https://v2.satuinbox.com",
+        },
+      };
+
+      function dataUser() {
+        return [
+          {
+            customerId: "s9123buy-100001",
+            fullname: "Pomade chan",
+            email: "pomade@g.com",
+            username: "pomade",
+            password: "asdqwe12",
+            phoneNumber: "6289712100001",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100002",
+            fullname: "pomade 2 chan",
+            email: "pomade2@g.com",
+            username: "pomade2",
+            password: "asdqwe12",
+            phoneNumber: "6289712100002",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100002",
+            fullname: "pomade 2 chan",
+            email: "pomade22@g.com",
+            username: "pomade22",
+            password: "asdqwe12",
+            phoneNumber: "6289712100002",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100002",
+            fullname: "pomade 2 chan",
+            email: "pomade223@g.com",
+            username: "pomade223",
+            password: "asdqwe12",
+            phoneNumber: "6289712100002",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100002",
+            fullname: "pomade 2 error",
+            email: "pomade2@g.com",
+            username: "pomade2err",
+            password: "asdqwe12",
+            phoneNumber: "62897",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100003",
+            fullname: "gatzby chan",
+            email: "gatzby@g.com",
+            username: "gatzby",
+            password: "asdqwe12",
+            phoneNumber: "6289712100003",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100003",
+            fullname: "gatzby udang",
+            email: "gatzby@g.com",
+            username: "gatzbyudang",
+            password: "asdqwe12",
+            phoneNumber: "62897",
+            role: "buyer udang",
+          },
+          {
+            customerId: "s9123buy-100003",
+            fullname: "gatzby err",
+            email: "gatzbyerr@g.com",
+            username: "gatzbyerr",
+            password: "asdqwe12",
+            phoneNumber: "62897",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100003234",
+            fullname: "gatzby errid",
+            email: "gatzby@g.com",
+            username: "gatzbyerrid",
+            password: "asdqwe12",
+            phoneNumber: "62897",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100004",
+            fullname: "gelas kertas",
+            email: "gelaskertas@g.com",
+            username: "gelaskertas",
+            password: "asdqwe12",
+            phoneNumber: "6289712100004",
+            role: "buyer",
+          },
+          {
+            //validate phoneNumber not mandatory
+            customerId: "s9123buy-100004",
+            fullname: "gelas kertas err",
+            email: "gelaskertas@g.com",
+            username: "gelaskertas2",
+            password: "asdqwe12",
+            phoneNumber: "6289712104123",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100005",
+            fullname: "gelas kertas 3",
+            email: "gelaskertas3@g.com",
+            username: "gelaskertas3",
+            password: "asdqwe12",
+            phoneNumber: "6289712100005",
+            role: "buyer",
+          },
+          {
+            customerId: "s9123buy-100006",
+            fullname: "tumbler chan",
+            email: "tumbler@g.com",
+            username: "tumbler",
+            password: "asdqwe12",
+            phoneNumber: "6289712100006",
+            role: "buyer",
+          },
+
+          {
+            customerId: "s9123sel-200001",
+            fullname: "Jane Smith",
+            email: "jane@example.com",
+            username: "janesmith",
+            password: "asdqwe12",
+            phoneNumber: "6289712200001",
+            role: "seller",
+          },
+          {
+            customerId: "s9123adm-200002",
+            fullname: "toko kucing",
+            email: "tokokucing@e.com",
+            username: "tokokucing",
+            password: "asdqwe12",
+            phoneNumber: "6289712200002",
+            role: "seller",
+          },
+          {
+            customerId: "s9123adm-200003",
+            fullname: "toko kelontong",
+            email: "tokokelontong@e.com",
+            username: "tokokelontong",
+            password: "asdqwe12",
+            phoneNumber: "6289712200003",
+            role: "seller",
+          },
+        ];
+      }
+
+      function saveCurrentUser(userData) {
+        localStorage.setItem("currentUser", JSON.stringify(userData));
+      }
+
+      function getCurrentUser() {
+        return JSON.parse(localStorage.getItem("currentUser"));
+      }
+
+      function clearCurrentUser() {
+        localStorage.removeItem("currentUser");
+        $satuinbox.push(["remove", "session-livechat", {}]);
+      }
+
+      function showToast(message, duration = 3000) {
+        toastMessage.textContent = message;
+        toast.classList.remove("hidden");
+        setTimeout(() => {
+          toast.classList.add("hidden");
+        }, duration);
+      }
+
+      function setSatuinboxSession(userData) {
+        const dataUserMarketplace = {
+          customerId: userData.customerId,
+          fullname: userData.fullname,
+          email: userData.email,
+          // username: userData.username,
+          phoneNumber: userData.phoneNumber,
+          role: userData.role,
+        };
+        console.log(`console a`, dataUserMarketplace);
+
+        // $satuinbox.push([
+        //   "set",
+        //   "session-marketplace",
+        //   { ...dataUserMarketplace },
+        //   // dataUserMarketplace,
+        //   // console.log(`console b`, dataUserMarketplace),
+        //   {
+        //     onSuccess: (data) => {
+        //       console.log(`Success -marketplace-`, data);
+        //     },
+        //     onError: (error) => {
+        //       console.error("Error -marketplace-", error);
+        //     },
+        //     onLoading: (status) => {
+        //       console.log("loading -marketplace-", status.isLoading);
+        //     },
+        //   },
+        // ]);
+
+        // SET DEFAULT
+        const dataUserDefault = {
+          email: userData.email,
+          name: userData.fullname,
+          phone: userData.phoneNumber,
+          // fullname: userData.fullname,
+          // phoneNumber: userData.phoneNumber,
+        };
+        console.log(`console b`, dataUserDefault);
+
+        $satuinbox.push([
+          "set",
+          "session-livechat",
+          dataUserDefault,
+          // {
+          //   onSuccess: (data) => {
+          //     console.log(`default`, data);
+          //   },
+          //   onError: (error) => {
+          //     console.error("default err: ", error);
+          //   },
+          //   onLoading: (status) => {
+          //     console.log("default load.", status.isLoading);
+          //   },
+          // },
+        ]);
+      }
+
+      function reloadWidget(newBaseUrl) {
+        baseUrl = newBaseUrl;
+
+        window.__WIDGET_CONFIG__.allowedOrigin = baseUrl;
+
+        const existingScript = document.querySelector(
+          'script[src*="widget.min.js"]',
+        );
+        if (existingScript) {
+          document.body.removeChild(existingScript);
+        }
+
+        const script = document.createElement("script");
+        script.src = `${baseUrl}/scripts/widget.min.js`;
+        script.async = true;
+        document.body.appendChild(script);
+
+        const noScriptElements = document.querySelectorAll("noscript");
+        noScriptElements.forEach((element) => {
+          if (element.innerHTML.includes("Chat with us")) {
+            element.innerHTML = `
+              <a href="${baseUrl}" rel="nofollow">Chat with us</a>, powered by
+              <a href="${baseUrl}" rel="noopener nofollow" target="_blank">Satuinbox</a>`;
+          }
+        });
+
+        console.log(`Widget reloaded with new baseUrl: ${baseUrl}`);
+      }
+
+      function getSellerRoleData() {
+        return dataUser().filter((user) => user.role === "seller");
+      }
+
+      function getBuyerRoleData() {
+        return dataUser().filter((user) => user.role === "buyer");
+      }
+
+      const showLogsCommand = {
+        onSuccess: (data) => {
+          console.log(`get marketplace contact success`, data);
+        },
+        onError: (error) => {
+          console.error("failed marketplace contact ", error);
+        },
+        onLoading: (status) => {
+          console.log("Session marketplace contact finished.".status.isLoading);
+        },
+      };
+      const logsSetSession = {
+        onSuccess: (data) => {
+          console.log(`set session success`, data);
+        },
+        onError: (error) => {
+          console.error("Error set session ", error);
+        },
+        onLoading: (status) => {
+          console.log("set session finished.".status.isLoading);
+        },
+      };
+
+      const databuttonSeller1 = {
+        customerId: getSellerRoleData()[0]?.customerId,
+        fullname: getSellerRoleData()[0]?.fullname,
+        // role: getSellerRoleData()[0]?.phoneNumber,
+        role: getSellerRoleData()[0]?.role,
+      };
+      function button_onclick() {
+        console.log("button 1 clicked");
+        console.log("data button 1", databuttonSeller1);
+        // buttonScript(databuttonSeller1);
+        window.$satuinbox = window.$satuinbox || [];
+        window.$satuinbox.push([
+          "toggle-widget",
+          "marketplace",
+          {
+            isOpen: true,
+            openChatroom: databuttonSeller1,
+          },
+          showLogsCommand,
+        ]);
+        console.log(databuttonSeller1);
+        showToast(`Opening chat with ${databuttonSeller1.fullname} (Seller)`);
+      }
+      function sessionPush() {
+        console.log("push session 1 clicked");
+        console.log("data session 1", databuttonSeller1);
+
+        $satuinbox.push([
+          "set",
+          "session-marketplace",
+          databuttonSeller1,
+          logsSetSession,
+        ]);
+        showToast(`Push session ${databuttonSeller1.fullname} (Seller)`);
+      }
+
+      const databuttonSeller2 = {
+        customerId: getSellerRoleData()[1]?.customerId,
+        fullname: getSellerRoleData()[1]?.fullname,
+        role: getSellerRoleData()[1]?.role,
+      };
+      function button_onclick2() {
+        console.log("button 2 clicked");
+        console.log("data button 2", databuttonSeller2);
+        // buttonScript(databuttonSeller1);
+        window.$satuinbox = window.$satuinbox || [];
+        window.$satuinbox.push([
+          "toggle-widget",
+          "marketplace",
+          {
+            isOpen: true,
+            openChatroom: databuttonSeller2,
+          },
+          showLogsCommand,
+          // () => console.log(data),
+        ]);
+        // console.log(databuttonSeller2);
+        showToast(`Opening chat with ${databuttonSeller2.fullname} (Seller)`);
+      }
+      function sessionPush2() {
+        console.log("push session 2 clicked");
+        console.log("data session 2", databuttonSeller2);
+
+        $satuinbox.push([
+          "set",
+          "session-marketplace",
+          databuttonSeller2,
+          logsSetSession,
+        ]);
+        // console.log(databuttonSeller1);
+        showToast(`Push session ${databuttonSeller2.fullname} (Seller)`);
+      }
+
+      const databuttonSeller3 = {
+        customerId: getSellerRoleData()[2]?.customerId,
+        fullname: getSellerRoleData()[2]?.fullname,
+        role: getSellerRoleData()[2]?.role,
+      };
+      function button_onclick3() {
+        console.log("button 3 clicked");
+        console.log("data button 1", databuttonSeller3);
+        // buttonScript(databuttonSeller1);
+        window.$satuinbox = window.$satuinbox || [];
+        window.$satuinbox.push([
+          "toggle-widget",
+          "marketplace",
+          {
+            isOpen: true,
+            openChatroom: databuttonSeller3,
+          },
+          showLogsCommand,
+          // () => console.log(data),
+        ]);
+        // console.log(databuttonSeller1);
+        showToast(`Opening chat with ${databuttonSeller3.fullname} (Seller)`);
+      }
+      function sessionPush3() {
+        console.log("push session 1 clicked");
+        console.log("data session 1", databuttonSeller3);
+
+        $satuinbox.push([
+          "set",
+          "session-marketplace",
+          databuttonSeller3,
+          logsSetSession,
+        ]);
+        console.log(databuttonSeller3);
+        showToast(`Push session ${databuttonSeller3.fullname} (Seller)`);
+      }
+
+      function button_show() {
+        console.log("button toggle on clicked");
+        // $satuinbox.push(["hide", "widgets", { hide: true }]);
+        window.$satuinbox = window.$satuinbox || [];
+        window.$satuinbox.push([
+          "hide",
+          "widgets",
+          {
+            hide: false,
+          },
+          // showLogsCommand,
+        ]);
+        showToast(`toggle widget open`);
+      }
+      function button_hide() {
+        console.log("button toggle on clicked");
+        // $satuinbox.push(["hide", "widgets", { hide: true }]);
+        window.$satuinbox = window.$satuinbox || [];
+        window.$satuinbox.push([
+          "hide",
+          "widgets",
+          {
+            hide: true,
+          },
+          // showLogsCommand,
+        ]);
+        showToast(`toggle widget open`);
+      }
+      function button_toggleOpen() {
+        console.log("button toggle on clicked");
+        // console.log("data button 1", databuttonSeller3);
+        // buttonScript(databuttonSeller1);
+        // $satuinbox.push(["toggle-widget", "default", { isOpen: true }]);
+        window.$satuinbox = window.$satuinbox || [];
+        window.$satuinbox.push([
+          "toggle-widget",
+          "default",
+          {
+            isOpen: true,
+          },
+          // showLogsCommand,
+        ]);
+        showToast(`toggle widget open`);
+      }
+      function button_toggleClose() {
+        console.log("button toggle on clicked");
+        // console.log("data button 1", databuttonSeller3);
+        // buttonScript(databuttonSeller1);
+        // $satuinbox.push(["toggle-widget", "default", { isOpen: true }]);
+        window.$satuinbox = window.$satuinbox || [];
+        window.$satuinbox.push([
+          "toggle-widget",
+          "default",
+          {
+            isOpen: false,
+          },
+          // showLogsCommand,
+        ]);
+        showToast(`toggle widget closed`);
+      }
+
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const users = dataUser();
+
+        const user = users.find(
+          (u) => u.username === username && u.password === password,
+        );
+
+        if (user) {
+          loginError.classList.add("hidden");
+
+          saveCurrentUser(user);
+
+          userFullname.textContent = user.fullname;
+          userRole.textContent =
+            user.role.charAt(0).toUpperCase() + user.role.slice(1);
+
+          displayCustomerId.textContent = user.customerId;
+          displayFullname.textContent = user.fullname;
+          displayEmail.textContent = user.email;
+          displayUsername.textContent = user.username;
+          displayPhoneNumber.textContent = user.phoneNumber;
+          displayRole.textContent =
+            user.role.charAt(0).toUpperCase() + user.role.slice(1);
+
+          setSatuinboxSession(user);
+
+          loginSection.classList.add("hidden");
+          dashboardSection.classList.remove("hidden");
+          dashboardSection.classList.add("fade-in");
+
+          showToast(`Welcome back, ${user.fullname}!`);
+        } else {
+          loginError.classList.remove("hidden");
+        }
+      });
+
+      loginForm.addEventListener("removeSession", (e) => {
+        e.preventDefault();
+        $satuinbox.push(["remove", "session-livechat", {}]);
+        console.log("removing old session without login");
+      });
+      forgotSession.addEventListener("click", (e) => {
+        e.preventDefault();
+        const event = new Event("removeSession", { bubbles: true });
+        loginForm.dispatchEvent(event);
+      });
+
+      logoutBtn.addEventListener("click", () => {
+        clearCurrentUser();
+        $satuinbox.push(["remove", "session-livechat", {}]);
+        // $satuinbox.push(["remove", "session-marketplace", {}]);
+
+        loginForm.reset();
+
+        dashboardSection.classList.add("hidden");
+        loginSection.classList.remove("hidden");
+        loginSection.classList.add("fade-in");
+
+        showToast("Logged out successfully!");
+      });
+
+      baseUrlSelector.addEventListener("change", (e) => {
+        const selectedEnv = e.target.value;
+        const env = environments[selectedEnv];
+
+        envIndicator.className = `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${env.color}-100 text-${env.color}-800`;
+        envIndicator.innerHTML = `
+                <i class="fas fa-circle text-${env.color}-500 mr-1" style="font-size: 6px;"></i>
+                ${env.label}
+            `;
+
+        reloadWidget(env.baseUrl);
+
+        showToast(`Switched to ${env.label}`);
+        console.log(`Base URL changed to: ${env.baseUrl}`);
+      });
+
+      const initialEnv = environments[baseUrlSelector.value];
+      envIndicator.innerHTML = `
+            <i class="fas fa-circle text-${initialEnv.color}-500 mr-1" style="font-size: 6px;"></i>
+            ${initialEnv.label}
+        `;
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+          userFullname.textContent = currentUser.fullname;
+          userRole.textContent =
+            currentUser.role.charAt(0).toUpperCase() +
+            currentUser.role.slice(1);
+
+          displayCustomerId.textContent = currentUser.customerId;
+          displayFullname.textContent = currentUser.fullname;
+          displayEmail.textContent = currentUser.email;
+          displayUsername.textContent = currentUser.username;
+          displayPhoneNumber.textContent = currentUser.phoneNumber;
+          displayRole.textContent =
+            currentUser.role.charAt(0).toUpperCase() +
+            currentUser.role.slice(1);
+
+          setSatuinboxSession(user);
+
+          loginSection.classList.add("hidden");
+          dashboardSection.classList.remove("hidden");
+        }
+      });
+
+      // const noScript = document.createElement("noscript");
+      // noScript.innerHTML = `
+      //     <a href="${baseUrl}" rel="nofollow">Chat with us</a>, powered by
+      //     <a href="${baseUrl}" rel="noopener nofollow" target="_blank">Satuinbox</a>`;
+      // document.body.appendChild(noScript);
+    </script>
+
+    <script>
+      const script = document.createElement("script");
+      script.src = `${baseUrl}/scripts/widget.min.js`;
+      // script.async = true;
+      document.body.appendChild(script);
+    </script>
+    <!-- <script src="https://v2-widget.satuinbox.com/scripts/widget.min.js"></script> -->
+  </body>
+</html>

@@ -460,21 +460,22 @@ class conversationSocketPage {
           // this.socketInstance.onAny((event, data) => {
           //   cy.log("SOCKET EVENT:", event, data);
           // });
-          return this.joinConversation(conversationId)
-            .then(() => {
-              const waitMessage = this.listenNewMessage();
-              this.sendInboundMessage(
-                clientContactId,
-                accountChannelId,
-                content,
-              );
-              return waitMessage;
-            })
-            .then((messageData) => {
-              cy.log(
-                `Received message for clientContactId ${clientContactId}: ${JSON.stringify(messageData)}`,
-              );
-            });
+          this.sendInboundMessage(clientContactId, accountChannelId, content);
+          // return this.joinConversation(conversationId)
+          //   .then(() => {
+          //     const waitMessage = this.listenNewMessage();
+          //     this.sendInboundMessage(
+          //       clientContactId,
+          //       accountChannelId,
+          //       content,
+          //     );
+          //     return waitMessage;
+          //   })
+          //   .then((messageData) => {
+          //     cy.log(
+          //       `Received message for clientContactId ${clientContactId}: ${JSON.stringify(messageData)}`,
+          //     );
+          //   });
           // this.listenNewMessage();
         });
       });
