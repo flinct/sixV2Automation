@@ -26,14 +26,36 @@
  * - It validates success by receiving NEW_MESSAGE_EVENT after sending inbound.
  */
 
-const { io } = require('socket.io-client');
+const { io } = require("socket.io-client");
 
 function envInt(name, def) {
   const v = process.env[name];
-  if (v == null || v === '') return def;
+  if (v == null || v === "") return def;
   const n = Number(v);
   if (!Number.isFinite(n)) throw new Error(`Invalid number for ${name}: ${v}`);
   return n;
+}
+
+function envStr(name, def) {
+  const v = process.env[name];
+  return v == null || v === "" ? def : String(v);
+}
+
+function makeLogger() {
+  const level = (envStr("LOG_LEVEL", "info") || "info").toLowerCase();
+  const levels = { silent: 0, error: 1, warn: 2, info: 3, debug: 4 };
+  const cur = levels[level] ?? 3;
+
+  const ts = () => new Date().toISOString();
+  const fmt = (tag, args) => [`[${ts()}] ${tag}`, ...args];
+
+  return {
+    level,
+    error: (...args) => cur >= 1 && console.error(...fmt("[ERROR]", args)),
+    warn: (...args) => cur >= 2 && console.warn(...fmt("[WARN ]", args)),
+    info: (...args) => cur >= 3 && console.log(...fmt("[INFO ]", args)),
+    debug: (...args) => cur >= 4 && console.log(...fmt("[DEBUG]", args)),
+  };
 }
 
 function sleep(ms) {
@@ -41,26 +63,30 @@ function sleep(ms) {
 }
 
 function randomAlphanumeric(length = 6) {
-  return Math.random().toString(36).substring(2, 2 + length).toUpperCase();
+  return Math.random()
+    .toString(36)
+    .substring(2, 2 + length)
+    .toUpperCase();
 }
 
 function randomAlphanumericSpecial(length = 8) {
   const chars =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
-  let result = '';
-  for (let i = 0; i < length; i++) result += chars[Math.floor(Math.random() * chars.length)];
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+  let result = "";
+  for (let i = 0; i < length; i++)
+    result += chars[Math.floor(Math.random() * chars.length)];
   return result;
 }
 
 function uuid() {
   // Node 16+ supports crypto.randomUUID
   try {
-    return require('crypto').randomUUID();
+    return require("crypto").randomUUID();
   } catch {
     // fallback
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   }
@@ -68,25 +94,31 @@ function uuid() {
 
 function apiBaseFromBaseUrl(baseUrl) {
   // mirrors cypress/support/01_url_page.js mapping
-  if (baseUrl === 'https://dev-v2.satuinbox.com') return 'https://dev-v2-api.satuinbox.com/';
-  if (baseUrl === 'https://v2.satuinbox.com') return 'https://v2-api.satuinbox.com/';
-  if (baseUrl === 'https://app.satuinbox.com') return 'https://app.satuinbox.com/api/v1';
-  if (baseUrl === 'https://dev.satuinbox.com') return 'https://dev.satuinbox.com/api/v1';
-  if (baseUrl === 'https://staging.satuinbox.com') return 'https://staging.satuinbox.com/api/v1';
+  if (baseUrl === "https://dev-v2.satuinbox.com")
+    return "https://dev-v2-api.satuinbox.com/";
+  if (baseUrl === "https://v2.satuinbox.com")
+    return "https://v2-api.satuinbox.com/";
+  if (baseUrl === "https://app.satuinbox.com")
+    return "https://app.satuinbox.com/api/v1";
+  if (baseUrl === "https://dev.satuinbox.com")
+    return "https://dev.satuinbox.com/api/v1";
+  if (baseUrl === "https://staging.satuinbox.com")
+    return "https://staging.satuinbox.com/api/v1";
   throw new Error(`Unknown BASE_URL mapping: ${baseUrl}`);
 }
 
 function joinUrl(base, path) {
-  if (!base.endsWith('/') && !path.startsWith('/')) return `${base}/${path}`;
-  if (base.endsWith('/') && path.startsWith('/')) return `${base}${path.slice(1)}`;
+  if (!base.endsWith("/") && !path.startsWith("/")) return `${base}/${path}`;
+  if (base.endsWith("/") && path.startsWith("/"))
+    return `${base}${path.slice(1)}`;
   return `${base}${path}`;
 }
 
-async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
+async function httpJson(url, { method = "GET", headers = {}, body } = {}) {
   const res = await fetch(url, {
     method,
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
       ...headers,
     },
     body: body == null ? undefined : JSON.stringify(body),
@@ -99,7 +131,9 @@ async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
     json = text;
   }
   if (!res.ok) {
-    const err = new Error(`HTTP ${res.status} ${res.statusText} for ${method} ${url}`);
+    const err = new Error(
+      `HTTP ${res.status} ${res.statusText} for ${method} ${url}`,
+    );
     err.status = res.status;
     err.body = json;
     throw err;
@@ -108,21 +142,33 @@ async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
 }
 
 async function fetchActiveWidgetAccountChannels({ apiBase, xApiKey }) {
-  const url = joinUrl(apiBase, 'api/account-channel?limit=200&connectionStatus=active');
+  const url = joinUrl(
+    apiBase,
+    "api/account-channel?limit=200&connectionStatus=active",
+  );
   const data = await httpJson(url, {
     headers: {
-      'x-api-key': xApiKey,
+      "x-api-key": xApiKey,
     },
   });
 
-  const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
+  const items = Array.isArray(data?.items)
+    ? data.items
+    : Array.isArray(data)
+      ? data
+      : [];
   const activeUsed = items.filter(
-    (it) => it?.connectionStatus === 'active' && (it?.accountStatus == null || it?.accountStatus === 'used'),
+    (it) =>
+      it?.connectionStatus === "active" &&
+      (it?.accountStatus == null || it?.accountStatus === "used"),
   );
 
   const widgetOnly = activeUsed.filter((it) => {
     const platformName = it?.channel?.platform?.name;
-    return typeof platformName === 'string' && platformName.toLowerCase() === 'widget';
+    return (
+      typeof platformName === "string" &&
+      platformName.toLowerCase() === "widget"
+    );
   });
 
   return widgetOnly;
@@ -135,6 +181,7 @@ class WidgetAgent {
     apiBase,
     signatureKey,
     socketUrl,
+    setUserEvent,
     joinEvent,
     inboundEvent,
     newMessageEvent,
@@ -146,6 +193,7 @@ class WidgetAgent {
     this.apiBase = apiBase;
     this.signatureKey = signatureKey;
     this.socketUrl = socketUrl;
+    this.setUserEvent = setUserEvent;
     this.joinEvent = joinEvent;
     this.inboundEvent = inboundEvent;
     this.newMessageEvent = newMessageEvent;
@@ -156,9 +204,12 @@ class WidgetAgent {
   }
 
   async connect() {
-    const auth = this.socketAuthMode === 'signatureKey' ? { token: this.signatureKey } : undefined;
+    const auth =
+      this.socketAuthMode === "signatureKey"
+        ? { token: this.signatureKey }
+        : undefined;
     this.socket = io(this.socketUrl, {
-      transports: ['websocket'],
+      transports: ["websocket"],
       forceNew: true,
       auth,
       extraHeaders: {
@@ -167,14 +218,20 @@ class WidgetAgent {
     });
 
     await new Promise((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error(`Agent ${this.agentId} connect timeout`)), 10000);
-      this.socket.on('connect', () => {
+      const t = setTimeout(
+        () => reject(new Error(`Agent ${this.agentId} connect timeout`)),
+        10000,
+      );
+      this.socket.on("connect", () => {
         clearTimeout(t);
         resolve();
       });
-      this.socket.on('connect_error', (err) => {
+      this.socket.on("connect_error", (err) => {
         // do not reject immediately; wait until timeout
-        console.error(`[agent:${this.agentId}] connect_error:`, err?.message || err);
+        console.error(
+          `[agent:${this.agentId}] connect_error:`,
+          err?.message || err,
+        );
       });
     });
 
@@ -193,19 +250,19 @@ class WidgetAgent {
   }
 
   async createClientContact({ channelId, guestName, referenceId }) {
-    const url = joinUrl(this.apiBase, 'open-api/client-contact');
+    const url = joinUrl(this.apiBase, "open-api/client-contact");
     return httpJson(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'x-signature-key': this.signatureKey,
+        "x-signature-key": this.signatureKey,
       },
       body: {
         channelId,
         metaData: {
-          browserName: 'Chrome',
-          deviceType: 'Desktop',
+          browserName: "Chrome",
+          deviceType: "Desktop",
           userAgent:
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
         },
         name: guestName,
         referenceId,
@@ -214,53 +271,107 @@ class WidgetAgent {
   }
 
   async submitTopic({ accountChannelId, clientContactId, topicName }) {
-    const url = joinUrl(this.apiBase, 'open-api/conversation/submit/topic');
+    const url = joinUrl(this.apiBase, "open-api/conversation/submit/topic");
     return httpJson(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'x-signature-key': this.signatureKey,
+        "x-signature-key": this.signatureKey,
       },
       body: {
         accountChannelId,
         clientContactId,
         metadata: [
           {
-            browserName: 'Chrome',
-            deviceType: 'Desktop',
+            browserName: "Chrome",
+            deviceType: "Desktop",
             topic: topicName,
             userAgent:
-              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
           },
         ],
       },
     });
   }
 
-  joinConversation(conversationId) {
-    if (!this.socket) throw new Error('Socket not connected');
-    this.socket.emit(this.joinEvent, { conversationId });
+  setUser({ id, name, referenceId, email = "", phone = "" }) {
+    if (!this.socket) throw new Error("Socket not connected");
+    if (!this.setUserEvent) throw new Error("Missing SET_USER_EVENT");
+    this.socket.emit(this.setUserEvent, { email, id, name, phone, referenceId });
   }
 
-  waitForNewMessage(timeoutMs = 10000) {
-    if (!this.socket) throw new Error('Socket not connected');
+  joinConversation(conversationId, { timeoutMs = 10000, repeat = 2 } = {}) {
+    if (!this.socket) throw new Error("Socket not connected");
+
+    // In real widget traffic, join.conversation is often sent twice (see packet ids 0 and 1)
+    // and server responds with ACK + may also emit the join event back.
     return new Promise((resolve, reject) => {
-      const handler = (data) => {
-        clearTimeout(t);
-        this.socket.off(this.newMessageEvent, handler);
-        resolve(data);
+      const t = setTimeout(
+        () => reject(new Error(`Join timeout for ${conversationId}`)),
+        timeoutMs,
+      );
+
+      let acks = 0;
+      const done = (ack) => {
+        acks++;
+        if (acks >= 1) {
+          clearTimeout(t);
+          resolve(ack);
+        }
       };
 
-      const t = setTimeout(() => {
-        this.socket.off(this.newMessageEvent, handler);
-        reject(new Error(`Timeout waiting ${this.newMessageEvent}`));
-      }, timeoutMs);
+      // first emit with ACK callback
+      this.socket.emit(this.joinEvent, { conversationId }, (ack) => done(ack));
 
-      this.socket.on(this.newMessageEvent, handler);
+      // repeat additional emits without waiting for ack (best-effort)
+      for (let i = 1; i < repeat; i++) {
+        this.socket.emit(this.joinEvent, { conversationId });
+      }
     });
   }
 
-  sendInboundMessage({ channelAccountId, clientContactId, content, type = 'text' }) {
-    if (!this.socket) throw new Error('Socket not connected');
+  waitForNewMessage(timeoutMs = 10000) {
+    if (!this.socket) throw new Error("Socket not connected");
+
+    // Support comma-separated list in NEW_MESSAGE_EVENT, e.g.
+    // NEW_MESSAGE_EVENT="notification.new.message,socket.inbound.message"
+    const events = String(this.newMessageEvent || "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    if (events.length === 0) throw new Error("Missing NEW_MESSAGE_EVENT");
+
+    return new Promise((resolve, reject) => {
+      const handlers = new Map();
+
+      const cleanup = () => {
+        clearTimeout(t);
+        for (const [event, handler] of handlers) this.socket.off(event, handler);
+      };
+
+      for (const event of events) {
+        const handler = (data) => {
+          cleanup();
+          resolve({ event, data });
+        };
+        handlers.set(event, handler);
+        this.socket.on(event, handler);
+      }
+
+      const t = setTimeout(() => {
+        cleanup();
+        reject(new Error(`Timeout waiting ${events.join("|")}`));
+      }, timeoutMs);
+    });
+  }
+
+  sendInboundMessage({
+    channelAccountId,
+    clientContactId,
+    content,
+    type = "text",
+  }) {
+    if (!this.socket) throw new Error("Socket not connected");
 
     const payload = {
       channelAccountId,
@@ -276,143 +387,334 @@ class WidgetAgent {
   }
 }
 
+function envDefaultsFromBaseUrl(baseUrl) {
+  if (typeof baseUrl !== "string") return {};
+
+  // Hardcoded defaults per environment (requested)
+  if (baseUrl.includes("dev-v2.satuinbox.com")) {
+    return {
+      channelId: "692fe8eaaff05e8a1623e0d3",
+      signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
+      accountChannels: [
+        { id: "698ef3aada258f2a5a46bf89", topic: "hey" },
+        { id: "6964ac1d2a5dbde9a5c6fa28", topic: "tumbler biru" },
+        { id: "69783b0154be8e7508b4af08", topic: "CS harga" },
+        { id: "69782d3654be8e7508b4abfe", topic: "Complain" },
+        { id: "6964ab6929de985a0fe73e48", topic: "kipas angin" },
+      ],
+    };
+  }
+
+  if (baseUrl.includes("v2.satuinbox.com")) {
+    return {
+      channelId: "694b55ffbb886b39e785d2c0",
+      signatureKey: "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
+      accountChannels: [
+        { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
+        { id: "69649c6b905d65859c36f81c", topic: "remote control" },
+        { id: "697845cf1782f1bd889b6bfc", topic: "CS harga" },
+        { id: "6964931c905d65859c36f618", topic: "kipas angin" },
+        { id: "69a9c8c86e7924748d4af383", topic: "Hayoh kumaha" },
+      ],
+    };
+  }
+
+  return {};
+}
+
 async function main() {
-  const baseUrl = process.env.BASE_URL;
-  const signatureKey = process.env.SIGNATURE_KEY;
-  if (!baseUrl) throw new Error('Missing BASE_URL');
-  if (!signatureKey) throw new Error('Missing SIGNATURE_KEY');
+  const log = makeLogger();
+
+  // Prefer BASE_URL for standalone runs; fall back to Cypress-style env.
+  // Normalize trailing slash so apiBaseFromBaseUrl() exact matches keep working.
+  const baseUrlRaw =
+    process.env.BASE_URL ||
+    process.env.CYPRESS_baseUrl ||
+    process.env.CYPRESS_BASE_URL;
+  const baseUrl =
+    typeof baseUrlRaw === "string"
+      ? baseUrlRaw.replace(/\/+$/g, "")
+      : baseUrlRaw;
+
+  const defaults = envDefaultsFromBaseUrl(baseUrl || "");
+
+  const signatureKey = process.env.SIGNATURE_KEY || defaults.signatureKey;
+
+  if (!baseUrl) throw new Error("Missing BASE_URL (or CYPRESS_baseUrl)");
+  if (!signatureKey) throw new Error("Missing SIGNATURE_KEY");
+
+  log.info("Starting widget-socket-load", {
+    baseUrl,
+    logLevel: log.level,
+  });
 
   const apiBase = apiBaseFromBaseUrl(baseUrl);
-  const socketUrl = joinUrl(apiBase, 'conversations');
+  const socketUrl = joinUrl(apiBase, "conversations");
 
-  const AGENTS = envInt('AGENTS', 5);
-  const CHURN_AGENTS = envInt('CHURN_AGENTS', 2);
-  const MESSAGES_PER_AGENT = envInt('MESSAGES_PER_AGENT', 10);
-  const CYCLES = envInt('CYCLES', 3);
+  const LOG_EVERY = envInt("LOG_EVERY", 5); // log every N messages per agent (0 = disable)
 
-  const TOPIC_PREFIX = process.env.TOPIC_PREFIX || 'loadtest';
-  const JOIN_EVENT = process.env.JOIN_EVENT || 'socket.join.conversation';
-  const INBOUND_EVENT = process.env.INBOUND_EVENT || 'socket.inbound.message';
-  const NEW_MESSAGE_EVENT = process.env.NEW_MESSAGE_EVENT || 'notification.new.message';
-  const SOCKET_AUTH_MODE = process.env.SOCKET_AUTH_MODE || 'signatureKey';
-  const DEBUG_ALL_EVENTS = (process.env.DEBUG_ALL_EVENTS || '').toLowerCase() === 'true';
+  const AGENTS = envInt("AGENTS", 5);
+  const CHURN_AGENTS = envInt("CHURN_AGENTS", 2);
+  const MESSAGES_PER_AGENT = envInt("MESSAGES_PER_AGENT", 10);
+  const CYCLES = envInt("CYCLES", 3);
+
+  const TOPIC_PREFIX = process.env.TOPIC_PREFIX || "loadtest";
+  const SET_USER_EVENT = process.env.SET_USER_EVENT || "widget.set.user";
+  // Default JOIN_EVENT updated based on observed socket logs.
+  const JOIN_EVENT = process.env.JOIN_EVENT || "join.conversation";
+  const INBOUND_EVENT = process.env.INBOUND_EVENT || "socket.inbound.message";
+  // Observed events after inbound:
+  // - "message"
+  // - "notification.new.message"
+  const NEW_MESSAGE_EVENT =
+    process.env.NEW_MESSAGE_EVENT || "notification.new.message,message";
+  const SOCKET_AUTH_MODE = process.env.SOCKET_AUTH_MODE || "signatureKey";
+  const DEBUG_ALL_EVENTS =
+    (process.env.DEBUG_ALL_EVENTS || "").toLowerCase() === "true";
+
+  const JOIN_DELAY_MS = envInt("JOIN_DELAY_MS", 200);
+  const MESSAGE_WAIT_TIMEOUT_MS = envInt("MESSAGE_WAIT_TIMEOUT_MS", 30000);
+  const SEND_TYPING = (process.env.SEND_TYPING || "").toLowerCase() === "true";
+  const TYPING_START_EVENT = process.env.TYPING_START_EVENT || "typing.start";
+  const TYPING_STOP_EVENT = process.env.TYPING_STOP_EVENT || "typing.stop";
 
   // Account-channel discovery:
   // - If X_API_KEY is provided, we can fetch active widget accountChannels from `api/account-channel`.
-  // - If not, user must provide WIDGET_ACCOUNT_CHANNEL_IDS (comma-separated).
+  // - Else, accept WIDGET_ACCOUNT_CHANNEL_IDS (comma-separated).
+  // - Else, fall back to hardcoded defaults based on BASE_URL (requested).
   const xApiKey = process.env.X_API_KEY;
 
-  let widgetAccountChannelIds;
+  /** @type {{id:string, topic?:string}[]} */
+  let widgetAccountChannels;
 
   if (xApiKey) {
-    const widgetChannels = await fetchActiveWidgetAccountChannels({ apiBase, xApiKey });
-    if (widgetChannels.length === 0) throw new Error('No active Widget account channels found');
-    widgetAccountChannelIds = widgetChannels.map((c) => c.id);
-    console.log(`widgetChannels(active via api/account-channel): ${widgetAccountChannelIds.length}`);
+    const widgetChannels = await fetchActiveWidgetAccountChannels({
+      apiBase,
+      xApiKey,
+    });
+    if (widgetChannels.length === 0)
+      throw new Error("No active Widget account channels found");
+    widgetAccountChannels = widgetChannels.map((c) => ({ id: c.id }));
+    log.info(
+      `widgetChannels(active via api/account-channel): ${widgetAccountChannels.length}`,
+    );
   } else {
-    widgetAccountChannelIds = (process.env.WIDGET_ACCOUNT_CHANNEL_IDS || '')
-      .split(',')
+    const fromEnv = (process.env.WIDGET_ACCOUNT_CHANNEL_IDS || "")
+      .split(",")
       .map((s) => s.trim())
-      .filter(Boolean);
+      .filter(Boolean)
+      .map((id) => ({ id }));
 
-    if (widgetAccountChannelIds.length === 0) {
+    if (fromEnv.length > 0) {
+      widgetAccountChannels = fromEnv;
+      log.info(
+        `widgetChannels(from WIDGET_ACCOUNT_CHANNEL_IDS): ${widgetAccountChannels.length}`,
+      );
+    } else if (
+      Array.isArray(defaults.accountChannels) &&
+      defaults.accountChannels.length > 0
+    ) {
+      widgetAccountChannels = defaults.accountChannels;
+      log.info(
+        `widgetChannels(from hardcoded defaults): ${widgetAccountChannels.length}`,
+      );
+    } else {
       throw new Error(
-        'Missing X_API_KEY and WIDGET_ACCOUNT_CHANNEL_IDS. Provide one of them to choose widget accountChannelId values.',
+        "Missing X_API_KEY and WIDGET_ACCOUNT_CHANNEL_IDS. Provide one of them to choose widget accountChannelId values.",
       );
     }
-    console.log(`widgetChannels(from WIDGET_ACCOUNT_CHANNEL_IDS): ${widgetAccountChannelIds.length}`);
   }
 
-  const pickAccountChannelId = () =>
-    widgetAccountChannelIds[Math.floor(Math.random() * widgetAccountChannelIds.length)];
+  const pickAccountChannel = () =>
+    widgetAccountChannels[
+      Math.floor(Math.random() * widgetAccountChannels.length)
+    ];
 
   const longLivedCount = Math.max(0, AGENTS - CHURN_AGENTS);
 
-  console.log('--- Widget Socket Load ---');
-  console.log({ baseUrl, apiBase, socketUrl });
-  console.log({ AGENTS, CHURN_AGENTS, longLivedCount, MESSAGES_PER_AGENT, CYCLES });
-  console.log({ JOIN_EVENT, INBOUND_EVENT, NEW_MESSAGE_EVENT, SOCKET_AUTH_MODE });
+  log.info("--- Widget Socket Load ---");
+  log.info({ baseUrl, apiBase, socketUrl });
+  log.info({
+    AGENTS,
+    CHURN_AGENTS,
+    longLivedCount,
+    MESSAGES_PER_AGENT,
+    CYCLES,
+    LOG_EVERY,
+  });
+  log.info({
+    SET_USER_EVENT,
+    JOIN_EVENT,
+    INBOUND_EVENT,
+    NEW_MESSAGE_EVENT,
+    SOCKET_AUTH_MODE,
+    JOIN_DELAY_MS,
+    MESSAGE_WAIT_TIMEOUT_MS,
+    SEND_TYPING,
+    TYPING_START_EVENT,
+    TYPING_STOP_EVENT,
+  });
   // widget channel count is logged above depending on discovery mode
 
   // long-lived agents: keep connected for entire run
-  const longLived = Array.from({ length: longLivedCount }).map((_, idx) =>
-    new WidgetAgent({
-      agentId: `L${idx + 1}`,
-      baseUrl,
-      apiBase,
-      signatureKey,
-      socketUrl,
-      joinEvent: JOIN_EVENT,
-      inboundEvent: INBOUND_EVENT,
-      newMessageEvent: NEW_MESSAGE_EVENT,
-      socketAuthMode: SOCKET_AUTH_MODE,
-      debugAllEvents: DEBUG_ALL_EVENTS,
-    }),
+  const longLived = Array.from({ length: longLivedCount }).map(
+    (_, idx) =>
+      new WidgetAgent({
+        agentId: `L${idx + 1}`,
+        baseUrl,
+        apiBase,
+        signatureKey,
+        socketUrl,
+        setUserEvent: SET_USER_EVENT,
+        joinEvent: JOIN_EVENT,
+        inboundEvent: INBOUND_EVENT,
+        newMessageEvent: NEW_MESSAGE_EVENT,
+        socketAuthMode: SOCKET_AUTH_MODE,
+        debugAllEvents: DEBUG_ALL_EVENTS,
+      }),
   );
 
   // churn agents: connect-send-disconnect each cycle
-  const churn = Array.from({ length: CHURN_AGENTS }).map((_, idx) =>
-    new WidgetAgent({
-      agentId: `C${idx + 1}`,
-      baseUrl,
-      apiBase,
-      signatureKey,
-      socketUrl,
-      joinEvent: JOIN_EVENT,
-      inboundEvent: INBOUND_EVENT,
-      newMessageEvent: NEW_MESSAGE_EVENT,
-      socketAuthMode: SOCKET_AUTH_MODE,
-      debugAllEvents: DEBUG_ALL_EVENTS,
-    }),
+  const churn = Array.from({ length: CHURN_AGENTS }).map(
+    (_, idx) =>
+      new WidgetAgent({
+        agentId: `C${idx + 1}`,
+        baseUrl,
+        apiBase,
+        signatureKey,
+        socketUrl,
+        setUserEvent: SET_USER_EVENT,
+        joinEvent: JOIN_EVENT,
+        inboundEvent: INBOUND_EVENT,
+        newMessageEvent: NEW_MESSAGE_EVENT,
+        socketAuthMode: SOCKET_AUTH_MODE,
+        debugAllEvents: DEBUG_ALL_EVENTS,
+      }),
   );
 
   // Connect long-lived first
-  await Promise.all(longLived.map((a) => a.connect()));
-  console.log(`Connected long-lived agents: ${longLived.length}`);
+  await Promise.all(
+    longLived.map(async (a) => {
+      log.info(`Connecting long-lived agent ${a.agentId}...`);
+      await a.connect();
+      log.info(`Connected long-lived agent ${a.agentId}`);
+    }),
+  );
+  log.info(`Connected long-lived agents: ${longLived.length}`);
 
   async function runOneFlow(agent) {
-    const accountChannelId = pickAccountChannelId();
-    const topicName = `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
+    const picked = pickAccountChannel();
+    const accountChannelId = picked.id;
+    const topicName =
+      picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
+
+    log.info(`[agent:${agent.agentId}] flow:start`, {
+      accountChannelId,
+      topicName,
+    });
 
     // channelId is not available in account-channel item; for widget open-api client-contact you use channelId (widget channelId),
     // but in your existing Cypress code it is hardcoded per env. Here we assume backend accepts widget.channel.id OR you provide it.
     // To avoid guessing, you must pass WIDGET_CHANNEL_ID.
-    const channelId = process.env.WIDGET_CHANNEL_ID;
-    if (!channelId) throw new Error('Missing WIDGET_CHANNEL_ID (widget channelId for open-api/client-contact)');
+    // Widget channelId (needed for open-api/client-contact)
+    // Support Cypress-style env naming too, with a hardcoded fallback per env.
+    const channelId =
+      process.env.WIDGET_CHANNEL_ID ||
+      process.env.CYPRESS_WIDGET_CHANNEL_ID ||
+      process.env.CYPRESS_widgetChannelId ||
+      defaults.channelId;
+
+    if (!channelId) {
+      throw new Error(
+        "Missing WIDGET_CHANNEL_ID (widget channelId for open-api/client-contact). " +
+          "Set env WIDGET_CHANNEL_ID or CYPRESS_WIDGET_CHANNEL_ID.",
+      );
+    }
 
     const guestName = `guest-${randomAlphanumeric(6)}`;
     const referenceId = uuid();
 
-    const contact = await agent.createClientContact({ channelId, guestName, referenceId });
+    const contact = await agent.createClientContact({
+      channelId,
+      guestName,
+      referenceId,
+    });
     const clientContactId = contact?.id || contact?.data?.id;
-    if (!clientContactId) throw new Error('createClientContact: missing id in response');
+    if (!clientContactId)
+      throw new Error("createClientContact: missing id in response");
+    log.debug(`[agent:${agent.agentId}] created clientContact`, {
+      clientContactId,
+    });
 
-    const topicResp = await agent.submitTopic({ accountChannelId, clientContactId, topicName });
+    const topicResp = await agent.submitTopic({
+      accountChannelId,
+      clientContactId,
+      topicName,
+    });
     const conversationId = topicResp?.id || topicResp?.data?.id;
-    if (!conversationId) throw new Error('submitTopic: missing conversation id in response');
+    if (!conversationId)
+      throw new Error("submitTopic: missing conversation id in response");
+    log.debug(`[agent:${agent.agentId}] submitted topic`, { conversationId });
 
-    agent.joinConversation(conversationId);
-    // small delay to reduce race
-    await sleep(50);
+    // Mirror browser widget flow: set user on socket, then join conversation (with ACK).
+    agent.setUser({
+      id: clientContactId,
+      name: guestName,
+      referenceId,
+      email: "",
+      phone: "",
+    });
+
+    const joinAck = await agent.joinConversation(conversationId, { timeoutMs: 10000 });
+    log.debug(`[agent:${agent.agentId}] joinAck`, joinAck);
+
+    // delay after join to reduce race
+    await sleep(JOIN_DELAY_MS);
 
     for (let i = 0; i < MESSAGES_PER_AGENT; i++) {
       const content = `${topicName}: msg-${i + 1} ${randomAlphanumericSpecial(6)}`;
-      const wait = agent.waitForNewMessage(15000);
+
+      if (LOG_EVERY > 0 && (i === 0 || (i + 1) % LOG_EVERY === 0)) {
+        log.info(
+          `[agent:${agent.agentId}] sending msg ${i + 1}/${MESSAGES_PER_AGENT}`,
+        );
+      }
+
+      const wait = agent.waitForNewMessage(MESSAGE_WAIT_TIMEOUT_MS);
+
+      if (SEND_TYPING) {
+        agent.socket.emit(TYPING_START_EVENT, { conversationId });
+        agent.socket.emit(TYPING_STOP_EVENT, { conversationId });
+      }
+
       agent.sendInboundMessage({
         channelAccountId: accountChannelId,
         clientContactId,
         content,
       });
-      const msg = await wait;
-      if (!msg) throw new Error('No message payload received');
+
+      const received = await wait;
+      if (!received) throw new Error("No message payload received");
+      if (LOG_EVERY > 0 && (i === 0 || (i + 1) % LOG_EVERY === 0)) {
+        log.debug(`[agent:${agent.agentId}] received`, {
+          event: received.event,
+          sample: received?.data,
+        });
+      }
     }
+
+    log.info(`[agent:${agent.agentId}] flow:done`, {
+      conversationId,
+      accountChannelId,
+      clientContactId,
+    });
 
     return { conversationId, accountChannelId, clientContactId };
   }
 
   // Run churn cycles
   for (let cycle = 1; cycle <= CYCLES; cycle++) {
-    console.log(`\n--- cycle ${cycle}/${CYCLES} ---`);
+    log.info(`\n--- cycle ${cycle}/${CYCLES} ---`);
 
     // churn agents: connect -> run flow -> disconnect
     await Promise.all(
@@ -436,11 +738,13 @@ async function main() {
 
   // cleanup
   longLived.forEach((a) => a.disconnect());
-  console.log('\nDone.');
+  log.info("\nDone.");
 }
 
 main().catch((err) => {
-  console.error('FAILED:', err?.message || err);
-  if (err?.body) console.error('BODY:', JSON.stringify(err.body).slice(0, 2000));
+  // keep error readable even when running under Cypress
+  console.error("FAILED:", err?.stack || err?.message || err);
+  if (err?.body)
+    console.error("BODY:", JSON.stringify(err.body).slice(0, 2000));
   process.exitCode = 1;
 });

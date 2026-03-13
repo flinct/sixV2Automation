@@ -35,10 +35,17 @@ describe("Load tests (Node scripts)", () => {
   }
 
   it("widgetSocketLoad", () => {
+    const timeoutMs = Number(Cypress.env("NODE_EXEC_TIMEOUT_MS")) || 1000 * 60 * 120; // default 2 hours
+
     cy.exec("node scripts/widget-socket-load.js", {
-      timeout: 1000 * 60 * 30, // 30 minutes
+      timeout: timeoutMs,
       failOnNonZeroExit: true,
-      env: commonNodeEnv(),
+      env: {
+        ...commonNodeEnv(),
+        // script logging
+        LOG_LEVEL: Cypress.env("LOG_LEVEL") || "info",
+        LOG_EVERY: Cypress.env("LOG_EVERY") || 5,
+      },
     }).then((res) => {
       cy.log(`exitCode: ${res.code}`);
     });
