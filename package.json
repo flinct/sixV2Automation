@@ -261,7 +261,8 @@
     "sendemail": "node rename-report2.js && node send-report2.js",
     "widget:socket:load": "node scripts/widget-socket-load.js",
     "widget:socket:load-2": "node scripts/widget-socket-load-2.js",
-    "wa:qr:health": "node scripts/wa-qr-health.js"
+    "wa:qr:health": "node scripts/wa-qr-health.js",
+    "proxy:precheck": "node scripts/proxy-precheck.js"
   },
   "author": "",
   "license": "ISC",
