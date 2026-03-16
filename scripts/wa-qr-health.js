@@ -33,6 +33,11 @@ function envInt(name, def) {
   return n;
 }
 
+function envStr(name, def = "") {
+  const v = process.env[name];
+  return v == null || v === "" ? def : String(v);
+}
+
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
