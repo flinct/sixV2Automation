@@ -25,9 +25,16 @@
  * - SOCKET_PATH: socket.io path (default: /socket.io)
  *
  * Throughput-only:
- * - EMIT_EVENT: event name to emit periodically (default: widget.ping)
+ * - EMIT_EVENT: event name to emit periodically (default: socket.inbound.message)
  * - EMIT_EVERY_MS: per-client emit interval (default: 2000)
- * - EMIT_PAYLOAD_JSON: JSON string payload (default: {"t":"ping"})
+ * - EMIT_PAYLOAD_JSON: JSON string payload.
+ *   Default matches scripts/widget-socket-load.js inbound payload shape.
+ *
+ *   You MUST provide identifiers via env vars:
+ *   - CHANNEL_ACCOUNT_ID (same as channelAccountId)
+ *   - CLIENT_CONTACT_ID (same as clientContactId)
+ *
+ *   The script will auto-fill: tempMessageId, timestamp, content.
  * - EXPECT_EVENTS: comma-separated list of events to count as "delivered" (default: empty)
  * - DEBUG_ALL_EVENTS: true|false (default false)
  *
@@ -100,6 +107,18 @@ function parseJsonEnv(name, defObj) {
     return JSON.parse(raw);
   } catch (e) {
     throw new Error(`Invalid JSON in ${name}: ${(e && e.message) || e}`);
+  }
+}
+
+function uuid() {
+  try {
+    return require('crypto').randomUUID();
+  } catch {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 }
 
@@ -238,10 +257,20 @@ async function main() {
     throw new Error('Missing SIGNATURE_KEY (required when SOCKET_AUTH_MODE=signatureKey)');
   }
 
-  // throughput options
-  const EMIT_EVENT = envStr('EMIT_EVENT', 'widget.ping');
+  // throughput options (default mirrors scripts/widget-socket-load.js)
+  const EMIT_EVENT = envStr('EMIT_EVENT', 'socket.inbound.message');
   const EMIT_EVERY_MS = envInt('EMIT_EVERY_MS', 2000);
-  const EMIT_PAYLOAD_JSON = parseJsonEnv('EMIT_PAYLOAD_JSON', { t: 'ping', ts: () => undefined });
+
+  const CHANNEL_ACCOUNT_ID = envStr('CHANNEL_ACCOUNT_ID', '');
+  const CLIENT_CONTACT_ID = envStr('CLIENT_CONTACT_ID', '');
+
+  const EMIT_PAYLOAD_JSON = parseJsonEnv('EMIT_PAYLOAD_JSON', {
+    // NOTE: script will override channelAccountId/clientContactId if env vars are provided
+    // and will always override tempMessageId/timestamp/content.
+    channelAccountId: CHANNEL_ACCOUNT_ID || undefined,
+    clientContactId: CLIENT_CONTACT_ID || undefined,
+    type: 'text',
+  });
 
   log.info('Starting widget-socket-load-2', {
     baseUrl,
@@ -255,7 +284,14 @@ async function main() {
     socketPath: SOCKET_PATH,
     socketAuthMode: SOCKET_AUTH_MODE,
     expectEvents: EXPECT_EVENTS,
-    emit: MODE === 'throughput' ? { event: EMIT_EVENT, everyMs: EMIT_EVERY_MS } : undefined,
+    emit: MODE === 'throughput'
+      ? {
+          event: EMIT_EVENT,
+          everyMs: EMIT_EVERY_MS,
+          channelAccountId: CHANNEL_ACCOUNT_ID || undefined,
+          clientContactId: CLIENT_CONTACT_ID || undefined,
+        }
+      : undefined,
     logLevel: log.level,
   });
 
@@ -336,13 +372,34 @@ async function main() {
     if (MODE === 'throughput') {
       const payloadTemplate = EMIT_PAYLOAD_JSON;
 
+      if (EMIT_EVENT === 'socket.inbound.message') {
+        if (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID) {
+          throw new Error(
+            'MODE=throughput with EMIT_EVENT=socket.inbound.message requires env CHANNEL_ACCOUNT_ID and CLIENT_CONTACT_ID ' +
+              '(so the payload matches widget-socket-load.js).',
+          );
+        }
+      }
+
       const loops = clients.map(async (c) => {
         while (!stop) {
           if (c.socket && c.socket.connected) {
-            // allow ts to be dynamic
-            const payload = typeof payloadTemplate === 'object' && payloadTemplate
-              ? { ...payloadTemplate, ts: new Date().toISOString(), clientId: c.id }
-              : payloadTemplate;
+            let payload;
+            if (typeof payloadTemplate === 'object' && payloadTemplate) {
+              payload = {
+                ...payloadTemplate,
+                channelAccountId: CHANNEL_ACCOUNT_ID || payloadTemplate.channelAccountId,
+                clientContactId: CLIENT_CONTACT_ID || payloadTemplate.clientContactId,
+                // align with widget-socket-load.js
+                tempMessageId: uuid(),
+                timestamp: new Date().toISOString(),
+                type: payloadTemplate.type || 'text',
+                content: `load-2 client:${c.id} ${new Date().toISOString()}`,
+              };
+            } else {
+              payload = payloadTemplate;
+            }
+
             c.emit(EMIT_EVENT, payload);
           }
           await sleep(EMIT_EVERY_MS);
