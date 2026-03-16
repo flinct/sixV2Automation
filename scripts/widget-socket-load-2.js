@@ -197,7 +197,28 @@ async function main() {
   const apiBase = apiBaseFromBaseUrl(baseUrl);
   const socketUrl = joinUrl(apiBase, 'conversations');
 
-  const signatureKey = process.env.SIGNATURE_KEY || '';
+  // Hardcoded defaults per environment (mirrors scripts/widget-socket-load.js)
+  function envDefaultsFromBaseUrl(baseUrlStr) {
+    if (typeof baseUrlStr !== 'string') return {};
+
+    if (baseUrlStr.includes('dev-v2.satuinbox.com')) {
+      return {
+        signatureKey: 'sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if',
+      };
+    }
+
+    if (baseUrlStr.includes('v2.satuinbox.com')) {
+      return {
+        signatureKey: 'sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM',
+      };
+    }
+
+    return {};
+  }
+
+  const defaults = envDefaultsFromBaseUrl(baseUrl);
+  const signatureKey = process.env.SIGNATURE_KEY || defaults.signatureKey || '';
+
   const MODE = (envStr('MODE', 'soak') || 'soak').toLowerCase();
   const TARGET_CONNECTIONS = envInt('TARGET_CONNECTIONS', 1200);
   const RAMP_STEP = envInt('RAMP_STEP', 50);
