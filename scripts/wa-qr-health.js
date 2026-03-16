@@ -329,8 +329,10 @@ async function main() {
         console.log("  [v2] created id:", created.id);
 
         // 2) init instance
+        // According to API validation error, payload expects `id` (mongodb id) and rejects `accountChannelId`.
+        // Default to { id: <accountChannelId> }. Override via INIT_INSTANCE_V2_BODY_JSON if your API differs.
         const initBody = parseJsonEnv("INIT_INSTANCE_V2_BODY_JSON", {
-          accountChannelId: created.id,
+          id: created.id,
         });
         console.log(`  [v2] init instance: POST ${joinUrl(apiBase, "api/account-channel/instance")}`);
         console.log("  [v2] body:", initBody);
