@@ -147,11 +147,19 @@ class LoadClient {
     this.socket = null;
     this.connectedAt = null;
 
+    // Optional per-client prepared identifiers
+    this.prepared = {
+      channelAccountId: null,
+      clientContactId: null,
+      conversationId: null,
+    };
+
     this.stats = {
       connectErrors: 0,
       disconnects: 0,
       emits: 0,
       expectHits: 0,
+      prepareErrors: 0,
     };
   }
 
@@ -371,6 +379,8 @@ async function main() {
   let CLIENT_CONTACT_ID = envStr('CLIENT_CONTACT_ID', '');
   let CONVERSATION_ID = envStr('CONVERSATION_ID', '');
 
+  const MAX_PREPARE_CONCURRENCY = envInt('MAX_PREPARE_CONCURRENCY', 10);
+
   const WIDGET_CHANNEL_ID = envStr('WIDGET_CHANNEL_ID', '') || defaults.channelId || '';
 
   const accountChannelFromEnv = envStr('WIDGET_ACCOUNT_CHANNEL_IDS', '')
@@ -436,11 +446,15 @@ async function main() {
     let disconnects = 0;
     let emits = 0;
     let expectHits = 0;
+    let prepareErrors = 0;
+    let preparedRooms = 0;
     for (const c of clients) {
       connectErrors += c.stats.connectErrors;
       disconnects += c.stats.disconnects;
       emits += c.stats.emits;
       expectHits += c.stats.expectHits;
+      prepareErrors += c.stats.prepareErrors;
+      if (c.prepared && c.prepared.conversationId) preparedRooms++;
     }
 
     const uptimeSec = Math.round((Date.now() - startedAt) / 1000);
@@ -452,17 +466,16 @@ async function main() {
       disconnects,
       emits,
       expectHits,
+      prepareErrors,
+      preparedRooms,
     });
   }, 10000);
 
   try {
     // Optional: auto-prepare identifiers for inbound event (mirrors widget-socket-load.js)
-    if (
-      MODE === 'throughput' &&
-      EMIT_EVENT === 'socket.inbound.message' &&
-      AUTO_PREPARE &&
-      (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID)
-    ) {
+    // - shared: create 1 conversation and all clients join it
+    // - perClient: create 1 conversation per client and join respectively
+    if (MODE === 'throughput' && EMIT_EVENT === 'socket.inbound.message' && AUTO_PREPARE) {
       if (!signatureKey) throw new Error('AUTO_PREPARE requires SIGNATURE_KEY');
       if (!WIDGET_CHANNEL_ID)
         throw new Error('AUTO_PREPARE requires WIDGET_CHANNEL_ID (or a BASE_URL with hardcoded default channelId)');
@@ -471,43 +484,52 @@ async function main() {
           'AUTO_PREPARE requires WIDGET_ACCOUNT_CHANNEL_IDS or a BASE_URL with hardcoded defaults.accountChannels',
         );
 
-      const picked = pickAccountChannel();
-      const accountChannelId = picked.id;
-      const topicName = picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
+      if (PREPARE_MODE === 'shared') {
+        if (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID) {
+          const picked = pickAccountChannel();
+          const accountChannelId = picked.id;
+          const topicName = picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
 
-      const guestName = `guest-${randomAlphanumeric(6)}`;
-      const referenceId = uuid();
+          const guestName = `guest-${randomAlphanumeric(6)}`;
+          const referenceId = uuid();
 
-      log.info('auto-prepare:start', { accountChannelId, topicName });
-      const contact = await createClientContact({
-        apiBase,
-        signatureKey,
-        channelId: WIDGET_CHANNEL_ID,
-        guestName,
-        referenceId,
-      });
-      const clientContactId = contact?.id || contact?.data?.id;
-      if (!clientContactId) throw new Error('auto-prepare: createClientContact missing id');
+          log.info('auto-prepare(shared):start', { accountChannelId, topicName });
+          const contact = await createClientContact({
+            apiBase,
+            signatureKey,
+            channelId: WIDGET_CHANNEL_ID,
+            guestName,
+            referenceId,
+          });
+          const clientContactId = contact?.id || contact?.data?.id;
+          if (!clientContactId) throw new Error('auto-prepare(shared): createClientContact missing id');
 
-      const topicResp = await submitTopic({
-        apiBase,
-        signatureKey,
-        accountChannelId,
-        clientContactId,
-        topicName,
-      });
-      const conversationId = topicResp?.id || topicResp?.data?.id;
-      if (!conversationId) throw new Error('auto-prepare: submitTopic missing conversation id');
+          const topicResp = await submitTopic({
+            apiBase,
+            signatureKey,
+            accountChannelId,
+            clientContactId,
+            topicName,
+          });
+          const conversationId = topicResp?.id || topicResp?.data?.id;
+          if (!conversationId) throw new Error('auto-prepare(shared): submitTopic missing conversation id');
 
-      CHANNEL_ACCOUNT_ID = accountChannelId;
-      CLIENT_CONTACT_ID = clientContactId;
-      CONVERSATION_ID = conversationId;
+          CHANNEL_ACCOUNT_ID = accountChannelId;
+          CLIENT_CONTACT_ID = clientContactId;
+          CONVERSATION_ID = conversationId;
 
-      log.info('auto-prepare:done', {
-        CHANNEL_ACCOUNT_ID,
-        CLIENT_CONTACT_ID,
-        CONVERSATION_ID,
-      });
+          log.info('auto-prepare(shared):done', {
+            CHANNEL_ACCOUNT_ID,
+            CLIENT_CONTACT_ID,
+            CONVERSATION_ID,
+          });
+        }
+      } else if (PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') {
+        // per-client prepare happens after sockets are created/connected (so each client can join its own room)
+        log.info('auto-prepare(perClient):enabled', { maxPrepareConcurrency: MAX_PREPARE_CONCURRENCY });
+      } else {
+        throw new Error(`Invalid PREPARE_MODE: ${PREPARE_MODE} (expected shared|perClient)`);
+      }
     }
 
     // ramp-up
@@ -555,7 +577,8 @@ async function main() {
       const payloadTemplate = EMIT_PAYLOAD_JSON;
 
       if (EMIT_EVENT === 'socket.inbound.message') {
-        if (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID) {
+        // shared: global ids must exist; perClient: each client will have its own ids
+        if ((PREPARE_MODE === 'shared' || !AUTO_PREPARE) && (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID)) {
           throw new Error(
             'MODE=throughput with EMIT_EVENT=socket.inbound.message requires CHANNEL_ACCOUNT_ID and CLIENT_CONTACT_ID. ' +
               'Set them via env or enable AUTO_PREPARE=true (default).',
@@ -563,8 +586,8 @@ async function main() {
         }
       }
 
-      // Optional: join the prepared conversation so server can deliver events back to clients.
-      if (CONVERSATION_ID) {
+      // Optional: join conversation(s) so server can deliver events back to clients.
+      if (PREPARE_MODE === 'shared' && CONVERSATION_ID) {
         log.info('joining conversation for all clients', {
           conversationId: CONVERSATION_ID,
           joinEvent: JOIN_EVENT,
@@ -574,15 +597,83 @@ async function main() {
         }
       }
 
+      if ((PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') && AUTO_PREPARE && EMIT_EVENT === 'socket.inbound.message') {
+        // Prepare one conversation per client with limited concurrency.
+        log.info('auto-prepare(perClient):start', { clients: clients.length, maxPrepareConcurrency: MAX_PREPARE_CONCURRENCY });
+
+        let idx = 0;
+        const worker = async () => {
+          while (idx < clients.length) {
+            const cur = clients[idx++];
+            if (!cur.socket || !cur.socket.connected) continue;
+            try {
+              const picked = pickAccountChannel();
+              const accountChannelId = picked.id;
+              const topicName = picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
+              const guestName = `guest-${randomAlphanumeric(6)}`;
+              const referenceId = uuid();
+
+              const contact = await createClientContact({
+                apiBase,
+                signatureKey,
+                channelId: WIDGET_CHANNEL_ID,
+                guestName,
+                referenceId,
+              });
+              const clientContactId = contact?.id || contact?.data?.id;
+              if (!clientContactId) throw new Error('createClientContact missing id');
+
+              const topicResp = await submitTopic({
+                apiBase,
+                signatureKey,
+                accountChannelId,
+                clientContactId,
+                topicName,
+              });
+              const conversationId = topicResp?.id || topicResp?.data?.id;
+              if (!conversationId) throw new Error('submitTopic missing conversation id');
+
+              cur.prepared.channelAccountId = accountChannelId;
+              cur.prepared.clientContactId = clientContactId;
+              cur.prepared.conversationId = conversationId;
+
+              // join its own conversation
+              cur.socket.emit(JOIN_EVENT, { conversationId });
+            } catch (e) {
+              cur.stats.prepareErrors++;
+            }
+          }
+        };
+
+        const workers = Array.from({ length: Math.max(1, Math.min(MAX_PREPARE_CONCURRENCY, clients.length)) }).map(() => worker());
+        await Promise.all(workers);
+
+        const preparedCount = clients.filter((c) => c.prepared.conversationId).length;
+        log.info('auto-prepare(perClient):done', { preparedCount });
+      }
+
       const loops = clients.map(async (c) => {
         while (!stop) {
           if (c.socket && c.socket.connected) {
             let payload;
+
             if (typeof payloadTemplate === 'object' && payloadTemplate) {
+              const perClientIds = c.prepared && c.prepared.clientContactId ? c.prepared : null;
+
+              const channelAccountId =
+                (PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') && perClientIds
+                  ? perClientIds.channelAccountId
+                  : CHANNEL_ACCOUNT_ID || payloadTemplate.channelAccountId;
+
+              const clientContactId =
+                (PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') && perClientIds
+                  ? perClientIds.clientContactId
+                  : CLIENT_CONTACT_ID || payloadTemplate.clientContactId;
+
               payload = {
                 ...payloadTemplate,
-                channelAccountId: CHANNEL_ACCOUNT_ID || payloadTemplate.channelAccountId,
-                clientContactId: CLIENT_CONTACT_ID || payloadTemplate.clientContactId,
+                channelAccountId,
+                clientContactId,
                 // align with widget-socket-load.js
                 tempMessageId: uuid(),
                 timestamp: new Date().toISOString(),
@@ -617,11 +708,15 @@ async function main() {
   let disconnects = 0;
   let emits = 0;
   let expectHits = 0;
+  let prepareErrors = 0;
+  let preparedRooms = 0;
   for (const c of clients) {
     connectErrors += c.stats.connectErrors;
     disconnects += c.stats.disconnects;
     emits += c.stats.emits;
     expectHits += c.stats.expectHits;
+    prepareErrors += c.stats.prepareErrors;
+    if (c.prepared && c.prepared.conversationId) preparedRooms++;
   }
 
   log.info('done', {
@@ -631,6 +726,8 @@ async function main() {
     disconnects,
     emits,
     expectHits,
+    prepareErrors,
+    preparedRooms,
   });
 }
 
