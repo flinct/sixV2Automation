@@ -204,12 +204,30 @@ async function main() {
   const baseHeaders = xApiKey ? { "x-api-key": xApiKey } : {};
 
   // optional bearer login
-  const loginIdentifier = envStr("LOGIN_IDENTIFIER", "");
-  const loginKeyword = envStr("LOGIN_KEYWORD", "");
-  const loginPassword = envStr("LOGIN_PASSWORD", "");
+  // You can provide only LOGIN_IDENTIFIER, and set CYPRESS_loginType to auto-resolve password
+  // from cypress/support/01_url_page.js env_config() (loginBody_<type>).
+  let loginIdentifier = envStr("LOGIN_IDENTIFIER", "");
+  let loginKeyword = envStr("LOGIN_KEYWORD", "");
+  let loginPassword = envStr("LOGIN_PASSWORD", "");
+
+  const cypressCfg = await getCypressEnvConfig(baseUrl);
+  if (!loginPassword && (loginIdentifier || loginKeyword) && cypressCfg?.cfg) {
+    // If loginType not set explicitly, try to use identifier/keyword as loginType key.
+    const loginType = cypressCfg?.loginType || loginIdentifier || loginKeyword;
+    const key = `loginBody_${loginType}`;
+    const body = cypressCfg.cfg?.[key];
+    if (body?.password && (!loginIdentifier && body.identifier)) loginIdentifier = body.identifier;
+    if (body?.password && (!loginKeyword && body.keyword)) loginKeyword = body.keyword;
+    if (body?.password) loginPassword = body.password;
+  }
+
   let bearerToken = "";
   if (loginPassword && (loginIdentifier || loginKeyword)) {
-    console.log("[auth] logging in...");
+    console.log("[auth] logging in...", {
+      identifier: loginIdentifier || undefined,
+      keyword: loginKeyword || undefined,
+      passwordFrom: process.env.LOGIN_PASSWORD ? "env" : cypressCfg ? "cypress" : "env",
+    });
     bearerToken = await loginBearer({
       apiBase,
       identifier: loginIdentifier,
@@ -218,6 +236,8 @@ async function main() {
       headers: baseHeaders,
     });
     console.log("[auth] login ok");
+  } else if (loginIdentifier || loginKeyword) {
+    console.log("[auth] skip login (missing password). Set LOGIN_PASSWORD or CYPRESS_loginType that maps to loginBody_<type>.");
   }
 
   const headers = {
