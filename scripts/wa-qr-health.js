@@ -76,16 +76,28 @@ function joinUrl(base, path) {
   return `${base}${path}`;
 }
 
-async function httpJson(url, { method = "GET", headers = {}, body, dispatcher } = {}) {
-  const res = await fetch(url, {
-    method,
-    headers: {
-      "content-type": "application/json",
-      ...headers,
-    },
-    body: body == null ? undefined : JSON.stringify(body),
-    dispatcher,
-  });
+async function httpJson(
+  url,
+  { method = "GET", headers = {}, body, dispatcher, timeoutMs } = {},
+) {
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), timeoutMs ?? 20000);
+
+  let res;
+  try {
+    res = await fetch(url, {
+      method,
+      headers: {
+        "content-type": "application/json",
+        ...headers,
+      },
+      body: body == null ? undefined : JSON.stringify(body),
+      dispatcher,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(t);
+  }
   const text = await res.text();
   let json;
   try {
@@ -102,26 +114,38 @@ async function httpJson(url, { method = "GET", headers = {}, body, dispatcher } 
   return json;
 }
 
-async function loginBearer({ apiBase, identifier, keyword, password, headers }) {
+async function loginBearer({ apiBase, identifier, keyword, password, headers, timeoutMs }) {
   const url = joinUrl(apiBase, "api/auth/login");
   const body = identifier ? { identifier, password } : { keyword, password };
-  const res = await httpJson(url, { method: "POST", headers, body });
+  const res = await httpJson(url, { method: "POST", headers, body, timeoutMs });
   const token = res?.accessToken || res?.token || res?.data?.accessToken || res?.data?.token;
   if (!token) throw new Error("login: missing token in response");
   return token;
 }
 
-async function createAccountChannel({ apiBase, headers, body, dispatcher }) {
+async function createAccountChannel({ apiBase, headers, body, dispatcher, timeoutMs }) {
   const url = joinUrl(apiBase, "api/account-channel");
-  const res = await httpJson(url, { method: "POST", headers, body, dispatcher });
+  const res = await httpJson(url, {
+    method: "POST",
+    headers,
+    body,
+    dispatcher,
+    timeoutMs,
+  });
   const id = res?.id || res?.data?.id;
   if (!id) throw new Error("createAccountChannel: missing id in response");
   return { id, raw: res };
 }
 
-async function initInstanceV2({ apiBase, headers, body, method, dispatcher }) {
+async function initInstanceV2({ apiBase, headers, body, method, dispatcher, timeoutMs }) {
   const url = joinUrl(apiBase, "api/account-channel/instance");
-  return httpJson(url, { method: method || "POST", headers, body, dispatcher });
+  return httpJson(url, {
+    method: method || "POST",
+    headers,
+    body,
+    dispatcher,
+    timeoutMs,
+  });
 }
 
 function loadProxyList(filePath) {
@@ -149,10 +173,11 @@ async function pollForQr({
   pollTimeoutMs,
   requireDataImagePrefix,
   dispatcher,
+  timeoutMs,
 }) {
   const start = Date.now();
   while (Date.now() - start < pollTimeoutMs) {
-    const data = await httpJson(url, { headers, dispatcher });
+    const data = await httpJson(url, { headers, dispatcher, timeoutMs });
     const qr = data?.[qrField];
     const ok =
       typeof qr === "string" &&
@@ -194,6 +219,8 @@ async function main() {
   const ITERATIONS = envInt("ITERATIONS", 20);
   const pollIntervalMs = envInt("POLL_INTERVAL_MS", 2000);
   const pollTimeoutMs = envInt("POLL_TIMEOUT_MS", 60000);
+  const REQUEST_TIMEOUT_MS = envInt("REQUEST_TIMEOUT_MS", 20000);
+  const PROXY_RETRIES = envInt("PROXY_RETRIES", 3);
 
   const qrField = process.env.QR_FIELD || "qrCode";
   const requireDataImagePrefix =
@@ -273,6 +300,7 @@ async function main() {
         keyword: loginKeyword,
         password: loginPassword,
         headers: baseHeaders,
+        timeoutMs: REQUEST_TIMEOUT_MS,
       });
       console.log("[auth] login ok");
     } catch (e) {
@@ -324,6 +352,8 @@ async function main() {
     ITERATIONS,
     pollIntervalMs,
     pollTimeoutMs,
+    REQUEST_TIMEOUT_MS,
+    PROXY_RETRIES,
     USE_V2,
     INIT_PATH,
     GET_QR_PATH,
@@ -369,47 +399,91 @@ async function main() {
           createBodyDefault,
         );
 
-        console.log(`\n  [v2] proxy: ${pickedProxy ? pickedProxy.proxy : "(none)"}`);
-        console.log(`\n  [v2] create account-channel: POST ${joinUrl(apiBase, "api/account-channel")}`);
-        console.log("  [v2] body:", createBody);
-        const created = await createAccountChannel({
-          apiBase,
-          headers,
-          body: createBody,
-          dispatcher,
-        });
-        console.log("  [v2] created id:", created.id);
+        // Retry with different proxies if the chosen proxy is dead/hangs.
+        let lastErr;
+        for (let attempt = 1; attempt <= Math.max(1, PROXY_RETRIES); attempt++) {
+          const curProxy = proxyAgents.length > 0 ? pickProxy() : null;
+          const curDispatcher = curProxy?.agent;
 
-        // 2) init instance
-        // According to API validation error, payload expects `id` (mongodb id) and rejects `accountChannelId`.
-        // Default to { id: <accountChannelId> }. Override via INIT_INSTANCE_V2_BODY_JSON if your API differs.
-        const initBody = parseJsonEnv("INIT_INSTANCE_V2_BODY_JSON", {
-          id: created.id,
-        });
-        console.log(`  [v2] init instance: POST ${joinUrl(apiBase, "api/account-channel/instance")}`);
-        console.log("  [v2] body:", initBody);
-        await initInstanceV2({
-          apiBase,
-          headers,
-          body: initBody,
-          method: envStr("INIT_INSTANCE_V2_METHOD", "POST"),
-          dispatcher,
-        });
-        console.log("  [v2] init ok; poll qr...");
+          console.log(`\n  [v2] proxy(attempt ${attempt}/${Math.max(1, PROXY_RETRIES)}): ${curProxy ? curProxy.proxy : "(none)"}`);
+          console.log(
+            `\n  [v2] create account-channel: POST ${joinUrl(apiBase, "api/account-channel")}`,
+          );
+          console.log("  [v2] body:", createBody);
 
-        // 3) poll QR
-        const qrUrl = joinUrl(apiBase, `api/account-channel/instance/qr/${encodeURIComponent(created.id)}`);
-        console.log("  [v2] qr url:", qrUrl);
+          try {
+            const created = await createAccountChannel({
+              apiBase,
+              headers,
+              body: createBody,
+              dispatcher: curDispatcher,
+              timeoutMs: REQUEST_TIMEOUT_MS,
+            });
+            console.log("  [v2] created id:", created.id);
 
-        const res = await pollForQr({
-          url: qrUrl,
-          headers,
-          qrField,
-          pollIntervalMs,
-          pollTimeoutMs,
-          requireDataImagePrefix,
-          dispatcher,
-        });
+            // 2) init instance
+            // According to API validation error, payload expects `id` (mongodb id) and rejects `accountChannelId`.
+            // Default to { id: <accountChannelId> }. Override via INIT_INSTANCE_V2_BODY_JSON if your API differs.
+            const initBody = parseJsonEnv("INIT_INSTANCE_V2_BODY_JSON", {
+              id: created.id,
+            });
+            console.log(
+              `  [v2] init instance: POST ${joinUrl(apiBase, "api/account-channel/instance")}`,
+            );
+            console.log("  [v2] body:", initBody);
+            await initInstanceV2({
+              apiBase,
+              headers,
+              body: initBody,
+              method: envStr("INIT_INSTANCE_V2_METHOD", "POST"),
+              dispatcher: curDispatcher,
+              timeoutMs: REQUEST_TIMEOUT_MS,
+            });
+            console.log("  [v2] init ok; poll qr...");
+
+            // 3) poll QR
+            const qrUrl = joinUrl(
+              apiBase,
+              `api/account-channel/instance/qr/${encodeURIComponent(created.id)}`,
+            );
+            console.log("  [v2] qr url:", qrUrl);
+
+            const res = await pollForQr({
+              url: qrUrl,
+              headers,
+              qrField,
+              pollIntervalMs,
+              pollTimeoutMs,
+              requireDataImagePrefix,
+              dispatcher: curDispatcher,
+              timeoutMs: REQUEST_TIMEOUT_MS,
+            });
+
+            if (res.ok) {
+              pass++;
+              console.log("PASS");
+            } else {
+              fail++;
+              console.log("FAIL (qr timeout)");
+            }
+
+            lastErr = null;
+            break; // success path
+          } catch (e) {
+            lastErr = e;
+            console.log("  [v2] attempt FAIL:", e?.message || e);
+            if (e?.name === "AbortError") {
+              console.log("  [v2] reason: request timeout (proxy likely hanging)");
+            }
+            if (attempt === Math.max(1, PROXY_RETRIES)) throw e;
+          }
+        }
+
+        // skip the legacy PASS/FAIL block below because we already handled it
+        continue;
+
+        // (unreachable)
+        const res = { ok: false };
 
         if (res.ok) {
           pass++;
