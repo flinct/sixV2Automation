@@ -38,6 +38,22 @@ function envStr(name, def = "") {
   return v == null || v === "" ? def : String(v);
 }
 
+function envBool(name, def = false) {
+  const v = (process.env[name] || "").toLowerCase();
+  if (!v) return def;
+  return v === "1" || v === "true" || v === "yes" || v === "y";
+}
+
+function parseJsonEnv(name, defObj) {
+  const raw = process.env[name];
+  if (!raw) return defObj;
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    throw new Error(`Invalid JSON in ${name}: ${(e && e.message) || e}`);
+  }
+}
+
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
@@ -74,14 +90,34 @@ async function httpJson(url, { method = "GET", headers = {}, body } = {}) {
     json = text;
   }
   if (!res.ok) {
-    const err = new Error(
-      `HTTP ${res.status} ${res.statusText} for ${method} ${url}`,
-    );
+    const err = new Error(`HTTP ${res.status} ${res.statusText} for ${method} ${url}`);
     err.status = res.status;
     err.body = json;
     throw err;
   }
   return json;
+}
+
+async function loginBearer({ apiBase, identifier, keyword, password, headers }) {
+  const url = joinUrl(apiBase, "api/auth/login");
+  const body = identifier ? { identifier, password } : { keyword, password };
+  const res = await httpJson(url, { method: "POST", headers, body });
+  const token = res?.accessToken || res?.token || res?.data?.accessToken || res?.data?.token;
+  if (!token) throw new Error("login: missing token in response");
+  return token;
+}
+
+async function createAccountChannel({ apiBase, headers, body }) {
+  const url = joinUrl(apiBase, "api/account-channel");
+  const res = await httpJson(url, { method: "POST", headers, body });
+  const id = res?.id || res?.data?.id;
+  if (!id) throw new Error("createAccountChannel: missing id in response");
+  return { id, raw: res };
+}
+
+async function initInstanceV2({ apiBase, headers, body, method }) {
+  const url = joinUrl(apiBase, "api/account-channel/instance");
+  return httpJson(url, { method: method || "POST", headers, body });
 }
 
 function pickRandomNumber() {
@@ -147,9 +183,13 @@ async function main() {
   const requireDataImagePrefix =
     (process.env.REQUIRE_DATA_IMAGE_PREFIX || "true").toLowerCase() === "true";
 
+  // legacy endpoints (older envs)
   const INIT_PATH =
     process.env.INIT_PATH || "open/whatsapp/init?force=true&whatsappNumber=";
   const GET_QR_PATH = process.env.GET_QR_PATH || "open/instance/info?key=";
+
+  // v2 endpoints (omnichannel)
+  const USE_V2 = envBool("USE_V2", true);
 
   // Support Cypress-style selector: $env:CYPRESS_loginType="cekerayam01"
   // If X_API_KEY is not provided, try to read it from cypress/support/01_url_page.js env_config().headers
@@ -160,7 +200,30 @@ async function main() {
     if (typeof maybe === "string" && maybe.length > 0) xApiKey = maybe;
   }
 
-  const headers = xApiKey ? { "x-api-key": xApiKey } : {};
+  // base headers (x-api-key only)
+  const baseHeaders = xApiKey ? { "x-api-key": xApiKey } : {};
+
+  // optional bearer login
+  const loginIdentifier = envStr("LOGIN_IDENTIFIER", "");
+  const loginKeyword = envStr("LOGIN_KEYWORD", "");
+  const loginPassword = envStr("LOGIN_PASSWORD", "");
+  let bearerToken = "";
+  if (loginPassword && (loginIdentifier || loginKeyword)) {
+    console.log("[auth] logging in...");
+    bearerToken = await loginBearer({
+      apiBase,
+      identifier: loginIdentifier,
+      keyword: loginKeyword,
+      password: loginPassword,
+      headers: baseHeaders,
+    });
+    console.log("[auth] login ok");
+  }
+
+  const headers = {
+    ...baseHeaders,
+    ...(bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
+  };
 
   const numbers = (process.env.NUMBERS || "")
     .split(",")
@@ -174,10 +237,13 @@ async function main() {
     ITERATIONS,
     pollIntervalMs,
     pollTimeoutMs,
+    USE_V2,
     INIT_PATH,
     GET_QR_PATH,
     qrField,
     requireDataImagePrefix,
+    hasApiKey: Boolean(xApiKey),
+    hasBearer: Boolean(bearerToken),
   });
 
   let pass = 0;
@@ -188,42 +254,93 @@ async function main() {
       ? numbers[(i - 1) % numbers.length]
       : pickRandomNumber();
 
-    const initUrl = joinUrl(
-      apiBase,
-      `${INIT_PATH}${encodeURIComponent(number)}`,
-    );
-    const qrUrl = joinUrl(
-      apiBase,
-      `${GET_QR_PATH}${encodeURIComponent(number)}`,
-    );
-
     process.stdout.write(`[#${i}] ${number} init... `);
 
     try {
-      await httpJson(initUrl, { method: "GET", headers });
-      process.stdout.write("ok; poll qr... ");
+      if (USE_V2) {
+        // 1) create account-channel (simulation) -> obtain id
+        const createBodyDefault = {
+          accountStatus: "used",
+          connectionStatus: "inactive",
+          channel: "692e83fb9fe6921a278565ab",
+          name: "helo",
+          phoneNumber: `+${number}`,
+        };
+        const createBody = parseJsonEnv(
+          "CREATE_ACCOUNT_CHANNEL_BODY_JSON",
+          createBodyDefault,
+        );
 
-      const res = await pollForQr({
-        url: qrUrl,
-        headers,
-        qrField,
-        pollIntervalMs,
-        pollTimeoutMs,
-        requireDataImagePrefix,
-      });
+        console.log(`\n  [v2] create account-channel: POST ${joinUrl(apiBase, "api/account-channel")}`);
+        console.log("  [v2] body:", createBody);
+        const created = await createAccountChannel({ apiBase, headers, body: createBody });
+        console.log("  [v2] created id:", created.id);
 
-      if (res.ok) {
-        pass++;
-        console.log("PASS");
+        // 2) init instance
+        const initBody = parseJsonEnv("INIT_INSTANCE_V2_BODY_JSON", {
+          accountChannelId: created.id,
+        });
+        console.log(`  [v2] init instance: POST ${joinUrl(apiBase, "api/account-channel/instance")}`);
+        console.log("  [v2] body:", initBody);
+        await initInstanceV2({
+          apiBase,
+          headers,
+          body: initBody,
+          method: envStr("INIT_INSTANCE_V2_METHOD", "POST"),
+        });
+        console.log("  [v2] init ok; poll qr...");
+
+        // 3) poll QR
+        const qrUrl = joinUrl(apiBase, `api/account-channel/instance/qr/${encodeURIComponent(created.id)}`);
+        console.log("  [v2] qr url:", qrUrl);
+
+        const res = await pollForQr({
+          url: qrUrl,
+          headers,
+          qrField,
+          pollIntervalMs,
+          pollTimeoutMs,
+          requireDataImagePrefix,
+        });
+
+        if (res.ok) {
+          pass++;
+          console.log("PASS");
+        } else {
+          fail++;
+          console.log("FAIL (qr timeout)");
+        }
       } else {
-        fail++;
-        console.log("FAIL (qr timeout)");
+        // legacy
+        const initUrl = joinUrl(apiBase, `${INIT_PATH}${encodeURIComponent(number)}`);
+        const qrUrl = joinUrl(apiBase, `${GET_QR_PATH}${encodeURIComponent(number)}`);
+        console.log(`\n  [legacy] init url: ${initUrl}`);
+        console.log(`  [legacy] qr url:   ${qrUrl}`);
+
+        await httpJson(initUrl, { method: "GET", headers });
+        process.stdout.write("ok; poll qr... ");
+
+        const res = await pollForQr({
+          url: qrUrl,
+          headers,
+          qrField,
+          pollIntervalMs,
+          pollTimeoutMs,
+          requireDataImagePrefix,
+        });
+
+        if (res.ok) {
+          pass++;
+          console.log("PASS");
+        } else {
+          fail++;
+          console.log("FAIL (qr timeout)");
+        }
       }
     } catch (err) {
       fail++;
       console.log(`FAIL (${err?.message || err})`);
-      if (err?.body)
-        console.log("BODY:", JSON.stringify(err.body).slice(0, 500));
+      if (err?.body) console.log("BODY:", JSON.stringify(err.body).slice(0, 800));
     }
   }
 
