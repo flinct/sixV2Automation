@@ -204,40 +204,71 @@ async function main() {
   const baseHeaders = xApiKey ? { "x-api-key": xApiKey } : {};
 
   // optional bearer login
-  // You can provide only LOGIN_IDENTIFIER, and set CYPRESS_loginType to auto-resolve password
-  // from cypress/support/01_url_page.js env_config() (loginBody_<type>).
+  // Supports:
+  // - explicit env: LOGIN_IDENTIFIER/LOGIN_KEYWORD + LOGIN_PASSWORD
+  // - or Cypress mapping: CYPRESS_loginType=<type> to auto-pick loginBody_<type> (identifier/keyword/password)
   let loginIdentifier = envStr("LOGIN_IDENTIFIER", "");
   let loginKeyword = envStr("LOGIN_KEYWORD", "");
   let loginPassword = envStr("LOGIN_PASSWORD", "");
 
   const cypressCfg = await getCypressEnvConfig(baseUrl);
-  if (!loginPassword && (loginIdentifier || loginKeyword) && cypressCfg?.cfg) {
-    // If loginType not set explicitly, try to use identifier/keyword as loginType key.
-    const loginType = cypressCfg?.loginType || loginIdentifier || loginKeyword;
-    const key = `loginBody_${loginType}`;
-    const body = cypressCfg.cfg?.[key];
-    if (body?.password && (!loginIdentifier && body.identifier)) loginIdentifier = body.identifier;
-    if (body?.password && (!loginKeyword && body.keyword)) loginKeyword = body.keyword;
-    if (body?.password) loginPassword = body.password;
+
+  // If CYPRESS_loginType is present and explicit creds are not provided, load them from env_config().
+  if (cypressCfg?.cfg) {
+    const loginType = cypressCfg.loginType;
+    const key = loginType ? `loginBody_${loginType}` : null;
+    const body = key ? cypressCfg.cfg?.[key] : null;
+
+    if (body) {
+      if (!loginIdentifier && body.identifier) loginIdentifier = body.identifier;
+      if (!loginKeyword && body.keyword) loginKeyword = body.keyword;
+      if (!loginPassword && body.password) loginPassword = body.password;
+
+      console.log("[auth] resolved from CYPRESS_loginType", {
+        CYPRESS_loginType: loginType,
+        key,
+        resolved: {
+          identifier: Boolean(loginIdentifier),
+          keyword: Boolean(loginKeyword),
+          password: Boolean(loginPassword),
+        },
+      });
+    } else if (loginType) {
+      console.log("[auth] CYPRESS_loginType set but mapping not found", { CYPRESS_loginType: loginType, expectedKey: key });
+    }
   }
 
+  const AUTO_LOGIN = envBool("AUTO_LOGIN", true);
   let bearerToken = "";
-  if (loginPassword && (loginIdentifier || loginKeyword)) {
+
+  if (AUTO_LOGIN && loginPassword && (loginIdentifier || loginKeyword)) {
     console.log("[auth] logging in...", {
+      url: joinUrl(apiBase, "api/auth/login"),
       identifier: loginIdentifier || undefined,
       keyword: loginKeyword || undefined,
       passwordFrom: process.env.LOGIN_PASSWORD ? "env" : cypressCfg ? "cypress" : "env",
     });
-    bearerToken = await loginBearer({
-      apiBase,
-      identifier: loginIdentifier,
-      keyword: loginKeyword,
-      password: loginPassword,
-      headers: baseHeaders,
+
+    try {
+      bearerToken = await loginBearer({
+        apiBase,
+        identifier: loginIdentifier,
+        keyword: loginKeyword,
+        password: loginPassword,
+        headers: baseHeaders,
+      });
+      console.log("[auth] login ok");
+    } catch (e) {
+      console.log("[auth] login FAIL", e?.message || e);
+      if (e?.body) console.log("[auth] login BODY:", JSON.stringify(e.body).slice(0, 800));
+      throw e;
+    }
+  } else {
+    console.log("[auth] bearer login not performed", {
+      AUTO_LOGIN,
+      hasIdentifier: Boolean(loginIdentifier || loginKeyword),
+      hasPassword: Boolean(loginPassword),
     });
-    console.log("[auth] login ok");
-  } else if (loginIdentifier || loginKeyword) {
-    console.log("[auth] skip login (missing password). Set LOGIN_PASSWORD or CYPRESS_loginType that maps to loginBody_<type>.");
   }
 
   const headers = {
@@ -264,6 +295,7 @@ async function main() {
     requireDataImagePrefix,
     hasApiKey: Boolean(xApiKey),
     hasBearer: Boolean(bearerToken),
+    authMode: bearerToken ? "bearer" : xApiKey ? "x-api-key" : "none",
   });
 
   let pass = 0;
