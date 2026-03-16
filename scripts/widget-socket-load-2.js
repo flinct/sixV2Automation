@@ -30,9 +30,19 @@
  * - EMIT_PAYLOAD_JSON: JSON string payload.
  *   Default matches scripts/widget-socket-load.js inbound payload shape.
  *
- *   You MUST provide identifiers via env vars:
+ *   Identifiers can be provided OR auto-prepared using the same open-api flow as scripts/widget-socket-load.js.
+ *
+ *   Provide manually via env vars:
  *   - CHANNEL_ACCOUNT_ID (same as channelAccountId)
  *   - CLIENT_CONTACT_ID (same as clientContactId)
+ *
+ *   Or enable auto-prepare (default: true when either id is missing):
+ *   - AUTO_PREPARE=true|false (default true)
+ *   - PREPARE_MODE=shared|perClient (default shared)
+ *   - WIDGET_CHANNEL_ID (optional; otherwise uses hardcoded default per BASE_URL)
+ *   - WIDGET_ACCOUNT_CHANNEL_IDS (optional; comma-separated; otherwise uses hardcoded default per BASE_URL)
+ *   - TOPIC_PREFIX (default loadtest)
+ *   - JOIN_EVENT (default join.conversation)
  *
  *   The script will auto-fill: tempMessageId, timestamp, content.
  * - EXPECT_EVENTS: comma-separated list of events to count as "delivered" (default: empty)
@@ -205,6 +215,79 @@ class LoadClient {
   }
 }
 
+async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
+  const res = await fetch(url, {
+    method,
+    headers: {
+      'content-type': 'application/json',
+      ...headers,
+    },
+    body: body == null ? undefined : JSON.stringify(body),
+  });
+  const text = await res.text();
+  let json;
+  try {
+    json = text ? JSON.parse(text) : null;
+  } catch {
+    json = text;
+  }
+  if (!res.ok) {
+    const err = new Error(`HTTP ${res.status} ${res.statusText} for ${method} ${url}`);
+    err.status = res.status;
+    err.body = json;
+    throw err;
+  }
+  return json;
+}
+
+async function createClientContact({ apiBase, signatureKey, channelId, guestName, referenceId }) {
+  const url = joinUrl(apiBase, 'open-api/client-contact');
+  return httpJson(url, {
+    method: 'POST',
+    headers: {
+      'x-signature-key': signatureKey,
+    },
+    body: {
+      channelId,
+      metaData: {
+        browserName: 'Chrome',
+        deviceType: 'Desktop',
+        userAgent:
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36',
+      },
+      name: guestName,
+      referenceId,
+    },
+  });
+}
+
+async function submitTopic({ apiBase, signatureKey, accountChannelId, clientContactId, topicName }) {
+  const url = joinUrl(apiBase, 'open-api/conversation/submit/topic');
+  return httpJson(url, {
+    method: 'POST',
+    headers: {
+      'x-signature-key': signatureKey,
+    },
+    body: {
+      accountChannelId,
+      clientContactId,
+      metadata: [
+        {
+          browserName: 'Chrome',
+          deviceType: 'Desktop',
+          topic: topicName,
+          userAgent:
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36',
+        },
+      ],
+    },
+  });
+}
+
+function randomAlphanumeric(length = 6) {
+  return Math.random().toString(36).substring(2, 2 + length).toUpperCase();
+}
+
 async function main() {
   const log = makeLogger();
 
@@ -222,13 +305,29 @@ async function main() {
 
     if (baseUrlStr.includes('dev-v2.satuinbox.com')) {
       return {
+        channelId: '692fe8eaaff05e8a1623e0d3',
         signatureKey: 'sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if',
+        accountChannels: [
+          { id: '698ef3aada258f2a5a46bf89', topic: 'hey' },
+          { id: '6964ac1d2a5dbde9a5c6fa28', topic: 'tumbler biru' },
+          { id: '69783b0154be8e7508b4af08', topic: 'CS harga' },
+          { id: '69782d3654be8e7508b4abfe', topic: 'Complain' },
+          { id: '6964ab6929de985a0fe73e48', topic: 'kipas angin' },
+        ],
       };
     }
 
     if (baseUrlStr.includes('v2.satuinbox.com')) {
       return {
+        channelId: '694b55ffbb886b39e785d2c0',
         signatureKey: 'sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM',
+        accountChannels: [
+          { id: '6996bcd952ef87df9e414fd3', topic: 'Complain' },
+          { id: '69649c6b905d65859c36f81c', topic: 'remote control' },
+          { id: '697845cf1782f1bd889b6bfc', topic: 'CS harga' },
+          { id: '6964931c905d65859c36f618', topic: 'kipas angin' },
+          { id: '69a9c8c86e7924748d4af383', topic: 'Hayoh kumaha' },
+        ],
       };
     }
 
@@ -261,12 +360,37 @@ async function main() {
   const EMIT_EVENT = envStr('EMIT_EVENT', 'socket.inbound.message');
   const EMIT_EVERY_MS = envInt('EMIT_EVERY_MS', 2000);
 
-  const CHANNEL_ACCOUNT_ID = envStr('CHANNEL_ACCOUNT_ID', '');
-  const CLIENT_CONTACT_ID = envStr('CLIENT_CONTACT_ID', '');
+  const AUTO_PREPARE = envBool('AUTO_PREPARE', true);
+  const PREPARE_MODE = (envStr('PREPARE_MODE', 'shared') || 'shared').toLowerCase(); // shared|perClient
+
+  const TOPIC_PREFIX = envStr('TOPIC_PREFIX', 'loadtest');
+  const JOIN_EVENT = envStr('JOIN_EVENT', 'join.conversation');
+
+  // If these are not provided, we can prepare them via open-api (mirrors widget-socket-load.js)
+  let CHANNEL_ACCOUNT_ID = envStr('CHANNEL_ACCOUNT_ID', '');
+  let CLIENT_CONTACT_ID = envStr('CLIENT_CONTACT_ID', '');
+  let CONVERSATION_ID = envStr('CONVERSATION_ID', '');
+
+  const WIDGET_CHANNEL_ID = envStr('WIDGET_CHANNEL_ID', '') || defaults.channelId || '';
+
+  const accountChannelFromEnv = envStr('WIDGET_ACCOUNT_CHANNEL_IDS', '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  /** @type {{id:string, topic?:string}[]} */
+  const widgetAccountChannels =
+    accountChannelFromEnv.length > 0
+      ? accountChannelFromEnv.map((id) => ({ id }))
+      : Array.isArray(defaults.accountChannels)
+        ? defaults.accountChannels
+        : [];
+
+  const pickAccountChannel = () =>
+    widgetAccountChannels[Math.floor(Math.random() * widgetAccountChannels.length)];
 
   const EMIT_PAYLOAD_JSON = parseJsonEnv('EMIT_PAYLOAD_JSON', {
-    // NOTE: script will override channelAccountId/clientContactId if env vars are provided
-    // and will always override tempMessageId/timestamp/content.
+    // NOTE: script will override channelAccountId/clientContactId/tempMessageId/timestamp/content.
     channelAccountId: CHANNEL_ACCOUNT_ID || undefined,
     clientContactId: CLIENT_CONTACT_ID || undefined,
     type: 'text',
@@ -284,12 +408,16 @@ async function main() {
     socketPath: SOCKET_PATH,
     socketAuthMode: SOCKET_AUTH_MODE,
     expectEvents: EXPECT_EVENTS,
+    autoPrepare: AUTO_PREPARE,
+    prepareMode: PREPARE_MODE,
     emit: MODE === 'throughput'
       ? {
           event: EMIT_EVENT,
           everyMs: EMIT_EVERY_MS,
           channelAccountId: CHANNEL_ACCOUNT_ID || undefined,
           clientContactId: CLIENT_CONTACT_ID || undefined,
+          conversationId: CONVERSATION_ID || undefined,
+          joinEvent: JOIN_EVENT,
         }
       : undefined,
     logLevel: log.level,
@@ -328,6 +456,60 @@ async function main() {
   }, 10000);
 
   try {
+    // Optional: auto-prepare identifiers for inbound event (mirrors widget-socket-load.js)
+    if (
+      MODE === 'throughput' &&
+      EMIT_EVENT === 'socket.inbound.message' &&
+      AUTO_PREPARE &&
+      (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID)
+    ) {
+      if (!signatureKey) throw new Error('AUTO_PREPARE requires SIGNATURE_KEY');
+      if (!WIDGET_CHANNEL_ID)
+        throw new Error('AUTO_PREPARE requires WIDGET_CHANNEL_ID (or a BASE_URL with hardcoded default channelId)');
+      if (!widgetAccountChannels || widgetAccountChannels.length === 0)
+        throw new Error(
+          'AUTO_PREPARE requires WIDGET_ACCOUNT_CHANNEL_IDS or a BASE_URL with hardcoded defaults.accountChannels',
+        );
+
+      const picked = pickAccountChannel();
+      const accountChannelId = picked.id;
+      const topicName = picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
+
+      const guestName = `guest-${randomAlphanumeric(6)}`;
+      const referenceId = uuid();
+
+      log.info('auto-prepare:start', { accountChannelId, topicName });
+      const contact = await createClientContact({
+        apiBase,
+        signatureKey,
+        channelId: WIDGET_CHANNEL_ID,
+        guestName,
+        referenceId,
+      });
+      const clientContactId = contact?.id || contact?.data?.id;
+      if (!clientContactId) throw new Error('auto-prepare: createClientContact missing id');
+
+      const topicResp = await submitTopic({
+        apiBase,
+        signatureKey,
+        accountChannelId,
+        clientContactId,
+        topicName,
+      });
+      const conversationId = topicResp?.id || topicResp?.data?.id;
+      if (!conversationId) throw new Error('auto-prepare: submitTopic missing conversation id');
+
+      CHANNEL_ACCOUNT_ID = accountChannelId;
+      CLIENT_CONTACT_ID = clientContactId;
+      CONVERSATION_ID = conversationId;
+
+      log.info('auto-prepare:done', {
+        CHANNEL_ACCOUNT_ID,
+        CLIENT_CONTACT_ID,
+        CONVERSATION_ID,
+      });
+    }
+
     // ramp-up
     for (let i = 0; i < TARGET_CONNECTIONS; i += RAMP_STEP) {
       const batchSize = Math.min(RAMP_STEP, TARGET_CONNECTIONS - i);
@@ -375,9 +557,20 @@ async function main() {
       if (EMIT_EVENT === 'socket.inbound.message') {
         if (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID) {
           throw new Error(
-            'MODE=throughput with EMIT_EVENT=socket.inbound.message requires env CHANNEL_ACCOUNT_ID and CLIENT_CONTACT_ID ' +
-              '(so the payload matches widget-socket-load.js).',
+            'MODE=throughput with EMIT_EVENT=socket.inbound.message requires CHANNEL_ACCOUNT_ID and CLIENT_CONTACT_ID. ' +
+              'Set them via env or enable AUTO_PREPARE=true (default).',
           );
+        }
+      }
+
+      // Optional: join the prepared conversation so server can deliver events back to clients.
+      if (CONVERSATION_ID) {
+        log.info('joining conversation for all clients', {
+          conversationId: CONVERSATION_ID,
+          joinEvent: JOIN_EVENT,
+        });
+        for (const c of clients) {
+          if (c.socket && c.socket.connected) c.socket.emit(JOIN_EVENT, { conversationId: CONVERSATION_ID });
         }
       }
 
