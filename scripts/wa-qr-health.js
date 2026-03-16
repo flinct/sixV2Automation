@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+
+const fs = require("fs");
+const { ProxyAgent } = require("undici");
 /**
  * WhatsApp Web (Baileys) QR Health Check
  *
@@ -73,7 +76,7 @@ function joinUrl(base, path) {
   return `${base}${path}`;
 }
 
-async function httpJson(url, { method = "GET", headers = {}, body } = {}) {
+async function httpJson(url, { method = "GET", headers = {}, body, dispatcher } = {}) {
   const res = await fetch(url, {
     method,
     headers: {
@@ -81,6 +84,7 @@ async function httpJson(url, { method = "GET", headers = {}, body } = {}) {
       ...headers,
     },
     body: body == null ? undefined : JSON.stringify(body),
+    dispatcher,
   });
   const text = await res.text();
   let json;
@@ -107,17 +111,28 @@ async function loginBearer({ apiBase, identifier, keyword, password, headers }) 
   return token;
 }
 
-async function createAccountChannel({ apiBase, headers, body }) {
+async function createAccountChannel({ apiBase, headers, body, dispatcher }) {
   const url = joinUrl(apiBase, "api/account-channel");
-  const res = await httpJson(url, { method: "POST", headers, body });
+  const res = await httpJson(url, { method: "POST", headers, body, dispatcher });
   const id = res?.id || res?.data?.id;
   if (!id) throw new Error("createAccountChannel: missing id in response");
   return { id, raw: res };
 }
 
-async function initInstanceV2({ apiBase, headers, body, method }) {
+async function initInstanceV2({ apiBase, headers, body, method, dispatcher }) {
   const url = joinUrl(apiBase, "api/account-channel/instance");
-  return httpJson(url, { method: method || "POST", headers, body });
+  return httpJson(url, { method: method || "POST", headers, body, dispatcher });
+}
+
+function loadProxyList(filePath) {
+  if (!filePath) return [];
+  if (!fs.existsSync(filePath)) return [];
+  const raw = fs.readFileSync(filePath, "utf8");
+  return raw
+    .split(/\r?\n/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .filter((s) => !s.startsWith("#"));
 }
 
 function pickRandomNumber() {
@@ -133,10 +148,11 @@ async function pollForQr({
   pollIntervalMs,
   pollTimeoutMs,
   requireDataImagePrefix,
+  dispatcher,
 }) {
   const start = Date.now();
   while (Date.now() - start < pollTimeoutMs) {
-    const data = await httpJson(url, { headers });
+    const data = await httpJson(url, { headers, dispatcher });
     const qr = data?.[qrField];
     const ok =
       typeof qr === "string" &&
@@ -247,6 +263,7 @@ async function main() {
       identifier: loginIdentifier || undefined,
       keyword: loginKeyword || undefined,
       passwordFrom: process.env.LOGIN_PASSWORD ? "env" : cypressCfg ? "cypress" : "env",
+      proxy: "(auth step uses direct connection)",
     });
 
     try {
@@ -282,6 +299,25 @@ async function main() {
     .filter(Boolean);
 
   console.log("--- WA QR Health ---");
+  // Proxy support
+  const PROXY_LIST_FILE = envStr("PROXY_LIST_FILE", "scripts/ipList");
+  const PROXY_MODE = (envStr("PROXY_MODE", "roundrobin") || "roundrobin").toLowerCase(); // roundrobin|random|off
+  const PROXY_PER_ITERATION = envBool("PROXY_PER_ITERATION", true);
+  const proxies = PROXY_MODE === "off" ? [] : loadProxyList(PROXY_LIST_FILE);
+  const proxyAgents = proxies.map((p) => ({ proxy: p, agent: new ProxyAgent(p) }));
+  let proxyIdx = 0;
+
+  const pickProxy = () => {
+    if (proxyAgents.length === 0) return null;
+    if (PROXY_MODE === "random") {
+      return proxyAgents[Math.floor(Math.random() * proxyAgents.length)];
+    }
+    // roundrobin default
+    const picked = proxyAgents[proxyIdx % proxyAgents.length];
+    proxyIdx++;
+    return picked;
+  };
+
   console.log({
     baseUrl,
     apiBase,
@@ -296,6 +332,13 @@ async function main() {
     hasApiKey: Boolean(xApiKey),
     hasBearer: Boolean(bearerToken),
     authMode: bearerToken ? "bearer" : xApiKey ? "x-api-key" : "none",
+    proxy: {
+      enabled: proxyAgents.length > 0,
+      listFile: PROXY_LIST_FILE,
+      count: proxyAgents.length,
+      mode: PROXY_MODE,
+      perIteration: PROXY_PER_ITERATION,
+    },
   });
 
   let pass = 0;
@@ -305,6 +348,9 @@ async function main() {
     const number = numbers.length
       ? numbers[(i - 1) % numbers.length]
       : pickRandomNumber();
+
+    const pickedProxy = PROXY_PER_ITERATION ? pickProxy() : null;
+    const dispatcher = pickedProxy?.agent;
 
     process.stdout.write(`[#${i}] ${number} init... `);
 
@@ -323,9 +369,15 @@ async function main() {
           createBodyDefault,
         );
 
+        console.log(`\n  [v2] proxy: ${pickedProxy ? pickedProxy.proxy : "(none)"}`);
         console.log(`\n  [v2] create account-channel: POST ${joinUrl(apiBase, "api/account-channel")}`);
         console.log("  [v2] body:", createBody);
-        const created = await createAccountChannel({ apiBase, headers, body: createBody });
+        const created = await createAccountChannel({
+          apiBase,
+          headers,
+          body: createBody,
+          dispatcher,
+        });
         console.log("  [v2] created id:", created.id);
 
         // 2) init instance
@@ -341,6 +393,7 @@ async function main() {
           headers,
           body: initBody,
           method: envStr("INIT_INSTANCE_V2_METHOD", "POST"),
+          dispatcher,
         });
         console.log("  [v2] init ok; poll qr...");
 
@@ -355,6 +408,7 @@ async function main() {
           pollIntervalMs,
           pollTimeoutMs,
           requireDataImagePrefix,
+          dispatcher,
         });
 
         if (res.ok) {
@@ -371,7 +425,7 @@ async function main() {
         console.log(`\n  [legacy] init url: ${initUrl}`);
         console.log(`  [legacy] qr url:   ${qrUrl}`);
 
-        await httpJson(initUrl, { method: "GET", headers });
+        await httpJson(initUrl, { method: "GET", headers, dispatcher });
         process.stdout.write("ok; poll qr... ");
 
         const res = await pollForQr({
@@ -381,6 +435,7 @@ async function main() {
           pollIntervalMs,
           pollTimeoutMs,
           requireDataImagePrefix,
+          dispatcher,
         });
 
         if (res.ok) {
