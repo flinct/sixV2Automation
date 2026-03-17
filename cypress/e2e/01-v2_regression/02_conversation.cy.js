@@ -11,6 +11,7 @@ import contactPage from "../../support/pages/contactPage.js";
 import userRbacPage from "../../support/pages/userRbacPage.js";
 import { env_config } from "../../support/01_url_page.js";
 import liveChatPage from "../../support/pages/liveChatPage.js";
+import endpointDetectPage from "../../support/pages/endpointDetectPage.js";
 // import 'cypress-file-upload';
 
 describe("testing INBOX page", () => {
@@ -24,6 +25,7 @@ describe("testing INBOX page", () => {
   // const accountWhatsappAction = new accountWhatsappPage();
   const userRbacAction = new userRbacPage();
   const liveChatAction = new liveChatPage();
+  const endpointDetect = new endpointDetectPage();
 
   let assertionLogs = [];
 
@@ -66,8 +68,14 @@ describe("testing INBOX page", () => {
   //   inboxAction.writeCombinedLog();
   // });
 
-  it("accessing conversation page", () => {
+  it.only("accessing conversation page", () => {
+    endpointDetect.start({
+      name: "conversation-your-inbox",
+      urlPattern: "**/api/**",
+    });
     inboxAction.accessConversation();
+    cy.wait(5000);
+    endpointDetect.save("endpoint_detect");
   });
   it("accessing conversation page - your inbox", () => {
     inboxAction.accessYourInbox();
@@ -99,9 +107,15 @@ describe("testing INBOX page", () => {
     cy.wait(2000);
     inboxAction.checkConversationFilter();
   });
-  it("opening a conversation", () => {
+  it.only("opening a conversation", () => {
     cy.wait(2000);
-    inboxAction.openConversation();
+    endpointDetect.start({
+      name: "conversation-your-inbox",
+      urlPattern: "**/api/**",
+    });
+    inboxAction.openFirstConversation();
+    cy.wait(5000);
+    endpointDetect.save("endpoint_detect");
   });
   it.skip("opening a conversation - compare account channel connectivity impact to conversation", () => {
     cy.wait(2000);

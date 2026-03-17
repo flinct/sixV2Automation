@@ -1,0 +1,104 @@
+{
+  "name": "conversation-your-inbox",
+  "startedAt": "2026-03-17T09:16:01.662Z",
+  "baseUrl": "https://dev-v2.satuinbox.com",
+  "spec": "cypress\\e2e\\01-v2_regression\\02_conversation.cy.js",
+  "entries": [
+    {
+      "ts": "2026-03-17T09:16:04.404Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-widget.satuinbox.com/api/widget/auth/api-key?licenseKey=$2b$10$mGxYszByoWYczJClaS0TeOtmuH7OCveFbnjDLGNIB.k53b/wWYuSG",
+      "statusCode": 200,
+      "durationMs": 131
+    },
+    {
+      "ts": "2026-03-17T09:16:05.128Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-widget.satuinbox.com/api/widget/widget/settings",
+      "statusCode": 200,
+      "durationMs": 620
+    },
+    {
+      "ts": "2026-03-17T09:16:08.902Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 346
+    },
+    {
+      "ts": "2026-03-17T09:16:09.815Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/member/status",
+      "statusCode": 200,
+      "durationMs": 471
+    },
+    {
+      "ts": "2026-03-17T09:16:09.817Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/count",
+      "statusCode": 200,
+      "durationMs": 426
+    },
+    {
+      "ts": "2026-03-17T09:16:10.039Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/organization/692e677de6f74788e2e6871b",
+      "statusCode": 200,
+      "durationMs": 631
+    },
+    {
+      "ts": "2026-03-17T09:16:10.091Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/screenshot/setting",
+      "statusCode": 200,
+      "durationMs": 187
+    },
+    {
+      "ts": "2026-03-17T09:16:10.099Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/tag?limit=100&page=1",
+      "statusCode": 200,
+      "durationMs": 612
+    },
+    {
+      "ts": "2026-03-17T09:16:10.198Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/member?limit=100&page=1",
+      "statusCode": 200,
+      "durationMs": 762
+    },
+    {
+      "ts": "2026-03-17T09:16:10.239Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/filter-count?assign=true",
+      "statusCode": 200,
+      "durationMs": 781
+    },
+    {
+      "ts": "2026-03-17T09:16:10.263Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation?assign=true&status=open&sort=isPinned:desc,pinnedAt:desc,timestamp:desc&hideEmpty=true&limit=20&page=1",
+      "statusCode": 200,
+      "durationMs": 390
+    },
+    {
+      "ts": "2026-03-17T09:16:10.325Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/away-reasons",
+      "statusCode": 200,
+      "durationMs": 190
+    }
+  ]
+}

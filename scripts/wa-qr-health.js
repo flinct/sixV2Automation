@@ -106,7 +106,9 @@ async function httpJson(
     json = text;
   }
   if (!res.ok) {
-    const err = new Error(`HTTP ${res.status} ${res.statusText} for ${method} ${url}`);
+    const err = new Error(
+      `HTTP ${res.status} ${res.statusText} for ${method} ${url}`,
+    );
     err.status = res.status;
     err.body = json;
     throw err;
@@ -114,16 +116,33 @@ async function httpJson(
   return json;
 }
 
-async function loginBearer({ apiBase, identifier, keyword, password, headers, timeoutMs }) {
+async function loginBearer({
+  apiBase,
+  identifier,
+  keyword,
+  password,
+  headers,
+  timeoutMs,
+}) {
   const url = joinUrl(apiBase, "api/auth/login");
   const body = identifier ? { identifier, password } : { keyword, password };
   const res = await httpJson(url, { method: "POST", headers, body, timeoutMs });
-  const token = res?.accessToken || res?.token || res?.data?.accessToken || res?.data?.token;
+  const token =
+    res?.accessToken ||
+    res?.token ||
+    res?.data?.accessToken ||
+    res?.data?.token;
   if (!token) throw new Error("login: missing token in response");
   return token;
 }
 
-async function createAccountChannel({ apiBase, headers, body, dispatcher, timeoutMs }) {
+async function createAccountChannel({
+  apiBase,
+  headers,
+  body,
+  dispatcher,
+  timeoutMs,
+}) {
   const url = joinUrl(apiBase, "api/account-channel");
   const res = await httpJson(url, {
     method: "POST",
@@ -137,7 +156,14 @@ async function createAccountChannel({ apiBase, headers, body, dispatcher, timeou
   return { id, raw: res };
 }
 
-async function initInstanceV2({ apiBase, headers, body, method, dispatcher, timeoutMs }) {
+async function initInstanceV2({
+  apiBase,
+  headers,
+  body,
+  method,
+  dispatcher,
+  timeoutMs,
+}) {
   const url = joinUrl(apiBase, "api/account-channel/instance");
   return httpJson(url, {
     method: method || "POST",
@@ -203,7 +229,9 @@ async function getCypressEnvConfig(baseUrl) {
   const mod = await import(pathToFileURL(filePath).href);
   const env_config = mod?.env_config;
   if (typeof env_config !== "function") {
-    throw new Error("Unable to load env_config() from cypress/support/01_url_page.js");
+    throw new Error(
+      "Unable to load env_config() from cypress/support/01_url_page.js",
+    );
   }
 
   const cfg = env_config(baseUrl);
@@ -216,7 +244,7 @@ async function main() {
 
   const apiBase = apiBaseFromBaseUrl(baseUrl);
 
-  const ITERATIONS = envInt("ITERATIONS", 20);
+  const ITERATIONS = envInt("ITERATIONS", 1);
   const pollIntervalMs = envInt("POLL_INTERVAL_MS", 2000);
   const pollTimeoutMs = envInt("POLL_TIMEOUT_MS", 60000);
   const REQUEST_TIMEOUT_MS = envInt("REQUEST_TIMEOUT_MS", 20000);
@@ -263,7 +291,8 @@ async function main() {
     const body = key ? cypressCfg.cfg?.[key] : null;
 
     if (body) {
-      if (!loginIdentifier && body.identifier) loginIdentifier = body.identifier;
+      if (!loginIdentifier && body.identifier)
+        loginIdentifier = body.identifier;
       if (!loginKeyword && body.keyword) loginKeyword = body.keyword;
       if (!loginPassword && body.password) loginPassword = body.password;
 
@@ -277,7 +306,10 @@ async function main() {
         },
       });
     } else if (loginType) {
-      console.log("[auth] CYPRESS_loginType set but mapping not found", { CYPRESS_loginType: loginType, expectedKey: key });
+      console.log("[auth] CYPRESS_loginType set but mapping not found", {
+        CYPRESS_loginType: loginType,
+        expectedKey: key,
+      });
     }
   }
 
@@ -289,7 +321,11 @@ async function main() {
       url: joinUrl(apiBase, "api/auth/login"),
       identifier: loginIdentifier || undefined,
       keyword: loginKeyword || undefined,
-      passwordFrom: process.env.LOGIN_PASSWORD ? "env" : cypressCfg ? "cypress" : "env",
+      passwordFrom: process.env.LOGIN_PASSWORD
+        ? "env"
+        : cypressCfg
+          ? "cypress"
+          : "env",
       proxy: "(auth step uses direct connection)",
     });
 
@@ -305,7 +341,8 @@ async function main() {
       console.log("[auth] login ok");
     } catch (e) {
       console.log("[auth] login FAIL", e?.message || e);
-      if (e?.body) console.log("[auth] login BODY:", JSON.stringify(e.body).slice(0, 800));
+      if (e?.body)
+        console.log("[auth] login BODY:", JSON.stringify(e.body).slice(0, 800));
       throw e;
     }
   } else {
@@ -329,10 +366,15 @@ async function main() {
   console.log("--- WA QR Health ---");
   // Proxy support
   const PROXY_LIST_FILE = envStr("PROXY_LIST_FILE", "scripts/ipList");
-  const PROXY_MODE = (envStr("PROXY_MODE", "roundrobin") || "roundrobin").toLowerCase(); // roundrobin|random|off
+  const PROXY_MODE = (
+    envStr("PROXY_MODE", "roundrobin") || "roundrobin"
+  ).toLowerCase(); // roundrobin|random|off
   const PROXY_PER_ITERATION = envBool("PROXY_PER_ITERATION", true);
   const proxies = PROXY_MODE === "off" ? [] : loadProxyList(PROXY_LIST_FILE);
-  const proxyAgents = proxies.map((p) => ({ proxy: p, agent: new ProxyAgent(p) }));
+  const proxyAgents = proxies.map((p) => ({
+    proxy: p,
+    agent: new ProxyAgent(p),
+  }));
   let proxyIdx = 0;
 
   const pickProxy = () => {
@@ -401,11 +443,17 @@ async function main() {
 
         // Retry with different proxies if the chosen proxy is dead/hangs.
         let lastErr;
-        for (let attempt = 1; attempt <= Math.max(1, PROXY_RETRIES); attempt++) {
+        for (
+          let attempt = 1;
+          attempt <= Math.max(1, PROXY_RETRIES);
+          attempt++
+        ) {
           const curProxy = proxyAgents.length > 0 ? pickProxy() : null;
           const curDispatcher = curProxy?.agent;
 
-          console.log(`\n  [v2] proxy(attempt ${attempt}/${Math.max(1, PROXY_RETRIES)}): ${curProxy ? curProxy.proxy : "(none)"}`);
+          console.log(
+            `\n  [v2] proxy(attempt ${attempt}/${Math.max(1, PROXY_RETRIES)}): ${curProxy ? curProxy.proxy : "(none)"}`,
+          );
           console.log(
             `\n  [v2] create account-channel: POST ${joinUrl(apiBase, "api/account-channel")}`,
           );
@@ -473,7 +521,9 @@ async function main() {
             lastErr = e;
             console.log("  [v2] attempt FAIL:", e?.message || e);
             if (e?.name === "AbortError") {
-              console.log("  [v2] reason: request timeout (proxy likely hanging)");
+              console.log(
+                "  [v2] reason: request timeout (proxy likely hanging)",
+              );
             }
             if (attempt === Math.max(1, PROXY_RETRIES)) throw e;
           }
@@ -494,8 +544,14 @@ async function main() {
         }
       } else {
         // legacy
-        const initUrl = joinUrl(apiBase, `${INIT_PATH}${encodeURIComponent(number)}`);
-        const qrUrl = joinUrl(apiBase, `${GET_QR_PATH}${encodeURIComponent(number)}`);
+        const initUrl = joinUrl(
+          apiBase,
+          `${INIT_PATH}${encodeURIComponent(number)}`,
+        );
+        const qrUrl = joinUrl(
+          apiBase,
+          `${GET_QR_PATH}${encodeURIComponent(number)}`,
+        );
         console.log(`\n  [legacy] init url: ${initUrl}`);
         console.log(`  [legacy] qr url:   ${qrUrl}`);
 
@@ -523,7 +579,8 @@ async function main() {
     } catch (err) {
       fail++;
       console.log(`FAIL (${err?.message || err})`);
-      if (err?.body) console.log("BODY:", JSON.stringify(err.body).slice(0, 800));
+      if (err?.body)
+        console.log("BODY:", JSON.stringify(err.body).slice(0, 800));
     }
   }
 

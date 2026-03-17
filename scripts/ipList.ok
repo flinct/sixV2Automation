@@ -1,0 +1,14 @@
+ curl.exe -v -x "http://84.17.47.150:9002" http://example.com --max-time 20
+*   Trying 84.17.47.150:9002...
+* Established connection to 84.17.47.150 (84.17.47.150 port 9002) from 192.168.1.168 port 63539 
+* using HTTP/1.x
+> GET http://example.com/ HTTP/1.1
+> Host: example.com
+> User-Agent: curl/8.16.0
+> Accept: */*
+> Proxy-Connection: Keep-Alive
+>
+* Request completely sent off
+* Empty reply from server
+* shutting down connection #0
+curl: (52) Empty reply from server

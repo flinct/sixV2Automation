@@ -2532,6 +2532,17 @@ class inboxPage {
     cy.wait(1000);
     elementConversation.closePopupFIlterButton().click();
   }
+  openFirstConversation() {
+    this.accessAllConversation();
+    // cy.viewport(1366, 768);
+    cy.viewport(1440, 900);
+    elementConversation.chatListNavPanelControlButton().click();
+    elementConversation
+      .chatListClientContainer(1, { timeout: 60000 })
+      .should("be.visible");
+    elementConversation.chatListClientContainer(1).click();
+    elementConversation.chatRoom().should("be.visible");
+  }
   openConversation() {
     this.accessAllConversation();
     // cy.viewport(1366, 768);

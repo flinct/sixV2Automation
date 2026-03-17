@@ -28,6 +28,7 @@ import "./commands/broadcast";
 import "./commands/termAndPolicy";
 import "./commands/notification";
 import "./commands/socket";
+// endpoint detection is implemented as a Page Object (support/pages/endpointDetectPage.js)
 
 // // Versi untuk chaining setelah cy.get()
 let successLogs = [];

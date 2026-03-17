@@ -1,0 +1,360 @@
+{
+  "name": "conversation-your-inbox",
+  "startedAt": "2026-03-17T09:25:57.743Z",
+  "baseUrl": "https://dev-v2.satuinbox.com",
+  "spec": "cypress\\e2e\\01-v2_regression\\02_conversation.cy.js",
+  "entries": [
+    {
+      "ts": "2026-03-17T09:26:00.148Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-widget.satuinbox.com/api/widget/auth/api-key?licenseKey=$2b$10$mGxYszByoWYczJClaS0TeOtmuH7OCveFbnjDLGNIB.k53b/wWYuSG",
+      "statusCode": 200,
+      "durationMs": 398
+    },
+    {
+      "ts": "2026-03-17T09:26:00.466Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-widget.satuinbox.com/api/widget/widget/settings",
+      "statusCode": 200,
+      "durationMs": 272
+    },
+    {
+      "ts": "2026-03-17T09:26:00.877Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 84
+    },
+    {
+      "ts": "2026-03-17T09:26:01.532Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/member/status",
+      "statusCode": 401,
+      "durationMs": 208
+    },
+    {
+      "ts": "2026-03-17T09:26:01.670Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/tag?limit=100&page=1",
+      "statusCode": 401,
+      "durationMs": 254
+    },
+    {
+      "ts": "2026-03-17T09:26:01.733Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/member?limit=100&page=1",
+      "statusCode": 401,
+      "durationMs": 338
+    },
+    {
+      "ts": "2026-03-17T09:26:01.736Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/filter-count?assign=true",
+      "statusCode": 401,
+      "durationMs": 279
+    },
+    {
+      "ts": "2026-03-17T09:26:01.737Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/organization/692e677de6f74788e2e6871b",
+      "statusCode": 401,
+      "durationMs": 301
+    },
+    {
+      "ts": "2026-03-17T09:26:01.740Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/count",
+      "statusCode": 401,
+      "durationMs": 366
+    },
+    {
+      "ts": "2026-03-17T09:26:01.743Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation?assign=true&status=open&sort=isPinned:desc,pinnedAt:desc,timestamp:desc&hideEmpty=true&limit=20&page=1",
+      "statusCode": 401,
+      "durationMs": 178
+    },
+    {
+      "ts": "2026-03-17T09:26:01.867Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/screenshot/setting",
+      "statusCode": 401,
+      "durationMs": 136
+    },
+    {
+      "ts": "2026-03-17T09:26:02.127Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 291
+    },
+    {
+      "ts": "2026-03-17T09:26:02.214Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 349
+    },
+    {
+      "ts": "2026-03-17T09:26:02.411Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 411
+    },
+    {
+      "ts": "2026-03-17T09:26:02.414Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 388
+    },
+    {
+      "ts": "2026-03-17T09:26:02.540Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 487
+    },
+    {
+      "ts": "2026-03-17T09:26:02.544Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 464
+    },
+    {
+      "ts": "2026-03-17T09:26:02.686Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 339
+    },
+    {
+      "ts": "2026-03-17T09:26:02.764Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 520
+    },
+    {
+      "ts": "2026-03-17T09:26:02.766Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2-api.satuinbox.com/api/auth/refresh-token",
+      "statusCode": 201,
+      "durationMs": 359
+    },
+    {
+      "ts": "2026-03-17T09:26:03.013Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 251
+    },
+    {
+      "ts": "2026-03-17T09:26:03.117Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 206
+    },
+    {
+      "ts": "2026-03-17T09:26:03.227Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 161
+    },
+    {
+      "ts": "2026-03-17T09:26:03.375Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 222
+    },
+    {
+      "ts": "2026-03-17T09:26:03.378Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 87
+    },
+    {
+      "ts": "2026-03-17T09:26:03.380Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/member/status",
+      "statusCode": 200,
+      "durationMs": 120
+    },
+    {
+      "ts": "2026-03-17T09:26:03.577Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 218
+    },
+    {
+      "ts": "2026-03-17T09:26:03.722Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 146
+    },
+    {
+      "ts": "2026-03-17T09:26:04.007Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/away-reasons",
+      "statusCode": 200,
+      "durationMs": 270
+    },
+    {
+      "ts": "2026-03-17T09:26:04.119Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 144
+    },
+    {
+      "ts": "2026-03-17T09:26:04.121Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 128
+    },
+    {
+      "ts": "2026-03-17T09:26:04.124Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/tag?limit=100&page=1",
+      "statusCode": 200,
+      "durationMs": 169
+    },
+    {
+      "ts": "2026-03-17T09:26:04.284Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 91
+    },
+    {
+      "ts": "2026-03-17T09:26:04.285Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 117
+    },
+    {
+      "ts": "2026-03-17T09:26:04.326Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/member?limit=100&page=1",
+      "statusCode": 200,
+      "durationMs": 239
+    },
+    {
+      "ts": "2026-03-17T09:26:04.447Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 127
+    },
+    {
+      "ts": "2026-03-17T09:26:04.522Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2.satuinbox.com/api/auth/csrf",
+      "statusCode": 200,
+      "durationMs": 135
+    },
+    {
+      "ts": "2026-03-17T09:26:04.566Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/filter-count?assign=true",
+      "statusCode": 200,
+      "durationMs": 200
+    },
+    {
+      "ts": "2026-03-17T09:26:04.616Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 117
+    },
+    {
+      "ts": "2026-03-17T09:26:04.692Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/organization/692e677de6f74788e2e6871b",
+      "statusCode": 200,
+      "durationMs": 173
+    },
+    {
+      "ts": "2026-03-17T09:26:04.859Z",
+      "name": "conversation-your-inbox",
+      "method": "POST",
+      "url": "https://dev-v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 112
+    },
+    {
+      "ts": "2026-03-17T09:26:04.965Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation?assign=true&status=open&sort=isPinned:desc,pinnedAt:desc,timestamp:desc&hideEmpty=true&limit=20&page=1",
+      "statusCode": 200,
+      "durationMs": 274
+    },
+    {
+      "ts": "2026-03-17T09:26:04.987Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/count",
+      "statusCode": 200,
+      "durationMs": 151
+    },
+    {
+      "ts": "2026-03-17T09:26:05.062Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://dev-v2-api.satuinbox.com/api/conversation/screenshot/setting",
+      "statusCode": 200,
+      "durationMs": 138
+    }
+  ]
+}
