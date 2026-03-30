@@ -30,17 +30,41 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.4/index.js";
  * This file is now intended to be the closest safe k6-compatible approximation.
  */
 
+const HTTP_STAGE_1_TARGET = envInt("HTTP_STAGE_1_TARGET", 10);
+const HTTP_STAGE_2_TARGET = envInt("HTTP_STAGE_2_TARGET", 25);
+const HTTP_STAGE_3_TARGET = envInt("HTTP_STAGE_3_TARGET", 50);
+const HTTP_STAGE_1_DURATION = envStr("HTTP_STAGE_1_DURATION", "30s");
+const HTTP_STAGE_2_DURATION = envStr("HTTP_STAGE_2_DURATION", "30s");
+const HTTP_STAGE_3_DURATION = envStr("HTTP_STAGE_3_DURATION", "30s");
+const HTTP_STAGE_DOWN_DURATION = envStr("HTTP_STAGE_DOWN_DURATION", "20s");
+const HTTP_GRACEFUL_RAMPDOWN = envStr("HTTP_GRACEFUL_RAMPDOWN", "10s");
+
+const SOCKET_STAGE_1_TARGET = envInt("SOCKET_STAGE_1_TARGET", 25);
+const SOCKET_STAGE_2_TARGET = envInt("SOCKET_STAGE_2_TARGET", 50);
+const SOCKET_STAGE_3_TARGET = envInt("SOCKET_STAGE_3_TARGET", 100);
+const SOCKET_STAGE_4_TARGET = envInt("SOCKET_STAGE_4_TARGET", 150);
+const SOCKET_STAGE_1_DURATION = envStr("SOCKET_STAGE_1_DURATION", "30s");
+const SOCKET_STAGE_2_DURATION = envStr("SOCKET_STAGE_2_DURATION", "30s");
+const SOCKET_STAGE_3_DURATION = envStr("SOCKET_STAGE_3_DURATION", "30s");
+const SOCKET_STAGE_4_DURATION = envStr("SOCKET_STAGE_4_DURATION", "30s");
+const SOCKET_STAGE_DOWN_DURATION = envStr("SOCKET_STAGE_DOWN_DURATION", "20s");
+const SOCKET_GRACEFUL_RAMPDOWN = envStr("SOCKET_GRACEFUL_RAMPDOWN", "10s");
+
+const SOCKET_SOAK_VUS = envInt("SOCKET_SOAK_VUS", 50);
+const SOCKET_SOAK_DURATION = envStr("SOCKET_SOAK_DURATION", "10m");
+const SOCKET_SOAK_START_TIME = envStr("SOCKET_SOAK_START_TIME", "2m20s");
+
 const runSchema = {
   http_bootstrap_ramp: {
     executor: "ramping-vus",
     startVUs: 0,
     stages: [
-      { duration: "30s", target: 10 },
-      { duration: "30s", target: 25 },
-      { duration: "30s", target: 50 },
-      { duration: "20s", target: 0 },
+      { duration: HTTP_STAGE_1_DURATION, target: HTTP_STAGE_1_TARGET },
+      { duration: HTTP_STAGE_2_DURATION, target: HTTP_STAGE_2_TARGET },
+      { duration: HTTP_STAGE_3_DURATION, target: HTTP_STAGE_3_TARGET },
+      { duration: HTTP_STAGE_DOWN_DURATION, target: 0 },
     ],
-    gracefulRampDown: "10s",
+    gracefulRampDown: HTTP_GRACEFUL_RAMPDOWN,
     exec: "httpBootstrapFlow",
     startTime: "0s",
   },
@@ -49,23 +73,23 @@ const runSchema = {
     executor: "ramping-vus",
     startVUs: 0,
     stages: [
-      { duration: "30s", target: 25 },
-      { duration: "30s", target: 50 },
-      { duration: "30s", target: 100 },
-      { duration: "30s", target: 150 },
-      { duration: "20s", target: 0 },
+      { duration: SOCKET_STAGE_1_DURATION, target: SOCKET_STAGE_1_TARGET },
+      { duration: SOCKET_STAGE_2_DURATION, target: SOCKET_STAGE_2_TARGET },
+      { duration: SOCKET_STAGE_3_DURATION, target: SOCKET_STAGE_3_TARGET },
+      { duration: SOCKET_STAGE_4_DURATION, target: SOCKET_STAGE_4_TARGET },
+      { duration: SOCKET_STAGE_DOWN_DURATION, target: 0 },
     ],
-    gracefulRampDown: "10s",
+    gracefulRampDown: SOCKET_GRACEFUL_RAMPDOWN,
     exec: "socketLifecycleApproxFlow",
     startTime: "0s",
   },
 
   socket_probe_soak: {
     executor: "constant-vus",
-    vus: 50,
-    duration: "10m",
+    vus: SOCKET_SOAK_VUS,
+    duration: SOCKET_SOAK_DURATION,
     exec: "socketLifecycleApproxFlow",
-    startTime: "2m20s",
+    startTime: SOCKET_SOAK_START_TIME,
   },
 };
 
