@@ -1,7 +1,7 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
 import exec from "k6/execution";
-import { Counter } from "k6/metrics";
+import { Counter, Rate } from "k6/metrics";
 
 // HTML report (generated at end of run)
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
@@ -49,10 +49,10 @@ const runSchema = {
     executor: "ramping-vus",
     startVUs: 0,
     stages: [
-      { duration: "30s", target: 25 },
       { duration: "30s", target: 50 },
-      { duration: "30s", target: 100 },
       { duration: "30s", target: 150 },
+      { duration: "30s", target: 300 },
+      { duration: "30s", target: 500 },
       { duration: "20s", target: 0 },
     ],
     gracefulRampDown: "10s",
@@ -82,6 +82,7 @@ export const options = {
 const qrPollAttempts = new Counter("qr_poll_attempts");
 const socketProbeAttempts = new Counter("socket_probe_attempts");
 const socketProbeSuccess = new Counter("socket_probe_success");
+const socketProbeSuccessRate = new Rate("socket_probe_success_rate");
 const socketActions = new Counter("socket_actions");
 
 function envInt(name, def) {
@@ -98,8 +99,10 @@ function envStr(name, def) {
 
 function deriveApiBase(baseUrl) {
   if (!baseUrl) return "";
-  if (baseUrl === "https://dev-v2.satuinbox.com") return "https://dev-v2-api.satuinbox.com/";
-  if (baseUrl === "https://v2.satuinbox.com") return "https://v2-api.satuinbox.com/";
+  if (baseUrl === "https://dev-v2.satuinbox.com")
+    return "https://dev-v2-api.satuinbox.com/";
+  if (baseUrl === "https://v2.satuinbox.com")
+    return "https://v2-api.satuinbox.com/";
   return "";
 }
 
@@ -151,7 +154,8 @@ const TOKEN_TTL_SEC = envInt("TOKEN_TTL_SEC", 15 * 60);
 const TOKEN_REFRESH_SKEW_SEC = envInt("TOKEN_REFRESH_SKEW_SEC", 60);
 const POLL_INTERVAL_MS = envInt("POLL_INTERVAL_MS", 2000);
 const POLL_MAX_ATTEMPTS = envInt("POLL_MAX_ATTEMPTS", 10);
-const DISABLE_RUNTIME_LOGIN_REFRESH = envStr("DISABLE_RUNTIME_LOGIN_REFRESH", "true") === "true";
+const DISABLE_RUNTIME_LOGIN_REFRESH =
+  envStr("DISABLE_RUNTIME_LOGIN_REFRESH", "true") === "true";
 
 const SOCKET_SESSION_MIN_MS = envInt("SOCKET_SESSION_MIN_MS", 30000);
 const SOCKET_SESSION_MAX_MS = envInt("SOCKET_SESSION_MAX_MS", 180000);
@@ -160,12 +164,20 @@ const SOCKET_ACTION_MAX_MS = envInt("SOCKET_ACTION_MAX_MS", 8000);
 const SOCKET_IDLE_MIN_MS = envInt("SOCKET_IDLE_MIN_MS", 8000);
 const SOCKET_IDLE_MAX_MS = envInt("SOCKET_IDLE_MAX_MS", 25000);
 const SOCKET_IDLE_EVERY_N_ACTIONS = envInt("SOCKET_IDLE_EVERY_N_ACTIONS", 4);
-const SOCKET_PROBE_ACTIONS_PER_SESSION = envInt("SOCKET_PROBE_ACTIONS_PER_SESSION", 6);
+const SOCKET_PROBE_ACTIONS_PER_SESSION = envInt(
+  "SOCKET_PROBE_ACTIONS_PER_SESSION",
+  6,
+);
 
 if (!BASE_URL) throw new Error("Missing BASE_URL");
-if (!API_BASE) throw new Error("Unable to derive API_BASE from BASE_URL. Set API_BASE explicitly.");
+if (!API_BASE)
+  throw new Error(
+    "Unable to derive API_BASE from BASE_URL. Set API_BASE explicitly.",
+  );
 if (!LOGIN_PASSWORD || (!LOGIN_IDENTIFIER && !LOGIN_KEYWORD)) {
-  throw new Error("Missing login creds. Set LOGIN_IDENTIFIER/LOGIN_KEYWORD + LOGIN_PASSWORD.");
+  throw new Error(
+    "Missing login creds. Set LOGIN_IDENTIFIER/LOGIN_KEYWORD + LOGIN_PASSWORD.",
+  );
 }
 
 let tokenState = { token: "", exp: 0 };
@@ -207,7 +219,11 @@ function ensureTokenSeeded(seed) {
 function shouldRefreshToken() {
   if (DISABLE_RUNTIME_LOGIN_REFRESH) return false;
   const t = nowSec();
-  return !tokenState.token || !tokenState.exp || tokenState.exp - t <= TOKEN_REFRESH_SKEW_SEC;
+  return (
+    !tokenState.token ||
+    !tokenState.exp ||
+    tokenState.exp - t <= TOKEN_REFRESH_SKEW_SEC
+  );
 }
 
 function refreshTokenWithJitter() {
@@ -285,7 +301,10 @@ export function httpBootstrapFlow(seed) {
   });
   if (!initOk) return;
 
-  const qrUrl = joinUrl(API_BASE, `api/account-channel/instance/qr/${encodeURIComponent(id)}`);
+  const qrUrl = joinUrl(
+    API_BASE,
+    `api/account-channel/instance/qr/${encodeURIComponent(id)}`,
+  );
   let qrOk = false;
 
   for (let attempt = 1; attempt <= POLL_MAX_ATTEMPTS; attempt++) {
@@ -353,10 +372,12 @@ function doSocketPollingProbe() {
 
   const ok = check(res, {
     "socket.io polling probe 2xx": (r) => r.status >= 200 && r.status < 300,
-    "socket.io polling body non-empty": (r) => !!r.body && String(r.body).length > 0,
+    "socket.io polling body non-empty": (r) =>
+      !!r.body && String(r.body).length > 0,
   });
 
   if (ok) socketProbeSuccess.add(1);
+  socketProbeSuccessRate.add(ok);
   return ok;
 }
 
@@ -364,19 +385,25 @@ export function socketLifecycleApproxFlow(seed) {
   ensureTokenSeeded(seed);
   if (shouldRefreshToken()) refreshTokenWithJitter();
 
-  const sessionBudgetMs = randomInt(SOCKET_SESSION_MIN_MS, SOCKET_SESSION_MAX_MS);
+  const sessionBudgetMs = randomInt(
+    SOCKET_SESSION_MIN_MS,
+    SOCKET_SESSION_MAX_MS,
+  );
   const startedAt = Date.now();
   let actionCount = 0;
 
   const firstProbeOk = doSocketPollingProbe();
-  check(firstProbeOk, { "socket_probe_success_rate": () => firstProbeOk });
+  check(firstProbeOk, { "socket probe first request ok": () => firstProbeOk });
   if (!firstProbeOk) return;
 
-  while (Date.now() - startedAt < sessionBudgetMs && actionCount < SOCKET_PROBE_ACTIONS_PER_SESSION) {
+  while (
+    Date.now() - startedAt < sessionBudgetMs &&
+    actionCount < SOCKET_PROBE_ACTIONS_PER_SESSION
+  ) {
     maybeSleepMs(SOCKET_ACTION_MIN_MS, SOCKET_ACTION_MAX_MS);
 
     const probeOk = doSocketPollingProbe();
-    check(probeOk, { "socket_probe_success_rate": () => probeOk });
+    check(probeOk, { "socket probe action ok": () => probeOk });
     socketActions.add(1);
     actionCount += 1;
 
