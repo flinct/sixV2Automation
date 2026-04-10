@@ -8,7 +8,7 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.4/index.js";
 
 /**
- * qr_flowinit.js
+ * qr_flowinit2.js
  *
  * Flow only:
  * - login
@@ -17,6 +17,7 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.4/index.js";
  * - hit the correct page for that random item
  * - init existing account-channel instance
  * - poll QR
+ * - destroy/terminate QR session
  *
  * No create account-channel.
  *
@@ -35,6 +36,7 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.4/index.js";
  * - ACCOUNT_CHANNEL_LIST_PATH: default api/account-channel
  * - INIT_PATH: default api/account-channel/instance
  * - QR_PATH_TEMPLATE: default api/account-channel/instance/qr/{id}
+ * - TERMINATE_PATH_TEMPLATE: default api/account-channel/instance/terminate-qr/{id}
  */
 
 const runSchema = {
@@ -73,6 +75,7 @@ export const options = {
 
 const qrPollAttempts = new Counter("qr_poll_attempts");
 const accountChannelListAttempts = new Counter("account_channel_list_attempts");
+const terminateAttempts = new Counter("terminate_qr_instance_attempts");
 
 function envInt(name, def) {
   const v = __ENV[name];
@@ -147,6 +150,11 @@ const QR_PATH_TEMPLATE = envStr(
   "QR_PATH_TEMPLATE",
   "api/account-channel/instance/qr/{id}",
 );
+const TERMINATE_PATH_TEMPLATE = envStr(
+  "TERMINATE_PATH_TEMPLATE",
+  "api/account-channel/instance/terminate-qr/{id}",
+);
+const TERMINATE_METHOD = envStr("TERMINATE_METHOD", "post").toUpperCase();
 
 const TOKEN_TTL_SEC = envInt("TOKEN_TTL_SEC", 15 * 60);
 const TOKEN_REFRESH_SKEW_SEC = envInt("TOKEN_REFRESH_SKEW_SEC", 60);
@@ -381,6 +389,36 @@ function makeQrPath(id) {
   return QR_PATH_TEMPLATE.replace("{id}", encodeURIComponent(id));
 }
 
+function makeTerminatePath(id) {
+  return TERMINATE_PATH_TEMPLATE.replace("{id}", encodeURIComponent(id));
+}
+
+function terminateQrInstance(token, accountChannelId) {
+  terminateAttempts.add(1);
+  const terminateUrl = joinUrl(API_BASE, makeTerminatePath(accountChannelId));
+
+  let res;
+  if (TERMINATE_METHOD === "DELETE") {
+    res = http.del(terminateUrl, null, {
+      headers: headers(token),
+      tags: { name: "qr_terminate" },
+      timeout: "30s",
+    });
+  } else {
+    res = http.post(terminateUrl, JSON.stringify({ id: accountChannelId }), {
+      headers: headers(token),
+      tags: { name: "qr_terminate" },
+      timeout: "30s",
+    });
+  }
+
+  check(res, {
+    "terminate 2xx": (r) => r.status >= 200 && r.status < 300,
+  });
+
+  return res;
+}
+
 export function setup() {
   const seed = login();
   if (!seed.token) throw new Error("setup login failed (no token)");
@@ -389,8 +427,8 @@ export function setup() {
 
 export function handleSummary(data) {
   return {
-    "k6/report/summary-qr_flowinit.html": htmlReport(data),
-    "k6/report/summary-qr_flowinit.txt": textSummary(data, {
+    "k6/report/summary-qr_flowinit2.html": htmlReport(data),
+    "k6/report/summary-qr_flowinit2.txt": textSummary(data, {
       indent: " ",
       enableColors: false,
     }),
@@ -457,6 +495,9 @@ export function httpFlowInitOnly(seed) {
   }
 
   check(qrOk, { "qr obtained": (v) => v === true });
+
+  maybeSleepMs(300, 1000);
+  terminateQrInstance(token, accountChannelId);
   maybeSleepMs(500, 2500);
 }
 

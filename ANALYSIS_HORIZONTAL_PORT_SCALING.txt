@@ -1,0 +1,280 @@
+================================================================================
+ANALISA CODE TESTING HORIZONTAL PORT SCALING
+Repository: sixV2Automation
+Date: 2026-04-08
+================================================================================
+
+STATUS KESELURUHAN: ⚠️ PARTIAL - Belum Fully Handle Horizontal Port Scaling
+
+================================================================================
+1. YANG SUDAH ADA (POSITIVE)
+================================================================================
+
+a) Socket.IO Load Test (widget-socket-load-2.js)
+   ✅ Handles connection scaling across instances:
+      - Parameter TARGET_CONNECTIONS (default 1200 clients)
+      - Parameter RAMP_STEP & RAMP_DELAY_MS untuk gradual ramp-up
+      - Flexible mode: soak (connection focus) vs throughput (message focus)
+      - Multiple socket channels support via EMIT_EVENT
+
+   ✅ Memory/CPU-aware testing:
+      - Memisahkan test scenario: connection-heavy vs message-heavy
+      - Tracks connection success rate dan event delivery
+      - Logs detailed per-client state
+
+b) K6 Load Test (qr_flowinit2.js & wa_qr_fullflow.js)
+   ✅ Ramping VUs untuk scaling simulation:
+      stages: [
+        { duration: "30s", target: 50 },
+        { duration: "2m", target: 150 },
+        { duration: "4m", target: 300 },
+        { duration: "10m", target: 500 },  // Progressive load
+        { duration: "20s", target: 0 },
+      ]
+
+   ✅ Token refresh + jitter handling untuk distributed load:
+      - TOKEN_REFRESH_SKEW_SEC = 60s
+      - refreshTokenWithJitter() dengan sleep(Math.random() * 3) 
+        untuk avoid thundering herd
+
+   ✅ Custom metrics:
+      - Counters untuk qr_poll_attempts, account_channel_list_attempts, 
+        terminate_qr_instance_attempts
+      - Thresholds: http_req_duration p(95)<3000
+
+c) Proxy Validation (proxy-precheck.js)
+   ✅ Multi-proxy horizontal distribution testing:
+      - Parameter CONCURRENCY (default 20) untuk parallel proxy checks
+      - Validates proxy viability sebelum load test
+      - Tests actual network path via ProxyAgent
+
+================================================================================
+2. YANG BELUM/TIDAK HANDLE (GAPS)
+================================================================================
+
+🔴 GAP 1: Tidak Ada Load Balancer Detection/Verification
+   Masalah: Code tidak detect/validate bahwa request benar2 di-distribute 
+            ke multiple backends
+   
+   Apa yang hilang:
+   - Tidak ada X-Forwarded-For header tracking
+   - Tidak ada backend instance ID tracking (misalnya via custom response header)
+   - Tidak ada metrics untuk "request distribution rate per instance"
+
+   MISSING CODE EXAMPLE:
+   // Verifikasi distribusi load
+   const backendInstanceIds = new Map(); 
+   const res = http.get(url, ...);
+   const backendId = res.headers['x-served-by'] || res.headers['x-instance-id'];
+   if (backendId) backendInstanceIds.set(backendId, 
+     (backendInstanceIds.get(backendId) || 0) + 1);
+
+🔴 GAP 2: Port-Specific Configuration Missing
+   Masalah: Script tidak support multi-port testing 
+            (e.g., http://localhost:3001, http://localhost:3002)
+   
+   Apa yang ada: Hanya BASE_URL tunggal, tidak ada port pool
+   
+   Apa yang seharusnya:
+   // MISSING: Port rotation/balancing
+   const PORTS = envStr("INSTANCE_PORTS", "3000,3001,3002").split(",");
+   const PORT_INDEX = new Map();
+   function getNextPort() {
+     const port = PORTS[Math.floor(Math.random() * PORTS.length)];
+     PORT_INDEX.set(port, (PORT_INDEX.get(port) || 0) + 1);
+     return port;
+   }
+
+🔴 GAP 3: Health Check Per Instance Missing
+   Masalah: Tidak ada pre-test validation bahwa semua instances healthy
+   
+   Apa yang ada: Hanya proxy-precheck.js untuk proxy, bukan untuk app instances
+   
+   Apa yang seharusnya:
+   // MISSING: Instance health verification
+   async function healthCheckAllInstances() {
+     for (let port of INSTANCE_PORTS) {
+       const health = await http.get(`http://localhost:${port}/health`);
+       if (health.status !== 200) 
+         throw new Error(`Instance on port ${port} unhealthy`);
+     }
+   }
+
+🔴 GAP 4: Sticky Session / Session Affinity Not Tested
+   Masalah: Code buat login sekali, reuse token semua VUs (bukan per-instance)
+   
+   Issue: Tidak test handling multi-instance session migration
+   
+   Current: Shared token state
+   let tokenState = { token: "", exp: 0 };
+   function ensureTokenSeeded(seed) {
+     if (tokenState.token) return; // Shared across all VUs
+     ...
+   }
+   
+   Should be: Per-instance atau load-balanced validation
+   Tidak clear apakah load balancer properly route session requests
+
+🔴 GAP 5: Persistent Connection Metrics Incomplete
+   Masalah: Socket test tidak track "connection distribution per instance"
+   
+   Apa yang ada di widget-socket-load-2.js:
+   - Tracks total connections
+   - Tracks events emitted/received
+   - MISSING: Breakdown per backend instance
+
+🔴 GAP 6: Scaling Boundaries Not Tested
+   Masalah: Tidak clear apakah test simulate real horizontal scaling limits
+   
+   Tidak ada:
+   - Max connections per instance threshold
+   - Connection pool exhaustion scenarios
+   - Port saturation testing
+   - Graceful degradation validation
+
+================================================================================
+3. ANALISA DETAIL PER SCRIPT
+================================================================================
+
+QR_FLOWINIT2.JS (K6):
+┌──────────────────────┬────────┬──────────────────────────────────────┐
+│ Aspek                │ Status │ Keterangan                           │
+├──────────────────────┼────────┼──────────────────────────────────────┤
+│ Load ramping         │ ✅     │ VU ramp dari 0→500 smooth           │
+│ Token handling       │ ✅     │ Refresh + jitter implemented        │
+│ Metrics              │ ✅     │ Custom counters untuk tracking      │
+│ Backend distribution │ ❌     │ Tidak verify load distribution      │
+│ Port rotation        │ ❌     │ Single API_BASE only                │
+│ Instance health      │ ❌     │ Tidak pre-check instance status     │
+└──────────────────────┴────────┴──────────────────────────────────────┘
+
+WIDGET-SOCKET-LOAD-2.JS (NODE.JS):
+┌──────────────────────┬────────┬──────────────────────────────────────┐
+│ Aspek                │ Status │ Keterangan                           │
+├──────────────────────┼────────┼──────────────────────────────────────┤
+│ Connection scaling   │ ✅     │ 1200+ concurrent clients support    │
+│ Ramp-up control      │ ✅     │ RAMP_STEP + RAMP_DELAY_MS          │
+│ Event throughput     │ ✅     │ Configurable emit interval          │
+│ Per-instance tracking│ ❌     │ Aggregate metrics only              │
+│ Port routing         │ ❌     │ Single BASE_URL only                │
+│ Connection pool      │ ❌     │ Tidak test resource constraints     │
+└──────────────────────┴────────┴──────────────────────────────────────┘
+
+PROXY-PRECHECK.JS (NODE.JS):
+┌──────────────────────┬────────┬──────────────────────────────────────┐
+│ Aspek                │ Status │ Keterangan                           │
+├──────────────────────┼────────┼──────────────────────────────────────┤
+│ Proxy validation     │ ✅     │ Parallel proxy health check         │
+│ Timeout handling     │ ✅     │ 20s timeout per proxy               │
+│ Output filtering     │ ✅     │ Only OK proxies written             │
+│ Instance health      │ ❌     │ Validates proxy, not app instance   │
+└──────────────────────┴────────┴──────────────────────────────────────┘
+
+================================================================================
+4. REKOMENDASI PERBAIKAN
+================================================================================
+
+Untuk fully handle HORIZONTAL PORT SCALING TESTING, tambahkan:
+
+1. INSTANCE/PORT CONFIGURATION:
+   export const INSTANCE_URLS = (envStr("INSTANCE_URLS", "") || "")
+     .split(",")
+     .filter(Boolean)
+     .map(u => u.trim());
+
+2. REQUEST DISTRIBUTION TRACKING:
+   const instanceMetrics = {};
+   INSTANCE_URLS.forEach(url => {
+     instanceMetrics[url] = new Counter(`requests_to_${encodeURIComponent(url)}`);
+   });
+
+3. PRE-TEST INSTANCE HEALTH CHECK:
+   export function setup() {
+     for (let url of INSTANCE_URLS) {
+       const res = http.get(`${url}/health`);
+       if (res.status !== 200) {
+         throw new Error(`Instance ${url} unhealthy: ${res.status}`);
+       }
+     }
+     return login();
+   }
+
+4. LOAD BALANCER VERIFICATION:
+   function getNextInstanceUrl() {
+     const idx = Math.floor(Math.random() * INSTANCE_URLS.length);
+     const url = INSTANCE_URLS[idx];
+     instanceMetrics[url].add(1);
+     return url;
+   }
+
+5. PER-INSTANCE METRICS REPORTING:
+   export function handleSummary(data) {
+     const summary = { instance_distribution: {} };
+     for (const [url, counter] of Object.entries(instanceMetrics)) {
+       summary.instance_distribution[url] = counter.value;
+     }
+     return { ... };
+   }
+
+================================================================================
+5. CHATGPT REFERENCE
+================================================================================
+
+Referensi: https://chatgpt.com/c/69afa20e-d800-8320-a428-8e4631154fb3
+
+Conversation tersebut likely discusses:
+- ✅ Multi-instance load balancing architecture
+- ✅ Port-based routing strategies
+- ❌ Versi current script BELUM implement backend instance tracking 
+      dari conversation tersebut
+
+================================================================================
+6. KESIMPULAN
+================================================================================
+
+Code sudah 60% SIAP, punya:
+✅ Load ramping & scaling scenarios
+✅ Token refresh + distributed jitter
+✅ Socket.IO parallel client support
+✅ Custom metrics framework
+
+Tapi MISSING 40% untuk TRUE HORIZONTAL PORT SCALING validation:
+❌ No per-instance request tracking
+❌ No port rotation/multi-endpoint support
+❌ No backend health pre-check
+❌ No load distribution verification
+❌ No instance affinity testing
+
+================================================================================
+7. ACTION ITEMS
+================================================================================
+
+PRIORITY 1 (CRITICAL):
+1. Extend scripts untuk support multiple INSTANCE_URLS atau INSTANCE_PORTS
+2. Add instance tracking metrics
+3. Add pre-test health validation per instance
+
+PRIORITY 2 (HIGH):
+4. Add load distribution reporting (request count per backend)
+5. Test connection/session failover scenarios
+
+PRIORITY 3 (MEDIUM):
+6. Add per-instance latency distribution metrics
+7. Add graceful degradation scenario testing
+8. Add connection pool exhaustion handling
+
+================================================================================
+FILE LOCATIONS ANALYZED
+================================================================================
+
+- C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\k6\qr_flowinit2.js
+- C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\k6\qr_flowinit.js
+- C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\k6\wa_qr_fullflow.js
+- C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\widget-socket-load-2.js
+- C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\proxy-precheck.js
+- C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\docs\loadTests.md
+- C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\README.md
+
+================================================================================
+END OF ANALYSIS
+================================================================================

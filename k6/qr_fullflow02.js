@@ -35,9 +35,10 @@ const runSchema = {
     executor: "ramping-vus",
     startVUs: 0,
     stages: [
-      { duration: "30s", target: 10 },
-      { duration: "30s", target: 25 },
       { duration: "30s", target: 50 },
+      { duration: "1m", target: 150 },
+      { duration: "3m", target: 300 },
+      { duration: "10m", target: 500 },
       { duration: "20s", target: 0 },
     ],
     gracefulRampDown: "10s",
@@ -45,28 +46,36 @@ const runSchema = {
     startTime: "0s",
   },
 
-  socket_probe_ramp: {
-    executor: "ramping-vus",
-    startVUs: 0,
-    stages: [
-      { duration: "30s", target: 50 },
-      { duration: "30s", target: 150 },
-      { duration: "30s", target: 300 },
-      { duration: "30s", target: 500 },
-      { duration: "20s", target: 0 },
-    ],
-    gracefulRampDown: "10s",
-    exec: "socketLifecycleApproxFlow",
-    startTime: "0s",
-  },
-
-  socket_probe_soak: {
+  http_bootstrap_soak: {
     executor: "constant-vus",
     vus: 50,
     duration: "10m",
-    exec: "socketLifecycleApproxFlow",
+    exec: "httpBootstrapFlow",
     startTime: "2m20s",
   },
+
+  // socket_probe_ramp: {
+  //   executor: "ramping-vus",
+  //   startVUs: 0,
+  //   stages: [
+  //     { duration: "30s", target: 50 },
+  //     { duration: "1m", target: 150 },
+  //     { duration: "3m", target: 300 },
+  //     { duration: "10m", target: 500 },
+  //     { duration: "20s", target: 0 },
+  //   ],
+  //   gracefulRampDown: "10s",
+  //   exec: "socketLifecycleApproxFlow",
+  //   startTime: "0s",
+  // },
+
+  // socket_probe_soak: {
+  //   executor: "constant-vus",
+  //   vus: 50,
+  //   duration: "10m",
+  //   exec: "socketLifecycleApproxFlow",
+  //   startTime: "2m20s",
+  // },
 };
 
 export const options = {

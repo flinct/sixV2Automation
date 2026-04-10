@@ -1,0 +1,37 @@
+{
+  "model": "gpt-5.2",
+  "temperature": 0.1,
+
+  "workspace": {
+    "maxFiles": 200,
+    "maxFileSizeKB": 300,
+    "respectGitIgnore": true,
+    "priorityExtensions": [".js", ".ts", ".jsx", ".tsx", ".json", ".md"]
+  },
+
+  "context": {
+    "maxTokens": 8000,
+    "compression": true,
+    "deduplicate": true
+  },
+
+  "agents": {
+    "planner": {
+      "enabled": true,
+      "maxSteps": 5
+    },
+    "coder": {
+      "enabled": true,
+      "maxOutputTokens": 6000
+    },
+    "reviewer": {
+      "enabled": true
+    }
+  },
+
+  "performance": {
+    "cache": true,
+    "reuseContext": true,
+    "parallelFileRead": true
+  }
+}

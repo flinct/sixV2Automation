@@ -1,0 +1,248 @@
+{
+  "name": "conversation-your-inbox",
+  "startedAt": "2026-03-18T10:13:48.334Z",
+  "baseUrl": "https://v2.satuinbox.com",
+  "spec": "cypress\\e2e\\01-v2_regression\\02_conversation.cy.js",
+  "entries": [
+    {
+      "ts": "2026-03-18T10:13:51.853Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-widget.satuinbox.com/api/widget/auth/api-key?licenseKey=$2b$10$txlAjtPectF0RxR1XUrVU.hztBrZrtwDrN/qh78XD9lI3J3tIZ1Te",
+      "statusCode": 200,
+      "durationMs": 201
+    },
+    {
+      "ts": "2026-03-18T10:13:52.037Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-widget.satuinbox.com/api/widget/widget/settings",
+      "statusCode": 200,
+      "durationMs": 126
+    },
+    {
+      "ts": "2026-03-18T10:13:52.591Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2.satuinbox.com/api/auth/session",
+      "statusCode": 200,
+      "durationMs": 119
+    },
+    {
+      "ts": "2026-03-18T10:13:53.187Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/count",
+      "statusCode": 200,
+      "durationMs": 212
+    },
+    {
+      "ts": "2026-03-18T10:13:53.271Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/organization/694b4baa2401bb310f0fdf2c",
+      "statusCode": 200,
+      "durationMs": 280
+    },
+    {
+      "ts": "2026-03-18T10:13:53.351Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/member/status",
+      "statusCode": 200,
+      "durationMs": 343
+    },
+    {
+      "ts": "2026-03-18T10:13:53.391Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/screenshot/setting",
+      "statusCode": 200,
+      "durationMs": 90
+    },
+    {
+      "ts": "2026-03-18T10:13:53.485Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation?assign=true&status=open&sort=isPinned:desc,pinnedAt:desc,timestamp:desc&hideEmpty=true&limit=20&page=1",
+      "statusCode": 200,
+      "durationMs": 268
+    },
+    {
+      "ts": "2026-03-18T10:13:53.653Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/filter-count?assign=true",
+      "statusCode": 200,
+      "durationMs": 602
+    },
+    {
+      "ts": "2026-03-18T10:13:53.655Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/tag?limit=100&page=1",
+      "statusCode": 200,
+      "durationMs": 622
+    },
+    {
+      "ts": "2026-03-18T10:13:53.664Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/away-reasons",
+      "statusCode": 200,
+      "durationMs": 184
+    },
+    {
+      "ts": "2026-03-18T10:13:53.997Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/member?limit=100&page=1",
+      "statusCode": 200,
+      "durationMs": 925
+    },
+    {
+      "ts": "2026-03-18T10:13:54.819Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/filter-count?",
+      "statusCode": 200,
+      "durationMs": 180
+    },
+    {
+      "ts": "2026-03-18T10:13:54.871Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation?status=open&sort=isPinned:desc,pinnedAt:desc,timestamp:desc&hideEmpty=true&limit=20&page=1",
+      "statusCode": 200,
+      "durationMs": 206
+    },
+    {
+      "ts": "2026-03-18T10:13:55.300Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation?status=open&sort=isPinned:desc,pinnedAt:desc,timestamp:desc&hideEmpty=true&limit=20&page=2",
+      "statusCode": 200,
+      "durationMs": 197
+    },
+    {
+      "ts": "2026-03-18T10:13:55.819Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/69ba449d9e3d56802d222baa/messages?limit=25&page=1",
+      "statusCode": 200,
+      "durationMs": 306
+    },
+    {
+      "ts": "2026-03-18T10:13:55.821Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/macros",
+      "statusCode": 200,
+      "durationMs": 239
+    },
+    {
+      "ts": "2026-03-18T10:13:55.825Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/69ba449d9e3d56802d222baa",
+      "statusCode": 200,
+      "durationMs": 276
+    },
+    {
+      "ts": "2026-03-18T10:13:55.835Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation-sla-metrics/69ba449d9e3d56802d222baa",
+      "statusCode": 200,
+      "durationMs": 154
+    },
+    {
+      "ts": "2026-03-18T10:13:55.837Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/screenshot?conversationId=69ba449d9e3d56802d222baa&renewScreenshotUrl=false",
+      "statusCode": 200,
+      "durationMs": 132
+    },
+    {
+      "ts": "2026-03-18T10:13:56.038Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/ticket?limit=100&page=1&conversationId=69ba449d9e3d56802d222baa",
+      "statusCode": 200,
+      "durationMs": 295
+    },
+    {
+      "ts": "2026-03-18T10:13:56.314Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/69ba449d9e3d56802d222baa/messages?limit=100&media=true&page=1",
+      "statusCode": 200,
+      "durationMs": 380
+    },
+    {
+      "ts": "2026-03-18T10:13:56.418Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/history?accountChannelIds=699fd15de4f819f6774bd866&contactId=694bb8f36e89104838c255e2&limit=100",
+      "statusCode": 200,
+      "durationMs": 448
+    },
+    {
+      "ts": "2026-03-18T10:13:56.420Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/69ba449d9e3d56802d222baa/messages?isPinned=true&limit=100&page=1&sort=isPinned:desc,pinnedAt:desc",
+      "statusCode": 200,
+      "durationMs": 385
+    },
+    {
+      "ts": "2026-03-18T10:13:56.421Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/69ba449d9e3d56802d222baa/messages?file=true&limit=100&page=1",
+      "statusCode": 200,
+      "durationMs": 364
+    },
+    {
+      "ts": "2026-03-18T10:13:56.423Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation-note?conversationId=69ba449d9e3d56802d222baa&limit=200",
+      "statusCode": 200,
+      "durationMs": 323
+    },
+    {
+      "ts": "2026-03-18T10:13:56.690Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/team?isArchived=false&limit=25&page=1&search=&sort=name:asc",
+      "statusCode": 200,
+      "durationMs": 276
+    },
+    {
+      "ts": "2026-03-18T10:13:56.801Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversations/69ba449d9e3d56802d222baa/message-utilities?page=1&limit=5",
+      "statusCode": 200,
+      "durationMs": 297
+    },
+    {
+      "ts": "2026-03-18T10:13:56.906Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/filter-count?",
+      "statusCode": 200,
+      "durationMs": 250
+    },
+    {
+      "ts": "2026-03-18T10:13:57.187Z",
+      "name": "conversation-your-inbox",
+      "method": "GET",
+      "url": "https://v2-api.satuinbox.com/api/conversation/filter-count?",
+      "statusCode": 200,
+      "durationMs": 194
+    }
+  ]
+}

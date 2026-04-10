@@ -1,0 +1,35 @@
+     ✗ socket.io polling probe 2xx
+      ↳  0% — ✓ 0 / ✗ 251161
+     ✗ socket.io polling body non-empty
+      ↳  99% — ✓ 251155 / ✗ 6
+     ✗ socket probe first request ok
+      ↳  0% — ✓ 0 / ✗ 251161
+     ✓ create 2xx
+     ✗ init 2xx
+      ↳  98% — ✓ 166 / ✗ 3
+     ✓ qr obtained
+
+     █ setup
+
+       ✓ login status 2xx
+
+   ✗ checks.........................: 33.37% ✓ 251653     ✗ 502331
+     data_received..................: 200 MB 224 kB/s
+     data_sent......................: 11 MB  12 kB/s
+     http_req_blocked...............: avg=572µs    min=0s      med=0s       max=7.83s   p(90)=0s       p(95)=0s     
+     http_req_connecting............: avg=326.11µs min=0s      med=0s       max=6.54s   p(90)=0s       p(95)=0s     
+   ✓ http_req_duration..............: avg=1.28s    min=0s      med=1.18s    max=30s     p(90)=2.05s    p(95)=2.51s  
+       { expected_response:true }...: avg=1.7s     min=75.82ms med=884.41ms max=22.53s  p(90)=1.96s    p(95)=3.71s  
+   ✗ http_req_failed................: 99.72% ✓ 251172     ✗ 704   
+     http_req_receiving.............: avg=4.16ms   min=0s      med=0s       max=18.36s  p(90)=5.18ms   p(95)=12.73ms
+     http_req_sending...............: avg=137.61µs min=0s      med=0s       max=18.33ms p(90)=590.19µs p(95)=696.5µs
+     http_req_tls_handshaking.......: avg=266.43µs min=0s      med=0s       max=4.99s   p(90)=0s       p(95)=0s     
+     http_req_waiting...............: avg=1.27s    min=0s      med=1.18s    max=30s     p(90)=2.04s    p(95)=2.5s   
+     http_reqs......................: 251876 282.701421/s
+     iteration_duration.............: avg=1.29s    min=54.96ms med=1.18s    max=42.77s  p(90)=2.05s    p(95)=2.52s  
+     iterations.....................: 251321 282.078498/s
+     qr_poll_attempts...............: 380    0.426506/s
+     socket_probe_attempts..........: 251161 281.898917/s
+   ✗ socket_probe_success_rate......: 0.00%  ✓ 0          ✗ 251161
+     vus............................: 3      min=0        max=506 
+     vus_max........................: 516    min=516      max=516 

@@ -23,6 +23,7 @@
  * - CONNECT_TIMEOUT_MS: per-client connect timeout (default: 15000)
  * - SOCKET_AUTH_MODE: "signatureKey" | "none" (default: signatureKey)
  * - SOCKET_PATH: socket.io path (default: /socket.io)
+ * - REPORT_OUTPUT: output file for HTML report (default: reports/load-test-report.html)
  *
  * Throughput-only:
  * - EMIT_EVENT: event name to emit periodically (default: socket.inbound.message)
@@ -53,11 +54,16 @@
  *   (example: join.conversation) and adjust payload accordingly via EMIT_PAYLOAD_JSON.
  */
 
-const { io } = require('socket.io-client');
+const { io } = require("socket.io-client");
+const {
+  generateHTMLReport,
+  ensureReportDir,
+  DEFAULT_REPORT_DIR,
+} = require("./report-generator");
 
 function envInt(name, def) {
   const v = process.env[name];
-  if (v == null || v === '') return def;
+  if (v == null || v === "") return def;
   const n = Number(v);
   if (!Number.isFinite(n)) throw new Error(`Invalid number for ${name}: ${v}`);
   return n;
@@ -65,17 +71,17 @@ function envInt(name, def) {
 
 function envStr(name, def) {
   const v = process.env[name];
-  return v == null || v === '' ? def : String(v);
+  return v == null || v === "" ? def : String(v);
 }
 
 function envBool(name, def = false) {
-  const v = (process.env[name] || '').toLowerCase();
+  const v = (process.env[name] || "").toLowerCase();
   if (!v) return def;
-  return v === '1' || v === 'true' || v === 'yes' || v === 'y';
+  return v === "1" || v === "true" || v === "yes" || v === "y";
 }
 
 function makeLogger() {
-  const level = (envStr('LOG_LEVEL', 'info') || 'info').toLowerCase();
+  const level = (envStr("LOG_LEVEL", "info") || "info").toLowerCase();
   const levels = { silent: 0, error: 1, warn: 2, info: 3, debug: 4 };
   const cur = levels[level] ?? 3;
 
@@ -84,10 +90,10 @@ function makeLogger() {
 
   return {
     level,
-    error: (...args) => cur >= 1 && console.error(...fmt('[ERROR]', args)),
-    warn: (...args) => cur >= 2 && console.warn(...fmt('[WARN ]', args)),
-    info: (...args) => cur >= 3 && console.log(...fmt('[INFO ]', args)),
-    debug: (...args) => cur >= 4 && console.log(...fmt('[DEBUG]', args)),
+    error: (...args) => cur >= 1 && console.error(...fmt("[ERROR]", args)),
+    warn: (...args) => cur >= 2 && console.warn(...fmt("[WARN ]", args)),
+    info: (...args) => cur >= 3 && console.log(...fmt("[INFO ]", args)),
+    debug: (...args) => cur >= 4 && console.log(...fmt("[DEBUG]", args)),
   };
 }
 
@@ -96,17 +102,23 @@ function sleep(ms) {
 }
 
 function apiBaseFromBaseUrl(baseUrl) {
-  if (baseUrl === 'https://dev-v2.satuinbox.com') return 'https://dev-v2-api.satuinbox.com/';
-  if (baseUrl === 'https://v2.satuinbox.com') return 'https://v2-api.satuinbox.com/';
-  if (baseUrl === 'https://app.satuinbox.com') return 'https://app.satuinbox.com/api/v1';
-  if (baseUrl === 'https://dev.satuinbox.com') return 'https://dev.satuinbox.com/api/v1';
-  if (baseUrl === 'https://staging.satuinbox.com') return 'https://staging.satuinbox.com/api/v1';
+  if (baseUrl === "https://dev-v2.satuinbox.com")
+    return "https://dev-v2-api.satuinbox.com/";
+  if (baseUrl === "https://v2.satuinbox.com")
+    return "https://v2-api.satuinbox.com/";
+  if (baseUrl === "https://app.satuinbox.com")
+    return "https://app.satuinbox.com/api/v1";
+  if (baseUrl === "https://dev.satuinbox.com")
+    return "https://dev.satuinbox.com/api/v1";
+  if (baseUrl === "https://staging.satuinbox.com")
+    return "https://staging.satuinbox.com/api/v1";
   throw new Error(`Unknown BASE_URL mapping: ${baseUrl}`);
 }
 
 function joinUrl(base, path) {
-  if (!base.endsWith('/') && !path.startsWith('/')) return `${base}/${path}`;
-  if (base.endsWith('/') && path.startsWith('/')) return `${base}${path.slice(1)}`;
+  if (!base.endsWith("/") && !path.startsWith("/")) return `${base}/${path}`;
+  if (base.endsWith("/") && path.startsWith("/"))
+    return `${base}${path.slice(1)}`;
   return `${base}${path}`;
 }
 
@@ -122,18 +134,30 @@ function parseJsonEnv(name, defObj) {
 
 function uuid() {
   try {
-    return require('crypto').randomUUID();
+    return require("crypto").randomUUID();
   } catch {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   }
 }
 
 class LoadClient {
-  constructor({ id, baseUrl, socketUrl, socketPath, signatureKey, socketAuthMode, connectTimeoutMs, debugAllEvents, expectEvents }) {
+  constructor({
+    id,
+    baseUrl,
+    socketUrl,
+    socketPath,
+    signatureKey,
+    socketAuthMode,
+    connectTimeoutMs,
+    debugAllEvents,
+    expectEvents,
+    apiBase,
+    accessToken,
+  }) {
     this.id = id;
     this.baseUrl = baseUrl;
     this.socketUrl = socketUrl;
@@ -143,6 +167,8 @@ class LoadClient {
     this.connectTimeoutMs = connectTimeoutMs;
     this.debugAllEvents = debugAllEvents;
     this.expectEvents = expectEvents;
+    this.apiBase = apiBase;
+    this.accessToken = accessToken;
 
     this.socket = null;
     this.connectedAt = null;
@@ -160,15 +186,31 @@ class LoadClient {
       emits: 0,
       expectHits: 0,
       prepareErrors: 0,
+      // API metrics
+      apiCalls: 0,
+      apiSuccesses: 0,
+      apiErrors: 0,
+      apiTotalTime: 0,
+      accountChannelCalls: 0,
+      accountChannelTime: 0,
+      conversationCalls: 0,
+      conversationTime: 0,
+      ticketCalls: 0,
+      ticketTime: 0,
+      // Detailed endpoint hits
+      endpointHits: [], // Array of {endpoint, status, responseTime, timestamp}
     };
   }
 
   async connect() {
-    const auth = this.socketAuthMode === 'signatureKey' ? { token: this.signatureKey } : undefined;
+    const auth =
+      this.socketAuthMode === "signatureKey"
+        ? { token: this.signatureKey }
+        : undefined;
 
     this.socket = io(this.socketUrl, {
       path: this.socketPath,
-      transports: ['websocket'],
+      transports: ["websocket"],
       forceNew: true,
       auth,
       extraHeaders: {
@@ -191,17 +233,20 @@ class LoadClient {
       }
     }
 
-    this.socket.on('connect_error', () => {
+    this.socket.on("connect_error", () => {
       this.stats.connectErrors++;
     });
 
-    this.socket.on('disconnect', () => {
+    this.socket.on("disconnect", () => {
       this.stats.disconnects++;
     });
 
     await new Promise((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error(`client ${this.id} connect timeout`)), this.connectTimeoutMs);
-      this.socket.on('connect', () => {
+      const t = setTimeout(
+        () => reject(new Error(`client ${this.id} connect timeout`)),
+        this.connectTimeoutMs,
+      );
+      this.socket.on("connect", () => {
         clearTimeout(t);
         this.connectedAt = Date.now();
         resolve();
@@ -223,11 +268,11 @@ class LoadClient {
   }
 }
 
-async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
+async function httpJson(url, { method = "GET", headers = {}, body } = {}) {
   const res = await fetch(url, {
     method,
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
       ...headers,
     },
     body: body == null ? undefined : JSON.stringify(body),
@@ -240,7 +285,9 @@ async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
     json = text;
   }
   if (!res.ok) {
-    const err = new Error(`HTTP ${res.status} ${res.statusText} for ${method} ${url}`);
+    const err = new Error(
+      `HTTP ${res.status} ${res.statusText} for ${method} ${url}`,
+    );
     err.status = res.status;
     err.body = json;
     throw err;
@@ -248,20 +295,26 @@ async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
   return json;
 }
 
-async function createClientContact({ apiBase, signatureKey, channelId, guestName, referenceId }) {
-  const url = joinUrl(apiBase, 'open-api/client-contact');
+async function createClientContact({
+  apiBase,
+  signatureKey,
+  channelId,
+  guestName,
+  referenceId,
+}) {
+  const url = joinUrl(apiBase, "open-api/client-contact");
   return httpJson(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'x-signature-key': signatureKey,
+      "x-signature-key": signatureKey,
     },
     body: {
       channelId,
       metaData: {
-        browserName: 'Chrome',
-        deviceType: 'Desktop',
+        browserName: "Chrome",
+        deviceType: "Desktop",
         userAgent:
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36',
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
       },
       name: guestName,
       referenceId,
@@ -269,72 +322,161 @@ async function createClientContact({ apiBase, signatureKey, channelId, guestName
   });
 }
 
-async function submitTopic({ apiBase, signatureKey, accountChannelId, clientContactId, topicName }) {
-  const url = joinUrl(apiBase, 'open-api/conversation/submit/topic');
+async function submitTopic({
+  apiBase,
+  signatureKey,
+  accountChannelId,
+  clientContactId,
+  topicName,
+}) {
+  const url = joinUrl(apiBase, "open-api/conversation/submit/topic");
   return httpJson(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'x-signature-key': signatureKey,
+      "x-signature-key": signatureKey,
     },
     body: {
       accountChannelId,
       clientContactId,
       metadata: [
         {
-          browserName: 'Chrome',
-          deviceType: 'Desktop',
+          browserName: "Chrome",
+          deviceType: "Desktop",
           topic: topicName,
           userAgent:
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36',
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
         },
       ],
     },
   });
 }
 
+async function testApiEndpoints({
+  apiBase,
+  accessToken,
+}) {
+  const results = {
+    accountChannel: { status: null, responseTime: 0, success: false },
+    conversation: { status: null, responseTime: 0, success: false },
+    ticket: { status: null, responseTime: 0, success: false },
+    errors: [],
+  };
+
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  // Test 1: Account Channel
+  try {
+    const startTime = Date.now();
+    const url = joinUrl(apiBase, "api/account-channel");
+    const res = await fetch(url, { headers });
+    const responseTime = Date.now() - startTime;
+    results.accountChannel.status = res.status;
+    results.accountChannel.responseTime = responseTime;
+    results.accountChannel.success = res.status === 200 || res.status === 201;
+  } catch (e) {
+    results.accountChannel.success = false;
+    results.errors.push(`accountChannel: ${e.message}`);
+  }
+
+  // Test 2: Conversation
+  try {
+    const startTime = Date.now();
+    const url = joinUrl(apiBase, "api/conversation");
+    const res = await fetch(url, { headers });
+    const responseTime = Date.now() - startTime;
+    results.conversation.status = res.status;
+    results.conversation.responseTime = responseTime;
+    results.conversation.success = res.status === 200 || res.status === 201;
+  } catch (e) {
+    results.conversation.success = false;
+    results.errors.push(`conversation: ${e.message}`);
+  }
+
+  // Test 3: Ticket
+  try {
+    const startTime = Date.now();
+    const url = joinUrl(apiBase, "api/ticket");
+    const res = await fetch(url, { headers });
+    const responseTime = Date.now() - startTime;
+    results.ticket.status = res.status;
+    results.ticket.responseTime = responseTime;
+    results.ticket.success = res.status === 200 || res.status === 201;
+  } catch (e) {
+    results.ticket.success = false;
+    results.errors.push(`ticket: ${e.message}`);
+  }
+
+  return results;
+}
+
 function randomAlphanumeric(length = 6) {
-  return Math.random().toString(36).substring(2, 2 + length).toUpperCase();
+  return Math.random()
+    .toString(36)
+    .substring(2, 2 + length)
+    .toUpperCase();
 }
 
 async function main() {
   const log = makeLogger();
 
-  const baseUrlRaw = process.env.BASE_URL || process.env.CYPRESS_baseUrl || process.env.CYPRESS_BASE_URL;
-  const baseUrl = typeof baseUrlRaw === 'string' ? baseUrlRaw.replace(/\/+$/g, '') : baseUrlRaw;
+  let accessToken = null; // Initialize here so it's accessible throughout main()
 
-  if (!baseUrl) throw new Error('Missing BASE_URL');
+  const baseUrlRaw =
+    process.env.BASE_URL ||
+    process.env.CYPRESS_baseUrl ||
+    process.env.CYPRESS_BASE_URL;
+  const baseUrl =
+    typeof baseUrlRaw === "string"
+      ? baseUrlRaw.replace(/\/+$/g, "")
+      : baseUrlRaw;
+
+  if (!baseUrl) throw new Error("Missing BASE_URL");
 
   const apiBase = apiBaseFromBaseUrl(baseUrl);
-  const socketUrl = joinUrl(apiBase, 'conversations');
+  const socketUrl = joinUrl(apiBase, "conversations");
 
   // Hardcoded defaults per environment (mirrors scripts/widget-socket-load.js)
   function envDefaultsFromBaseUrl(baseUrlStr) {
-    if (typeof baseUrlStr !== 'string') return {};
+    if (typeof baseUrlStr !== "string") return {};
 
-    if (baseUrlStr.includes('dev-v2.satuinbox.com')) {
+    if (baseUrlStr.includes("dev-v2.satuinbox.com")) {
       return {
-        channelId: '692fe8eaaff05e8a1623e0d3',
-        signatureKey: 'sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if',
+        channelId: "692fe8eaaff05e8a1623e0d3",
+        signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
+        // Credentials for API testing (from 01_url_page.js loginBody_cekerayam01)
+        apiUsername: "cekerayam01",
+        apiPassword: "Asdqwe12@",
         accountChannels: [
-          { id: '698ef3aada258f2a5a46bf89', topic: 'hey' },
-          { id: '6964ac1d2a5dbde9a5c6fa28', topic: 'tumbler biru' },
-          { id: '69783b0154be8e7508b4af08', topic: 'CS harga' },
-          { id: '69782d3654be8e7508b4abfe', topic: 'Complain' },
-          { id: '6964ab6929de985a0fe73e48', topic: 'kipas angin' },
+          { id: "69325a7eeb9e605baa8e7723", topic: "pengiriman" },
+          { id: "69a9adc1fc7e6da3893922ba", topic: "Bintang" },
+          { id: "697c6b9c15caa8d61ec7e0cb", topic: "jambu " },
+          { id: "6964ab6929de985a0fe73e48", topic: "kipas angin" },
+          { id: "69783b0154be8e7508b4af08", topic: "CS Harga" },
+          { id: "6964ac042a5dbde9a5c6fa0a", topic: "tumbler ijo" },
+          { id: "69649cc6a16d19e2849ef8bf", topic: "remote control" },
+          { id: "69325be0eb9e605baa8e7747", topic: "technical" },
+          { id: "698ef3aada258f2a5a46bf89", topic: "hey" },
+          { id: "69782d3654be8e7508b4abfe", topic: "Complain" },
+          { id: "6964ac1d2a5dbde9a5c6fa28", topic: "tumbler biru" },
         ],
       };
     }
 
-    if (baseUrlStr.includes('v2.satuinbox.com')) {
+    if (baseUrlStr.includes("v2.satuinbox.com")) {
       return {
-        channelId: '694b55ffbb886b39e785d2c0',
-        signatureKey: 'sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM',
+        channelId: "694b55ffbb886b39e785d2c0",
+        signatureKey: "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
+        // Credentials for API testing (from 01_url_page.js)
+        apiUsername: "goddummyprod",
+        apiPassword: "TongTji89",
         accountChannels: [
-          { id: '6996bcd952ef87df9e414fd3', topic: 'Complain' },
-          { id: '69649c6b905d65859c36f81c', topic: 'remote control' },
-          { id: '697845cf1782f1bd889b6bfc', topic: 'CS harga' },
-          { id: '6964931c905d65859c36f618', topic: 'kipas angin' },
-          { id: '69a9c8c86e7924748d4af383', topic: 'Hayoh kumaha' },
+          { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
+          { id: "69649c6b905d65859c36f81c", topic: "remote control" },
+          { id: "697845cf1782f1bd889b6bfc", topic: "CS harga" },
+          { id: "6964931c905d65859c36f618", topic: "kipas angin" },
+          { id: "69a9c8c86e7924748d4af383", topic: "Hayoh kumaha" },
         ],
       };
     }
@@ -343,48 +485,53 @@ async function main() {
   }
 
   const defaults = envDefaultsFromBaseUrl(baseUrl);
-  const signatureKey = process.env.SIGNATURE_KEY || defaults.signatureKey || '';
+  const signatureKey = process.env.SIGNATURE_KEY || defaults.signatureKey || "";
 
-  const MODE = (envStr('MODE', 'soak') || 'soak').toLowerCase();
-  const TARGET_CONNECTIONS = envInt('TARGET_CONNECTIONS', 1200);
-  const RAMP_STEP = envInt('RAMP_STEP', 50);
-  const RAMP_DELAY_MS = envInt('RAMP_DELAY_MS', 250);
-  const RUN_DURATION_MS = envInt('RUN_DURATION_MS', 60 * 60 * 1000);
-  const CONNECT_TIMEOUT_MS = envInt('CONNECT_TIMEOUT_MS', 15000);
-  const SOCKET_AUTH_MODE = envStr('SOCKET_AUTH_MODE', 'signatureKey');
-  const SOCKET_PATH = envStr('SOCKET_PATH', '/socket.io');
+  const MODE = (envStr("MODE", "soak") || "soak").toLowerCase();
+  const TARGET_CONNECTIONS = envInt("TARGET_CONNECTIONS", 1200);
+  const RAMP_STEP = envInt("RAMP_STEP", 50);
+  const RAMP_DELAY_MS = envInt("RAMP_DELAY_MS", 250);
+  const RUN_DURATION_MS = envInt("RUN_DURATION_MS", 60 * 60 * 1000);
+  const CONNECT_TIMEOUT_MS = envInt("CONNECT_TIMEOUT_MS", 15000);
+  const SOCKET_AUTH_MODE = envStr("SOCKET_AUTH_MODE", "signatureKey");
+  const SOCKET_PATH = envStr("SOCKET_PATH", "/socket.io");
 
-  const DEBUG_ALL_EVENTS = envBool('DEBUG_ALL_EVENTS', false);
-  const EXPECT_EVENTS = envStr('EXPECT_EVENTS', '')
-    .split(',')
+  const DEBUG_ALL_EVENTS = envBool("DEBUG_ALL_EVENTS", false);
+  const EXPECT_EVENTS = envStr("EXPECT_EVENTS", "")
+    .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
 
-  if (SOCKET_AUTH_MODE === 'signatureKey' && !signatureKey) {
-    throw new Error('Missing SIGNATURE_KEY (required when SOCKET_AUTH_MODE=signatureKey)');
+  if (SOCKET_AUTH_MODE === "signatureKey" && !signatureKey) {
+    throw new Error(
+      "Missing SIGNATURE_KEY (required when SOCKET_AUTH_MODE=signatureKey)",
+    );
   }
 
   // throughput options (default mirrors scripts/widget-socket-load.js)
-  const EMIT_EVENT = envStr('EMIT_EVENT', 'socket.inbound.message');
-  const EMIT_EVERY_MS = envInt('EMIT_EVERY_MS', 2000);
+  const EMIT_EVENT = envStr("EMIT_EVENT", "socket.inbound.message");
+  const EMIT_EVERY_MS = envInt("EMIT_EVERY_MS", 2000);
 
-  const AUTO_PREPARE = envBool('AUTO_PREPARE', true);
-  const PREPARE_MODE = (envStr('PREPARE_MODE', 'shared') || 'shared').toLowerCase(); // shared|perClient
+  const AUTO_PREPARE = envBool("AUTO_PREPARE", true);
+  const PREPARE_MODE = (
+    envStr("PREPARE_MODE", "shared") || "shared"
+  ).toLowerCase(); // shared|perClient
 
-  const TOPIC_PREFIX = envStr('TOPIC_PREFIX', 'loadtest');
-  const JOIN_EVENT = envStr('JOIN_EVENT', 'join.conversation');
+  const TOPIC_PREFIX = envStr("TOPIC_PREFIX", "loadtest");
+  const JOIN_EVENT = envStr("JOIN_EVENT", "join.conversation");
 
   // If these are not provided, we can prepare them via open-api (mirrors widget-socket-load.js)
-  let CHANNEL_ACCOUNT_ID = envStr('CHANNEL_ACCOUNT_ID', '');
-  let CLIENT_CONTACT_ID = envStr('CLIENT_CONTACT_ID', '');
-  let CONVERSATION_ID = envStr('CONVERSATION_ID', '');
+  let CHANNEL_ACCOUNT_ID = envStr("CHANNEL_ACCOUNT_ID", "");
+  let CLIENT_CONTACT_ID = envStr("CLIENT_CONTACT_ID", "");
+  let CONVERSATION_ID = envStr("CONVERSATION_ID", "");
 
-  const MAX_PREPARE_CONCURRENCY = envInt('MAX_PREPARE_CONCURRENCY', 10);
+  const MAX_PREPARE_CONCURRENCY = envInt("MAX_PREPARE_CONCURRENCY", 10);
 
-  const WIDGET_CHANNEL_ID = envStr('WIDGET_CHANNEL_ID', '') || defaults.channelId || '';
+  const WIDGET_CHANNEL_ID =
+    envStr("WIDGET_CHANNEL_ID", "") || defaults.channelId || "";
 
-  const accountChannelFromEnv = envStr('WIDGET_ACCOUNT_CHANNEL_IDS', '')
-    .split(',')
+  const accountChannelFromEnv = envStr("WIDGET_ACCOUNT_CHANNEL_IDS", "")
+    .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
 
@@ -397,16 +544,43 @@ async function main() {
         : [];
 
   const pickAccountChannel = () =>
-    widgetAccountChannels[Math.floor(Math.random() * widgetAccountChannels.length)];
+    widgetAccountChannels[
+      Math.floor(Math.random() * widgetAccountChannels.length)
+    ];
 
-  const EMIT_PAYLOAD_JSON = parseJsonEnv('EMIT_PAYLOAD_JSON', {
+  const EMIT_PAYLOAD_JSON = parseJsonEnv("EMIT_PAYLOAD_JSON", {
     // NOTE: script will override channelAccountId/clientContactId/tempMessageId/timestamp/content.
     channelAccountId: CHANNEL_ACCOUNT_ID || undefined,
     clientContactId: CLIENT_CONTACT_ID || undefined,
-    type: 'text',
+    type: "text",
   });
 
-  log.info('Starting widget-socket-load-2', {
+  // Report output configuration
+  const fs = require("fs");
+  const path = require("path");
+
+  // Use environment variable or default to report directory
+  let REPORT_OUTPUT = process.env.REPORT_OUTPUT;
+  if (!REPORT_OUTPUT) {
+    ensureReportDir(DEFAULT_REPORT_DIR);
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .slice(0, -5);
+    REPORT_OUTPUT = path.join(
+      DEFAULT_REPORT_DIR,
+      `load-test-${timestamp}.html`,
+    );
+  }
+
+  const testStartTime = Date.now();
+  const testId = `load-test-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+  const machineHostname = process.env.MACHINE_HOSTNAME || "unknown";
+  const machineIp = process.env.MACHINE_IP || "unknown";
+
+  log.info("Starting widget-socket-load-2", {
+    machineHostname,
+    machineIp,
     baseUrl,
     apiBase,
     socketUrl,
@@ -420,16 +594,18 @@ async function main() {
     expectEvents: EXPECT_EVENTS,
     autoPrepare: AUTO_PREPARE,
     prepareMode: PREPARE_MODE,
-    emit: MODE === 'throughput'
-      ? {
-          event: EMIT_EVENT,
-          everyMs: EMIT_EVERY_MS,
-          channelAccountId: CHANNEL_ACCOUNT_ID || undefined,
-          clientContactId: CLIENT_CONTACT_ID || undefined,
-          conversationId: CONVERSATION_ID || undefined,
-          joinEvent: JOIN_EVENT,
-        }
-      : undefined,
+    reportOutput: REPORT_OUTPUT,
+    emit:
+      MODE === "throughput"
+        ? {
+            event: EMIT_EVENT,
+            everyMs: EMIT_EVERY_MS,
+            channelAccountId: CHANNEL_ACCOUNT_ID || undefined,
+            clientContactId: CLIENT_CONTACT_ID || undefined,
+            conversationId: CONVERSATION_ID || undefined,
+            joinEvent: JOIN_EVENT,
+          }
+        : undefined,
     logLevel: log.level,
   });
 
@@ -440,7 +616,9 @@ async function main() {
   const startedAt = Date.now();
 
   const statsInterval = setInterval(() => {
-    const connected = clients.filter((c) => c.socket && c.socket.connected).length;
+    const connected = clients.filter(
+      (c) => c.socket && c.socket.connected,
+    ).length;
 
     let connectErrors = 0;
     let disconnects = 0;
@@ -458,7 +636,7 @@ async function main() {
     }
 
     const uptimeSec = Math.round((Date.now() - startedAt) / 1000);
-    log.info('progress', {
+    log.info("progress", {
       uptimeSec,
       created: clients.length,
       connected,
@@ -475,25 +653,35 @@ async function main() {
     // Optional: auto-prepare identifiers for inbound event (mirrors widget-socket-load.js)
     // - shared: create 1 conversation and all clients join it
     // - perClient: create 1 conversation per client and join respectively
-    if (MODE === 'throughput' && EMIT_EVENT === 'socket.inbound.message' && AUTO_PREPARE) {
-      if (!signatureKey) throw new Error('AUTO_PREPARE requires SIGNATURE_KEY');
+    if (
+      MODE === "throughput" &&
+      EMIT_EVENT === "socket.inbound.message" &&
+      AUTO_PREPARE
+    ) {
+      if (!signatureKey) throw new Error("AUTO_PREPARE requires SIGNATURE_KEY");
       if (!WIDGET_CHANNEL_ID)
-        throw new Error('AUTO_PREPARE requires WIDGET_CHANNEL_ID (or a BASE_URL with hardcoded default channelId)');
+        throw new Error(
+          "AUTO_PREPARE requires WIDGET_CHANNEL_ID (or a BASE_URL with hardcoded default channelId)",
+        );
       if (!widgetAccountChannels || widgetAccountChannels.length === 0)
         throw new Error(
-          'AUTO_PREPARE requires WIDGET_ACCOUNT_CHANNEL_IDS or a BASE_URL with hardcoded defaults.accountChannels',
+          "AUTO_PREPARE requires WIDGET_ACCOUNT_CHANNEL_IDS or a BASE_URL with hardcoded defaults.accountChannels",
         );
 
-      if (PREPARE_MODE === 'shared') {
+      if (PREPARE_MODE === "shared") {
         if (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID) {
           const picked = pickAccountChannel();
           const accountChannelId = picked.id;
-          const topicName = picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
+          const topicName =
+            picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
 
           const guestName = `guest-${randomAlphanumeric(6)}`;
           const referenceId = uuid();
 
-          log.info('auto-prepare(shared):start', { accountChannelId, topicName });
+          log.info("auto-prepare(shared):start", {
+            accountChannelId,
+            topicName,
+          });
           const contact = await createClientContact({
             apiBase,
             signatureKey,
@@ -502,7 +690,10 @@ async function main() {
             referenceId,
           });
           const clientContactId = contact?.id || contact?.data?.id;
-          if (!clientContactId) throw new Error('auto-prepare(shared): createClientContact missing id');
+          if (!clientContactId)
+            throw new Error(
+              "auto-prepare(shared): createClientContact missing id",
+            );
 
           const topicResp = await submitTopic({
             apiBase,
@@ -512,23 +703,72 @@ async function main() {
             topicName,
           });
           const conversationId = topicResp?.id || topicResp?.data?.id;
-          if (!conversationId) throw new Error('auto-prepare(shared): submitTopic missing conversation id');
+          if (!conversationId)
+            throw new Error(
+              "auto-prepare(shared): submitTopic missing conversation id",
+            );
 
           CHANNEL_ACCOUNT_ID = accountChannelId;
           CLIENT_CONTACT_ID = clientContactId;
           CONVERSATION_ID = conversationId;
 
-          log.info('auto-prepare(shared):done', {
+          log.info("auto-prepare(shared):done", {
             CHANNEL_ACCOUNT_ID,
             CLIENT_CONTACT_ID,
             CONVERSATION_ID,
           });
         }
-      } else if (PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') {
+      } else if (PREPARE_MODE === "perclient" || PREPARE_MODE === "perClient") {
         // per-client prepare happens after sockets are created/connected (so each client can join its own room)
-        log.info('auto-prepare(perClient):enabled', { maxPrepareConcurrency: MAX_PREPARE_CONCURRENCY });
+        log.info("auto-prepare(perClient):enabled", {
+          maxPrepareConcurrency: MAX_PREPARE_CONCURRENCY,
+        });
       } else {
-        throw new Error(`Invalid PREPARE_MODE: ${PREPARE_MODE} (expected shared|perClient)`);
+        throw new Error(
+          `Invalid PREPARE_MODE: ${PREPARE_MODE} (expected shared|perClient)`,
+        );
+      }
+    }
+
+    // Optional: Login to get accessToken for API testing
+    // Use credentials from defaults object (from 01_url_page.js) or environment variables
+    const apiUsername = process.env.API_TEST_USERNAME || defaults.apiUsername || "";
+    const apiPassword = process.env.API_TEST_PASSWORD || defaults.apiPassword || "";
+
+    log.info(`API Testing Config: username="${apiUsername}", password set=${!!apiPassword}`);
+    
+    if (apiUsername && apiPassword) {
+      log.info("Attempting to login for API testing...");
+      try {
+        const loginUrl = joinUrl(apiBase, "api/auth/login");
+        log.info(`Logging in to ${loginUrl}`);
+        const loginRes = await fetch(loginUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "LoadTest/1.0",
+          },
+          body: JSON.stringify({
+            identifier: apiUsername,
+            password: apiPassword,
+          }),
+        });
+        const loginData = await loginRes.json();
+        accessToken =
+          loginData?.data?.accessToken || loginData?.accessToken;
+
+        if (accessToken) {
+          log.info("API login successful, accessToken obtained");
+        } else {
+          log.warn(
+            "API login failed or no accessToken returned. Response status:",
+            loginRes.status,
+            "Response:",
+            JSON.stringify(loginData).substring(0, 200)
+          );
+        }
+      } catch (e) {
+        log.warn("API login error:", e.message);
       }
     }
 
@@ -547,6 +787,8 @@ async function main() {
           connectTimeoutMs: CONNECT_TIMEOUT_MS,
           debugAllEvents: DEBUG_ALL_EVENTS,
           expectEvents: EXPECT_EVENTS,
+          apiBase,
+          accessToken,
         });
       });
 
@@ -563,43 +805,54 @@ async function main() {
       );
 
       clients.push(...batch);
-      log.info('ramp', { created: clients.length, target: TARGET_CONNECTIONS });
+      log.info("ramp", { created: clients.length, target: TARGET_CONNECTIONS });
       await sleep(RAMP_DELAY_MS);
     }
 
-    log.info('ramp complete', {
+    log.info("ramp complete", {
       created: clients.length,
       connected: clients.filter((c) => c.socket && c.socket.connected).length,
     });
 
     // run phase
-    if (MODE === 'throughput') {
+    if (MODE === "throughput") {
       const payloadTemplate = EMIT_PAYLOAD_JSON;
 
-      if (EMIT_EVENT === 'socket.inbound.message') {
+      if (EMIT_EVENT === "socket.inbound.message") {
         // shared: global ids must exist; perClient: each client will have its own ids
-        if ((PREPARE_MODE === 'shared' || !AUTO_PREPARE) && (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID)) {
+        if (
+          (PREPARE_MODE === "shared" || !AUTO_PREPARE) &&
+          (!CHANNEL_ACCOUNT_ID || !CLIENT_CONTACT_ID)
+        ) {
           throw new Error(
-            'MODE=throughput with EMIT_EVENT=socket.inbound.message requires CHANNEL_ACCOUNT_ID and CLIENT_CONTACT_ID. ' +
-              'Set them via env or enable AUTO_PREPARE=true (default).',
+            "MODE=throughput with EMIT_EVENT=socket.inbound.message requires CHANNEL_ACCOUNT_ID and CLIENT_CONTACT_ID. " +
+              "Set them via env or enable AUTO_PREPARE=true (default).",
           );
         }
       }
 
       // Optional: join conversation(s) so server can deliver events back to clients.
-      if (PREPARE_MODE === 'shared' && CONVERSATION_ID) {
-        log.info('joining conversation for all clients', {
+      if (PREPARE_MODE === "shared" && CONVERSATION_ID) {
+        log.info("joining conversation for all clients", {
           conversationId: CONVERSATION_ID,
           joinEvent: JOIN_EVENT,
         });
         for (const c of clients) {
-          if (c.socket && c.socket.connected) c.socket.emit(JOIN_EVENT, { conversationId: CONVERSATION_ID });
+          if (c.socket && c.socket.connected)
+            c.socket.emit(JOIN_EVENT, { conversationId: CONVERSATION_ID });
         }
       }
 
-      if ((PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') && AUTO_PREPARE && EMIT_EVENT === 'socket.inbound.message') {
+      if (
+        (PREPARE_MODE === "perclient" || PREPARE_MODE === "perClient") &&
+        AUTO_PREPARE &&
+        EMIT_EVENT === "socket.inbound.message"
+      ) {
         // Prepare one conversation per client with limited concurrency.
-        log.info('auto-prepare(perClient):start', { clients: clients.length, maxPrepareConcurrency: MAX_PREPARE_CONCURRENCY });
+        log.info("auto-prepare(perClient):start", {
+          clients: clients.length,
+          maxPrepareConcurrency: MAX_PREPARE_CONCURRENCY,
+        });
 
         let idx = 0;
         const worker = async () => {
@@ -609,7 +862,8 @@ async function main() {
             try {
               const picked = pickAccountChannel();
               const accountChannelId = picked.id;
-              const topicName = picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
+              const topicName =
+                picked.topic || `${TOPIC_PREFIX}-${randomAlphanumeric(4)}`;
               const guestName = `guest-${randomAlphanumeric(6)}`;
               const referenceId = uuid();
 
@@ -621,7 +875,8 @@ async function main() {
                 referenceId,
               });
               const clientContactId = contact?.id || contact?.data?.id;
-              if (!clientContactId) throw new Error('createClientContact missing id');
+              if (!clientContactId)
+                throw new Error("createClientContact missing id");
 
               const topicResp = await submitTopic({
                 apiBase,
@@ -631,7 +886,8 @@ async function main() {
                 topicName,
               });
               const conversationId = topicResp?.id || topicResp?.data?.id;
-              if (!conversationId) throw new Error('submitTopic missing conversation id');
+              if (!conversationId)
+                throw new Error("submitTopic missing conversation id");
 
               cur.prepared.channelAccountId = accountChannelId;
               cur.prepared.clientContactId = clientContactId;
@@ -645,28 +901,44 @@ async function main() {
           }
         };
 
-        const workers = Array.from({ length: Math.max(1, Math.min(MAX_PREPARE_CONCURRENCY, clients.length)) }).map(() => worker());
+        const workers = Array.from({
+          length: Math.max(
+            1,
+            Math.min(MAX_PREPARE_CONCURRENCY, clients.length),
+          ),
+        }).map(() => worker());
         await Promise.all(workers);
 
-        const preparedCount = clients.filter((c) => c.prepared.conversationId).length;
-        log.info('auto-prepare(perClient):done', { preparedCount });
+        const preparedCount = clients.filter(
+          (c) => c.prepared.conversationId,
+        ).length;
+        log.info("auto-prepare(perClient):done", { preparedCount });
       }
 
       const loops = clients.map(async (c) => {
+        let lastApiTest = 0;
+        const API_TEST_INTERVAL_MS = 10000; // Test API every 10 seconds per client
+
         while (!stop) {
           if (c.socket && c.socket.connected) {
+            // 1. Emit socket message
             let payload;
 
-            if (typeof payloadTemplate === 'object' && payloadTemplate) {
-              const perClientIds = c.prepared && c.prepared.clientContactId ? c.prepared : null;
+            if (typeof payloadTemplate === "object" && payloadTemplate) {
+              const perClientIds =
+                c.prepared && c.prepared.clientContactId ? c.prepared : null;
 
               const channelAccountId =
-                (PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') && perClientIds
+                (PREPARE_MODE === "perclient" ||
+                  PREPARE_MODE === "perClient") &&
+                perClientIds
                   ? perClientIds.channelAccountId
                   : CHANNEL_ACCOUNT_ID || payloadTemplate.channelAccountId;
 
               const clientContactId =
-                (PREPARE_MODE === 'perclient' || PREPARE_MODE === 'perClient') && perClientIds
+                (PREPARE_MODE === "perclient" ||
+                  PREPARE_MODE === "perClient") &&
+                perClientIds
                   ? perClientIds.clientContactId
                   : CLIENT_CONTACT_ID || payloadTemplate.clientContactId;
 
@@ -677,7 +949,7 @@ async function main() {
                 // align with widget-socket-load.js
                 tempMessageId: uuid(),
                 timestamp: new Date().toISOString(),
-                type: payloadTemplate.type || 'text',
+                type: payloadTemplate.type || "text",
                 content: `load-2 client:${c.id} ${new Date().toISOString()}`,
               };
             } else {
@@ -685,6 +957,79 @@ async function main() {
             }
 
             c.emit(EMIT_EVENT, payload);
+
+            // 2. Test API endpoints periodically
+            const now = Date.now();
+            if (c.accessToken && now - lastApiTest >= API_TEST_INTERVAL_MS) {
+              lastApiTest = now;
+              try {
+                const apiResults = await testApiEndpoints({
+                  apiBase: c.apiBase,
+                  accessToken: c.accessToken,
+                });
+
+                c.stats.apiCalls += 3; // 3 endpoints tested
+
+                // Account Channel
+                if (apiResults.accountChannel.success) {
+                  c.stats.apiSuccesses++;
+                  c.stats.accountChannelCalls++;
+                  c.stats.accountChannelTime += apiResults.accountChannel.responseTime;
+                } else {
+                  c.stats.apiErrors++;
+                }
+                c.stats.endpointHits.push({
+                  endpoint: "account-channel",
+                  status: apiResults.accountChannel.status,
+                  responseTime: apiResults.accountChannel.responseTime,
+                  success: apiResults.accountChannel.success,
+                  timestamp: new Date().toISOString(),
+                });
+                log.debug(`[client ${c.id}] account-channel: ${apiResults.accountChannel.status} (${apiResults.accountChannel.responseTime}ms)`);
+
+                // Conversation
+                if (apiResults.conversation.success) {
+                  c.stats.apiSuccesses++;
+                  c.stats.conversationCalls++;
+                  c.stats.conversationTime += apiResults.conversation.responseTime;
+                } else {
+                  c.stats.apiErrors++;
+                }
+                c.stats.endpointHits.push({
+                  endpoint: "conversation",
+                  status: apiResults.conversation.status,
+                  responseTime: apiResults.conversation.responseTime,
+                  success: apiResults.conversation.success,
+                  timestamp: new Date().toISOString(),
+                });
+                log.debug(`[client ${c.id}] conversation: ${apiResults.conversation.status} (${apiResults.conversation.responseTime}ms)`);
+
+                // Ticket
+                if (apiResults.ticket.success) {
+                  c.stats.apiSuccesses++;
+                  c.stats.ticketCalls++;
+                  c.stats.ticketTime += apiResults.ticket.responseTime;
+                } else {
+                  c.stats.apiErrors++;
+                }
+                c.stats.endpointHits.push({
+                  endpoint: "ticket",
+                  status: apiResults.ticket.status,
+                  responseTime: apiResults.ticket.responseTime,
+                  success: apiResults.ticket.success,
+                  timestamp: new Date().toISOString(),
+                });
+                log.debug(`[client ${c.id}] ticket: ${apiResults.ticket.status} (${apiResults.ticket.responseTime}ms)`);
+
+                c.stats.apiTotalTime +=
+                  apiResults.accountChannel.responseTime +
+                  apiResults.conversation.responseTime +
+                  apiResults.ticket.responseTime;
+              } catch (e) {
+                c.stats.apiErrors += 3;
+                log.debug(`client ${c.id} API test error:`, e.message);
+              }
+            }
           }
           await sleep(EMIT_EVERY_MS);
         }
@@ -703,13 +1048,28 @@ async function main() {
   }
 
   // final summary
-  const connected = clients.filter((c) => c.socket && c.socket.connected).length;
+  const testEndTime = Date.now();
+  const connected = clients.filter(
+    (c) => c.socket && c.socket.connected,
+  ).length;
   let connectErrors = 0;
   let disconnects = 0;
   let emits = 0;
   let expectHits = 0;
   let prepareErrors = 0;
   let preparedRooms = 0;
+  let apiCalls = 0;
+  let apiSuccesses = 0;
+  let apiErrors = 0;
+  let apiTotalTime = 0;
+  let accountChannelCalls = 0;
+  let accountChannelTime = 0;
+  let conversationCalls = 0;
+  let conversationTime = 0;
+  let ticketCalls = 0;
+  let ticketTime = 0;
+  let allEndpointHits = []; // Collect all endpoint hits from all clients
+
   for (const c of clients) {
     connectErrors += c.stats.connectErrors;
     disconnects += c.stats.disconnects;
@@ -717,9 +1077,38 @@ async function main() {
     expectHits += c.stats.expectHits;
     prepareErrors += c.stats.prepareErrors;
     if (c.prepared && c.prepared.conversationId) preparedRooms++;
+    
+    // API metrics
+    apiCalls += c.stats.apiCalls;
+    apiSuccesses += c.stats.apiSuccesses;
+    apiErrors += c.stats.apiErrors;
+    apiTotalTime += c.stats.apiTotalTime;
+    accountChannelCalls += c.stats.accountChannelCalls;
+    accountChannelTime += c.stats.accountChannelTime;
+    conversationCalls += c.stats.conversationCalls;
+    conversationTime += c.stats.conversationTime;
+    ticketCalls += c.stats.ticketCalls;
+    ticketTime += c.stats.ticketTime;
+    
+    // Collect all endpoint hits
+    if (c.stats.endpointHits && c.stats.endpointHits.length > 0) {
+      allEndpointHits.push(...c.stats.endpointHits);
+    }
   }
 
-  log.info('done', {
+  const apiAvgTime = apiCalls > 0 ? Math.round(apiTotalTime / apiCalls) : 0;
+  const accountChannelAvgTime =
+    accountChannelCalls > 0
+      ? Math.round(accountChannelTime / accountChannelCalls)
+      : 0;
+  const conversationAvgTime =
+    conversationCalls > 0
+      ? Math.round(conversationTime / conversationCalls)
+      : 0;
+  const ticketAvgTime =
+    ticketCalls > 0 ? Math.round(ticketTime / ticketCalls) : 0;
+
+  log.info("done", {
     created: clients.length,
     connected,
     connectErrors,
@@ -728,10 +1117,68 @@ async function main() {
     expectHits,
     prepareErrors,
     preparedRooms,
+    apiCalls,
+    apiSuccesses,
+    apiErrors,
+    apiAvgTime,
   });
+
+  // Generate HTML Report
+  try {
+    generateHTMLReport(
+      {
+        testId,
+        startTime: testStartTime,
+        endTime: testEndTime,
+        duration: testEndTime - testStartTime,
+        baseUrl,
+        mode: MODE,
+        targetConnections: TARGET_CONNECTIONS,
+        machineHostname,
+        machineIp,
+        metrics: {
+          created: clients.length,
+          connected,
+          connectErrors,
+          disconnects,
+          emits,
+          expectHits,
+          prepareErrors,
+          preparedRooms,
+          conversationsCreated: preparedRooms,
+          // API metrics
+          apiCalls,
+          apiSuccesses,
+          apiErrors,
+          apiAvgTime,
+          accountChannelCalls,
+          accountChannelAvgTime,
+          conversationCalls,
+          conversationAvgTime,
+          ticketCalls,
+          ticketAvgTime,
+          // Detailed endpoint hits
+          endpointHits: allEndpointHits,
+        },
+        config: {
+          rampStep: RAMP_STEP,
+          rampDelayMs: RAMP_DELAY_MS,
+          socketAuthMode: SOCKET_AUTH_MODE,
+          emitEvent: EMIT_EVENT,
+          emitEveryMs: EMIT_EVERY_MS,
+          prepareMode: PREPARE_MODE,
+          apiTestingEnabled: accessToken ? true : false,
+        },
+      },
+      REPORT_OUTPUT,
+    );
+    log.info("HTML report generated", { file: REPORT_OUTPUT });
+  } catch (err) {
+    log.error("Failed to generate HTML report", { error: err?.message || err });
+  }
 }
 
 main().catch((err) => {
-  console.error('FAILED:', err?.stack || err?.message || err);
+  console.error("FAILED:", err?.stack || err?.message || err);
   process.exitCode = 1;
 });

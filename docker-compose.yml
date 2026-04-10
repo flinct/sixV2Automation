@@ -1,0 +1,121 @@
+version: "3.9"
+
+services:
+  machine1:
+    build: .
+    container_name: load-test-machine-1
+    hostname: load-test-1
+    environment:
+      BASE_URL: https://dev-v2.satuinbox.com
+      MODE: throughput
+      # MODE: soak
+      TARGET_CONNECTIONS: 50
+      RUN_DURATION_MS: 300000
+      LOG_LEVEL: debug
+      PREPARE_MODE: perClient
+    volumes:
+      - ./scripts/report:/app/scripts/report:rw
+    networks:
+      - load-test-network
+
+  machine2:
+    build: .
+    container_name: load-test-machine-2
+    hostname: load-test-2
+    environment:
+      BASE_URL: https://dev-v2.satuinbox.com
+      MODE: throughput
+      # MODE: soak
+      TARGET_CONNECTIONS: 50
+      RUN_DURATION_MS: 300000
+      LOG_LEVEL: debug
+      PREPARE_MODE: perClient
+    volumes:
+      - ./scripts/report:/app/scripts/report:rw
+    networks:
+      - load-test-network
+    depends_on:
+      - machine1
+
+  machine3:
+    build: .
+    container_name: load-test-machine-3
+    hostname: load-test-3
+    environment:
+      BASE_URL: https://dev-v2.satuinbox.com
+      MODE: throughput
+      # MODE: soak
+      TARGET_CONNECTIONS: 50
+      RUN_DURATION_MS: 300000
+      LOG_LEVEL: debug
+      PREPARE_MODE: perClient
+    volumes:
+      - ./scripts/report:/app/scripts/report:rw
+    networks:
+      - load-test-network
+    depends_on:
+      - machine2
+
+  # machine4:
+  #   build: .
+  #   container_name: load-test-machine-4
+  #   hostname: load-test-4
+  #   environment:
+  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     MODE: throughput
+  #     # MODE: soak
+  #     TARGET_CONNECTIONS: 50
+  #     RUN_DURATION_MS: 300000
+  #     LOG_LEVEL: info
+  #     PREPARE_MODE: perClient
+  #   volumes:
+  #     - ./scripts/report:/app/scripts/report:rw
+  #   networks:
+  #     - load-test-network
+  #   depends_on:
+  #     - machine3
+
+  # machine5:
+  #   build: .
+  #   container_name: load-test-machine-5
+  #   hostname: load-test-5
+  #   environment:
+  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     MODE: throughput
+  #     # MODE: soak
+  #     TARGET_CONNECTIONS: 50
+  #     RUN_DURATION_MS: 300000
+  #     LOG_LEVEL: info
+  #     PREPARE_MODE: perClient
+  #   volumes:
+  #     - ./scripts/report:/app/scripts/report:rw
+  #   networks:
+  #     - load-test-network
+  #   depends_on:
+  #     - machine4
+
+  # machine6:
+  #   build: .
+  #   container_name: load-test-machine-6
+  #   hostname: load-test-6
+  #   environment:
+  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     MODE: throughput
+  #     # MODE: soak
+  #     TARGET_CONNECTIONS: 50
+  #     RUN_DURATION_MS: 300000
+  #     LOG_LEVEL: info
+  #     PREPARE_MODE: perClient
+  #   volumes:
+  #     - ./scripts/report:/app/scripts/report:rw
+  #   networks:
+  #     - load-test-network
+  #   depends_on:
+  #     - machine5
+
+networks:
+  load-test-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16

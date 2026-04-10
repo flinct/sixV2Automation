@@ -1,0 +1,29 @@
+﻿README/
+├── INDEX.md (Main navigation)
+│
+├── 01-GETTING-STARTED/
+│   ├── START_HERE_DOCKER_SETUP.md (Quick overview)
+│   └── DOCKER_SETUP_README.md (Navigation guide)
+│
+├── 02-DOCKER-SETUP/
+│   ├── DOCKER_SETUP_SUMMARY.md (Why Docker approach)
+│   └── DOCKER_MULTI_MACHINE_SETUP.md (Complete detailed guide)
+│
+├── 03-STORAGE/
+│   └── DOCKER_STORAGE_RESIZE.md (Storage management)
+│
+├── 04-IMPLEMENTATION/
+│   └── DOCKER_QUICK_START.md (Copy-paste commands)
+│
+├── 05-TECHNICAL-DEEP-DIVE/
+│   └── DOCKER_NETWORK_IP_EXPLANATION.md (How networking works)
+│
+├── 06-REFERENCE/
+│   ├── SOCKET_LOAD_TEST_SOLUTION.md (Solutions summary)
+│   ├── HTML_REPORT_GUIDE.md (Report generation)
+│   ├── REPORT_DIRECTORY_CONFIG.md (Report config)
+│   ├── LOGGING_AND_IP_GUIDE.md (Logging + IP guide)
+│   └── DOCKER_MULTI_MACHINE_SETUP.md (Reference copy)
+│
+└── 07-TROUBLESHOOTING/
+    └── IP_PROXY_ANALYSIS.md (IP limitations & solutions)

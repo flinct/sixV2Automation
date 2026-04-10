@@ -1,0 +1,26 @@
+     ✓ create 2xx
+     ✗ init 2xx
+      ↳  99% — ✓ 285 / ✗ 2
+     ✓ qr obtained
+
+     █ setup
+
+       ✓ login status 2xx
+
+   ✓ checks.........................: 99.75% ✓ 828      ✗ 2   
+     data_received..................: 2.7 MB 21 kB/s
+     data_sent......................: 199 kB 1.5 kB/s
+     http_req_blocked...............: avg=29.19ms  min=0s      med=0s       max=4.01s    p(90)=0s       p(95)=0s      
+     http_req_connecting............: avg=2.52ms   min=0s      med=0s       max=208.55ms p(90)=0s       p(95)=0s      
+   ✓ http_req_duration..............: avg=1.58s    min=66.86ms med=283.93ms max=30s      p(90)=1s       p(95)=1.93s   
+       { expected_response:true }...: avg=414.41ms min=66.86ms med=272.7ms  max=8.55s    p(90)=734.66ms p(95)=1.09s   
+   ✓ http_req_failed................: 3.97%  ✓ 46       ✗ 1112
+     http_req_receiving.............: avg=4.16ms   min=0s      med=706.65µs max=303.87ms p(90)=12.57ms  p(95)=17.19ms 
+     http_req_sending...............: avg=311.79µs min=0s      med=0s       max=4.72ms   p(90)=666.5µs  p(95)=797.56µs
+     http_req_tls_handshaking.......: avg=26.65ms  min=0s      med=0s       max=3.97s    p(90)=0s       p(95)=0s      
+     http_req_waiting...............: avg=1.58s    min=66.33ms med=278.33ms max=30s      p(90)=1s       p(95)=1.93s   
+     http_reqs......................: 1158   8.863391/s
+     iteration_duration.............: avg=5.18s    min=2.65s   med=3.47s    max=39.43s   p(90)=4.97s    p(95)=11.34s  
+     iterations.....................: 257    1.967091/s
+     vus............................: 2      min=0      max=50
+     vus_max........................: 50     min=50     max=50

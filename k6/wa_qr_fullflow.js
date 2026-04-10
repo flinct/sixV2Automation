@@ -27,12 +27,12 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.4/index.js";
 // - This schema is set up to run sequentially by default.
 // - For big loads, disable verbose logs (LOG_EVERY/LOG_BODY_CHARS) to avoid console bottlenecks.
 const runSchema = {
-  // load: {
-  //   executor: "constant-vus",
-  //   vus: 2,
-  //   duration: "10s",
-  //   startTime: "0s",
-  // },
+  load: {
+    executor: "constant-vus",
+    vus: 200,
+    duration: "5m",
+    startTime: "0s",
+  },
   // load_small: {
   //   executor: "constant-vus",
   //   vus: 10,
@@ -56,13 +56,14 @@ const runSchema = {
     executor: "ramping-vus",
     startVUs: 0,
     stages: [
-      { duration: "30s", target: 10 },
-      { duration: "30s", target: 30 },
       { duration: "30s", target: 50 },
-      { duration: "30s", target: 0 },
+      { duration: "2m", target: 150 },
+      { duration: "4m", target: 300 },
+      { duration: "10m", target: 500 },
+      { duration: "20s", target: 0 },
     ],
     gracefulRampDown: "10s",
-    startTime: "0s", // after load_heavy, set 0 if need to run immediately
+    startTime: "2m", // after load_heavy, set 0 if need to run immediately
   },
 
   // spike: {
@@ -79,12 +80,12 @@ const runSchema = {
   //   startTime: "250s",
   // },
 
-  // load_long: {
-  //   executor: "constant-vus",
-  //   vus: 5,
-  //   duration: "10m",
-  //   startTime: "280s",
-  // },
+  load_long: {
+    executor: "constant-vus",
+    vus: 50,
+    duration: "10m",
+    startTime: "280s",
+  },
 };
 
 export const options = {
@@ -271,7 +272,10 @@ export function handleSummary(data) {
   // Write reports under k6/report (directory must exist)
   return {
     "k6/report/summary.html": htmlReport(data),
-    "k6/report/summary.txt": textSummary(data, { indent: " ", enableColors: false }),
+    "k6/report/summary.txt": textSummary(data, {
+      indent: " ",
+      enableColors: false,
+    }),
     stdout: textSummary(data, { indent: " ", enableColors: true }),
   };
 }
