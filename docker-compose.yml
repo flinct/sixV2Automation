@@ -13,9 +13,6 @@ services:
       RUN_DURATION_MS: 60000
       LOG_LEVEL: info
       PREPARE_MODE: perClient
-      # API Testing Credentials (from 01_url_page.js cekerayam01)
-      API_TEST_USERNAME: cekerayam01
-      API_TEST_PASSWORD: Asdqwe12@
     volumes:
       - ./scripts/report:/app/scripts/report:rw
     networks:
@@ -33,9 +30,6 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
-  #     # API Testing Credentials
-  #     API_TEST_USERNAME: cekerayam01
-  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
@@ -55,9 +49,6 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
-  #     # API Testing Credentials
-  #     API_TEST_USERNAME: cekerayam01
-  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
@@ -77,9 +68,6 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
-  #     # API Testing Credentials
-  #     API_TEST_USERNAME: cekerayam01
-  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
@@ -99,9 +87,6 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
-  #     # API Testing Credentials
-  #     API_TEST_USERNAME: cekerayam01
-  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
@@ -121,9 +106,6 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
-  #     # API Testing Credentials
-  #     API_TEST_USERNAME: cekerayam01
-  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:

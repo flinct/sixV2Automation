@@ -461,13 +461,16 @@ async function main() {
       };
     }
 
-    if (baseUrlStr.includes("v2.satuinbox.com") && !baseUrlStr.includes("dev-v2")) {
+    if (
+      baseUrlStr.includes("v2.satuinbox.com") &&
+      !baseUrlStr.includes("dev-v2")
+    ) {
       return {
         channelId: "694b55ffbb886b39e785d2c0",
         signatureKey: "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
         // Credentials for API testing (imported from 01_url_page.cjs)
-        apiUsername: "goddummyprod",
-        apiPassword: "TongTji89",
+        apiUsername: "danyatmin01",
+        apiPassword: "Asdqwe12@",
         accountChannels: [
           { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
           { id: "69649c6b905d65859c36f81c", topic: "remote control" },
@@ -728,8 +731,9 @@ async function main() {
     }
 
     // Optional: Login to get accessToken for API testing
-    const apiUsername = process.env.API_TEST_USERNAME || "";
-    const apiPassword = process.env.API_TEST_PASSWORD || "";
+    // Use env vars first, fallback to hardcoded defaults
+    const apiUsername = process.env.API_TEST_USERNAME || defaults.apiUsername || "";
+    const apiPassword = process.env.API_TEST_PASSWORD || defaults.apiPassword || "";
 
     if (apiUsername && apiPassword) {
       log.info("Attempting to login for API testing...");
@@ -740,19 +744,24 @@ async function main() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            identifier: apiUsername,  // Use 'identifier' instead of 'email'
+            identifier: apiUsername, // Use 'identifier' instead of 'email'
             password: apiPassword,
           }),
         });
         const loginData = await loginRes.json();
         accessToken = loginData?.data?.accessToken || loginData?.accessToken;
 
-        log.debug(`Login response status: ${loginRes.status}, accessToken: ${!!accessToken}`);
+        log.debug(
+          `Login response status: ${loginRes.status}, accessToken: ${!!accessToken}`,
+        );
 
         if (accessToken) {
           log.info("API login successful, accessToken obtained");
         } else {
-          log.warn("API login failed or no accessToken returned. Response:", JSON.stringify(loginData).substring(0, 300));
+          log.warn(
+            "API login failed or no accessToken returned. Response:",
+            JSON.stringify(loginData).substring(0, 300),
+          );
         }
       } catch (e) {
         log.warn("API login error:", e.message);
