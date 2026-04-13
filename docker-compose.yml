@@ -9,52 +9,61 @@ services:
       BASE_URL: https://dev-v2.satuinbox.com
       MODE: throughput
       # MODE: soak
-      TARGET_CONNECTIONS: 50
-      RUN_DURATION_MS: 300000
-      LOG_LEVEL: debug
+      TARGET_CONNECTIONS: 5
+      RUN_DURATION_MS: 60000
+      LOG_LEVEL: info
       PREPARE_MODE: perClient
+      # API Testing Credentials (from 01_url_page.js cekerayam01)
+      API_TEST_USERNAME: cekerayam01
+      API_TEST_PASSWORD: Asdqwe12@
     volumes:
       - ./scripts/report:/app/scripts/report:rw
     networks:
       - load-test-network
 
-  machine2:
-    build: .
-    container_name: load-test-machine-2
-    hostname: load-test-2
-    environment:
-      BASE_URL: https://dev-v2.satuinbox.com
-      MODE: throughput
-      # MODE: soak
-      TARGET_CONNECTIONS: 50
-      RUN_DURATION_MS: 300000
-      LOG_LEVEL: debug
-      PREPARE_MODE: perClient
-    volumes:
-      - ./scripts/report:/app/scripts/report:rw
-    networks:
-      - load-test-network
-    depends_on:
-      - machine1
+  # machine2:
+  #   build: .
+  #   container_name: load-test-machine-2
+  #   hostname: load-test-2
+  #   environment:
+  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     MODE: throughput
+  #     # MODE: soak
+  #     TARGET_CONNECTIONS: 50
+  #     RUN_DURATION_MS: 300000
+  #     LOG_LEVEL: info
+  #     PREPARE_MODE: perClient
+  #     # API Testing Credentials
+  #     API_TEST_USERNAME: cekerayam01
+  #     API_TEST_PASSWORD: Asdqwe12@
+  #   volumes:
+  #     - ./scripts/report:/app/scripts/report:rw
+  #   networks:
+  #     - load-test-network
+  #   depends_on:
+  #     - machine1
 
-  machine3:
-    build: .
-    container_name: load-test-machine-3
-    hostname: load-test-3
-    environment:
-      BASE_URL: https://dev-v2.satuinbox.com
-      MODE: throughput
-      # MODE: soak
-      TARGET_CONNECTIONS: 50
-      RUN_DURATION_MS: 300000
-      LOG_LEVEL: debug
-      PREPARE_MODE: perClient
-    volumes:
-      - ./scripts/report:/app/scripts/report:rw
-    networks:
-      - load-test-network
-    depends_on:
-      - machine2
+  # machine3:
+  #   build: .
+  #   container_name: load-test-machine-3
+  #   hostname: load-test-3
+  #   environment:
+  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     MODE: throughput
+  #     # MODE: soak
+  #     TARGET_CONNECTIONS: 50
+  #     RUN_DURATION_MS: 300000
+  #     LOG_LEVEL: info
+  #     PREPARE_MODE: perClient
+  #     # API Testing Credentials
+  #     API_TEST_USERNAME: cekerayam01
+  #     API_TEST_PASSWORD: Asdqwe12@
+  #   volumes:
+  #     - ./scripts/report:/app/scripts/report:rw
+  #   networks:
+  #     - load-test-network
+  #   depends_on:
+  #     - machine2
 
   # machine4:
   #   build: .
@@ -68,6 +77,9 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
+  #     # API Testing Credentials
+  #     API_TEST_USERNAME: cekerayam01
+  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
@@ -87,6 +99,9 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
+  #     # API Testing Credentials
+  #     API_TEST_USERNAME: cekerayam01
+  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
@@ -106,6 +121,9 @@ services:
   #     RUN_DURATION_MS: 300000
   #     LOG_LEVEL: info
   #     PREPARE_MODE: perClient
+  #     # API Testing Credentials
+  #     API_TEST_USERNAME: cekerayam01
+  #     API_TEST_PASSWORD: Asdqwe12@
   #   volumes:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:

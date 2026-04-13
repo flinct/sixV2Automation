@@ -351,10 +351,7 @@ async function submitTopic({
   });
 }
 
-async function testApiEndpoints({
-  apiBase,
-  accessToken,
-}) {
+async function testApiEndpoints({ apiBase, accessToken }) {
   const results = {
     accountChannel: { status: null, responseTime: 0, success: false },
     conversation: { status: null, responseTime: 0, success: false },
@@ -445,7 +442,7 @@ async function main() {
       return {
         channelId: "692fe8eaaff05e8a1623e0d3",
         signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
-        // Credentials for API testing (from 01_url_page.js loginBody_cekerayam01)
+        // Credentials for API testing (imported from 01_url_page.cjs)
         apiUsername: "cekerayam01",
         apiPassword: "Asdqwe12@",
         accountChannels: [
@@ -464,11 +461,11 @@ async function main() {
       };
     }
 
-    if (baseUrlStr.includes("v2.satuinbox.com")) {
+    if (baseUrlStr.includes("v2.satuinbox.com") && !baseUrlStr.includes("dev-v2")) {
       return {
         channelId: "694b55ffbb886b39e785d2c0",
         signatureKey: "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
-        // Credentials for API testing (from 01_url_page.js)
+        // Credentials for API testing (imported from 01_url_page.cjs)
         apiUsername: "goddummyprod",
         apiPassword: "TongTji89",
         accountChannels: [
@@ -731,41 +728,31 @@ async function main() {
     }
 
     // Optional: Login to get accessToken for API testing
-    // Use credentials from defaults object (from 01_url_page.js) or environment variables
-    const apiUsername = process.env.API_TEST_USERNAME || defaults.apiUsername || "";
-    const apiPassword = process.env.API_TEST_PASSWORD || defaults.apiPassword || "";
+    const apiUsername = process.env.API_TEST_USERNAME || "";
+    const apiPassword = process.env.API_TEST_PASSWORD || "";
 
-    log.info(`API Testing Config: username="${apiUsername}", password set=${!!apiPassword}`);
-    
     if (apiUsername && apiPassword) {
       log.info("Attempting to login for API testing...");
       try {
         const loginUrl = joinUrl(apiBase, "api/auth/login");
-        log.info(`Logging in to ${loginUrl}`);
+        log.debug(`Login URL: ${loginUrl}, Username: ${apiUsername}`);
         const loginRes = await fetch(loginUrl, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "LoadTest/1.0",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            identifier: apiUsername,
+            identifier: apiUsername,  // Use 'identifier' instead of 'email'
             password: apiPassword,
           }),
         });
         const loginData = await loginRes.json();
-        accessToken =
-          loginData?.data?.accessToken || loginData?.accessToken;
+        accessToken = loginData?.data?.accessToken || loginData?.accessToken;
+
+        log.debug(`Login response status: ${loginRes.status}, accessToken: ${!!accessToken}`);
 
         if (accessToken) {
           log.info("API login successful, accessToken obtained");
         } else {
-          log.warn(
-            "API login failed or no accessToken returned. Response status:",
-            loginRes.status,
-            "Response:",
-            JSON.stringify(loginData).substring(0, 200)
-          );
+          log.warn("API login failed or no accessToken returned. Response:", JSON.stringify(loginData).substring(0, 300));
         }
       } catch (e) {
         log.warn("API login error:", e.message);
@@ -974,7 +961,8 @@ async function main() {
                 if (apiResults.accountChannel.success) {
                   c.stats.apiSuccesses++;
                   c.stats.accountChannelCalls++;
-                  c.stats.accountChannelTime += apiResults.accountChannel.responseTime;
+                  c.stats.accountChannelTime +=
+                    apiResults.accountChannel.responseTime;
                 } else {
                   c.stats.apiErrors++;
                 }
@@ -985,13 +973,16 @@ async function main() {
                   success: apiResults.accountChannel.success,
                   timestamp: new Date().toISOString(),
                 });
-                log.debug(`[client ${c.id}] account-channel: ${apiResults.accountChannel.status} (${apiResults.accountChannel.responseTime}ms)`);
+                log.debug(
+                  `[client ${c.id}] account-channel: ${apiResults.accountChannel.status} (${apiResults.accountChannel.responseTime}ms)`,
+                );
 
                 // Conversation
                 if (apiResults.conversation.success) {
                   c.stats.apiSuccesses++;
                   c.stats.conversationCalls++;
-                  c.stats.conversationTime += apiResults.conversation.responseTime;
+                  c.stats.conversationTime +=
+                    apiResults.conversation.responseTime;
                 } else {
                   c.stats.apiErrors++;
                 }
@@ -1002,7 +993,9 @@ async function main() {
                   success: apiResults.conversation.success,
                   timestamp: new Date().toISOString(),
                 });
-                log.debug(`[client ${c.id}] conversation: ${apiResults.conversation.status} (${apiResults.conversation.responseTime}ms)`);
+                log.debug(
+                  `[client ${c.id}] conversation: ${apiResults.conversation.status} (${apiResults.conversation.responseTime}ms)`,
+                );
 
                 // Ticket
                 if (apiResults.ticket.success) {
@@ -1019,7 +1012,9 @@ async function main() {
                   success: apiResults.ticket.success,
                   timestamp: new Date().toISOString(),
                 });
-                log.debug(`[client ${c.id}] ticket: ${apiResults.ticket.status} (${apiResults.ticket.responseTime}ms)`);
+                log.debug(
+                  `[client ${c.id}] ticket: ${apiResults.ticket.status} (${apiResults.ticket.responseTime}ms)`,
+                );
 
                 c.stats.apiTotalTime +=
                   apiResults.accountChannel.responseTime +
@@ -1077,7 +1072,7 @@ async function main() {
     expectHits += c.stats.expectHits;
     prepareErrors += c.stats.prepareErrors;
     if (c.prepared && c.prepared.conversationId) preparedRooms++;
-    
+
     // API metrics
     apiCalls += c.stats.apiCalls;
     apiSuccesses += c.stats.apiSuccesses;
@@ -1089,7 +1084,7 @@ async function main() {
     conversationTime += c.stats.conversationTime;
     ticketCalls += c.stats.ticketCalls;
     ticketTime += c.stats.ticketTime;
-    
+
     // Collect all endpoint hits
     if (c.stats.endpointHits && c.stats.endpointHits.length > 0) {
       allEndpointHits.push(...c.stats.endpointHits);

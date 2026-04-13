@@ -7,6 +7,7 @@ COPY package*.json ./
 RUN npm ci 
 
 COPY scripts/ ./scripts/
+COPY cypress/support/ ./cypress/support/
 RUN mkdir -p scripts/report
 
 # Copy entrypoint script
