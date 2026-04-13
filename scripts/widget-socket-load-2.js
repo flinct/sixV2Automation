@@ -567,9 +567,17 @@ async function main() {
       .toISOString()
       .replace(/[:.]/g, "-")
       .slice(0, -5);
+    
+    // Get machine hostname - set if running in docker, empty if running locally
+    const machineHostname = process.env.MACHINE_HOSTNAME || "";
+    
+    // Include machine name in filename only if running in docker
+    // (MACHINE_HOSTNAME is set by entrypoint.sh in docker)
+    const machinePrefix = machineHostname ? `${machineHostname}-` : "";
+    
     REPORT_OUTPUT = path.join(
       DEFAULT_REPORT_DIR,
-      `load-test-${timestamp}.html`,
+      `load-test-${machinePrefix}${timestamp}.html`,
     );
   }
 
