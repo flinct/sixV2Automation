@@ -9,8 +9,8 @@ services:
       BASE_URL: https://dev-v2.satuinbox.com
       MODE: throughput
       # MODE: soak
-      TARGET_CONNECTIONS: 5
-      RUN_DURATION_MS: 60000
+      TARGET_CONNECTIONS: 75
+      RUN_DURATION_MS: 300000
       LOG_LEVEL: info
       PREPARE_MODE: perClient
     volumes:
@@ -18,43 +18,43 @@ services:
     networks:
       - load-test-network
 
-  # machine2:
-  #   build: .
-  #   container_name: load-test-machine-2
-  #   hostname: load-test-2
-  #   environment:
-  #     BASE_URL: https://dev-v2.satuinbox.com
-  #     MODE: throughput
-  #     # MODE: soak
-  #     TARGET_CONNECTIONS: 50
-  #     RUN_DURATION_MS: 300000
-  #     LOG_LEVEL: info
-  #     PREPARE_MODE: perClient
-  #   volumes:
-  #     - ./scripts/report:/app/scripts/report:rw
-  #   networks:
-  #     - load-test-network
-  #   depends_on:
-  #     - machine1
+  machine2:
+    build: .
+    container_name: load-test-machine-2
+    hostname: load-test-2
+    environment:
+      BASE_URL: https://dev-v2.satuinbox.com
+      MODE: throughput
+      # MODE: soak
+      TARGET_CONNECTIONS: 75
+      RUN_DURATION_MS: 300000
+      LOG_LEVEL: info
+      PREPARE_MODE: perClient
+    volumes:
+      - ./scripts/report:/app/scripts/report:rw
+    networks:
+      - load-test-network
+    # depends_on:
+    #   - machine1
 
-  # machine3:
-  #   build: .
-  #   container_name: load-test-machine-3
-  #   hostname: load-test-3
-  #   environment:
-  #     BASE_URL: https://dev-v2.satuinbox.com
-  #     MODE: throughput
-  #     # MODE: soak
-  #     TARGET_CONNECTIONS: 50
-  #     RUN_DURATION_MS: 300000
-  #     LOG_LEVEL: info
-  #     PREPARE_MODE: perClient
-  #   volumes:
-  #     - ./scripts/report:/app/scripts/report:rw
-  #   networks:
-  #     - load-test-network
-  #   depends_on:
-  #     - machine2
+  machine3:
+    build: .
+    container_name: load-test-machine-3
+    hostname: load-test-3
+    environment:
+      BASE_URL: https://dev-v2.satuinbox.com
+      MODE: throughput
+      # MODE: soak
+      TARGET_CONNECTIONS: 75
+      RUN_DURATION_MS: 300000
+      LOG_LEVEL: info
+      PREPARE_MODE: perClient
+    volumes:
+      - ./scripts/report:/app/scripts/report:rw
+    networks:
+      - load-test-network
+    # depends_on:
+    #   - machine2
 
   # machine4:
   #   build: .
@@ -72,8 +72,8 @@ services:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
   #     - load-test-network
-  #   depends_on:
-  #     - machine3
+  #   # depends_on:
+  #   #   - machine3
 
   # machine5:
   #   build: .
@@ -91,8 +91,8 @@ services:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
   #     - load-test-network
-  #   depends_on:
-  #     - machine4
+  #   # depends_on:
+  #   #   - machine4
 
   # machine6:
   #   build: .
@@ -110,8 +110,8 @@ services:
   #     - ./scripts/report:/app/scripts/report:rw
   #   networks:
   #     - load-test-network
-  #   depends_on:
-  #     - machine5
+  #   # depends_on:
+  #   #   - machine5
 
 networks:
   load-test-network:
