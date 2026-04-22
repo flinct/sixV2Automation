@@ -298,7 +298,7 @@ describe("testing INBOX page", () => {
   });
 
   //test functional auth - REGISTER - LOGIN - LOGOUT - RESET PASSWORD - LOGIN WITH NEW PASSWORD
-  it("try register and reset password", () => {
+  it.only("try register and reset password", () => {
     authAction.registerAndResetWithMailTm();
   });
 

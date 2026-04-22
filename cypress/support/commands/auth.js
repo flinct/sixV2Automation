@@ -241,11 +241,48 @@ class elementAuth {
   onboardingOrganizationName() {
     return cy.get("#company");
   }
+  onboardingOrganizationNameErr() {
+    return cy.get("#company.border-red-600");
+  }
+  onboardingOrganizationNameErrorMsg() {
+    return cy
+      .get("#company")
+      .parent()
+      .parent()
+      .find("p")
+      .eq(1)
+      .should("be.visible");
+  }
   onboardingOrganizationNIB() {
     return cy.get("#bussiness-number");
   }
+
+  onboardingOrganizationNIBErr() {
+    return cy.get("#bussiness-number.border-red-600");
+  }
+  onboardingOrganizationNIBErrorMsg() {
+    return cy
+      .get("#bussiness-number")
+      .parent()
+      .parent()
+      .find("p")
+      .eq(1)
+      .should("be.visible");
+  }
   onboardingOrganizationNPWP() {
     return cy.get("#tax-number");
+  }
+  onboardingOrganizationNPWPErr() {
+    return cy.get("#tax-number.border-red-600");
+  }
+  onboardingOrganizationNPWPErrorMsg() {
+    return cy
+      .get("#tax-number")
+      .parent()
+      .parent()
+      .find("p")
+      .eq(1)
+      .should("be.visible");
   }
   onboardingOrganizationNIBupload() {
     return cy
@@ -255,11 +292,114 @@ class elementAuth {
       .find('input[type="file"]')
       .selectFile("cypress/fixtures/107.jpg", { force: true });
   }
+
+  onboardingOrganizationNIBuploadMin() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/cupangstore0.jpeg", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadMax() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/5,2mb.png", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadPNG() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/1,77mb.png", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadPDF() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes pdf.pdf", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadXLSX() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes xlsx.xlsx", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadDOCX() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes docx.docx", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadTXT() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes txt.txt", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadPPTX() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes pptx.pptx", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadCorruptJPEG() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/corrupt file pdf.jpeg", { force: true });
+  }
+
+  onboardingOrganizationNIBuploadCorruptPDF() {
+    return cy
+      .get("label")
+      .contains(/Unggah NIB/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/corrupt file jpg.pdf", { force: true });
+  }
+
   onboardingOrganizationPICdesc() {
     return cy.get("");
   }
   onboardingOrganizationIDnumber() {
     return cy.get("#person-number");
+  }
+  onboardingOrganizationIDnumberErr() {
+    return cy.get("#person-number.border-red-600");
+  }
+  onboardingOrganizationIDnumberErrorMsg() {
+    return cy
+      .get("#person-number")
+      .parent()
+      .parent()
+      .find("p")
+      .eq(1)
+      .should("be.visible");
   }
   onboardingOrganizationIDnumberUpload() {
     return cy
@@ -269,6 +409,124 @@ class elementAuth {
       .find('input[type="file"]')
       .selectFile("cypress/fixtures/cupangstore8.jpg", { force: true });
   }
+
+  onboardingOrganizationIDnumberuploadMin() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/cupangstore0.jpeg", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadMax() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/5,2mb.png", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadPNG() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/1,77mb.png", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadPDF() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes pdf.pdf", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadXLSX() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes xlsx.xlsx", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadDOCX() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes docx.docx", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadTXT() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes txt.txt", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadPPTX() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/tes pptx.pptx", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadCorruptJPEG() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/corrupt file pdf.jpeg", { force: true });
+  }
+
+  onboardingOrganizationIDnumberuploadCorruptPDF() {
+    return cy
+      .get("label")
+      .contains(/Unggah KTP/i)
+      .parent()
+      .find('input[type="file"]')
+      .selectFile("cypress/fixtures/corrupt file jpg.pdf", { force: true });
+  }
+
+  onboardingOrganizationUploadImgMaxErr() {
+    return cy.get(".Toastify__toast:visible").within(() => {
+      cy.get("h1").should("have.text", "Error");
+      cy.get("p")
+        .invoke("text")
+        .should("match", /File .* melebihi 5MB/);
+    });
+  }
+
+  onboardingOrganizationUploadImgInvErr() {
+    return cy.get(".Toastify__toast:visible").within(() => {
+      cy.get("h1").should("have.text", "Error");
+      cy.get("p")
+        .invoke("text")
+        .should("match", /Ekstensi file .* tidak valid/);
+    });
+  }
+
+  onboardingOrganizationUploadImgCorruptErr() {
+    return cy.get(".Toastify__toast:visible").within(() => {
+      cy.get("h1").should("have.text", "Error");
+      cy.get("p")
+        .invoke("text")
+        .should("match", /File .* tidak bisa dibaca/);
+    });
+  }
+
   onboardingButtonSubmit() {
     return cy.contains("button", /Kirim/i);
   }

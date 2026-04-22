@@ -45,6 +45,7 @@ export function env_config(baseUrl) {
     initInstance: `${base}/open/whatsapp/init?force=true&whatsappNumber=`,
     clientContact: `${base}open-api/client-contact`,
     submitTopic: `${base}open-api/conversation/submit/topic`,
+    getLicensekey: `${base}/open/license-key`, //OPEN API
 
     //--------------OPEN API-----------------
 
@@ -558,12 +559,12 @@ export function env_config(baseUrl) {
     loginBody_mataayam01: {
       //spv
       identifier: "mataayam01",
-      password: "f^(B2WdK3uh.p@!?",
+      password: "Asdqwe12@",
     },
     loginBody_leherayam01: {
       //agent
       identifier: "leherayam01",
-      password: "5481p#9kKxb?M=!G",
+      password: "Asdqwe12@",
     },
     //-------chickentester--------
 

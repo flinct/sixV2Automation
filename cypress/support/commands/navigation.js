@@ -33,6 +33,11 @@ class elementNavigation {
     return cy.get('[data-cy="Sidebar-Navigation-List"]').find("button").eq(4);
   }
 
+  leadsNav() {
+    // return cy.get('[data-cy="main-nav-contact"]').parent().find("p");
+    return cy.get('[data-cy="Sidebar-Navigation-List"]').find("button").eq(5);
+  }
+
   settingsNav() {
     // return cy.get('[data-cy="main-nav-settings"]').parent().find("p");
     // return cy.get('[data-cy="Sidebar-Navigation-List"]').find("button").eq(5);
@@ -43,7 +48,10 @@ class elementNavigation {
 
   profileNav() {
     // return cy.get('[data-cy="main-nav-profile"]').parent().find("p");
-    return cy.get("span:has(svg.tabler-icon-user-filled)");
+    // return cy.get("span:has(svg.tabler-icon-user-filled)");
+    return cy.get(
+      '[data-cy="Sidebar-Navigation"] > div > [aria-haspopup="dialog"]',
+    );
   }
 
   //--------------ALL SETTING NAV------------------

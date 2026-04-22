@@ -67,7 +67,7 @@ describe("testing LOGIN page", () => {
   });
   it.only("try login with ROLE SUPERVISOR", () => {
     if (baseUrl === "https://dev-v2.satuinbox.com") {
-      const paramLogin = "mataayam01";
+      const paramLogin = "mataayam01"; //spv
       authAction.loginAsSupervisor(paramLogin);
     }
     if (baseUrl === "https://v2.satuinbox.com") {

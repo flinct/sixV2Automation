@@ -41,7 +41,9 @@ Cypress.Commands.add("templatePesanNav", () => {
   cy.get('a[data-cy="nav-link-Settings-Template Pesan"]');
 });
 Cypress.Commands.add("userLoginNameLabel", () => {
-  cy.get('[data-testId="avatar-root"]').eq(0);
+  // cy.get('[data-testId="avatar-root"]').eq(0);
+  cy.get('[data-cy="Sidebar-Navigation"]').find("div").eq(2);
+
   //   .xpath(
   //   "/html[1]/body[1]/main[1]/main[1]/section[1]/div[1]/div[2]/div[1]/div[1]/p[1]"
   // );

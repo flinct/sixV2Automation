@@ -37,10 +37,10 @@ describe("testing ONBOARDING page", () => {
     authAction.tryLoginBeforeEmailValidated();
   });
 
-  it.only("check onboarding validation -display behavior-", () => {
+  it("check onboarding validation -display behavior-", () => {
     authAction.validateOnboardingSuccessAccess();
   });
-  it("check onboarding validation -try re-access with refreshing the page-", () => {
+  it("check onboarding validation -try re-access with refreshing the page- FAILED, REFRESH - RE-ENTER ONBOARDING FORM", () => {
     authAction.validateOnboardingNotRedisplayWhenRefreshed();
   });
   it("check onboarding validation -re access via path-", () => {
@@ -49,72 +49,54 @@ describe("testing ONBOARDING page", () => {
   it("check onboarding validation -successfull onboarding-", () => {
     authAction.validateOnboardingWithValidCriteria();
   });
-  it("check onboarding validation -minimum organization name-", () => {
+
+  //field validation
+  it.only("check onboarding field validation -minimum organization name-", () => {
+    // ORGANIZATION NAME
     authAction.validateOnboardingMinimumOrganizationName();
-  });
-  it("check onboarding validation -valid length organization name-", () => {
-    authAction.validateOnboardingOrganizationNameValidLength();
-  });
-  it("check onboarding validation -maximum organization name-", () => {
     authAction.validateOnboardingMaximumOrganizationName();
-  });
-  it("check onboarding validation -organization name with special chars-", () => {
+    authAction.validateOnboardingMaximumOrganizationName();
     authAction.validateOnboardingOrganizationNameWithSpecialChars();
-  });
-  it("check onboarding validation -organization name with numeric only-", () => {
     authAction.validateOnboardingOrganizationNameWithNumericOnly();
-  });
-  it("check onboarding validation -organization name with exsisting data-", () => {
-    authAction.validateOnboardingOrganizationNameWithExistingData();
-  });
-  it("check onboarding validation -minimum NIB-", () => {
+    // authAction.validateOnboardingOrganizationNameWithExistingData();
+
+    // NIB
     authAction.validateOnboardingMinimumNIB();
-  });
-  it("check onboarding validation -valid lenght NIB-", () => {
     authAction.validateOnboardingNIBValidLength();
-  });
-  it("check onboarding validation -maximum NIB-", () => {
     authAction.validateOnboardingMaximumNIB();
-  });
-  it("check onboarding validation -NIB with alphabeth-", () => {
     authAction.validateOnboardingNIBWithAlphabet();
-  });
-  it("check onboarding validation -NIB with special chars-", () => {
     authAction.validateOnboardingNIBWithSpecialChars();
-  });
-  it("check onboarding validation -NIB with spaces-", () => {
     authAction.validateOnboardingNIBWithSpaces();
-  });
-  it("check onboarding validation -minimum NPWP-", () => {
+
+    // NPWP
     authAction.validateOnboardingMinimumNPWP();
-  });
-  it("check onboarding validation -valid lenght NPWP-", () => {
     authAction.validateOnboardingNPWPValidLength();
-  });
-  it("check onboarding validation -maximum NPWP-", () => {
     authAction.validateOnboardingMaximumNPWP();
-  });
-  it("check onboarding validation -NPWP with alphabeth-", () => {
     authAction.validateOnboardingNPWPWithAlphabet();
-  });
-  it("check onboarding validation -NPWP with special chars-", () => {
-    authAction.validateOnboardingNPWPWithAlphabet();
-  });
-  it("check onboarding validation -NPWP with spaces-", () => {
-    authAction.validateOnboardingNPWPWithSpaces();
-  });
-  it("check onboarding validation -NIB upload minimum-", () => {
+    authAction.validateOnboardingNPWPWithSpecialChars();
+
+    // NIB FILE UPLOAD
     authAction.validateOnboardingNIBUploadBelowMax();
-  });
-  it("check onboarding validation -NIB upload maximum-", () => {
     authAction.validateOnboardingNIBUploadExceedMax();
-  });
-  it("check onboarding validation -NIB upload invalid ext-", () => {
     authAction.validateOnboardingNIBUploadInvalidExt();
+    // authAction.validateOnboardingNIBUploadCorruptFile();
+
+    // NPWP FILE UPLOAD
+    authAction.validateOnboardingNPWPValidLength();
+    authAction.validateOnboardingMaximumNPWP();
+    authAction.validateOnboardingNPWPWithAlphabet();
+    authAction.validateOnboardingNPWPWithSpecialChars();
+    // authAction.validateOnboardingNPWPWithSpaces();
+
+    //ID NUMBER
+    authAction.validateOnboardingMinimumIDnumber();
+    // authAction.validateOnboardingIDnumberValidLength();
+    authAction.validateOnboardingMaximumIDnumber();
+    authAction.validateOnboardingIDnumberWithSpaces();
+    authAction.validateOnboardingIDnumberWithAlphabet();
+    authAction.validateOnboardingIDnumberWithSpecialChars();
   });
-  it("check onboarding validation -NIB upload corrupted file-", () => {
-    authAction.validateOnboardingNIBUploadCorruptFile();
-  });
+
   it("check onboarding validation -minimum ID number-", () => {
     authAction.validateOnboardingMinimumIDnumber();
   });
