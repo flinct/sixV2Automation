@@ -18,6 +18,8 @@ const customer_number = 6289655057778;
 const customerNumber = "6289655057778";
 
 class inboxPage {
+  activeChannel = null;
+
   //v2
   //──────── NAVIGATION PANEL ─────────────────────────────
   accessConversation() {
@@ -810,33 +812,171 @@ class inboxPage {
     });
   }
 
+  throttleNetwork({
+    latency = 2000,
+    downloadThroughput = 50000,
+    uploadThroughput = 50000,
+  } = {}) {
+    return cy
+      .then(() =>
+        Cypress.automation("remote:debugger:protocol", {
+          command: "Network.enable",
+        }),
+      )
+      .then(() =>
+        Cypress.automation("remote:debugger:protocol", {
+          command: "Network.emulateNetworkConditions",
+          params: {
+            offline: false,
+            latency,
+            downloadThroughput,
+            uploadThroughput,
+          },
+        }),
+      );
+  }
+
+  resetNetwork() {
+    return cy.then(() =>
+      Cypress.automation("remote:debugger:protocol", {
+        command: "Network.emulateNetworkConditions",
+        params: {
+          offline: false,
+          latency: 0,
+          downloadThroughput: -1,
+          uploadThroughput: -1,
+        },
+      }),
+    );
+  }
+
   sendMessageInChat(message) {
     cy.task("log", `SENDING MESSAGE IN CHAT: "${message}"`);
-    elementConversation
+    return elementConversation
       .chatSectionTextInput()
       .should("be.visible")
       .type(message)
-      .type("{enter}");
-    this.validateMessageStatusTime();
+      .type("{enter}")
+      .then(() => this.validateMessageStatusTime(message, this.activeChannel));
   }
 
-  validateMessageStatusTime() {
-    elementConversation
-      .chatSectionBubbleChatAgentMessageStatus_delivered(0)
-      .should("be.visible");
-    // elementConversation
-    //   .chatSectionBubbleChatAgentMessageStatusDeliveredTimestamp(0)
-    //   .should("be.visible")
-    //   .invoke("text")
-    //   .then((text) => {
-    //     const value = text?.trim();
-    //   });
+  validateMessageStatusTime(message, channel = this.activeChannel) {
+    // const thresholdMs = 2000;
+    const thresholdMs = 10000;
+    const pollIntervalMs = 100;
+    const maxWaitMs = 30000;
+    const webhookUrl =
+      "https://chat.googleapis.com/v1/spaces/AAQAnDKFI6g/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=YQRWeK2Jy4H8CluGauRE3X-iVPIYVu5_1yGI69ouD6o";
+    return cy
+      .then(() => {
+        const startedAt = Date.now();
+        const outgoingBubbleSelector =
+          "#scrollableChatDiv .flex.flex-col.items-end";
+
+        const findDeliveredIcon = ($body) => {
+          const outgoingBubbles = $body.find(outgoingBubbleSelector);
+
+          if (!outgoingBubbles.length) {
+            return Cypress.$();
+          }
+
+          const matchingBubble = Array.from(outgoingBubbles).find((bubble) => {
+            const bubbleText = Cypress.$(bubble).text();
+            return bubbleText.includes(message);
+          });
+
+          if (!matchingBubble) {
+            return Cypress.$();
+          }
+
+          const $matchingBubble = Cypress.$(matchingBubble);
+
+          if (channel === "email") {
+            return $matchingBubble.find("svg.tabler-icon.tabler-icon-mail");
+          }
+
+          return $matchingBubble.find(
+            "svg.tabler-icon.tabler-icon-checks.text-slate-500",
+          );
+        };
+
+        const waitUntilDelivered = () => {
+          return cy.get("body").then(($body) => {
+            const deliveredIcon = findDeliveredIcon($body);
+
+            if (deliveredIcon.length > 0 && deliveredIcon.is(":visible")) {
+              return cy.wrap(Date.now() - startedAt, { log: false });
+            }
+
+            const elapsedMs = Date.now() - startedAt;
+
+            if (elapsedMs >= maxWaitMs) {
+              throw new Error(
+                `Message status delivered did not appear within ${maxWaitMs} ms`,
+              );
+            }
+
+            return cy.wait(pollIntervalMs).then(waitUntilDelivered);
+          });
+        };
+
+        return waitUntilDelivered();
+      })
+      .then((durationMs) => {
+        return cy
+          .task(
+            "log",
+            `chatSectionBubbleChatAgentMessageStatus_delivered visible after ${durationMs} ms`,
+          )
+          .then(() => {
+            if (durationMs <= thresholdMs) {
+              return cy.wrap(durationMs, { log: false });
+            }
+
+            return cy
+              .task(
+                "log",
+                `Delivered status exceeded threshold: ${durationMs} ms > ${thresholdMs} ms`,
+              )
+              .then(() => {
+                if (!webhookUrl) {
+                  return cy
+                    .task(
+                      "log",
+                      'Webhook skipped: Cypress.env("messageStatusWebhookUrl") is not configured',
+                    )
+                    .then(() => cy.wrap(durationMs, { log: false }));
+                }
+
+                return cy.url().then((currentUrl) => {
+                  return cy
+                    .request({
+                      method: "POST",
+                      url: webhookUrl,
+                      failOnStatusCode: false,
+                      body: {
+                        text: `Delivered status slow: ${durationMs} ms\nChannel: ${channel || "unknown"}\nThreshold: ${thresholdMs} ms\nURL: ${currentUrl}\nTime: ${new Date().toISOString()}`,
+                      },
+                    })
+                    .then((response) => {
+                      return cy
+                        .task(
+                          "log",
+                          `Slow delivery webhook sent. Status: ${response.status}`,
+                        )
+                        .then(() => cy.wrap(durationMs, { log: false }));
+                    });
+                });
+              });
+          });
+      });
   }
 
   openFirstChatByChannel(channel) {
     this.accessConversation();
     cy.wait(2000);
     cy.task("log", `OPENING FIRST CHAT IN CHANNEL: ${channel}`);
+    this.activeChannel = channel;
 
     const channelNavMap = {
       widget: {
@@ -849,11 +989,15 @@ class inboxPage {
       },
       baileys: {
         navFilterMethod: elementConversation.navFilterChannelWhatsappUnoff,
-        iconClass: "tabler-icon-brand-whatsapp",
+        iconClass: "tabler-icon-device-laptop",
       },
       instagram: {
         navFilterMethod: elementConversation.navFilterChannelInstagram,
         iconClass: "tabler-icon-brand-instagram",
+      },
+      email: {
+        navFilterMethod: elementConversation.navFilterChannelEmail,
+        iconClass: "tabler-icon-mail",
       },
     };
 

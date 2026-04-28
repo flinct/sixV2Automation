@@ -80,7 +80,8 @@ class elementConversation {
   }
 
   navFilterChannelWhatsapp() {
-    return cy.get('[data-cy="nav-filter-channel-whatsapp"]');
+    // return cy.get('[data-cy="nav-filter-channel-whatsapp"]');
+    return cy.contains("button p", "Whatsapp Api").closest("button");
   }
 
   navFilterChannelWhatsappUnoff() {
@@ -97,8 +98,13 @@ class elementConversation {
   }
 
   navFilterChannelEmail() {
-    return cy.get('[data-cy="nav-filter-channel-email"]');
+    return cy.contains("button p", "Email").closest("button");
+    // return cy.get('[data-cy="nav-filter-channel-instagram"]');
   }
+
+  // navFilterChannelEmail() {
+  //   return cy.get('[data-cy="nav-filter-channel-email"]');
+  // }
 
   // ─── TEAM ─────────────────────────────────────
   navFilterTeamContainerSection() {
@@ -329,6 +335,14 @@ class elementConversation {
       .get(`#conversation-buble.items-end`)
       .eq(index)
       .find("svg.tabler-icon.tabler-icon-checks")
+      .eq(0)
+      .should("have.class", "text-slate-500");
+  }
+  chatSectionBubbleChatAgentMessageStatus_delivered_mail(index) {
+    return cy
+      .get(`#conversation-buble.items-end`)
+      .eq(index)
+      .find("svg.tabler-icon tabler-icon-mail")
       .eq(0)
       .should("have.class", "text-slate-500");
   }

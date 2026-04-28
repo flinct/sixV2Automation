@@ -34,18 +34,6 @@ describe("testing INBOX page", () => {
   const baseUrl = Cypress.config("baseUrl");
   const loginType = Cypress.env("loginType");
 
-  // Cypress.on("uncaught:exception", (err, runnable) => {
-  //   // cy.task(
-  //   //   "log asd",
-  //   //   `Unhandled exception: ${err.message || JSON.stringify(err)}`
-  //   // );
-  //   console.error("Unhandled exception:", err.message || JSON.stringify(err));
-  //   // if (err.message && err.message.includes("You cannot delete this user!")) {
-  //   //   cy.task("log", `Specific error caught: ${err.message}`);
-  //   // }
-  //   return false;
-  // });
-
   before(() => {
     const timestamp = new Date().toISOString();
     Cypress.env("sessionLogTimestamp", timestamp);
@@ -64,35 +52,13 @@ describe("testing INBOX page", () => {
     });
   });
 
-  // after(() => {
-  //   inboxAction.writeCombinedLog();
-  // });
-
   it.only("accessing conversation page - widget", () => {
     inboxAction.openFirstChatByChannel("widget");
-
-    // inboxAction.throttleNetwork({
-    //   latency: 100000,
-    //   downloadThroughput: 30000,
-    //   uploadThroughput: 300000,
-    // });
-
     inboxAction.sendMessageInChat("testing message for widget");
-
-    // inboxAction.resetNetwork();
   });
   it.only("accessing conversation page - whatsapp-web", () => {
     inboxAction.openFirstChatByChannel("baileys");
-
-    // inboxAction.throttleNetwork({
-    //   latency: 100000,
-    //   downloadThroughput: 30000,
-    //   uploadThroughput: 300000,
-    // });
-
     inboxAction.sendMessageInChat("testing message for whatsapp-web");
-
-    // inboxAction.resetNetwork();
   });
   it.only("accessing conversation page - whatsapp-official", () => {
     inboxAction.openFirstChatByChannel("whatsapp-official");
@@ -107,63 +73,5 @@ describe("testing INBOX page", () => {
   // });
   // it.only("accessing conversation page - facebook", () => {
   //   inboxAction.openFirstChatByChannel("facebook");
-  // });
-
-  // it.only("accessing conversation page", () => {
-  //   endpointDetect.start({
-  //     name: "conversation-your-inbox",
-  //     urlPattern: "**/api/**",
-  //   });
-  //   inboxAction.accessConversation();
-  //   cy.wait(5000);
-  //   endpointDetect.save("endpoint_detect");
-  // });
-  // it("accessing conversation page - your inbox", () => {
-  //   inboxAction.accessYourInbox();
-  // });
-  // it("accessing conversation page - unassigned", () => {
-  //   inboxAction.accessUnassigned();
-  // });
-  // it("accessing conversation page - all inbox", () => {
-  //   inboxAction.accessAllConversation();
-  // });
-  // it("accessing conversation page - starred", () => {
-  //   inboxAction.accessStarredConversation();
-  // });
-  // it("accessing conversation page - spam", () => {
-  //   inboxAction.accessSpamConversation();
-  // });
-  // it("accessing conversation page - junk", () => {
-  //   inboxAction.accessSpamConversation();
-  // });
-  // it("accessing conversation page - your inbox - validate empty state", () => {
-  //   cy.wait(2000);
-  //   inboxAction.validateChatList_emptyState();
-  // });
-  // it("accessing conversation page - your inbox - validate title section", () => {
-  //   cy.wait(2000);
-  //   inboxAction.validateTitleAndFilterChatlist();
-  // });
-  // it("accessing conversation page - your inbox - testing filter component placement and visiblity", () => {
-  //   cy.wait(2000);
-  //   inboxAction.checkConversationFilter();
-  // });
-  // it.only("opening a conversation", () => {
-  //   cy.wait(2000);
-  //   endpointDetect.start({
-  //     name: "conversation-your-inbox",
-  //     urlPattern: "**/api/**",
-  //   });
-  //   inboxAction.openFirstConversation();
-  //   cy.wait(5000);
-  //   endpointDetect.save("endpoint_detect");
-  // });
-  // it.skip("opening a conversation - compare account channel connectivity impact to conversation", () => {
-  //   cy.wait(2000);
-  //   inboxAction.compareConversationAccountChannelConnectivity();
-  // });
-  // it.skip("simulate accesing widget from codepen", () => {
-  //   cy.wait(2000);
-  //   inboxAction.accessWdigetCodepen();
   // });
 });
