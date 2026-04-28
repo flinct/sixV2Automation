@@ -856,7 +856,12 @@ class inboxPage {
       .chatSectionTextInput()
       .should("be.visible")
       .type(message)
-      .type("{enter}")
+      .then(() => {
+        return elementConversation
+          .chatSectionTextInput()
+          .should("be.visible")
+          .type("{enter}");
+      })
       .then(() => this.validateMessageStatusTime(message, this.activeChannel));
   }
 
@@ -1016,78 +1021,94 @@ class inboxPage {
 
     // Select target channel via nav filter
     navFilterMethod().should("be.visible").click();
-    cy.wait(1000);
 
     cy.task("log", `Looking for first chat in channel: ${channel}`);
     elementConversation.chatListContainer().should("be.visible");
 
     // Find and click the first conversation item with matching channel
-    cy.get("body").then(($body) => {
-      // Find all chat list items
-      const chatItems = $body.find('[data-cy^="chat-list-"]');
+    cy.get('[data-cy^="chat-list-"]', { timeout: 15000 })
+      .should(($items) => {
+        expect($items.length, "chat items count").to.be.greaterThan(0);
 
-      if (chatItems.length === 0) {
-        cy.task("log", "❌ No chat items found in the list");
-        throw new Error("No chat items found in the conversation list");
-      }
+        const hasMatchingChannel = Array.from($items).some(
+          (item) => Cypress.$(item).find(`svg.${iconClass}`).length > 0,
+        );
 
-      cy.task(
-        "log",
-        `Found ${chatItems.length} chat items. Searching for first chat in channel...`,
-      );
+        expect(
+          hasMatchingChannel,
+          `chat list contains channel icon ${iconClass}`,
+        ).to.be.true;
+      })
+      .then(() => cy.get("body"))
+      .then(($body) => {
+        // Find all chat list items
+        const chatItems = $body.find('[data-cy^="chat-list-"]');
 
-      // Find the first chat item with matching channel icon
-      let found = false;
-      let foundIndex = -1;
-      let foundContactName = "";
-
-      chatItems.each((index, element) => {
-        const $element = Cypress.$(element);
-        const hasChannelIcon = $element.find(`svg.${iconClass}`).length > 0;
-
-        if (hasChannelIcon && !found) {
-          const contactNameInItem = $element
-            .find('[data-cy="chatList-client-name"]')
-            .text()
-            .trim();
-          foundIndex = index + 1; // data-cy uses 1-based index
-          foundContactName = contactNameInItem;
-          found = true;
-          cy.task(
-            "log",
-            `✓ Found first chat at index ${foundIndex}: "${contactNameInItem}"`,
-          );
-          return false; // Break the loop
+        if (chatItems.length === 0) {
+          cy.task("log", "❌ No chat items found in the list");
+          throw new Error("No chat items found in the conversation list");
         }
+
+        cy.task(
+          "log",
+          `Found ${chatItems.length} chat items. Searching for first chat in channel...`,
+        );
+
+        // Find the first chat item with matching channel icon
+        let found = false;
+        let foundIndex = -1;
+        let foundContactName = "";
+
+        chatItems.each((index, element) => {
+          const $element = Cypress.$(element);
+          const hasChannelIcon = $element.find(`svg.${iconClass}`).length > 0;
+
+          if (hasChannelIcon && !found) {
+            const contactNameInItem = $element
+              .find('[data-cy="chatList-client-name"]')
+              .text()
+              .trim();
+            foundIndex = index + 1; // data-cy uses 1-based index
+            foundContactName = contactNameInItem;
+            found = true;
+            cy.task(
+              "log",
+              `✓ Found first chat at index ${foundIndex}: "${contactNameInItem}"`,
+            );
+            return false; // Break the loop
+          }
+        });
+
+        if (!found) {
+          cy.task("log", `❌ No chats found in channel "${channel}"`);
+          throw new Error(`No chats found in channel "${channel}"`);
+        }
+
+        // Click the found chat
+        cy.get(`[data-cy="chat-list-${foundIndex}"]`)
+          .scrollIntoView();
+
+        cy.get(`[data-cy="chat-list-${foundIndex}"]`)
+          .should("be.visible")
+          .click()
+          .then(() => {
+            cy.task(
+              "log",
+              `✓ Successfully clicked first chat in ${channel}: ${foundContactName}`,
+            );
+          });
+
+        // Verify chat room opened
+        elementConversation
+          .chatRoom()
+          .should("be.visible")
+          .then(() => {
+            cy.task(
+              "log",
+              `✓ Chat room loaded for first chat in channel: ${channel}`,
+            );
+          });
       });
-
-      if (!found) {
-        cy.task("log", `❌ No chats found in channel "${channel}"`);
-        throw new Error(`No chats found in channel "${channel}"`);
-      }
-
-      // Click the found chat
-      cy.get(`[data-cy="chat-list-${foundIndex}"]`)
-        .should("be.visible")
-        .click()
-        .then(() => {
-          cy.task(
-            "log",
-            `✓ Successfully clicked first chat in ${channel}: ${foundContactName}`,
-          );
-        });
-
-      // Verify chat room opened
-      elementConversation
-        .chatRoom()
-        .should("be.visible")
-        .then(() => {
-          cy.task(
-            "log",
-            `✓ Chat room loaded for first chat in channel: ${channel}`,
-          );
-        });
-    });
   }
 
   openLastChatByChannel(channel) {
