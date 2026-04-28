@@ -68,6 +68,21 @@ describe("testing INBOX page", () => {
   //   inboxAction.writeCombinedLog();
   // });
 
+  it.only("accessing conversation page - widget", () => {
+    inboxAction.openFirstChatByChannel("widget");
+    inboxAction.sendMessageInChat("testing message for widget");
+  });
+  it.only("accessing conversation page - whatsapp-web", () => {
+    inboxAction.openFirstChatByChannel("whatsapp-web");
+    inboxAction.sendMessageInChat("testing message for whatsapp-web");
+  });
+  // it.only("accessing conversation page - instagram", () => {
+  //   inboxAction.openFirstChatByChannel("instagram");
+  // });
+  // it.only("accessing conversation page - facebook", () => {
+  //   inboxAction.openFirstChatByChannel("facebook");
+  // });
+
   it.only("accessing conversation page", () => {
     endpointDetect.start({
       name: "conversation-your-inbox",

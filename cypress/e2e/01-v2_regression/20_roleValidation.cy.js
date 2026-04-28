@@ -4,7 +4,7 @@ import inboxPage from "../../support/pages/inboxPage.js";
 
 describe("Role-Based Access Control Test", () => {
   const authAction = new authPage();
-  const inboxAction = new inboxPage
+  const inboxAction = new inboxPage();
   const baseUrl = Cypress.config("baseUrl");
   const config = env_config(baseUrl);
   // const baseUrl = "https://dev-v2.satuinbox.com";
@@ -328,20 +328,16 @@ describe("Role-Based Access Control Test", () => {
   });
 
   describe("Test conversation page based role userlogin", () => {
-    it('accessing conversation as agent -- navigation list', () => {
-        inboxPage.accessYourInbox()
-        inboxPage.accessSpamConversation()
-        inboxPage.accessJunkConversation()
-        inboxPage.accessStarredConversation()
-        inboxPage.
+    it("accessing conversation as agent -- navigation list", () => {
+      inboxPage.accessYourInbox();
+      inboxPage.accessSpamConversation();
+      inboxPage.accessJunkConversation();
+      inboxPage.accessStarredConversation();
+      // inboxPage.
     });
-    it('accessing conversation as supervisor', () => {
-        
-    });
-    it('accessing conversation as admin', () => {
-        
-    });
-  })
+    it("accessing conversation as supervisor", () => {});
+    it("accessing conversation as admin", () => {});
+  });
 
   // Test tanpa login
   describe.skip("Testing direct access without login", () => {
@@ -380,6 +376,4 @@ describe("Role-Based Access Control Test", () => {
     cy.log("📸 Screenshots are saved in cypress/screenshots/");
     cy.log("====================================");
   });
-
-
 });
