@@ -838,23 +838,36 @@ class inboxPage {
     cy.wait(2000);
     cy.task("log", `OPENING FIRST CHAT IN CHANNEL: ${channel}`);
 
-    // Channel nav filter mapping (using elementConversation)
     const channelNavMap = {
-      widget: elementConversation.navFilterChannelLivechat,
-      "whatsapp-official": elementConversation.navFilterChannelWhatsapp,
-      baileys: elementConversation.navFilterChannelWhatsappUnoff,
-      instagram: elementConversation.navFilterChannelInstagram,
+      widget: {
+        navFilterMethod: elementConversation.navFilterChannelLivechat,
+        iconClass: "tabler-icon-messages",
+      },
+      "whatsapp-official": {
+        navFilterMethod: elementConversation.navFilterChannelWhatsapp,
+        iconClass: "tabler-icon-brand-whatsapp",
+      },
+      baileys: {
+        navFilterMethod: elementConversation.navFilterChannelWhatsappUnoff,
+        iconClass: "tabler-icon-brand-whatsapp",
+      },
+      instagram: {
+        navFilterMethod: elementConversation.navFilterChannelInstagram,
+        iconClass: "tabler-icon-brand-instagram",
+      },
     };
 
-    const navFilterMethod = channelNavMap[channel];
+    const channelConfig = channelNavMap[channel];
 
     // Validate channel parameter
-    if (!navFilterMethod) {
+    if (!channelConfig) {
       cy.task("log", `❌ ERROR: Unknown channel - ${channel}`);
       throw new Error(
         `Unknown channel: ${channel}. Valid channels: ${Object.keys(channelNavMap).join(", ")}`,
       );
     }
+
+    const { navFilterMethod, iconClass } = channelConfig;
 
     // Select target channel via nav filter
     navFilterMethod().should("be.visible").click();
