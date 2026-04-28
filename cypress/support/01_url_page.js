@@ -514,10 +514,10 @@ export function env_config(baseUrl) {
     //---------goddummyprod2 SAP----------
 
     //---------tester dummy prod -------
-    loginBody_testerdummy01: {
-      identifier: "testerdummy01",
-      password: "Asdqwe12@",
-    },
+    // loginBody_testerdummy01: {
+    //   identifier: "testerdummy01",
+    //   password: "Asdqwe12@",
+    // },
     loginBody_testerdummy01: {
       identifier: "testerdummyprod01",
       password: "Asdqwe12@",
@@ -622,6 +622,9 @@ export function env_config(baseUrl) {
     },
     header_tantaffgo: {
       "x-signature-key": "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
+    },
+    header_automation01: {
+      "x-signature-key": "sk_moic2ycf_nXXxomZIUKhIE-p493wF3biOfdK_th4h",
     },
     randomGlobalDelay: Math.floor(Math.random() * 1800000) + 60000, //1 menit + random wait time
     randomGlobalDelayStaging: Math.floor(Math.random() * 2000) + 10000, //1 menit + random wait time

@@ -3,6 +3,8 @@ class elementNavigation {
   defaultUrl() {
     // cy.visit("https://dev-v2.satuinbox.com/id");
     // cy.visit(baseUrl + "/id/conversation/your-inbox");
+    // cy.visit("/id/conversation/your-inbox");
+    // cy.visit(baseUrl);
     cy.visit("/conversation/your-inbox");
     // cy.visit("/id");
     // cy.visit("/conversation/your-inbox");

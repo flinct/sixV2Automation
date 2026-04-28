@@ -75,7 +75,8 @@ class elementConversation {
   }
 
   navFilterChannelLivechat() {
-    return cy.get('[data-cy="nav-filter-channel-livechat"]');
+    // return cy.get('[data-cy="nav-filter-channel-livechat"]');
+    return cy.contains("button p", "Widget").closest("button");
   }
 
   navFilterChannelWhatsapp() {
@@ -323,7 +324,7 @@ class elementConversation {
   chatSectionBubbleChatAgentTimestamp(index) {
     return cy.get(`#conversation-buble.items-end`).eq(index).find("p");
   }
-  chatSectionBubbleChatAgentMessageStatus(index) {
+  chatSectionBubbleChatAgentMessageStatus_delivered(index) {
     return cy
       .get(`#conversation-buble.items-end`)
       .eq(index)
@@ -338,6 +339,33 @@ class elementConversation {
       .find("svg.tabler-icon.tabler-icon-checks")
       .eq(0)
       .should("have.class", "text-green-600");
+  }
+
+  chatSectionBubbleChatAgentMessageStatus_sent(index) {
+    return cy
+      .get(`#conversation-buble.items-end`)
+      .eq(index)
+      .find("svg.tabler-icon.tabler-icon-check")
+      .eq(0)
+      .should("have.class", "text-slate-500");
+  }
+
+  chatSectionBubbleChatAgentMessageStatus_pending(index) {
+    return cy
+      .get(`#conversation-buble.items-end`)
+      .eq(index)
+      .find("svg.tabler-icon.tabler-icon-clock")
+      .eq(0)
+      .should("have.class", "text-slate-500");
+  }
+
+  chatSectionBubbleChatAgentMessageStatus_failed(index) {
+    return cy
+      .get(`#conversation-buble.items-end`)
+      .eq(index)
+      .find("svg.tabler-icon.tabler-icon-alert-triangle")
+      .eq(0)
+      .should("have.class", "text-red-600");
   }
 
   chatSectionTypingIndicator() {

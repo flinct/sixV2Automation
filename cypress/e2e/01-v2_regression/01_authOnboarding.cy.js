@@ -96,20 +96,4 @@ describe("testing ONBOARDING page", () => {
     authAction.validateOnboardingIDnumberWithAlphabet();
     authAction.validateOnboardingIDnumberWithSpecialChars();
   });
-
-  it("check onboarding validation -minimum ID number-", () => {
-    authAction.validateOnboardingMinimumIDnumber();
-  });
-  it("check onboarding validation -valid length ID number-", () => {
-    authAction.validateOnboardingIDnumberValidLength();
-  });
-  it("check onboarding validation -maximum ID number-", () => {
-    authAction.validateOnboardingMaximumIDnumber();
-  });
-  it("check onboarding validation -ID number with alphabeth-", () => {
-    authAction.validateOnboardingIDnumberWithAlphabeth();
-  });
-  it("check onboarding validation -ID number with spaces-", () => {
-    authAction.validateOnboardingIDnumberWithSpaces();
-  });
 });

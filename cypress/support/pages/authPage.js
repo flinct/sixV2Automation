@@ -191,6 +191,38 @@ class authPage {
     cy.url().should("include", `/conversation/your-inbox`);
     cy.task("log", "-----SUCCESSFULL LOGIN------");
   }
+  loginAsAdmin(overrideLogin) {
+    if (overrideLogin) {
+      Cypress.env("loginType", overrideLogin);
+    }
+
+    const loginBody = this.reGetConfigLogiType();
+
+    if (baseUrl === "https://dev-v2.satuinbox.com") {
+      this.visitLoginPageV2();
+    } else {
+      this.visitLoginPage();
+    }
+    // cy.wrap(this.loginBody).then((body) => {
+    elementAuth
+      .keyword({
+        timeout: 15000,
+      })
+      .type(loginBody.identifier);
+    elementAuth
+      .password({
+        timeout: 15000,
+      })
+      .type(loginBody.password);
+    elementAuth
+      .buttonLogin({
+        timeout: 15000,
+      })
+      .click();
+    // });
+    cy.url().should("include", `/conversation/your-inbox`);
+    cy.task("log", "-----SUCCESSFULL LOGIN as SPV------");
+  }
   loginAsSupervisor(overrideLogin) {
     if (overrideLogin) {
       Cypress.env("loginType", overrideLogin);
