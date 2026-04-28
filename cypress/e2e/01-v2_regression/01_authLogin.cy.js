@@ -59,13 +59,13 @@ describe("testing LOGIN page", () => {
     authAction.elementCheckingV2LoginErrorState();
   });
 
-  it.only("try login with valid credentials", () => {
+  it("try login with valid credentials", () => {
     authAction.loginValidUsername();
   });
   it("try login with INVALID credentials", () => {
     authAction.loginInvalidUsername();
   });
-  it.only("try login with ROLE SUPERVISOR", () => {
+  it("try login with ROLE SUPERVISOR", () => {
     if (baseUrl === "https://dev-v2.satuinbox.com") {
       const paramLogin = "mataayam01"; //spv
       authAction.loginAsSupervisor(paramLogin);
@@ -75,7 +75,7 @@ describe("testing LOGIN page", () => {
       authAction.loginAsSupervisor(paramLogin);
     }
   });
-  it.only("try login with ROLE AGENT", () => {
+  it("try login with ROLE AGENT", () => {
     if (baseUrl === "https://dev-v2.satuinbox.com") {
       const paramLogin = "leherayam01";
       authAction.loginAsAgent(paramLogin);

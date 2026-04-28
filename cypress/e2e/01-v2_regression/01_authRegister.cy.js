@@ -193,7 +193,7 @@ describe("testing REGISTER page", () => {
   });
 
   //test functional auth - REGISTER - LOGIN - LOGOUT - RESET PASSWORD - LOGIN WITH NEW PASSWORD
-  it.only("try register and reset password", () => {
+  it("try register and reset password", () => {
     authAction.registerAndResetWithMailTm();
   });
 });

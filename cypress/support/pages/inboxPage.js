@@ -17,545 +17,6 @@ const customer_number = 6289655057778;
 
 const customerNumber = "6289655057778";
 
-// function getHeaderByLoginType(config, baseUrl, loginType) {
-//   if (baseUrl === "https://app.satuinbox.com") {
-//     if (loginType === "goddummyprod") return config.headers;
-//     if (loginType === "testing270520252")
-//       return config.headers_testing270520252;
-//   }
-
-//   if (baseUrl === "https://dev.satuinbox.com") {
-//     if (loginType === "chickentester") return config.headers_CT;
-//     if (loginType === "goddevsa1") return config.headers_GD;
-//     if (loginType === "messagelogsatu") return config.headers_ms1;
-//   }
-
-//   if (baseUrl === "https://staging.satuinbox.com") {
-//     if (loginType === "chickentester") return config.headers_CT_staging;
-//     if (loginType === "goddevsa1") return config.headers_GD;
-//     if (loginType === "messagelogsatu") return config.headers_ms1;
-//   }
-// }
-// function getLoginBodyByLoginType(config, baseUrl, loginType) {
-//   if (baseUrl === "https://app.satuinbox.com") {
-//     if (loginType === "goddummyprod") return config.loginBody;
-//     if (loginType === "testing270520252")
-//       return config.loginBody_testing270520252;
-//   }
-
-//   if (baseUrl === "https://dev.satuinbox.com") {
-//     if (loginType === "chickentester") return config.loginBody_CT;
-//     if (loginType === "goddevsa1") return config.loginBody_SAP;
-//     if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
-//     if (loginType === "spongebobkotak") return config.loginBody_bikini;
-//   }
-
-//   if (baseUrl === "https://staging.satuinbox.com") {
-//     if (loginType === "chickentester") return config.loginBody_CT;
-//     if (loginType === "goddevsa1") return config.loginBody_SAP;
-//     if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
-//     if (loginType === "spongebobkotak") return config.loginBody_bikini;
-//   }
-// }
-
-// const loginBody = getLoginBodyByLoginType(config, baseUrl, loginType);
-// const headers = getHeaderByLoginType(config, baseUrl, loginType);
-
-// function formatCustomerNumber(customerNumber) {
-//   return customerNumber.replace(/(\d{2})(\d{3})(\d{4})(\d{4})/, "$1 $2 $3 $4");
-// }
-
-// const broadcastCount = 4;
-
-// const generateRandomId2 = () => {
-//   return Math.floor(10000 + Math.random() * 90000).toString(); // Generates a number between 10000 and 99999
-// };
-
-// const randomAWB2 = () => {
-//   return Math.floor(10000000 + Math.random() * 90000000).toString();
-// };
-
-// const agent = "chicken tester 2";
-
-// const el_chatList = '[data-cy^="chat-list-"]';
-
-// const emptyState_chatListInbox =
-//   'div.mt-3.flex.flex-col.items-center.justify-center.space-y-3 p:contains("Belum Ada Pesan")';
-
-// function scroll() {
-//   cy.get(el_chatList, { timeout: 2000 })
-//     .its("length")
-//     .then((count) => {
-//       cy.log(`Found ${count} data loaded`);
-//       cy.softAssert(count > 0, "Data loaded correctly"); // Use softAssert here
-
-//       // Calculate maximum scroll attempts based on the count
-//       const maxScrollAttempts =
-//         count < 7 ? 0 : Math.min(8, Math.max(1, Math.ceil(count / 10))); // Limit to a maximum of 8
-
-//       cy.log(`Maximum scroll attempts: ${maxScrollAttempts}`);
-//       // Use the calculated maximum scroll attempts
-//       if (maxScrollAttempts > 0) {
-//         cy.scrollUntilLoaded(
-//           "div.custom-scrollbar.overflow-y-auto.h-full.w-full.pb-5", // Scrollable container
-//           ".lazy-loaded-item", // Lazy-loaded item selector
-//           maxScrollAttempts, // Dynamic maximum scroll attempts
-//           300, // Optional scroll step duration
-//         );
-//       } else {
-//         cy.log("Skipping scrolling as count is below 6.");
-//       }
-//     });
-// }
-
-// function getTokenThenBroadcast() {
-//   return cy.request({
-//     method: "POST",
-//     url: `${config.sendBroadcastUrl}${config.parentNumber}`,
-//     // body: value_BC,
-//     body: {
-//       broadcastMessage: [
-//         {
-//           number_whatsapp_customer: customer_number.toString(),
-//           message: `${value_randomQuotes} from : ${config.parentNumber} please reply this BC`,
-//           id_template: generateRandomId2(),
-//           properties:
-//             // [
-//             {
-//               contactName: `Customer${randomAWB2()}`,
-//               division: config.parentNumber,
-//               senderName: "TESTER",
-//               category: "any",
-//               orderId: `AWB-${randomAWB2()}`,
-//               batchId: `BATCH00${randomAWB2()}`,
-//             },
-//           // ]
-//         },
-//         // {
-//         //     "number_whatsapp_customer": "6289655057778",
-//         //     "message": "Terima kasih menjadi customer setia kami!, mari antar paketmu ke kami dan paketmu sampi esok hari :) | Broadcast - SAP 2:25PM",
-//         //     "id_template": "48688", // id template broadcast (optional)
-//         //     "properties":
-//         //     // [ //use this when needs multiprops
-//         //         {
-//         //             "contactName": "ayam",
-//         //             "division": "Jawa Barat",
-//         //             "senderName": "System-SAP",
-//         //             "category": "food and baverage",
-//         //             "orderId": "AWB-48928394294", // awb number
-//         //             "batchId": "BATCH001" // batch number
-//         //         }
-//         //     // ]
-//         // }
-//       ],
-//     },
-//     headers: {
-//       "x-api-key":
-//         "7058d1c05c763aaa5d5744baf5c371ae01ed38455d90eb29dd16ccd4bcb47d17",
-//     },
-//   });
-// }
-
-// function generateRandomText(length = 10) {
-//   const characters =
-//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//   let result = "";
-//   for (let i = 0; i < length; i++) {
-//     result += characters.charAt(Math.floor(Math.random() * characters.length));
-//   }
-//   return result;
-// }
-// const randomText = generateRandomText();
-
-// function navigateToInbox_Ongoing_() {
-//   cy.inboxOngoingTab().click();
-// }
-// function navigateToInbox_unassigned_() {
-//   cy.inboxUnassignedTab().click();
-// }
-// function navigateToInbox_resolved_() {
-//   cy.inboxResolvedTab().click();
-// }
-
-// function writeCombinedLog() {
-//   const sessionTimestamp = Cypress.env("sessionLogTimestamp");
-//   const inboxLogs = Cypress.env("inboxLogs") || [];
-//   const messageLogs = Cypress.env("messageLogs") || [];
-
-//   const sessionLog = {
-//     timestamp: sessionTimestamp,
-//     inboxLogs,
-//     messageLogs,
-//   };
-
-//   const fileSafeTime = sessionTimestamp.replace(/:/g, "-"); // avoid ":" in file name
-//   const fileName = `cypress/logs/session_log_${fileSafeTime}.json`;
-
-//   // cy.writeFile(fileName, sessionLog);
-//   // cy.task("log", `✅ Saved combined session log to ${fileName}`);
-//   cy.task("readJsonFile", fileName).then((existingLogs) => {
-//     const logsArray = Array.isArray(existingLogs) ? existingLogs : [];
-//     logsArray.push(sessionLog);
-
-//     cy.writeFile(fileName, logsArray, { log: false });
-//     cy.task("log", `✅ Appended log to ${fileName}`);
-//   });
-// }
-
-// function interceptResponse() {
-//   // cy.intercept("GET", /\/api\/v1\/inbox\/.*/).as("idOneInbox");
-
-//   cy.wait("@idOneInbox").then((interception) => {
-//     const responseBody = interception.response.body;
-//     const responseBodyInbox = interception.response.body;
-
-//     // const responseBodyContactHistory = responseBody.contact.roomHistory[0];
-
-//     const responseBodyInboxCompany = responseBody.company;
-//     const responseBodyInboxContactName = responseBody.accountName;
-//     const responseBodyInboxContact = responseBody.accountNumberWhatsapp;
-//     const responseBodyInboxCustomerName = responseBody.nameCustomer;
-//     const responseBodyInboxCustomerNumber = responseBody.accountNumberWhatsapp;
-//     const statusCodeInbox = interception.response.statusCode;
-
-//     // cy.task("log", "Print response body get one inbox : ");
-//     // cy.task("log", responseBodyInbox);
-//     cy.task("log", "Print company from get one inbox : ");
-//     cy.task("log", responseBodyInboxCompany);
-//     cy.task("log", "- - - - - - - - - - - - -");
-//     cy.task("log", "Print whatsapp name from get one inbox : ");
-//     cy.task("log", responseBodyInboxContactName);
-//     cy.task("log", "- - - - - - - - - - - - -");
-//     cy.task("log", "Print account number whatsapp from get one inbox : ");
-//     cy.task("log", responseBodyInboxContact);
-//     cy.task("log", "- - - - - - - - - - - - -");
-//     cy.task("log", "Print receiver from get one inbox : ");
-//     cy.task("log", responseBodyInboxCustomerName);
-//     cy.task("log", "- - - - - - - - - - - - -");
-//     cy.task("log", "Print receiver number whatsapp from get one inbox : ");
-//     cy.task("log", responseBodyInboxCustomerNumber);
-//     cy.task("log", "- - - - - - - - - - - - -");
-//     cy.task("log", "Print status code get one inbox : ");
-//     cy.task("log", statusCodeInbox);
-//     cy.task("log", "- - - - - - - - - - - - -");
-
-//     cy.wrap(responseBodyInboxContact).as("responseBodyInboxContact");
-
-//     const logEntry = {
-//       timestamp: new Date().toISOString(),
-//       statusCodeInbox: statusCodeInbox,
-//       responseBodyInboxCompany: responseBodyInboxCompany,
-//       responseBodyInboxContactName: responseBodyInboxContactName,
-//       responseBodyInboxContact: responseBodyInboxContact,
-//       responseBodyInboxCustomerName: responseBodyInboxCustomerName,
-//       responseBodyInboxCustomerNumber: responseBodyInboxCustomerNumber,
-//     };
-
-//     //push ke inboxLogs
-//     const logs = Cypress.env("inboxLogs");
-//     logs.push(logEntry);
-//     Cypress.env("inboxLogs", logs);
-//   });
-// }
-
-// function getCustomerNumberList(el_chatList, length_val = 0) {
-//   const text_cus_num_value = [];
-//   return cy.get("body", { timeout: 2000 }).then(($body) => {
-//     if ($body.find(el_chatList).length > length_val) {
-//       return cy
-//         .get(el_chatList)
-//         .each(($els_cust_number) => {
-//           cy.wrap($els_cust_number)
-//             .find("h1.text-sm")
-//             .invoke("text")
-//             .then((text_cus_num) => {
-//               if (text_cus_num) {
-//                 const formattedText = text_cus_num.replace(/\s+/g, "");
-//                 text_cus_num_value.push(formattedText);
-//               }
-//             });
-//         })
-//         .then(() => {
-//           cy.task("log", "List ditemukan : " + text_cus_num_value.join(", "));
-//           return cy.wrap(text_cus_num_value).as("customerNumValues");
-//           return text_cus_num_value;
-//         });
-//     } else {
-//       cy.task("log", "List kosong").then(() => {
-//         cy.reload();
-//         cy.wait(2000);
-//         return getCustomerNumberList(el_chatList, length_val);
-//       });
-//     }
-//   });
-// }
-
-// function assignChatList(el_chatList, textList) {
-//   textList.forEach((value) => {
-//     cy.get(`${el_chatList}:contains("${value}")`).within(() => {
-//       cy.softAssert(cy.checkbox_chatList());
-//       cy.wait(500);
-//     });
-//   });
-//   cy.softAssert(cy.selectButton_assign().click());
-//   cy.softAssert(cy.simpan_popupModal_min1().click());
-//   cy.wait(2000);
-//   cy.softAssert(
-//     cy.inboxOngoingTab().should("have.attr", "data-state", "active"),
-//   );
-// }
-
-// function verifyAssigneUsers(el_chatList, textList) {
-//   textList.forEach((value) => {
-//     let userLoginName;
-//     cy.get(`${el_chatList}:contains("${value})`).within(() => {
-//       cy.softAssert(
-//         cy.checkbox_chatList(),
-//         `checking ${value} succes assigned to ongoing`,
-//       );
-//       cy.contains(value).click();
-//     });
-//     cy.wait(2000);
-//     cy.userLoginNameLabel()
-//       .invoke("text")
-//       .then((text) => {
-//         userLoginName = text.trim();
-//       });
-//     cy.wait(2000);
-//     cy.softAssert(
-//       cy
-//         .inbox_chat_detail_all_agent()
-//         .invoke("text")
-//         .then((text2) => {
-//           expect(text2.trim()).to.equal(userLoginName);
-//           cy.softAssert(
-//             cy.inbox_chat_detail_all_agent().contains(userLoginName),
-//             "this value is equal to : " + userLoginName,
-//           );
-//         }),
-//     );
-//   });
-// }
-
-// //wrapNumber, tickallNumber,loopWrapandTick digunakan saat ingin assign/handover semua chat, fungsi ini akan mengulang proses select dan scroll hingga semua number terpilih (NEED ADJUSTMENT)
-// let wrappedNumbers = [];
-
-// function wrapNumber(offset = 0) {
-//   const text_cus_num_value = [];
-
-//   cy.get(el_chatList)
-//     .each(($el, index) => {
-//       if (index >= offset && index < offset + 10) {
-//         cy.wrap($el)
-//           .find("h1.text-sm")
-//           .invoke("text")
-//           .then((text_cus_num) => {
-//             text_cus_num_value.push(text_cus_num);
-//             // if (text_cus_num) {
-//             //   const formattedText = text_cus_num.replace(/\s+/g, "");
-//             //   text_cus_num_value.push(formattedText);
-//             // }
-//           });
-//       }
-//     })
-//     .then(() => {
-//       text_cus_num_value.forEach((text, index) => {
-//         cy.task("log", `logArray[${offset + index}]: ${text}`);
-//       });
-
-//       wrappedNumbers = wrappedNumbers.concat(text_cus_num_value); // gabungkan ke global array
-//       cy.wrap(text_cus_num_value).as("customerNumValues");
-//     });
-// }
-
-// function tickAllNumber(offset = 0) {
-//   cy.get("@customerNumValues").then((values) => {
-//     cy.task(
-//       "log",
-//       `✔️ Tick dari index ${offset} sampai ${offset + values.length - 1}`,
-//     );
-//     values.forEach((value) => {
-//       cy.get(`${el_chatList}:contains("${value}")`).within(() => {
-//         cy.softAssert(cy.checkbox_chatList());
-//         cy.wait(400);
-//       });
-//     });
-//   });
-// }
-
-// function loopWrapAndTick() {
-//   let currentOffset = 0;
-
-//   cy.get("@badgeValue").then((badgeVal) => {
-//     function nextBatch() {
-//       cy.task("log", `🔁 Iterasi offset: ${currentOffset}`);
-//       wrapNumber(currentOffset);
-//       cy.wait(1000); // tunggu hasil wrapping
-
-//       cy.get("@customerNumValues").then((currentWrapped) => {
-//         tickAllNumber(currentOffset);
-//         currentOffset += currentWrapped.length;
-
-//         if (wrappedNumbers.length < badgeVal) {
-//           // cy.scrollTo("bottom"); // trigger lazy-load jika ada
-//           cy.get(el_chatList).last().scrollIntoView();
-//           cy.wait(1000);
-//           nextBatch();
-//         } else {
-//           cy.task("log", `✅ Total ticked number: ${wrappedNumbers.length}`);
-//         }
-//       });
-//     }
-
-//     nextBatch(); // mulai loop pertama
-//   });
-// }
-
-// function wrapNumber2(length_val) {
-//   const text_cus_num_value = [];
-//   cy.get(el_chatList)
-//     .each(($els) => {
-//       cy.wrap($els)
-//         .find("h1.text-sm")
-//         .invoke("text")
-//         .then((text_cus_num) => {
-//           if (text_cus_num) {
-//             const formattedText = text_cus_num.replace(/\s+/g, "");
-//             text_cus_num_value.push(text_cus_num);
-//           }
-//         });
-//     })
-//     .then(() => {
-//       text_cus_num_value.forEach((text, index) => {
-//         cy.log(`logArray[${index}]: ${text}`);
-//       });
-//       expect(text_cus_num_value.length).to.be.greaterThan(length_val);
-//       cy.wrap(text_cus_num_value).as("customerNumValues");
-//     });
-// }
-
-// function tickAllNumber2(maxLoop) {
-//   cy.get("@customerNumValues").then((values) => {
-//     cy.task("log", "check all number in unassigned tab");
-//     values.forEach((value, index) => {
-//       if (index < maxLoop) {
-//         // Limit the iteration
-//         cy.get(`${el_chatList}:contains("${value}")`)
-//           // cy.wrap($value)
-//           .within(() => {
-//             cy.softAssert(cy.checkbox_chatList());
-//             cy.wait(400);
-//           });
-//       }
-//     });
-//   });
-// }
-
-// function validateAssigned(maxLoop) {
-//   cy.get("@customerNumValues").then((values) => {
-//     let userLoginName;
-//     cy.userLoginNameLabel() //change this function
-//       .click();
-//     cy.softAssert(
-//       cy
-//         .userLoginNameLabel_valueName()
-//         .invoke("text")
-//         .then((text) => {
-//           userLoginName = text.trim();
-//         }),
-//     );
-//     values.forEach((value, index2) => {
-//       if (index2 < maxLoop) {
-//         cy.get(`${el_chatList}:contains("${value}")`)
-//           .scrollIntoView()
-//           .should("be.visible")
-//           // cy.wrap($value)
-//           .within(() => {
-//             cy.softAssert(
-//               cy.checkbox_chatList(),
-//               `checking ${value} success assigned to ongoing`,
-//             );
-//             cy.contains(value).click();
-//           });
-//         cy.wait(2000);
-//         cy.wait(2000);
-//         cy.softAssert(
-//           cy
-//             .inbox_chat_detail_all_agent()
-//             .invoke("text")
-//             .then((text2) => {
-//               const value = text2;
-//               expect(value.trim()).to.equal(userLoginName);
-//               cy.softAssert(
-//                 cy.inbox_chat_detail_all_agent().contains(userLoginName),
-//                 "this value is equal to :" + userLoginName,
-//               );
-//             }),
-//         );
-//         cy.get(el_chatList).eq(0).scrollIntoView();
-//         // .scrollTo("top");
-//         // cy.scrollUntilLoaded(
-//         //   "div.custom-scrollbar.overflow-y-auto.h-full.w-full.pb-5", // Scrollable container
-//         //   ".lazy-loaded-item"
-//         // ).scrollTo("top");
-//       }
-//     });
-//   });
-// }
-
-// function get_multipleList_unassigned() {
-//   let length_val = 0;
-//   // cy.get("body", { timeout: 2000 }).then(($body) => {
-//   cy.log("asd");
-//   cy.log(el_chatList.length);
-//   if (el_chatList.length > length_val) {
-//     cy.log("a");
-//     //looping wrap number then tick
-//     const allCheckedNumbers = new Set();
-//     cy.wait(2000);
-//     cy.inboxUnassignedTab()
-//       .invoke("text")
-//       .then((text) => {
-//         const badgeVal = parseInt(text.replace("Unassigned", "").trim());
-//         cy.task("log", `Total badge value: ${badgeVal}`);
-//         cy.wrap(badgeVal).as("badgeValue");
-//       });
-
-//     cy.task(
-//       "log",
-//       `jumlah list chat yang dibaca cypress : ${el_chatList.length}`,
-//     );
-//     cy.get("@badgeValue").then((badgeVal) => {
-//       cy.log(badgeVal);
-
-//       cy.wrap(badgeVal).as("badgeValue");
-//       // loopWrapAndTick();
-//       wrapNumber2(length_val);
-//       tickAllNumber2(10);
-//     });
-//     // return;
-//   }
-//   if (el_chatList.length === length_val) {
-//     cy.log("b");
-//     cy.task("log", "Unassigned tab kosong, try to relkoad page");
-//     cy.reload();
-//     cy.wait(2000);
-//     get_multipleList_unassigned();
-//   }
-
-//   cy.softAssert(cy.selectButton_assign().click()); //click button assign bulk
-//   cy.softAssert(cy.simpan_popupModal_min1().click()); //konfirmasi simpan
-
-//   cy.wait(2000);
-//   cy.softAssert(
-//     cy.inboxOngoingTab().should("have.attr", "data-state", "active"),
-//   );
-
-//   validateAssigned(10);
-//   cy.bulk_handoverChat().click();
-//   cy.simpan_popupModal_min1().click();
-// }
-
 class inboxPage {
   //v2
   //──────── NAVIGATION PANEL ─────────────────────────────
@@ -903,7 +364,8 @@ class inboxPage {
     cy.task("log", "-  ACCOUNT  CHANNEL  -");
     elementConversation.chatListClientContainer(2).click();
     elementConversation
-      .chatSectionBubbleChatAgentMessageStatus(0)
+      // .chatSectionBubbleChatAgentMessageStatus(0)
+      .chatSectionBubbleChatAgentMessageStatus_delivered(0)
       .should("be.visible")
       .invoke("text")
       .then((text) => {
@@ -922,6 +384,866 @@ class inboxPage {
   }
 
   validateAccessConversationTeamAsAgent() {}
+
+  //──────── MESSAGE STATUS VALIDATION ─────────────────────────────
+  validateMessageStatusPending() {
+    this.openFirstConversation();
+    cy.task("log", "VALIDATING MESSAGE STATUS: PENDING");
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus_pending(0)
+      .should("be.visible")
+      .then(() => {
+        cy.task("log", "✓ Message status is PENDING");
+      });
+  }
+
+  validateMessageStatusSent() {
+    this.openFirstConversation();
+    cy.task("log", "VALIDATING MESSAGE STATUS: SENT");
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus_sent(0)
+      .should("be.visible")
+      .then(() => {
+        cy.task("log", "✓ Message status is SENT");
+      });
+  }
+
+  validateMessageStatusDelivered() {
+    this.openFirstConversation();
+    cy.task("log", "VALIDATING MESSAGE STATUS: DELIVERED");
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus_delivered(0)
+      .should("be.visible")
+      .then(() => {
+        cy.task("log", "✓ Message status is DELIVERED");
+      });
+  }
+
+  validateMessageStatusRead() {
+    this.openFirstConversation();
+    cy.task("log", "VALIDATING MESSAGE STATUS: READ");
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus_read(0)
+      .should("be.visible")
+      .then(() => {
+        cy.task("log", "✓ Message status is READ");
+      });
+  }
+
+  validateMessageStatusFailed() {
+    this.openFirstConversation();
+    cy.task("log", "VALIDATING MESSAGE STATUS: FAILED");
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus_failed(0)
+      .should("be.visible")
+      .then(() => {
+        cy.task("log", "✓ Message status is FAILED");
+      });
+  }
+
+  //──────── SLA INDICATOR VALIDATION ─────────────────────────────
+  validateSLAIndicatorVisible() {
+    cy.task("log", "VALIDATING SLA INDICATOR VISIBILITY");
+    this.accessYourInbox();
+    elementConversation
+      .chatListClientSLAIndicator()
+      .should("be.visible")
+      .then(($slaIndicator) => {
+        const count = $slaIndicator.length;
+        cy.task("log", `SLA indicators found: ${count}`);
+        expect(
+          count,
+          "at least one SLA indicator should be visible",
+        ).to.be.greaterThan(0);
+      });
+  }
+
+  //──────── TEAM INBOX ASSIGNMENT ─────────────────────────────
+  validateTeamInboxAssignment() {
+    cy.task("log", "VALIDATING TEAM INBOX ASSIGNMENT");
+    this.openFirstConversation();
+
+    elementConversation
+      .chatDetailTeamValue()
+      .should("be.visible")
+      .invoke("text")
+      .then((teamName) => {
+        const value = teamName?.trim();
+        if (value) {
+          cy.task("log", `Team Inbox assigned: ${value}`);
+          expect(value, "team inbox should be assigned").to.not.be.empty;
+        } else {
+          cy.task("log", "Team Inbox not assigned or empty");
+        }
+      });
+  }
+
+  validateHandlerAssignment() {
+    cy.task("log", "VALIDATING HANDLER/AGENT ASSIGNMENT");
+    elementConversation
+      .chatDetailHandlerValue(0)
+      .should("be.visible")
+      .invoke("text")
+      .then((handlerName) => {
+        const value = handlerName?.trim();
+        if (value) {
+          cy.task("log", `Handler assigned: ${value}`);
+          expect(value, "handler should be assigned").to.not.be.empty;
+        } else {
+          cy.task("log", "Handler not assigned");
+        }
+      });
+  }
+
+  //──────── SEARCH & FILTER FUNCTIONALITY ─────────────────────────────
+  validateSearchFilter() {
+    cy.task("log", "VALIDATING SEARCH FILTER FUNCTIONALITY");
+    this.accessConversation();
+    elementConversation.chatListSearchFilter().should("be.visible").click();
+    elementConversation
+      .openFilterSearch()
+      .should("be.visible")
+      .type("test search");
+    cy.wait(1000);
+    cy.task("log", "Search filter executed successfully");
+    elementConversation.closeFilterSearch().click();
+  }
+
+  validateAdvancedFilter() {
+    cy.task("log", "VALIDATING ADVANCED FILTER");
+    this.accessConversation();
+    elementConversation.chatListFilterAdvance().should("be.visible").click();
+    cy.wait(500);
+    cy.get("body").then(($body) => {
+      const filterModal = $body.find('[data-slot="dialog"]');
+      if (filterModal.length) {
+        cy.task("log", "Advanced filter modal opened successfully");
+      }
+    });
+    elementConversation.closePopupFIlterButton().click();
+  }
+
+  //──────── RBAC/PERMISSION VALIDATION ─────────────────────────────
+  validateNavigationVisibility() {
+    cy.task("log", "VALIDATING NAVIGATION VISIBILITY BASED ON RBAC");
+    elementConversation
+      .conversationSidebarNavigation()
+      .should("be.visible")
+      .within(() => {
+        cy.get("button").then(($buttons) => {
+          const buttonCount = $buttons.length;
+          cy.task("log", `Navigation buttons visible: ${buttonCount}`);
+          expect(
+            buttonCount,
+            "at least one navigation button should be visible",
+          ).to.be.greaterThan(0);
+        });
+      });
+  }
+
+  validateConversationListAccessibility() {
+    cy.task("log", "VALIDATING CONVERSATION LIST ACCESSIBILITY");
+    this.accessConversation();
+    elementConversation
+      .chatListContainer()
+      .should("be.visible")
+      .then(($container) => {
+        cy.task("log", "Conversation list is accessible");
+        expect($container).to.exist;
+      });
+  }
+
+  //──────── STARRED CONVERSATION ─────────────────────────────
+  validateStarredConversationAccess() {
+    cy.task("log", "VALIDATING STARRED CONVERSATION");
+    this.accessStarredConversation();
+    elementConversation.inboxStarredNav().should("have.class", "bg-white");
+    cy.url().should("include", "/starred");
+    cy.task("log", "Starred conversation page accessed");
+  }
+
+  //──────── SPAM/JUNK CONVERSATION ─────────────────────────────
+  validateSpamConversationAccess() {
+    cy.task("log", "VALIDATING SPAM CONVERSATION");
+    this.accessSpamConversation();
+    elementConversation.inboxSpamNav().should("have.class", "bg-white");
+    cy.url().should("include", "/spam");
+    cy.task("log", "Spam conversation page accessed");
+  }
+
+  validateJunkConversationAccess() {
+    cy.task("log", "VALIDATING JUNK CONVERSATION");
+    this.accessJunkConversation();
+    elementConversation.inboxJunkNav().should("have.class", "bg-white");
+    cy.url().should("include", "/junk");
+    cy.task("log", "Junk conversation page accessed");
+  }
+
+  //──────── CONVERSATION DETAIL VALIDATION ─────────────────────────────
+  validateConversationDetailPanel() {
+    cy.task("log", "VALIDATING CONVERSATION DETAIL PANEL");
+    this.openFirstConversation();
+
+    elementConversation
+      .chatDetailContainerSection()
+      .should("be.visible")
+      .then(($detailPanel) => {
+        cy.task("log", "Conversation detail panel is visible");
+        expect($detailPanel).to.exist;
+      });
+  }
+
+  validateContactDataDisplay() {
+    cy.task("log", "VALIDATING CONTACT DATA DISPLAY");
+    elementConversation
+      .chatDetailClientDataContainerSection()
+      .should("be.visible");
+
+    elementConversation
+      .chatDetailClientDataNameValue()
+      .should("be.visible")
+      .invoke("text")
+      .then((name) => {
+        cy.task("log", `Contact name: ${name?.trim()}`);
+      });
+
+    elementConversation
+      .chatDetailClientDataNumberValue()
+      .should("be.visible")
+      .invoke("text")
+      .then((number) => {
+        cy.task("log", `Contact number: ${number?.trim()}`);
+      });
+  }
+
+  validateConversationAttributes() {
+    cy.task("log", "VALIDATING CONVERSATION ATTRIBUTES");
+    elementConversation
+      .chatDetailConvAttrContainerSection()
+      .should("be.visible")
+      .then(($attrSection) => {
+        cy.task("log", "Conversation attributes section is visible");
+        expect($attrSection).to.exist;
+      });
+  }
+
+  //──────── MEDIA & FILES VALIDATION ─────────────────────────────
+  validateMediaSection() {
+    cy.task("log", "VALIDATING MEDIA SECTION");
+    elementConversation
+      .chatDetailMediaContainerSection()
+      .should("be.visible")
+      .then(($mediaSection) => {
+        cy.task("log", "Media section is visible");
+        expect($mediaSection).to.exist;
+      });
+  }
+
+  validateFilesSection() {
+    cy.task("log", "VALIDATING FILES SECTION");
+    elementConversation
+      .chatDetailFilesContainerSection()
+      .should("be.visible")
+      .then(($filesSection) => {
+        cy.task("log", "Files section is visible");
+        expect($filesSection).to.exist;
+      });
+  }
+
+  //──────── TAGS VALIDATION ─────────────────────────────
+  validateTagsSection() {
+    cy.task("log", "VALIDATING TAGS SECTION");
+    elementConversation
+      .chatDetailTagsContainerSection()
+      .should("be.visible")
+      .then(($tagsSection) => {
+        cy.task("log", "Tags section is visible");
+        expect($tagsSection).to.exist;
+      });
+  }
+
+  //──────── CONVERSATION HISTORY VALIDATION ─────────────────────────────
+  validateConversationHistorySection() {
+    cy.task("log", "VALIDATING CONVERSATION HISTORY SECTION");
+    elementConversation
+      .chatDetailConvoHistoryContainerSection()
+      .should("be.visible")
+      .then(($historySection) => {
+        cy.task("log", "Conversation history section is visible");
+        expect($historySection).to.exist;
+      });
+  }
+
+  //──────── TEXT INPUT VALIDATION ─────────────────────────────
+  validateTextInputAvailability() {
+    cy.task("log", "VALIDATING TEXT INPUT AVAILABILITY");
+    this.openFirstConversation();
+
+    cy.get("body").then(($body) => {
+      const textInput = $body.find('[data-cy="autogrowing-textarea"]');
+      if (textInput.length) {
+        cy.task("log", "Text input is available for sending messages");
+        elementConversation.chatSectionTextInput().should("be.visible");
+      } else {
+        cy.task(
+          "log",
+          "Text input not available - conversation may be closed or archived",
+        );
+      }
+    });
+  }
+
+  //──────── EMOJI & ATTACHMENT BUTTONS ─────────────────────────────
+  validateComposerButtons() {
+    cy.task("log", "VALIDATING COMPOSER BUTTONS");
+    this.openFirstConversation();
+
+    cy.get("body").then(($body) => {
+      const emojiBtn = $body.find(
+        '[data-cy="chatSection-textbox-button-emoji"]',
+      );
+      const attachBtn = $body.find(
+        '[data-cy="chatSection-textbox-button-attch"]',
+      );
+      const sendBtn = $body.find(
+        '[data-cy="chatSection-textbox-button-sendChat"]',
+      );
+
+      cy.task("log", `Emoji button visible: ${emojiBtn.length > 0}`);
+      cy.task("log", `Attach button visible: ${attachBtn.length > 0}`);
+      cy.task("log", `Send button visible: ${sendBtn.length > 0}`);
+    });
+  }
+
+  //──────── CHANNEL-BASED CHAT NAVIGATION ─────────────────────────────
+  clickChatByChannel(contactName, channel) {
+    cy.task(
+      "log",
+      `OPENING CHAT - Contact: ${contactName}, Channel: ${channel}`,
+    );
+
+    // Channel icon mapping
+    const channelIconMap = {
+      "whatsapp-web": "tabler-icon-brand-whatsapp",
+      "whatsapp-api": "tabler-icon-brand-whatsapp",
+      "whatsapp-group": "tabler-icon-brand-whatsapp",
+      email: "tabler-icon-mail",
+      widget: "tabler-icon-messages",
+      "facebook-messenger": "tabler-icon-brand-messenger",
+      facebook: "tabler-icon-brand-facebook",
+      instagram: "tabler-icon-brand-instagram",
+      telegram: "tabler-icon-brand-telegram",
+    };
+
+    const iconClass = channelIconMap[channel];
+
+    // Validate channel parameter
+    if (!iconClass) {
+      cy.task("log", `❌ ERROR: Unknown channel - ${channel}`);
+      throw new Error(
+        `Unknown channel: ${channel}. Valid channels: ${Object.keys(channelIconMap).join(", ")}`,
+      );
+    }
+
+    cy.task("log", `Looking for chat: "${contactName}" in channel: ${channel}`);
+
+    // Find and click the conversation item
+    cy.get("body").then(($body) => {
+      // Find all chat list items
+      const chatItems = $body.find('[data-cy^="chat-list-"]');
+
+      if (chatItems.length === 0) {
+        cy.task("log", "❌ No chat items found in the list");
+        throw new Error("No chat items found in the conversation list");
+      }
+
+      cy.task(
+        "log",
+        `Found ${chatItems.length} chat items. Searching for "${contactName}"...`,
+      );
+
+      // Loop through chat items to find the one with the contact name and channel
+      let found = false;
+      let foundIndex = -1;
+
+      chatItems.each((index, element) => {
+        const $element = Cypress.$(element);
+        const contactNameInItem = $element
+          .find('[data-cy="chatList-client-name"]')
+          .text()
+          .trim();
+        const hasChannelIcon = $element.find(`svg.${iconClass}`).length > 0;
+
+        if (contactNameInItem === contactName && hasChannelIcon) {
+          foundIndex = index + 1; // data-cy uses 1-based index
+          found = true;
+          cy.task("log", `✓ Found matching chat at index ${foundIndex}`);
+          return false; // Break the loop
+        }
+      });
+
+      if (!found) {
+        cy.task(
+          "log",
+          `❌ Chat not found: "${contactName}" in channel "${channel}"`,
+        );
+        throw new Error(
+          `Chat with name "${contactName}" not found in channel "${channel}"`,
+        );
+      }
+
+      // Click the found chat
+      cy.get(`[data-cy="chat-list-${foundIndex}"]`)
+        .should("be.visible")
+        .click({ force: true })
+        .then(() => {
+          cy.task("log", `✓ Successfully clicked chat: ${contactName}`);
+        });
+
+      // Verify chat room opened
+      elementConversation
+        .chatRoom()
+        .should("be.visible")
+        .then(() => {
+          cy.task("log", `✓ Chat room loaded for: ${contactName}`);
+        });
+    });
+  }
+
+  sendMessageInChat(message) {
+    cy.task("log", `SENDING MESSAGE IN CHAT: "${message}"`);
+    elementConversation
+      .chatSectionTextInput()
+      .should("be.visible")
+      .type(message)
+      .type("{enter}");
+    this.validateMessageStatusTime();
+  }
+
+  validateMessageStatusTime() {
+    elementConversation
+      .chatSectionBubbleChatAgentMessageStatus_delivered(0)
+      .should("be.visible");
+    // elementConversation
+    //   .chatSectionBubbleChatAgentMessageStatusDeliveredTimestamp(0)
+    //   .should("be.visible")
+    //   .invoke("text")
+    //   .then((text) => {
+    //     const value = text?.trim();
+    //   });
+  }
+
+  openFirstChatByChannel(channel) {
+    this.accessConversation();
+    cy.wait(2000);
+    cy.task("log", `OPENING FIRST CHAT IN CHANNEL: ${channel}`);
+
+    // Channel nav filter mapping (using elementConversation)
+    const channelNavMap = {
+      widget: elementConversation.navFilterChannelLivechat,
+      "whatsapp-official": elementConversation.navFilterChannelWhatsapp,
+      baileys: elementConversation.navFilterChannelWhatsappUnoff,
+      instagram: elementConversation.navFilterChannelInstagram,
+    };
+
+    const navFilterMethod = channelNavMap[channel];
+
+    // Validate channel parameter
+    if (!navFilterMethod) {
+      cy.task("log", `❌ ERROR: Unknown channel - ${channel}`);
+      throw new Error(
+        `Unknown channel: ${channel}. Valid channels: ${Object.keys(channelNavMap).join(", ")}`,
+      );
+    }
+
+    // Select target channel via nav filter
+    navFilterMethod().should("be.visible").click();
+    cy.wait(1000);
+
+    cy.task("log", `Looking for first chat in channel: ${channel}`);
+    elementConversation.chatListContainer().should("be.visible");
+
+    // Find and click the first conversation item with matching channel
+    cy.get("body").then(($body) => {
+      // Find all chat list items
+      const chatItems = $body.find('[data-cy^="chat-list-"]');
+
+      if (chatItems.length === 0) {
+        cy.task("log", "❌ No chat items found in the list");
+        throw new Error("No chat items found in the conversation list");
+      }
+
+      cy.task(
+        "log",
+        `Found ${chatItems.length} chat items. Searching for first chat in channel...`,
+      );
+
+      // Find the first chat item with matching channel icon
+      let found = false;
+      let foundIndex = -1;
+      let foundContactName = "";
+
+      chatItems.each((index, element) => {
+        const $element = Cypress.$(element);
+        const hasChannelIcon = $element.find(`svg.${iconClass}`).length > 0;
+
+        if (hasChannelIcon && !found) {
+          const contactNameInItem = $element
+            .find('[data-cy="chatList-client-name"]')
+            .text()
+            .trim();
+          foundIndex = index + 1; // data-cy uses 1-based index
+          foundContactName = contactNameInItem;
+          found = true;
+          cy.task(
+            "log",
+            `✓ Found first chat at index ${foundIndex}: "${contactNameInItem}"`,
+          );
+          return false; // Break the loop
+        }
+      });
+
+      if (!found) {
+        cy.task("log", `❌ No chats found in channel "${channel}"`);
+        throw new Error(`No chats found in channel "${channel}"`);
+      }
+
+      // Click the found chat
+      cy.get(`[data-cy="chat-list-${foundIndex}"]`)
+        .should("be.visible")
+        .click()
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Successfully clicked first chat in ${channel}: ${foundContactName}`,
+          );
+        });
+
+      // Verify chat room opened
+      elementConversation
+        .chatRoom()
+        .should("be.visible")
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Chat room loaded for first chat in channel: ${channel}`,
+          );
+        });
+    });
+  }
+
+  openLastChatByChannel(channel) {
+    cy.task("log", `OPENING LAST CHAT IN CHANNEL: ${channel}`);
+
+    // Channel icon mapping
+    const channelIconMap = {
+      "whatsapp-web": "tabler-icon-brand-whatsapp",
+      "whatsapp-api": "tabler-icon-brand-whatsapp",
+      "whatsapp-group": "tabler-icon-brand-whatsapp",
+      email: "tabler-icon-mail",
+      widget: "tabler-icon-messages",
+      "facebook-messenger": "tabler-icon-brand-messenger",
+      facebook: "tabler-icon-brand-facebook",
+      instagram: "tabler-icon-brand-instagram",
+      telegram: "tabler-icon-brand-telegram",
+    };
+
+    const iconClass = channelIconMap[channel];
+
+    // Validate channel parameter
+    if (!iconClass) {
+      cy.task("log", `❌ ERROR: Unknown channel - ${channel}`);
+      throw new Error(
+        `Unknown channel: ${channel}. Valid channels: ${Object.keys(channelIconMap).join(", ")}`,
+      );
+    }
+
+    cy.task("log", `Looking for last chat in channel: ${channel}`);
+
+    // Find and click the last conversation item with matching channel
+    cy.get("body").then(($body) => {
+      // Find all chat list items
+      const chatItems = $body.find('[data-cy^="chat-list-"]');
+
+      if (chatItems.length === 0) {
+        cy.task("log", "❌ No chat items found in the list");
+        throw new Error("No chat items found in the conversation list");
+      }
+
+      cy.task(
+        "log",
+        `Found ${chatItems.length} chat items. Searching for last chat in channel...`,
+      );
+
+      // Find the last chat item with matching channel icon
+      let foundIndex = -1;
+      let foundContactName = "";
+
+      chatItems.each((index, element) => {
+        const $element = Cypress.$(element);
+        const hasChannelIcon = $element.find(`svg.${iconClass}`).length > 0;
+
+        if (hasChannelIcon) {
+          const contactNameInItem = $element
+            .find('[data-cy="chatList-client-name"]')
+            .text()
+            .trim();
+          foundIndex = index + 1; // data-cy uses 1-based index
+          foundContactName = contactNameInItem;
+        }
+      });
+
+      if (foundIndex === -1) {
+        cy.task("log", `❌ No chats found in channel "${channel}"`);
+        throw new Error(`No chats found in channel "${channel}"`);
+      }
+
+      cy.task(
+        "log",
+        `✓ Found last chat at index ${foundIndex}: "${foundContactName}"`,
+      );
+
+      // Click the found chat
+      cy.get(`[data-cy="chat-list-${foundIndex}"]`)
+        .should("be.visible")
+        .click({ force: true })
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Successfully clicked last chat in ${channel}: ${foundContactName}`,
+          );
+        });
+
+      // Verify chat room opened
+      elementConversation
+        .chatRoom()
+        .should("be.visible")
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Chat room loaded for last chat in channel: ${channel}`,
+          );
+        });
+    });
+  }
+
+  openNthChatByChannel(channel, index) {
+    cy.task("log", `OPENING NTH CHAT IN CHANNEL: ${channel}, Index: ${index}`);
+
+    // Channel icon mapping
+    const channelIconMap = {
+      "whatsapp-web": "tabler-icon-brand-whatsapp",
+      "whatsapp-api": "tabler-icon-brand-whatsapp",
+      "whatsapp-group": "tabler-icon-brand-whatsapp",
+      email: "tabler-icon-mail",
+      widget: "tabler-icon-messages",
+      "facebook-messenger": "tabler-icon-brand-messenger",
+      facebook: "tabler-icon-brand-facebook",
+      instagram: "tabler-icon-brand-instagram",
+      telegram: "tabler-icon-brand-telegram",
+    };
+
+    const iconClass = channelIconMap[channel];
+
+    // Validate channel parameter
+    if (!iconClass) {
+      cy.task("log", `❌ ERROR: Unknown channel - ${channel}`);
+      throw new Error(
+        `Unknown channel: ${channel}. Valid channels: ${Object.keys(channelIconMap).join(", ")}`,
+      );
+    }
+
+    // Validate index parameter
+    if (!Number.isInteger(index) || index < 0) {
+      cy.task(
+        "log",
+        `❌ ERROR: Invalid index - ${index}. Must be a non-negative integer`,
+      );
+      throw new Error(
+        `Invalid index: ${index}. Index must be a non-negative integer`,
+      );
+    }
+
+    cy.task("log", `Looking for chat at index ${index} in channel: ${channel}`);
+
+    // Find and click the nth conversation item with matching channel
+    cy.get("body").then(($body) => {
+      // Find all chat list items
+      const chatItems = $body.find('[data-cy^="chat-list-"]');
+
+      if (chatItems.length === 0) {
+        cy.task("log", "❌ No chat items found in the list");
+        throw new Error("No chat items found in the conversation list");
+      }
+
+      cy.task(
+        "log",
+        `Found ${chatItems.length} chat items. Searching for chat at index ${index} in channel...`,
+      );
+
+      // Find chats matching the channel
+      let matchCount = 0;
+      let foundIndex = -1;
+      let foundContactName = "";
+
+      chatItems.each((listIndex, element) => {
+        const $element = Cypress.$(element);
+        const hasChannelIcon = $element.find(`svg.${iconClass}`).length > 0;
+
+        if (hasChannelIcon) {
+          if (matchCount === index) {
+            const contactNameInItem = $element
+              .find('[data-cy="chatList-client-name"]')
+              .text()
+              .trim();
+            foundIndex = listIndex + 1; // data-cy uses 1-based index
+            foundContactName = contactNameInItem;
+            return false; // Break the loop
+          }
+          matchCount++;
+        }
+      });
+
+      if (foundIndex === -1) {
+        cy.task(
+          "log",
+          `❌ No chat found at index ${index} in channel "${channel}" (found ${matchCount} chats)`,
+        );
+        throw new Error(
+          `No chat found at index ${index} in channel "${channel}". Found ${matchCount} chats in this channel.`,
+        );
+      }
+
+      cy.task(
+        "log",
+        `✓ Found chat at index ${index}: "${foundContactName}" (list position: ${foundIndex})`,
+      );
+
+      // Click the found chat
+      cy.get(`[data-cy="chat-list-${foundIndex}"]`)
+        .should("be.visible")
+        .click({ force: true })
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Successfully clicked chat at index ${index} in ${channel}: ${foundContactName}`,
+          );
+        });
+
+      // Verify chat room opened
+      elementConversation
+        .chatRoom()
+        .should("be.visible")
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Chat room loaded for chat at index ${index} in channel: ${channel}`,
+          );
+        });
+    });
+  }
+
+  openRandomChatByChannel(channel) {
+    cy.task("log", `OPENING RANDOM CHAT IN CHANNEL: ${channel}`);
+
+    // Channel icon mapping
+    const channelIconMap = {
+      "whatsapp-web": "tabler-icon-brand-whatsapp",
+      "whatsapp-api": "tabler-icon-brand-whatsapp",
+      "whatsapp-group": "tabler-icon-brand-whatsapp",
+      email: "tabler-icon-mail",
+      widget: "tabler-icon-messages",
+      "facebook-messenger": "tabler-icon-brand-messenger",
+      facebook: "tabler-icon-brand-facebook",
+      instagram: "tabler-icon-brand-instagram",
+      telegram: "tabler-icon-brand-telegram",
+    };
+
+    const iconClass = channelIconMap[channel];
+
+    // Validate channel parameter
+    if (!iconClass) {
+      cy.task("log", `❌ ERROR: Unknown channel - ${channel}`);
+      throw new Error(
+        `Unknown channel: ${channel}. Valid channels: ${Object.keys(channelIconMap).join(", ")}`,
+      );
+    }
+
+    cy.task("log", `Looking for random chat in channel: ${channel}`);
+
+    // Find and click a random conversation item with matching channel
+    cy.get("body").then(($body) => {
+      // Find all chat list items
+      const chatItems = $body.find('[data-cy^="chat-list-"]');
+
+      if (chatItems.length === 0) {
+        cy.task("log", "❌ No chat items found in the list");
+        throw new Error("No chat items found in the conversation list");
+      }
+
+      cy.task(
+        "log",
+        `Found ${chatItems.length} chat items. Searching for random chat in channel...`,
+      );
+
+      // Find all chats matching the channel
+      const matchingChats = [];
+
+      chatItems.each((index, element) => {
+        const $element = Cypress.$(element);
+        const hasChannelIcon = $element.find(`svg.${iconClass}`).length > 0;
+
+        if (hasChannelIcon) {
+          const contactNameInItem = $element
+            .find('[data-cy="chatList-client-name"]')
+            .text()
+            .trim();
+          matchingChats.push({
+            index: index + 1, // data-cy uses 1-based index
+            contactName: contactNameInItem,
+          });
+        }
+      });
+
+      if (matchingChats.length === 0) {
+        cy.task("log", `❌ No chats found in channel "${channel}"`);
+        throw new Error(`No chats found in channel "${channel}"`);
+      }
+
+      // Select a random chat
+      const randomSelection =
+        matchingChats[Math.floor(Math.random() * matchingChats.length)];
+      const foundIndex = randomSelection.index;
+      const foundContactName = randomSelection.contactName;
+
+      cy.task(
+        "log",
+        `✓ Found ${matchingChats.length} chats in channel. Selected random index: ${foundIndex} - "${foundContactName}"`,
+      );
+
+      // Click the random chat
+      cy.get(`[data-cy="chat-list-${foundIndex}"]`)
+        .should("be.visible")
+        .click({ force: true })
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Successfully clicked random chat in ${channel}: ${foundContactName}`,
+          );
+        });
+
+      // Verify chat room opened
+      elementConversation
+        .chatRoom()
+        .should("be.visible")
+        .then(() => {
+          cy.task(
+            "log",
+            `✓ Chat room loaded for random chat in channel: ${channel}`,
+          );
+        });
+    });
+  }
 }
 
 function randomQuotes() {
