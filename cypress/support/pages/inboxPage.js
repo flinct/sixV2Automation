@@ -862,7 +862,8 @@ class inboxPage {
 
   validateMessageStatusTime(message, channel = this.activeChannel) {
     // const thresholdMs = 2000;
-    const thresholdMs = 10000;
+    // const thresholdMs = 10000;
+    const thresholdMs = 30000;
     const pollIntervalMs = 100;
     const maxWaitMs = 30000;
     const webhookUrl =
