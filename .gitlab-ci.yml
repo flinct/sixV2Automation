@@ -22,12 +22,8 @@ cypress_scheduled_test:
 
     - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatmin01  npx cypress run --spec "cypress/e2e/01-v2_regression/01_authOnboarding.cy.js"
   rules:
-    # - when: manual
-    # jalan kalau di-push ke branch tertentu
     - if: '$CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "main")'
-
-    # jalan kalau dipicu oleh schedule (cron)
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $RUN_CI_SUITE == "auth"'
 
 cypress_conversation_runner_checker:
   stage: test
@@ -36,4 +32,4 @@ cypress_conversation_runner_checker:
     - CYPRESS_baseUrl=https://v2.satuinbox.com CYPRESS_loginType=danyatmin01 npx cypress run --spec "cypress/e2e/01-v2_regression/02_conversation_runnerChecker.cy.js"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "main")'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $RUN_CI_SUITE == "conversation"'
