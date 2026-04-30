@@ -11,6 +11,7 @@ import contactPage from "../../support/pages/contactPage.js";
 import userRbacPage from "../../support/pages/userRbacPage.js";
 import { env_config } from "../../support/01_url_page.js";
 import liveChatPage from "../../support/pages/liveChatPage.js";
+import elementCollector from "../../support/page/elementCollector.js";
 // import 'cypress-file-upload';
 
 describe("testing INBOX page", () => {
@@ -24,6 +25,7 @@ describe("testing INBOX page", () => {
   // const accountWhatsappAction = new accountWhatsappPage();
   const userRbacAction = new userRbacPage();
   const liveChatAction = new liveChatPage();
+  const elementCollectorAction = new elementCollector();
 
   let assertionLogs = [];
 
@@ -32,18 +34,6 @@ describe("testing INBOX page", () => {
   const baseUrl = Cypress.config("baseUrl");
   const loginType = Cypress.env("loginType");
 
-  Cypress.on("uncaught:exception", (err, runnable) => {
-    // cy.task(
-    //   "log asd",
-    //   `Unhandled exception: ${err.message || JSON.stringify(err)}`
-    // );
-    console.error("Unhandled exception:", err.message || JSON.stringify(err));
-    // if (err.message && err.message.includes("You cannot delete this user!")) {
-    //   cy.task("log", `Specific error caught: ${err.message}`);
-    // }
-    return false;
-  });
-
   before(() => {
     const timestamp = new Date().toISOString();
     Cypress.env("sessionLogTimestamp", timestamp);
@@ -51,20 +41,22 @@ describe("testing INBOX page", () => {
     Cypress.env("messageLogs", []);
   });
 
-  // beforeEach(() => {
-  //   cy.session("loginSession", () => {
-  //     // Adjust cookie names to match your app
-  //     authAction.loginValidUsername();
-  //     // cy.wait(2000);
-  //     cy.softAssert(cy.dashboardNav(), "a");
-  //   });
-  // });
+  beforeEach(() => {
+    cy.session("loginSession", () => {
+      // Adjust cookie names to match your app
+      authAction.loginAsAdmin();
+      // cy.wait(2000);
+      // cy.softAssert(cy.dashboardNav(), "a");
+    });
+  });
 
   // after(() => {
   //   inboxAction.writeCombinedLog();
   // });
 
-  it("TEST", () => {
-    authAction.test();
+  it("collect interactive elements", () => {
+    cy.visit("/");
+
+    elementCollectorAction.collect();
   });
 });

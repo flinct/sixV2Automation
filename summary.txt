@@ -1,3 +1,62 @@
+Summary Percakapan - 2026-04-29
+
+1. Tujuan
+- Membuat collector elemen interaktif Cypress yang bisa dipanggil dari e2e setelah login dan akses halaman tertentu.
+- Lokasi yang diminta user: /support/page dengan nama elementCollector.
+
+2. Project yang dipakai
+- C:\Users\flinc\Desktop\sixV2Automation
+
+3. Perubahan yang dibuat
+- Menambahkan file baru: cypress/support/page/elementCollector.js
+- Mengubah file: cypress/e2e/02-v2_test/01_conversation.cy.js untuk memakai class baru.
+
+4. Perkembangan implementasi
+- Awalnya collector diambil dari spec lama dan dipindahkan ke class reusable.
+- Versi awal hanya mengambil elemen [data-cy] yang interaktif.
+- Muncul error Cypress karena return object sync di dalam chain yang juga memanggil cy command.
+- Error diperbaiki dengan mengembalikan payload lewat cy.wrap(payload).
+
+5. Masalah yang ditemukan user
+- Setelah akses halaman conversation, hasil hanya 1 elemen.
+- Penyebab: collector hanya mencari [data-cy].
+
+6. Perbaikan lanjutan pada elementCollector
+- Collector diubah agar scan semua elemen interaktif, bukan hanya [data-cy].
+- Unique caller sekarang prioritasnya:
+  data-cy -> id -> name -> aria-label -> href -> tag+role+text -> tag+index
+- Payload sekarang menyimpan field:
+  uniqueCaller, dataCy, id, name, tag, type, role, text, href, ariaLabel, selector, index
+- Heuristik interactive diperlebar agar juga menangkap elemen dengan:
+  summary, label, option, role tambahan, onclick, onmousedown, onmouseup,
+  aria-expanded, aria-controls, data-state, data-slot, contenteditable,
+  cursor:pointer, dan elemen lain yang terlihat clickable.
+- Cara collect sekarang:
+  ambil kandidat dari selector interaktif + scan semua elemen di root,
+  lalu filter lewat heuristik isInteractiveElement().
+
+7. Status terakhir
+- Collector sudah jauh lebih lebar daripada versi awal, tapi belum diverifikasi ulang dari hasil terbaru user setelah heuristik diperbesar.
+- User terakhir melaporkan sebelumnya hanya dapat 18 elemen, lalu meminta cara get element diperlebar lagi.
+- Perubahan untuk memperlebar heuristik sudah selesai diterapkan.
+
+8. File penting
+- cypress/support/page/elementCollector.js
+- cypress/e2e/02-v2_test/01_conversation.cy.js
+
+9. Contoh pemakaian
+- import elementCollector from "../../support/page/elementCollector.js";
+- const collector = new elementCollector();
+- collector.collect({
+    outputFile: "cypress/fixtures/conversation-elements.json",
+    onlyVisible: true,
+  });
+
+10. Catatan
+- Folder yang dipakai user adalah support/page, bukan support/pages.
+- summary.txt diminta user sebagai pengganti history OpenCode yang hilang saat app ditutup.
+
+
      ✓ create 2xx
      ✗ init 2xx
       ↳  99% — ✓ 285 / ✗ 2
