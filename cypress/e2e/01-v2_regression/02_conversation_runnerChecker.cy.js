@@ -68,9 +68,10 @@ describe("testing INBOX page", () => {
     inboxAction.openFirstChatByChannel("email");
     inboxAction.sendMessageInChat("testing message for email");
   });
-  // it.only("accessing conversation page - instagram", () => {
-  //   inboxAction.openFirstChatByChannel("instagram");
-  // });
+  it.only("accessing conversation page - instagram", () => {
+    inboxAction.openFirstChatByChannel("instagram");
+    inboxAction.sendMessageInChat("testing message for instagram");
+  });
   // it.only("accessing conversation page - facebook", () => {
   //   inboxAction.openFirstChatByChannel("facebook");
   // });

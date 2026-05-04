@@ -70,29 +70,11 @@ describe("testing INBOX page", () => {
 
   it.only("accessing conversation page - widget", () => {
     inboxAction.openFirstChatByChannel("widget");
-
-    // inboxAction.throttleNetwork({
-    //   latency: 100000,
-    //   downloadThroughput: 30000,
-    //   uploadThroughput: 300000,
-    // });
-
     inboxAction.sendMessageInChat("testing message for widget");
-
-    // inboxAction.resetNetwork();
   });
   it.only("accessing conversation page - whatsapp-web", () => {
     inboxAction.openFirstChatByChannel("baileys");
-
-    // inboxAction.throttleNetwork({
-    //   latency: 100000,
-    //   downloadThroughput: 30000,
-    //   uploadThroughput: 300000,
-    // });
-
     inboxAction.sendMessageInChat("testing message for whatsapp-web");
-
-    // inboxAction.resetNetwork();
   });
   it.only("accessing conversation page - whatsapp-official", () => {
     inboxAction.openFirstChatByChannel("whatsapp-official");
@@ -102,9 +84,10 @@ describe("testing INBOX page", () => {
     inboxAction.openFirstChatByChannel("email");
     inboxAction.sendMessageInChat("testing message for email");
   });
-  // it.only("accessing conversation page - instagram", () => {
-  //   inboxAction.openFirstChatByChannel("instagram");
-  // });
+  it.only("accessing conversation page - instagram", () => {
+    inboxAction.openFirstChatByChannel("instagram");
+    inboxAction.sendMessageInChat("testing message for instagram");
+  });
   // it.only("accessing conversation page - facebook", () => {
   //   inboxAction.openFirstChatByChannel("facebook");
   // });

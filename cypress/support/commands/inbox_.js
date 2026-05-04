@@ -94,7 +94,8 @@ class elementConversation {
   }
 
   navFilterChannelInstagram() {
-    return cy.get('[data-cy="nav-filter-channel-instagram"]');
+    // return cy.get('[data-cy="nav-filter-channel-instagram"]');
+    return cy.contains("button p", "Instagram").closest("button");
   }
 
   navFilterChannelEmail() {
