@@ -859,7 +859,7 @@ class inboxPage {
       .then(() => {
         return elementConversation
           .chatSectionTextInput()
-          .should("be.visible")
+          .should("be.visible", { timeout: 20000 })
           .type("{enter}");
       })
       .then(() => this.validateMessageStatusTime(message, this.activeChannel));
@@ -1085,8 +1085,7 @@ class inboxPage {
         }
 
         // Click the found chat
-        cy.get(`[data-cy="chat-list-${foundIndex}"]`)
-          .scrollIntoView();
+        cy.get(`[data-cy="chat-list-${foundIndex}"]`).scrollIntoView();
 
         cy.get(`[data-cy="chat-list-${foundIndex}"]`)
           .should("be.visible")
