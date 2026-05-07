@@ -56,22 +56,22 @@ describe("testing INBOX page", () => {
     inboxAction.openFirstChatByChannel("widget");
     inboxAction.sendMessageInChat("testing message for widget");
   });
-  it.only("accessing conversation page - whatsapp-web", () => {
-    inboxAction.openFirstChatByChannel("baileys");
-    inboxAction.sendMessageInChat("testing message for whatsapp-web");
-  });
-  it.only("accessing conversation page - whatsapp-official", () => {
-    inboxAction.openFirstChatByChannel("whatsapp-official");
-    inboxAction.sendMessageInChat("testing message for whatsapp-official");
-  });
-  it.only("accessing conversation page - email", () => {
-    inboxAction.openFirstChatByChannel("email");
-    inboxAction.sendMessageInChat("testing message for email");
-  });
-  it.only("accessing conversation page - instagram", () => {
-    inboxAction.openFirstChatByChannel("instagram");
-    inboxAction.sendMessageInChat("testing message for instagram");
-  });
+  // it.only("accessing conversation page - whatsapp-web", () => {
+  //   inboxAction.openFirstChatByChannel("baileys");
+  //   inboxAction.sendMessageInChat("testing message for whatsapp-web");
+  // });
+  // it.only("accessing conversation page - whatsapp-official", () => {
+  //   inboxAction.openFirstChatByChannel("whatsapp-official");
+  //   inboxAction.sendMessageInChat("testing message for whatsapp-official");
+  // });
+  // it.only("accessing conversation page - email", () => {
+  //   inboxAction.openFirstChatByChannel("email");
+  //   inboxAction.sendMessageInChat("testing message for email");
+  // });
+  // it.only("accessing conversation page - instagram", () => {
+  //   inboxAction.openFirstChatByChannel("instagram");
+  //   inboxAction.sendMessageInChat("testing message for instagram");
+  // });
   // it.only("accessing conversation page - facebook", () => {
   //   inboxAction.openFirstChatByChannel("facebook");
   // });

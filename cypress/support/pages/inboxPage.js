@@ -1088,7 +1088,7 @@ class inboxPage {
         cy.get(`[data-cy="chat-list-${foundIndex}"]`).scrollIntoView();
 
         cy.get(`[data-cy="chat-list-${foundIndex}"]`)
-          .should("be.visible")
+          .should("be.visible", { timeout: 20000 })
           .click()
           .then(() => {
             cy.task(

@@ -3,8 +3,8 @@
 export function env_config(baseUrl) {
   // cy.log(baseUrl);
   let base;
-  if (baseUrl === "https://app.satuinbox.com") {
-    base = "https://app.satuinbox.com/api/v1";
+  if (baseUrl === "http://localhost:3002") {
+    base = "https://dev-v2-api.satuinbox.com/";
     // return base;
   }
   if (baseUrl === "https://dev.satuinbox.com") {
@@ -24,7 +24,7 @@ export function env_config(baseUrl) {
     // return base;
   }
   if (
-    baseUrl !== "https://app.satuinbox.com" &&
+    baseUrl !== "http://localhost:3002" &&
     baseUrl !== "https://dev.satuinbox.com" &&
     baseUrl !== "https://staging.satuinbox.com" &&
     baseUrl !== "https://dev-v2.satuinbox.com" &&

@@ -9,50 +9,69 @@ class elementConversation {
     return cy.get('[data-cy="nav-filter-navName"]');
   }
 
-  yourInboxNav() {
-    return cy
-      .get('[data-cy="Conversation-Sidebar-Navigation"]')
-      .find("button")
-      .eq(0);
-  }
-
-  inboxUnassignedNav() {
-    return cy
-      .get('[data-cy="Conversation-Sidebar-Navigation"]')
-      .find("button")
-      .eq(1);
-  }
-
-  // navFilterInboxClosed() {
-  //   return cy.get('[data-cy="nav-filter-inbox-closed"]');
+  // yourInboxNav() {
+  //   return cy
+  //     .get('[data-cy="Conversation-Sidebar-Navigation"]')
+  //     .find("button")
+  //     .eq(0);
   // }
 
+  // inboxUnassignedNav() {
+  //   return cy
+  //     .get('[data-cy="Conversation-Sidebar-Navigation"]')
+  //     .find("button")
+  //     .eq(1);
+  // }
+
+  // // navFilterInboxClosed() {
+  // //   return cy.get('[data-cy="nav-filter-inbox-closed"]');
+  // // }
+
+  // inboxAllNav() {
+  //   return cy
+  //     .get('[data-cy="Conversation-Sidebar-Navigation"]')
+  //     .find("button")
+  //     .eq(2);
+  // }
+
+  // inboxStarredNav() {
+  //   return cy
+  //     .get('[data-cy="Conversation-Sidebar-Navigation"]')
+  //     .find("button")
+  //     .eq(4);
+  // }
+
+  // inboxSpamNav() {
+  //   return cy
+  //     .get('[data-cy="Conversation-Sidebar-Navigation"]')
+  //     .find("button")
+  //     .eq(3);
+  // }
+
+  // inboxJunkNav() {
+  //   return cy
+  //     .get('[data-cy="Conversation-Sidebar-Navigation"]')
+  //     .find("button")
+  //     .eq(5);
+  // }
+
+  yourInboxNav() {
+    return cy.get('[data-cy="inbox-nav-your-inbox"]');
+  }
+  inboxUnassignedNav() {
+    return cy.get('[data-cy="inbox-nav-unassigned"]');
+  }
   inboxAllNav() {
-    return cy
-      .get('[data-cy="Conversation-Sidebar-Navigation"]')
-      .find("button")
-      .eq(2);
+    return cy.get('[data-cy="inbox-nav-all"]');
   }
-
-  inboxStarredNav() {
-    return cy
-      .get('[data-cy="Conversation-Sidebar-Navigation"]')
-      .find("button")
-      .eq(4);
-  }
-
   inboxSpamNav() {
-    return cy
-      .get('[data-cy="Conversation-Sidebar-Navigation"]')
-      .find("button")
-      .eq(3);
+    return cy.get('[data-cy="inbox-nav-spam"]');
   }
-
+  inboxStarredNav() {
+    return cy.get('[data-cy="inbox-nav-starred"]');
+  }
   inboxJunkNav() {
-    return cy
-      .get('[data-cy="Conversation-Sidebar-Navigation"]')
-      .find("button")
-      .eq(5);
+    return cy.get('[data-cy="inbox-nav-junk"]');
   }
 
   groupChatNav() {
@@ -74,17 +93,25 @@ class elementConversation {
     // .contains(/whatsapp web/i);
   }
 
+  navFilterWhatsappWebGroup() {
+    // return cy.get('[data-cy="nav-filter-channel-livechat"]');
+    return cy.get('[data-cy="channel-nav-whatsapp_web_group"]');
+    // return cy.contains("button p", "Widget").closest("button");
+  }
+
   navFilterChannelLivechat() {
     // return cy.get('[data-cy="nav-filter-channel-livechat"]');
+    // return cy.get('[data-cy="channel-nav-widget"]');
     return cy.contains("button p", "Widget").closest("button");
   }
 
   navFilterChannelWhatsapp() {
-    // return cy.get('[data-cy="nav-filter-channel-whatsapp"]');
+    // return cy.get('[data-cy="channel-nav-whatsapp_api"]');
     return cy.contains("button p", "Whatsapp Api").closest("button");
   }
 
   navFilterChannelWhatsappUnoff() {
+    // return cy.get('[data-cy="channel-nav-whatsapp_web"]');
     return cy
       .get('[data-cy="Conversation-Sidebar-Navigation"]')
       .contains("h3", /saluran|channel/i)
@@ -94,18 +121,20 @@ class elementConversation {
   }
 
   navFilterChannelInstagram() {
-    // return cy.get('[data-cy="nav-filter-channel-instagram"]');
+    // return cy.get('[data-cy="channel-nav-instagram"]');
     return cy.contains("button p", "Instagram").closest("button");
   }
 
-  navFilterChannelEmail() {
-    return cy.contains("button p", "Email").closest("button");
-    // return cy.get('[data-cy="nav-filter-channel-instagram"]');
+  navFilterChannelFacebookMessenger() {
+    return cy.get('[data-cy="channel-nav-facebook_messenger"]');
+    // return cy.contains("button p", "Instagram").closest("button");
   }
 
-  // navFilterChannelEmail() {
-  //   return cy.get('[data-cy="nav-filter-channel-email"]');
-  // }
+  navFilterChannelEmail() {
+    return cy.get('[data-cy="channel-nav-email"]');
+    // return cy.contains("button p", "Email").closest("button");
+    // return cy.get('[data-cy="nav-filter-channel-instagram"]');
+  }
 
   // ─── TEAM ─────────────────────────────────────
   navFilterTeamContainerSection() {
@@ -122,6 +151,10 @@ class elementConversation {
       .eq(0);
     // .contains(/whatsapp web/i);
     return cy.get(`[data-cy="nav-filter-team-${index}-label"]`);
+  }
+
+  teamNav(index) {
+    return cy.get(`[data-cy="team-${index}"]`);
   }
 
   // ─── CHAT LIST ─────────────────────────────────────
