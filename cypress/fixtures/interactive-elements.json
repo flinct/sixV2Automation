@@ -1,7 +1,7 @@
 {
-  "collectedAt": "2026-05-05T03:22:18.223Z",
-  "url": "http://localhost:3002/id/conversation/your-inbox",
-  "total": 103,
+  "collectedAt": "2026-05-08T07:57:40.104Z",
+  "url": "https://dev-v2.satuinbox.com/id/conversation/your-inbox",
+  "total": 97,
   "elements": [
     {
       "uniqueCaller": "href=/notification",
@@ -74,8 +74,8 @@
       "index": 4
     },
     {
-      "uniqueCaller": "data-cy=inbox-nav-your-inbox",
-      "dataCy": "inbox-nav-your-inbox",
+      "uniqueCaller": "button::Kotak Pesan Anda 0",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -84,12 +84,12 @@
       "text": "Kotak Pesan Anda 0",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"inbox-nav-your-inbox\"]",
+      "selector": "button",
       "index": 5
     },
     {
-      "uniqueCaller": "data-cy=inbox-nav-unassigned",
-      "dataCy": "inbox-nav-unassigned",
+      "uniqueCaller": "button::Belum Ditugaskan 0",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -98,12 +98,12 @@
       "text": "Belum Ditugaskan 0",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"inbox-nav-unassigned\"]",
+      "selector": "button",
       "index": 6
     },
     {
-      "uniqueCaller": "data-cy=inbox-nav-all",
-      "dataCy": "inbox-nav-all",
+      "uniqueCaller": "button::Semua 0",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -112,12 +112,12 @@
       "text": "Semua 0",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"inbox-nav-all\"]",
+      "selector": "button",
       "index": 7
     },
     {
-      "uniqueCaller": "data-cy=inbox-nav-spam",
-      "dataCy": "inbox-nav-spam",
+      "uniqueCaller": "button::Spam 0",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -126,12 +126,12 @@
       "text": "Spam 0",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"inbox-nav-spam\"]",
+      "selector": "button",
       "index": 8
     },
     {
-      "uniqueCaller": "data-cy=inbox-nav-starred",
-      "dataCy": "inbox-nav-starred",
+      "uniqueCaller": "button::Berbintang 0",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -140,12 +140,12 @@
       "text": "Berbintang 0",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"inbox-nav-starred\"]",
+      "selector": "button",
       "index": 9
     },
     {
-      "uniqueCaller": "data-cy=inbox-nav-junk",
-      "dataCy": "inbox-nav-junk",
+      "uniqueCaller": "button::Folder Sampah 0",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -154,7 +154,7 @@
       "text": "Folder Sampah 0",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"inbox-nav-junk\"]",
+      "selector": "button",
       "index": 10
     },
     {
@@ -186,9 +186,9 @@
       "index": 12
     },
     {
-      "uniqueCaller": "id=radix-_R_ad5ritl9ev9etb_",
+      "uniqueCaller": "id=radix-_R_56bsnl5vivb_",
       "dataCy": null,
-      "id": "radix-_R_ad5ritl9ev9etb_",
+      "id": "radix-_R_56bsnl5vivb_",
       "name": null,
       "tag": "button",
       "type": "button",
@@ -196,13 +196,13 @@
       "text": "Saluran",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[id=\"radix-_R_ad5ritl9ev9etb_\"][type=\"button\"]",
+      "selector": "button[id=\"radix-_R_56bsnl5vivb_\"][type=\"button\"]",
       "index": 13
     },
     {
-      "uniqueCaller": "id=radix-_R_1ad5ritl9ev9etb_",
+      "uniqueCaller": "id=radix-_R_l6bsnl5vivb_",
       "dataCy": null,
-      "id": "radix-_R_1ad5ritl9ev9etb_",
+      "id": "radix-_R_l6bsnl5vivb_",
       "name": null,
       "tag": "div",
       "type": null,
@@ -210,7 +210,7 @@
       "text": null,
       "href": null,
       "ariaLabel": null,
-      "selector": "div[id=\"radix-_R_1ad5ritl9ev9etb_\"][role=\"region\"]",
+      "selector": "div[id=\"radix-_R_l6bsnl5vivb_\"][role=\"region\"]",
       "index": 14
     },
     {
@@ -242,9 +242,9 @@
       "index": 16
     },
     {
-      "uniqueCaller": "id=radix-_R_ed5ritl9ev9etb_",
+      "uniqueCaller": "id=radix-_R_76bsnl5vivb_",
       "dataCy": null,
-      "id": "radix-_R_ed5ritl9ev9etb_",
+      "id": "radix-_R_76bsnl5vivb_",
       "name": null,
       "tag": "button",
       "type": "button",
@@ -252,13 +252,13 @@
       "text": "Kotak Masuk Tim",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[id=\"radix-_R_ed5ritl9ev9etb_\"][type=\"button\"]",
+      "selector": "button[id=\"radix-_R_76bsnl5vivb_\"][type=\"button\"]",
       "index": 17
     },
     {
-      "uniqueCaller": "id=radix-_R_1ed5ritl9ev9etb_",
+      "uniqueCaller": "id=radix-_R_n6bsnl5vivb_",
       "dataCy": null,
-      "id": "radix-_R_1ed5ritl9ev9etb_",
+      "id": "radix-_R_n6bsnl5vivb_",
       "name": null,
       "tag": "div",
       "type": null,
@@ -266,12 +266,12 @@
       "text": null,
       "href": null,
       "ariaLabel": null,
-      "selector": "div[id=\"radix-_R_1ed5ritl9ev9etb_\"][role=\"region\"]",
+      "selector": "div[id=\"radix-_R_n6bsnl5vivb_\"][role=\"region\"]",
       "index": 18
     },
     {
-      "uniqueCaller": "data-cy=chatList-searchButton",
-      "dataCy": "chatList-searchButton",
+      "uniqueCaller": "aria-label=Alihkan pencarian",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -280,12 +280,12 @@
       "text": null,
       "href": null,
       "ariaLabel": "Alihkan pencarian",
-      "selector": "button[data-cy=\"chatList-searchButton\"][type=\"button\"][aria-label=\"Alihkan pencarian\"]",
+      "selector": "button[type=\"button\"][aria-label=\"Alihkan pencarian\"]",
       "index": 19
     },
     {
-      "uniqueCaller": "data-cy=chatList-filter-status",
-      "dataCy": "chatList-filter-status",
+      "uniqueCaller": "button::Terbuka",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -294,12 +294,12 @@
       "text": "Terbuka",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"chatList-filter-status\"][type=\"button\"]",
+      "selector": "button[type=\"button\"]",
       "index": 20
     },
     {
-      "uniqueCaller": "data-cy=chatList-filter-read",
-      "dataCy": "chatList-filter-read",
+      "uniqueCaller": "button::Semua",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -308,12 +308,12 @@
       "text": "Semua",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"chatList-filter-read\"][type=\"button\"]",
+      "selector": "button[type=\"button\"]",
       "index": 21
     },
     {
-      "uniqueCaller": "data-cy=chatList-filter-sort",
-      "dataCy": "chatList-filter-sort",
+      "uniqueCaller": "button::Terbaru",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -322,12 +322,12 @@
       "text": "Terbaru",
       "href": null,
       "ariaLabel": null,
-      "selector": "button[data-cy=\"chatList-filter-sort\"][type=\"button\"]",
+      "selector": "button[type=\"button\"]",
       "index": 22
     },
     {
-      "uniqueCaller": "data-cy=chatList-filter-visibility",
-      "dataCy": "chatList-filter-visibility",
+      "uniqueCaller": "aria-label=Tata Letak dan Visibilitas",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -336,12 +336,12 @@
       "text": null,
       "href": null,
       "ariaLabel": "Tata Letak dan Visibilitas",
-      "selector": "button[data-cy=\"chatList-filter-visibility\"][type=\"button\"][data-slot=\"dialog-trigger\"][aria-label=\"Tata Letak dan Visibilitas\"]",
+      "selector": "button[type=\"button\"][data-slot=\"dialog-trigger\"][aria-label=\"Tata Letak dan Visibilitas\"]",
       "index": 23
     },
     {
-      "uniqueCaller": "data-cy=chatList-filter-advance",
-      "dataCy": "chatList-filter-advance",
+      "uniqueCaller": "aria-label=Filter Lanjutan",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "button",
@@ -350,39 +350,11 @@
       "text": null,
       "href": null,
       "ariaLabel": "Filter Lanjutan",
-      "selector": "button[data-cy=\"chatList-filter-advance\"][type=\"button\"][data-slot=\"dialog-trigger\"][aria-label=\"Filter Lanjutan\"]",
+      "selector": "button[type=\"button\"][data-slot=\"dialog-trigger\"][aria-label=\"Filter Lanjutan\"]",
       "index": 24
     },
     {
-      "uniqueCaller": "id=satuinbox-livechat-widget-launcher",
-      "dataCy": null,
-      "id": "satuinbox-livechat-widget-launcher",
-      "name": null,
-      "tag": "button",
-      "type": null,
-      "role": null,
-      "text": "×",
-      "href": null,
-      "ariaLabel": "open-chat",
-      "selector": "button[id=\"satuinbox-livechat-widget-launcher\"][aria-label=\"open-chat\"]",
-      "index": 25
-    },
-    {
-      "uniqueCaller": "aria-label=open-chat-mini",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "button",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": "open-chat-mini",
-      "selector": "button[aria-label=\"open-chat-mini\"]",
-      "index": 26
-    },
-    {
-      "uniqueCaller": "div::index=27",
+      "uniqueCaller": "div::index=25",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -393,10 +365,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 27
+      "index": 25
     },
     {
-      "uniqueCaller": "svg::index=28",
+      "uniqueCaller": "svg::index=26",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -407,10 +379,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
-      "index": 28
+      "index": 26
     },
     {
-      "uniqueCaller": "path::index=29",
+      "uniqueCaller": "path::index=27",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -421,6 +393,34 @@
       "href": null,
       "ariaLabel": null,
       "selector": "path",
+      "index": 27
+    },
+    {
+      "uniqueCaller": "path::index=28",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 28
+    },
+    {
+      "uniqueCaller": "svg::index=29",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "svg",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "svg",
       "index": 29
     },
     {
@@ -438,49 +438,21 @@
       "index": 30
     },
     {
-      "uniqueCaller": "svg::index=31",
+      "uniqueCaller": "path::index=31",
       "dataCy": null,
       "id": null,
       "name": null,
-      "tag": "svg",
+      "tag": "path",
       "type": null,
       "role": null,
       "text": null,
       "href": null,
       "ariaLabel": null,
-      "selector": "svg",
+      "selector": "path",
       "index": 31
     },
     {
-      "uniqueCaller": "path::index=32",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 32
-    },
-    {
-      "uniqueCaller": "path::index=33",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 33
-    },
-    {
-      "uniqueCaller": "div::index=34",
+      "uniqueCaller": "div::index=32",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -491,10 +463,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 34
+      "index": 32
     },
     {
-      "uniqueCaller": "span::index=35",
+      "uniqueCaller": "span::index=33",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -505,10 +477,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "span",
-      "index": 35
+      "index": 33
     },
     {
-      "uniqueCaller": "svg::index=36",
+      "uniqueCaller": "svg::index=34",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -519,35 +491,35 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
+      "index": 34
+    },
+    {
+      "uniqueCaller": "path::index=35",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 35
+    },
+    {
+      "uniqueCaller": "path::index=36",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
       "index": 36
-    },
-    {
-      "uniqueCaller": "path::index=37",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 37
-    },
-    {
-      "uniqueCaller": "path::index=38",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 38
     },
     {
       "uniqueCaller": "div::Kotak Pesan Anda",
@@ -561,10 +533,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 39
+      "index": 37
     },
     {
-      "uniqueCaller": "svg::index=40",
+      "uniqueCaller": "svg::index=38",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -575,6 +547,34 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
+      "index": 38
+    },
+    {
+      "uniqueCaller": "path::index=39",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 39
+    },
+    {
+      "uniqueCaller": "path::index=40",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
       "index": 40
     },
     {
@@ -606,34 +606,6 @@
       "index": 42
     },
     {
-      "uniqueCaller": "path::index=43",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 43
-    },
-    {
-      "uniqueCaller": "path::index=44",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 44
-    },
-    {
       "uniqueCaller": "p::Kotak Pesan Anda",
       "dataCy": null,
       "id": null,
@@ -645,7 +617,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "p",
-      "index": 45
+      "index": 43
     },
     {
       "uniqueCaller": "p::0",
@@ -659,7 +631,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "p",
-      "index": 46
+      "index": 44
     },
     {
       "uniqueCaller": "div::Belum Ditugaskan",
@@ -673,10 +645,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 47
+      "index": 45
     },
     {
-      "uniqueCaller": "svg::index=48",
+      "uniqueCaller": "svg::index=46",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -687,6 +659,34 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
+      "index": 46
+    },
+    {
+      "uniqueCaller": "path::index=47",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 47
+    },
+    {
+      "uniqueCaller": "path::index=48",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
       "index": 48
     },
     {
@@ -746,34 +746,6 @@
       "index": 52
     },
     {
-      "uniqueCaller": "path::index=53",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 53
-    },
-    {
-      "uniqueCaller": "path::index=54",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 54
-    },
-    {
       "uniqueCaller": "p::Belum Ditugaskan",
       "dataCy": null,
       "id": null,
@@ -785,7 +757,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "p",
-      "index": 55
+      "index": 53
     },
     {
       "uniqueCaller": "div::Semua",
@@ -799,10 +771,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 57
+      "index": 55
     },
     {
-      "uniqueCaller": "svg::index=58",
+      "uniqueCaller": "svg::index=56",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -813,6 +785,34 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
+      "index": 56
+    },
+    {
+      "uniqueCaller": "path::index=57",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 57
+    },
+    {
+      "uniqueCaller": "path::index=58",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
       "index": 58
     },
     {
@@ -830,34 +830,6 @@
       "index": 59
     },
     {
-      "uniqueCaller": "path::index=60",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 60
-    },
-    {
-      "uniqueCaller": "path::index=61",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 61
-    },
-    {
       "uniqueCaller": "p::Semua",
       "dataCy": null,
       "id": null,
@@ -869,7 +841,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "p",
-      "index": 62
+      "index": 60
     },
     {
       "uniqueCaller": "div::Spam",
@@ -883,10 +855,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 64
+      "index": 62
     },
     {
-      "uniqueCaller": "svg::index=65",
+      "uniqueCaller": "svg::index=63",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -897,6 +869,34 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
+      "index": 63
+    },
+    {
+      "uniqueCaller": "path::index=64",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 64
+    },
+    {
+      "uniqueCaller": "path::index=65",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
       "index": 65
     },
     {
@@ -914,34 +914,6 @@
       "index": 66
     },
     {
-      "uniqueCaller": "path::index=67",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 67
-    },
-    {
-      "uniqueCaller": "path::index=68",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 68
-    },
-    {
       "uniqueCaller": "p::Spam",
       "dataCy": null,
       "id": null,
@@ -953,7 +925,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "p",
-      "index": 69
+      "index": 67
     },
     {
       "uniqueCaller": "div::Berbintang",
@@ -967,10 +939,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 71
+      "index": 69
     },
     {
-      "uniqueCaller": "svg::index=72",
+      "uniqueCaller": "svg::index=70",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -981,10 +953,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
-      "index": 72
+      "index": 70
     },
     {
-      "uniqueCaller": "path::index=73",
+      "uniqueCaller": "path::index=71",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -995,7 +967,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "path",
-      "index": 73
+      "index": 71
     },
     {
       "uniqueCaller": "p::Berbintang",
@@ -1009,7 +981,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "p",
-      "index": 74
+      "index": 72
     },
     {
       "uniqueCaller": "div::Folder Sampah",
@@ -1023,10 +995,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "div",
-      "index": 76
+      "index": 74
     },
     {
-      "uniqueCaller": "svg::index=77",
+      "uniqueCaller": "svg::index=75",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -1037,6 +1009,34 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
+      "index": 75
+    },
+    {
+      "uniqueCaller": "path::index=76",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 76
+    },
+    {
+      "uniqueCaller": "path::index=77",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
       "index": 77
     },
     {
@@ -1082,34 +1082,6 @@
       "index": 80
     },
     {
-      "uniqueCaller": "path::index=81",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 81
-    },
-    {
-      "uniqueCaller": "path::index=82",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 82
-    },
-    {
       "uniqueCaller": "p::Folder Sampah",
       "dataCy": null,
       "id": null,
@@ -1121,11 +1093,11 @@
       "href": null,
       "ariaLabel": null,
       "selector": "p",
-      "index": 83
+      "index": 81
     },
     {
-      "uniqueCaller": "data-cy=chatList-navPanelControlButton",
-      "dataCy": "chatList-navPanelControlButton",
+      "uniqueCaller": "svg::index=83",
+      "dataCy": null,
       "id": null,
       "name": null,
       "tag": "svg",
@@ -1134,7 +1106,35 @@
       "text": null,
       "href": null,
       "ariaLabel": null,
-      "selector": "svg[data-cy=\"chatList-navPanelControlButton\"]",
+      "selector": "svg",
+      "index": 83
+    },
+    {
+      "uniqueCaller": "path::index=84",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
+      "index": 84
+    },
+    {
+      "uniqueCaller": "svg::index=85",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "svg",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "svg",
       "index": 85
     },
     {
@@ -1152,46 +1152,18 @@
       "index": 86
     },
     {
-      "uniqueCaller": "svg::index=87",
+      "uniqueCaller": "path::index=87",
       "dataCy": null,
       "id": null,
       "name": null,
-      "tag": "svg",
+      "tag": "path",
       "type": null,
       "role": null,
       "text": null,
       "href": null,
       "ariaLabel": null,
-      "selector": "svg",
+      "selector": "path",
       "index": 87
-    },
-    {
-      "uniqueCaller": "path::index=88",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 88
-    },
-    {
-      "uniqueCaller": "path::index=89",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 89
     },
     {
       "uniqueCaller": "span::Terbuka",
@@ -1205,10 +1177,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "span",
-      "index": 90
+      "index": 88
     },
     {
-      "uniqueCaller": "svg::index=91",
+      "uniqueCaller": "svg::index=89",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -1219,10 +1191,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
-      "index": 91
+      "index": 89
     },
     {
-      "uniqueCaller": "path::index=92",
+      "uniqueCaller": "path::index=90",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -1233,7 +1205,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "path",
-      "index": 92
+      "index": 90
     },
     {
       "uniqueCaller": "span::Semua",
@@ -1247,10 +1219,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "span",
-      "index": 93
+      "index": 91
     },
     {
-      "uniqueCaller": "svg::index=94",
+      "uniqueCaller": "svg::index=92",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -1261,10 +1233,10 @@
       "href": null,
       "ariaLabel": null,
       "selector": "svg",
-      "index": 94
+      "index": 92
     },
     {
-      "uniqueCaller": "path::index=95",
+      "uniqueCaller": "path::index=93",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -1275,7 +1247,7 @@
       "href": null,
       "ariaLabel": null,
       "selector": "path",
-      "index": 95
+      "index": 93
     },
     {
       "uniqueCaller": "span::Terbaru",
@@ -1289,6 +1261,34 @@
       "href": null,
       "ariaLabel": null,
       "selector": "span",
+      "index": 94
+    },
+    {
+      "uniqueCaller": "svg::index=95",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "svg",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "svg",
+      "index": 95
+    },
+    {
+      "uniqueCaller": "path::index=96",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "path",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "path",
       "index": 96
     },
     {
@@ -1320,21 +1320,7 @@
       "index": 98
     },
     {
-      "uniqueCaller": "svg::index=99",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "svg",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "svg",
-      "index": 99
-    },
-    {
-      "uniqueCaller": "path::index=100",
+      "uniqueCaller": "path::index=99",
       "dataCy": null,
       "id": null,
       "name": null,
@@ -1345,6 +1331,20 @@
       "href": null,
       "ariaLabel": null,
       "selector": "path",
+      "index": 99
+    },
+    {
+      "uniqueCaller": "svg::index=100",
+      "dataCy": null,
+      "id": null,
+      "name": null,
+      "tag": "svg",
+      "type": null,
+      "role": null,
+      "text": null,
+      "href": null,
+      "ariaLabel": null,
+      "selector": "svg",
       "index": 100
     },
     {
@@ -1360,90 +1360,6 @@
       "ariaLabel": null,
       "selector": "path",
       "index": 101
-    },
-    {
-      "uniqueCaller": "svg::index=102",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "svg",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "svg",
-      "index": 102
-    },
-    {
-      "uniqueCaller": "path::index=103",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 103
-    },
-    {
-      "uniqueCaller": "img::index=104",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "img",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "img",
-      "index": 104
-    },
-    {
-      "uniqueCaller": "aria-label=hide-launcher",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "span",
-      "type": null,
-      "role": null,
-      "text": "×",
-      "href": null,
-      "ariaLabel": "hide-launcher",
-      "selector": "span[aria-label=\"hide-launcher\"]",
-      "index": 105
-    },
-    {
-      "uniqueCaller": "svg::index=106",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "svg",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "svg",
-      "index": 106
-    },
-    {
-      "uniqueCaller": "path::index=107",
-      "dataCy": null,
-      "id": null,
-      "name": null,
-      "tag": "path",
-      "type": null,
-      "role": null,
-      "text": null,
-      "href": null,
-      "ariaLabel": null,
-      "selector": "path",
-      "index": 107
     }
   ]
 }

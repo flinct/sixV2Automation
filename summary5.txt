@@ -1,0 +1,111 @@
+Summary Perubahan Konversi Cypress ke Playwright
+
+Scope sumber Cypress yang dikonversi:
+- cypress/e2e/01-v2_regression
+- cypress/e2e/02-v2_test
+
+Perubahan utama:
+- Menambahkan spec Playwright baru untuk area auth, conversation, ticket, team, dan role validation.
+- Melengkapi coverage file check-all/navigation agar mencakup register, ticket, broadcast, statistic, contact, setting, dan akses conversation tambahan.
+- Memperbaiki support export Playwright agar page object yang dipakai test benar-benar tersedia dari playwright/support/pages/index.js.
+- Memperbaiki helper auth Playwright supaya flow login invalid tidak selalu menunggu redirect sukses.
+- Memperbaiki helper endpoint detection agar pencatatan request dilakukan dengan route tunggal dan file log disimpan via Node fs, bukan browser context.
+- Memperbaiki file Playwright lama yang masih syntax error karena penutup blok belum lengkap.
+
+File Playwright yang ditambahkan:
+- playwright/tests/e2e/auth/register.spec.js
+- playwright/tests/e2e/auth/onboarding.spec.js
+- playwright/tests/e2e/auth/auth-legacy.spec.js
+- playwright/tests/e2e/conversation/empty-state.spec.js
+- playwright/tests/e2e/conversation/runner-checker.spec.js
+- playwright/tests/e2e/conversation/collect-elements.spec.js
+- playwright/tests/e2e/conversation/loop-login.spec.js
+- playwright/tests/e2e/conversation/endpoint-detect.spec.js
+- playwright/tests/e2e/ticket/ticketing.spec.js
+- playwright/tests/e2e/team/team.spec.js
+- playwright/tests/e2e/rbac/role-validation.spec.js
+
+File Playwright yang diubah:
+- playwright/tests/e2e/check-all/navigation.spec.js
+- playwright/tests/e2e/auth/login.spec.js
+- playwright/tests/e2e/socket/conversation.spec.js
+- playwright/support/pages/index.js
+- playwright/support/pages/auth.page.js
+- playwright/support/pages/endpoint-detect.page.js
+
+Mapping konversi per sumber Cypress:
+
+01-v2_regression
+- 00_check all page.cy.js
+  Dikonversi dan diperluas ke playwright/tests/e2e/check-all/navigation.spec.js
+- 01_authLogin.cy.js
+  Sudah ada sebelumnya di playwright/tests/e2e/auth/login.spec.js, lalu diperbaiki untuk invalid login flow
+- 01_authRegister.cy.js
+  Dikonversi ke playwright/tests/e2e/auth/register.spec.js
+- 01_authOnboarding.cy.js
+  Dikonversi ke playwright/tests/e2e/auth/onboarding.spec.js
+- 01_auth.cy.js
+  Dikonversi sebagai legacy coverage map ke playwright/tests/e2e/auth/auth-legacy.spec.js
+- 02_conversation.cy.js
+  Sudah ada sebelumnya di playwright/tests/e2e/conversation/inbox.spec.js
+- 02_conversation_emptyState.cy.js
+  Dikonversi ke playwright/tests/e2e/conversation/empty-state.spec.js
+- 02_conversation_runnerChecker.cy.js
+  Dikonversi ke playwright/tests/e2e/conversation/runner-checker.spec.js
+- 03_ticket.cy.js
+  Dinormalisasi menjadi smoke ticket coverage di playwright/tests/e2e/ticket/ticketing.spec.js
+- 10_team.cy.js
+  Dikonversi ke playwright/tests/e2e/team/team.spec.js
+- 20_roleValidation.cy.js
+  Dikonversi ke playwright/tests/e2e/rbac/role-validation.spec.js
+
+02-v2_test
+- 01_conversation.cy.js
+  Dikonversi ke playwright/tests/e2e/conversation/collect-elements.spec.js
+- 01_loopLoginTest.cy.js
+  Dikonversi ke playwright/tests/e2e/conversation/loop-login.spec.js
+- 02_conversationSocket.cy.js
+  Sudah ada sebelumnya di playwright/tests/e2e/socket/conversation.spec.js
+- 03_endpoint_detect_conversation.cy.js
+  Dikonversi ke playwright/tests/e2e/conversation/endpoint-detect.spec.js
+
+Catatan penting hasil konversi:
+- Tidak semua flow Cypress bisa dibuat runnable penuh tanpa risiko karena beberapa test bersifat mutasi data, bergantung pada email verification, onboarding document upload, atau account fixture spesifik environment.
+- Untuk kasus seperti itu, test ditandai dengan test.fixme agar gap konversi tetap terdokumentasi jelas dan tidak menghasilkan false green atau test merah palsu.
+- Team/member mutation sengaja tidak dibuat runnable penuh untuk menghindari perubahan data organisasi test secara tidak aman.
+- Empty-state conversation saat ini runnable penuh hanya jika account dummy prod tersedia, sesuai data yang sudah ada di konfigurasi Playwright.
+
+Verifikasi yang dilakukan:
+- Syntax check seluruh file di playwright/tests/e2e dengan node --check: berhasil.
+- Syntax check file support yang diubah: berhasil.
+- Eksekusi playwright test penuh belum bisa dijalankan di environment ini karena package @playwright/test belum terpasang meskipun sudah tercantum di package.json.
+
+Rekomendasi lanjut:
+- Install dependency Playwright terlebih dulu, lalu jalankan playwright test list/smoke.
+- Prioritaskan pelengkapan locator dan fixture untuk register validation, onboarding, dan team mutation supaya test.fixme bisa dikurangi.
+
+
+<div data-index="0" class="absolute left-0 top-0 w-full" data-cy="chat-list-1" style="transform: translateY(0px);"><div><div class="rounded-lg border-slate-300 text-card-foreground group flex cursor-pointer items-start gap-3 p-2 transition-all shadow-none hover:bg-secondary-hover bg-slate-50 border-0" tabindex="0" aria-label="Conversation with Nayaka Ak" aria-pressed="false"><div class="relative flex-shrink-0"><span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><span class="flex h-full w-full items-center justify-center rounded-full bg-pink-100 text-pink-700 font-semibold select-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-ticket h-5 w-5" aria-label="Ticket"><path d="M15 5l0 2"></path><path d="M15 11l0 2"></path><path d="M15 17l0 2"></path><path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2"></path></svg></span></span></div><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><div class="flex items-center gap-1 min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-device-laptop h-3 w-3 flex-shrink-0 text-green-500"><path d="M3 19l18 0"></path><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z"></path></svg><div class="font-semibold text-gray-900 line-clamp-1" title="Nayaka Ak">Nayaka Ak</div></div><div class="flex items-center gap-2"><span class="text-xs text-gray-500">Rabu</span><div class="flex items-center" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-_r_1j3_" data-state="closed"><button class="overflow-hidden cursor-pointer gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:border-background-border-disabled disabled:text-disabled-text [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-secondary-hover active:bg-secondary-active disabled:border-0 disabled:bg-transparent h-6 w-6 p-0 rounded-full transition-all items-center justify-center ml-1 hidden group-hover:flex opacity-100" aria-haspopup="menu" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots h-5 w-5 text-slate-600"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg></button></div></div></div><div class="mt-0.5 flex items-center justify-between gap-1 text-sm text-gray-500"><div class="flex flex-1 items-center gap-1 min-w-0"><div class="w-full text-gray-500 flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-checks text-slate-500" aria-hidden="true"><path d="M7 12l5 5l10 -10"></path><path d="M2 12l5 5m5 -5l5 -5"></path></svg><span class="line-clamp-1 truncate flex-1" title="testing message for whatsapp-web">testing message for whatsapp-web</span></div></div><div class="flex items-center gap-1 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="tabler-icon tabler-icon-pin-filled h-4 w-4 w-full" aria-label="Pinned"><path d="M15.113 3.21l.094 .083l5.5 5.5a1 1 0 0 1 -1.175 1.59l-3.172 3.171l-1.424 3.797a1 1 0 0 1 -.158 .277l-.07 .08l-1.5 1.5a1 1 0 0 1 -1.32 .082l-.095 -.083l-2.793 -2.792l-3.793 3.792a1 1 0 0 1 -1.497 -1.32l.083 -.094l3.792 -3.793l-2.792 -2.793a1 1 0 0 1 -.083 -1.32l.083 -.094l1.5 -1.5a1 1 0 0 1 .258 -.187l.098 -.042l3.796 -1.425l3.171 -3.17a1 1 0 0 1 1.497 -1.26z"></path></svg></div></div><div><div class="inline-flex items-center rounded-full border font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-xs bg-pink-100 text-pink-700 border-pink-700 py-0 px-1">Tiket Dibuat</div></div><span class="text-xs rounded bg-green-100 px-2 py-0.5 text-green-700 mt-1 inline-block">+6285135425714</span></div></div></div> </div>
+
+elemen di atas
+didalamnya banyak element yg perlu di beri data-cy, mulai dari 
+
+chat list icon
+chat list channel icon
+chat list nama
+chat list time stamp
+chat list latest message
+chat list pinned icon
+chat list starred icon
+chat list ticket info
+chat list account channel number
+chat list typing indicator
+chat list tag container
+chat list broadcast indicator
+chat list reminder 
+chat list mention 
+chat list unread count 
+chat list checkbox (need hover action)
+
+list ada apa lagi untuk chat list ini
+​

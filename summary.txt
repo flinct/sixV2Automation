@@ -82,4 +82,33 @@ Summary Percakapan - 2026-04-29
      iteration_duration.............: avg=5.18s    min=2.65s   med=3.47s    max=39.43s   p(90)=4.97s    p(95)=11.34s  
      iterations.....................: 257    1.967091/s
      vus............................: 2      min=0      max=50
-     vus_max........................: 50     min=50     max=50
+      vus_max........................: 50     min=50     max=50
+
+---
+
+# Summary Masalah Konfigurasi mcp-gsheets
+
+## Masalah Utama: Path dengan Spasi
+```
+C:\\Users\\MyBook SAGA 12\\.opencode\\google-service-account.json
+```
+Folder `MyBook SAGA 12` mengandung **spasi**. Meskipun di JSON string ini valid (dengan escape `\\`), saat nilai ini diteruskan sebagai environment variable, sistem operasi atau `mcp-gsheets` mungkin tidak menangani path dengan spasi dengan benar.
+
+## Kemungkinan Masalah Lainnya:
+1. **File tidak ditemukan** - File `google-service-account.json` mungkin tidak ada di path tersebut
+2. **Izin file** - File service account tidak dapat dibaca
+3. **Format konfigurasi** - Jika Anda menggunakan `//` untuk comment (seperti di contoh), JSON standar tidak mendukung comment inline
+
+## Solusi Sementara:
+Pindahkan file service account ke path **tanpa spasi**, contoh:
+```
+C:\\Users\\Public\\.opencode\\google-service-account.json
+```
+atau
+```
+C:\\google-service-account.json
+```
+
+## Rekomendasi:
+Berikan pesan error yang spesifik untuk mendiagnosis masalah dengan lebih akurat.
+

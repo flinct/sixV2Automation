@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@playwright/test": "^1.47.0",
     "cypress": "^13.17.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-mailslurp": "^1.11.1",
@@ -262,7 +263,15 @@
     "widget:socket:load": "node scripts/widget-socket-load.js",
     "widget:socket:load-2": "node scripts/widget-socket-load-2.js",
     "wa:qr:health": "node scripts/wa-qr-health.js",
-    "proxy:precheck": "node scripts/proxy-precheck.js"
+    "proxy:precheck": "node scripts/proxy-precheck.js",
+    "pw:install": "playwright install",
+    "pw:test": "playwright test",
+    "pw:test:ui": "playwright test --ui",
+    "pw:test:debug": "playwright test --debug",
+    "pw:test:chrome": "playwright test --project=chromium",
+    "pw:test:firefox": "playwright test --project=firefox",
+    "pw:test:webkit": "playwright test --project=webkit",
+    "pw:report": "playwright show-report"
   },
   "author": "",
   "license": "ISC",

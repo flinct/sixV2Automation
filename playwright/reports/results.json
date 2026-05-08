@@ -1,0 +1,634 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright.config.js",
+    "rootDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 8
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 8
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 8
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 8
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "playwright/reports/html"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright/reports/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 8,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e\\auth\\login.spec.js",
+      "file": "e2e/auth/login.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth Login Tests",
+          "file": "e2e/auth/login.spec.js",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "check exist element on login page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26710,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:53.910Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--fc465-exist-element-on-login-page-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-117be43985ea1fd74dbd",
+              "file": "e2e/auth/login.spec.js",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "check login error state",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 28400,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:32:68",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                          "column": 68,
+                          "line": 32
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 30 |\u001b[39m   test(\u001b[32m'check login error state'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 31 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m'invalid-user'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'wrong-pass'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 32 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 33 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 34 |\u001b[39m\n \u001b[90m 35 |\u001b[39m   test(\u001b[32m'valid login with admin credentials'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                            "column": 68,
+                            "line": 32
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n\n\u001b[0m \u001b[90m 30 |\u001b[39m   test(\u001b[32m'check login error state'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 31 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m'invalid-user'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'wrong-pass'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 32 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 33 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 34 |\u001b[39m\n \u001b[90m 35 |\u001b[39m   test(\u001b[32m'valid login with admin credentials'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:32:68\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:53.923Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                        "column": 68,
+                        "line": 32
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-5fc3e3c32279c9a57580",
+              "file": "e2e/auth/login.spec.js",
+              "line": 30,
+              "column": 3
+            },
+            {
+              "title": "valid login with admin credentials",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 2,
+                      "status": "timedOut",
+                      "duration": 31601,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
+                            "column": 23,
+                            "line": 65
+                          },
+                          "message": "Error: page.waitForURL: Test timeout of 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n\u001b[90m   at \u001b[39m..\\support\\pages\\auth.page.js:65\n\n\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m     \u001b[36mif\u001b[39m (expectSuccess) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/conversation\\/your-inbox/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     }\n \u001b[90m 67 |\u001b[39m   }\n \u001b[90m 68 |\u001b[39m\u001b[0m\n\u001b[2m    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:65:23)\u001b[22m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:37:5\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:53.940Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-29110388d319070ce6b8",
+              "file": "e2e/auth/login.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "invalid login with wrong password",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 27851,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:44:68",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                          "column": 68,
+                          "line": 44
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m credentials \u001b[33m=\u001b[39m config\u001b[33m.\u001b[39mgetDefaultAccount()\u001b[33m;\u001b[39m\n \u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(credentials\u001b[33m.\u001b[39midentifier\u001b[33m,\u001b[39m \u001b[32m'wrongpassword123'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 45 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m\n \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                            "column": 68,
+                            "line": 44
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n\n\u001b[0m \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m credentials \u001b[33m=\u001b[39m config\u001b[33m.\u001b[39mgetDefaultAccount()\u001b[33m;\u001b[39m\n \u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(credentials\u001b[33m.\u001b[39midentifier\u001b[33m,\u001b[39m \u001b[32m'wrongpassword123'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 45 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m\n \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:44:68\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:53.913Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                        "column": 68,
+                        "line": 44
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-cdabffb759f6876ae7e4",
+              "file": "e2e/auth/login.spec.js",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "login with empty fields",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 28172,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('Keyword-Input')\nExpected: \u001b[32m\"true\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('Keyword-Input')\u001b[22m\n\u001b[2m    8 × locator resolved to <input type=\"text\" id=\"username\" name=\"usernameEmail\" data-cy=\"Keyword-Input\" placeholder=\"Masukan username atau email\" class=\"flex h-10 w-full rounded-md border py-2 text-sm ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-100 disabled:text-slate-400 border-red-600 !bg-red-50 focus-visible:border-red-600 pl-10\"/>\u001b[22m\n\u001b[2m      - unexpected value \"null\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('Keyword-Input')\nExpected: \u001b[32m\"true\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('Keyword-Input')\u001b[22m\n\u001b[2m    8 × locator resolved to <input type=\"text\" id=\"username\" name=\"usernameEmail\" data-cy=\"Keyword-Input\" placeholder=\"Masukan username atau email\" class=\"flex h-10 w-full rounded-md border py-2 text-sm ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-100 disabled:text-slate-400 border-red-600 !bg-red-50 focus-visible:border-red-600 pl-10\"/>\u001b[22m\n\u001b[2m      - unexpected value \"null\"\u001b[22m\n\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:49:41",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                          "column": 41,
+                          "line": 49
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 48 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m''\u001b[39m\u001b[33m,\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mkeywordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpasswordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 51 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 52 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                            "column": 41,
+                            "line": 49
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('Keyword-Input')\nExpected: \u001b[32m\"true\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('Keyword-Input')\u001b[22m\n\u001b[2m    8 × locator resolved to <input type=\"text\" id=\"username\" name=\"usernameEmail\" data-cy=\"Keyword-Input\" placeholder=\"Masukan username atau email\" class=\"flex h-10 w-full rounded-md border py-2 text-sm ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-100 disabled:text-slate-400 border-red-600 !bg-red-50 focus-visible:border-red-600 pl-10\"/>\u001b[22m\n\u001b[2m      - unexpected value \"null\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 48 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m''\u001b[39m\u001b[33m,\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mkeywordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpasswordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 51 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 52 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:49:41\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:53.914Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
+                        "column": 41,
+                        "line": 49
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-456baf7f86097db3889d",
+              "file": "e2e/auth/login.spec.js",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "try login with ROLE SUPERVISOR",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 28119,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:53.955Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--c3525--login-with-ROLE-SUPERVISOR-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-0d4830331f9065f69a87",
+              "file": "e2e/auth/login.spec.js",
+              "line": 53,
+              "column": 3
+            },
+            {
+              "title": "try login with ROLE AGENT",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 6,
+                      "status": "passed",
+                      "duration": 27599,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:53.970Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-try-login-with-ROLE-AGENT-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-d4288d0a62d48d622ddc",
+              "file": "e2e/auth/login.spec.js",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "Confirm that the access token truly becomes invalid after 15 minutes",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 23,
+                      "parallelIndex": 7,
+                      "status": "failed",
+                      "duration": 29658,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:65:23)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:67:5",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
+                          "column": 23,
+                          "line": 65
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m..\\support\\pages\\auth.page.js:65\n\n\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m     \u001b[36mif\u001b[39m (expectSuccess) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/conversation\\/your-inbox/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     }\n \u001b[90m 67 |\u001b[39m   }\n \u001b[90m 68 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
+                            "column": 23,
+                            "line": 65
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n\u001b[90m   at \u001b[39m..\\support\\pages\\auth.page.js:65\n\n\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m     \u001b[36mif\u001b[39m (expectSuccess) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/conversation\\/your-inbox/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     }\n \u001b[90m 67 |\u001b[39m   }\n \u001b[90m 68 |\u001b[39m\u001b[0m\n\u001b[2m    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:65:23)\u001b[22m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:67:5\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-08T13:36:54.002Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
+                        "column": 23,
+                        "line": 65
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8291f610b1e3eb7fd1eb-7b0a9061beeec1cf64fe",
+              "file": "e2e/auth/login.spec.js",
+              "line": 65,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-08T13:36:49.604Z",
+    "duration": 37848.88699999999,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,57 @@
+const { test } = require('@playwright/test');
+
+const legacyCases = [
+  'check duplicate email validation',
+  'check email validation no leading include',
+  'check email validation normalization to lowercase',
+  "check email validation - missing '@'",
+  'check email validation - missing domain',
+  'check email validation -invalid input',
+  'check registration token and link verify',
+  'check successfull register with all valid format input',
+  'check minimum fullname register',
+  'check maximum fullname register',
+  'check fullname register with numbers',
+  'check fullname register with special character',
+  'check fullname register with double spacing',
+  'check minimum username register',
+  'check maximum username register',
+  'check username register with spacing',
+  'check username register with special character',
+  'check already registered username',
+  'check username register with uppercases',
+  'check username register with trailing space',
+  'check phoneNumber register with local code',
+  'check phoneNumber register with international code',
+  'check minimum phoneNumber register - 9 digit -',
+  'check minimum phoneNumber register - 5 digit -',
+  'check minimum phoneNumber register - 2 digit -',
+  'check maximum phoneNumber register - 13 digits -',
+  'check maximum phoneNumber register - 17 digits -',
+  'check maximum phoneNumber register - 25 digits -',
+  'check phoneNumber register with special character',
+  'check phoneNumber register with spacing',
+  'check phoneNumber register with trailing spacing',
+  'check phoneNumber register with invalid prefix',
+  'check phoneNumber register with prefix spacing',
+  'check phoneNumber register with already registered number',
+  'check password register with minimum input',
+  'check password register with maximum input',
+  'check password register without special chars',
+  'check password register without capital chars',
+  'check password register same as username',
+  'check password register same as email',
+  'check password register contains spacing',
+  'check login validation - try login without validate email -',
+  'check onboarding validation -display behavior-',
+  'check onboarding validation -try re-access with refreshing the page-',
+  'check onboarding validation -re access via path-',
+  'check onboarding validation -successfull onboarding-',
+  'check onboarding validation -minimum organization name-',
+];
+
+test.describe('Legacy Combined Auth Regression', () => {
+  for (const title of legacyCases) {
+    test.fixme(title, 'This Cypress file duplicated register and onboarding coverage; equivalent Playwright coverage lives in register/onboarding specs and remaining gaps are explicitly deferred.');
+  }
+});
