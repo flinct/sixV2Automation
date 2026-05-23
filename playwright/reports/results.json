@@ -10,18 +10,14 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {
-      "actualWorkers": 8
-    },
+    "metadata": {},
     "preserveOutput": "always",
     "projects": [
       {
         "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 8
-        },
+        "metadata": {},
         "id": "chromium",
         "name": "chromium",
         "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
@@ -29,15 +25,13 @@
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
         ],
-        "timeout": 30000
+        "timeout": 180000
       },
       {
         "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 8
-        },
+        "metadata": {},
         "id": "firefox",
         "name": "firefox",
         "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
@@ -45,15 +39,13 @@
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
         ],
-        "timeout": 30000
+        "timeout": 180000
       },
       {
         "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 8
-        },
+        "metadata": {},
         "id": "webkit",
         "name": "webkit",
         "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
@@ -61,7 +53,7 @@
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
         ],
-        "timeout": 30000
+        "timeout": 180000
       }
     ],
     "quiet": false,
@@ -116,33 +108,13 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 16,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 26710,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:53.910Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--fc465-exist-element-on-login-page-chromium\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-117be43985ea1fd74dbd",
@@ -152,76 +124,17 @@
             },
             {
               "title": "check login error state",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 17,
-                      "parallelIndex": 1,
-                      "status": "failed",
-                      "duration": 28400,
-                      "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:32:68",
-                        "location": {
-                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                          "column": 68,
-                          "line": 32
-                        },
-                        "snippet": "\u001b[0m \u001b[90m 30 |\u001b[39m   test(\u001b[32m'check login error state'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 31 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m'invalid-user'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'wrong-pass'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 32 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 33 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 34 |\u001b[39m\n \u001b[90m 35 |\u001b[39m   test(\u001b[32m'valid login with admin credentials'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                            "column": 68,
-                            "line": 32
-                          },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n\n\u001b[0m \u001b[90m 30 |\u001b[39m   test(\u001b[32m'check login error state'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 31 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m'invalid-user'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'wrong-pass'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 32 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 33 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 34 |\u001b[39m\n \u001b[90m 35 |\u001b[39m   test(\u001b[32m'valid login with admin credentials'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:32:68\u001b[22m"
-                        }
-                      ],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:53.923Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\error-context.md"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-check-login-error-state-chromium\\trace.zip"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                        "column": 68,
-                        "line": 32
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-5fc3e3c32279c9a57580",
@@ -231,68 +144,17 @@
             },
             {
               "title": "valid login with admin credentials",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 18,
-                      "parallelIndex": 2,
-                      "status": "timedOut",
-                      "duration": 31601,
-                      "error": {
-                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
-                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                      },
-                      "errors": [
-                        {
-                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                        },
-                        {
-                          "location": {
-                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
-                            "column": 23,
-                            "line": 65
-                          },
-                          "message": "Error: page.waitForURL: Test timeout of 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n\u001b[90m   at \u001b[39m..\\support\\pages\\auth.page.js:65\n\n\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m     \u001b[36mif\u001b[39m (expectSuccess) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/conversation\\/your-inbox/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     }\n \u001b[90m 67 |\u001b[39m   }\n \u001b[90m 68 |\u001b[39m\u001b[0m\n\u001b[2m    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:65:23)\u001b[22m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:37:5\u001b[22m"
-                        }
-                      ],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:53.940Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\error-context.md"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--2ed06-ogin-with-admin-credentials-chromium\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-29110388d319070ce6b8",
@@ -302,76 +164,17 @@
             },
             {
               "title": "invalid login with wrong password",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 19,
-                      "parallelIndex": 3,
-                      "status": "failed",
-                      "duration": 27851,
-                      "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:44:68",
-                        "location": {
-                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                          "column": 68,
-                          "line": 44
-                        },
-                        "snippet": "\u001b[0m \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m credentials \u001b[33m=\u001b[39m config\u001b[33m.\u001b[39mgetDefaultAccount()\u001b[33m;\u001b[39m\n \u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(credentials\u001b[33m.\u001b[39midentifier\u001b[33m,\u001b[39m \u001b[32m'wrongpassword123'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 45 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m\n \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                            "column": 68,
-                            "line": 44
-                          },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('login-error-message')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('login-error-message')\u001b[22m\n\n\n\u001b[0m \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m credentials \u001b[33m=\u001b[39m config\u001b[33m.\u001b[39mgetDefaultAccount()\u001b[33m;\u001b[39m\n \u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(credentials\u001b[33m.\u001b[39midentifier\u001b[33m,\u001b[39m \u001b[32m'wrongpassword123'\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'login-error-message'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 45 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m\n \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:44:68\u001b[22m"
-                        }
-                      ],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:53.913Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\error-context.md"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--10273-d-login-with-wrong-password-chromium\\trace.zip"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                        "column": 68,
-                        "line": 44
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-cdabffb759f6876ae7e4",
@@ -381,76 +184,17 @@
             },
             {
               "title": "login with empty fields",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 20,
-                      "parallelIndex": 4,
-                      "status": "failed",
-                      "duration": 28172,
-                      "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('Keyword-Input')\nExpected: \u001b[32m\"true\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('Keyword-Input')\u001b[22m\n\u001b[2m    8 × locator resolved to <input type=\"text\" id=\"username\" name=\"usernameEmail\" data-cy=\"Keyword-Input\" placeholder=\"Masukan username atau email\" class=\"flex h-10 w-full rounded-md border py-2 text-sm ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-100 disabled:text-slate-400 border-red-600 !bg-red-50 focus-visible:border-red-600 pl-10\"/>\u001b[22m\n\u001b[2m      - unexpected value \"null\"\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('Keyword-Input')\nExpected: \u001b[32m\"true\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('Keyword-Input')\u001b[22m\n\u001b[2m    8 × locator resolved to <input type=\"text\" id=\"username\" name=\"usernameEmail\" data-cy=\"Keyword-Input\" placeholder=\"Masukan username atau email\" class=\"flex h-10 w-full rounded-md border py-2 text-sm ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-100 disabled:text-slate-400 border-red-600 !bg-red-50 focus-visible:border-red-600 pl-10\"/>\u001b[22m\n\u001b[2m      - unexpected value \"null\"\u001b[22m\n\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:49:41",
-                        "location": {
-                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                          "column": 41,
-                          "line": 49
-                        },
-                        "snippet": "\u001b[0m \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 48 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m''\u001b[39m\u001b[33m,\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mkeywordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpasswordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 51 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 52 |\u001b[39m\u001b[0m"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                            "column": 41,
-                            "line": 49
-                          },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('Keyword-Input')\nExpected: \u001b[32m\"true\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('Keyword-Input')\u001b[22m\n\u001b[2m    8 × locator resolved to <input type=\"text\" id=\"username\" name=\"usernameEmail\" data-cy=\"Keyword-Input\" placeholder=\"Masukan username atau email\" class=\"flex h-10 w-full rounded-md border py-2 text-sm ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-100 disabled:text-slate-400 border-red-600 !bg-red-50 focus-visible:border-red-600 pl-10\"/>\u001b[22m\n\u001b[2m      - unexpected value \"null\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 47 |\u001b[39m   test(\u001b[32m'login with empty fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 48 |\u001b[39m     \u001b[36mawait\u001b[39m authPage\u001b[33m.\u001b[39mlogin(\u001b[32m''\u001b[39m\u001b[33m,\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m { expectSuccess\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mkeywordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 |\u001b[39m     \u001b[36mawait\u001b[39m expect(authPage\u001b[33m.\u001b[39mpasswordInput)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-invalid'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 51 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 52 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:49:41\u001b[22m"
-                        }
-                      ],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:53.914Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\error-context.md"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-login-with-empty-fields-chromium\\trace.zip"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js",
-                        "column": 41,
-                        "line": 49
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-456baf7f86097db3889d",
@@ -464,38 +208,18 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 21,
-                      "parallelIndex": 5,
-                      "status": "passed",
-                      "duration": 28119,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:53.955Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--c3525--login-with-ROLE-SUPERVISOR-chromium\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-0d4830331f9065f69a87",
               "file": "e2e/auth/login.spec.js",
-              "line": 53,
+              "line": 52,
               "column": 3
             },
             {
@@ -504,117 +228,2615 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 22,
-                      "parallelIndex": 6,
-                      "status": "passed",
-                      "duration": 27599,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:53.970Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login-Tests-try-login-with-ROLE-AGENT-chromium\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-d4288d0a62d48d622ddc",
               "file": "e2e/auth/login.spec.js",
-              "line": 59,
+              "line": 58,
               "column": 3
             },
             {
               "title": "Confirm that the access token truly becomes invalid after 15 minutes",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 23,
-                      "parallelIndex": 7,
-                      "status": "failed",
-                      "duration": 29658,
-                      "error": {
-                        "message": "TimeoutError: page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
-                        "stack": "TimeoutError: page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:65:23)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:67:5",
-                        "location": {
-                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
-                          "column": 23,
-                          "line": 65
-                        },
-                        "snippet": "\u001b[90m   at \u001b[39m..\\support\\pages\\auth.page.js:65\n\n\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m     \u001b[36mif\u001b[39m (expectSuccess) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/conversation\\/your-inbox/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     }\n \u001b[90m 67 |\u001b[39m   }\n \u001b[90m 68 |\u001b[39m\u001b[0m"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
-                            "column": 23,
-                            "line": 65
-                          },
-                          "message": "TimeoutError: page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n\u001b[90m   at \u001b[39m..\\support\\pages\\auth.page.js:65\n\n\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m     \u001b[36mif\u001b[39m (expectSuccess) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/conversation\\/your-inbox/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     }\n \u001b[90m 67 |\u001b[39m   }\n \u001b[90m 68 |\u001b[39m\u001b[0m\n\u001b[2m    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:65:23)\u001b[22m\n\u001b[2m    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\login.spec.js:67:5\u001b[22m"
-                        }
-                      ],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-08T13:36:54.002Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\error-context.md"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-auth-login-Auth-Login--86b37-es-invalid-after-15-minutes-chromium\\trace.zip"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
-                        "column": 23,
-                        "line": 65
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "8291f610b1e3eb7fd1eb-7b0a9061beeec1cf64fe",
               "file": "e2e/auth/login.spec.js",
-              "line": 65,
+              "line": 64,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\auth\\onboarding.spec.js",
+      "file": "e2e/auth/onboarding.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Onboarding Flow Tests",
+          "file": "e2e/auth/onboarding.spec.js",
+          "line": 119,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should complete successful onboarding",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-c224a35d49503e3388ac",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 127,
+              "column": 3
+            },
+            {
+              "title": "should reject organization name less than minimum",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-e0e88c06c74c8842b230",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 155,
+              "column": 3
+            },
+            {
+              "title": "should reject organization name exceeding maximum",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-d76df4c2948208e7e7b6",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 172,
+              "column": 3
+            },
+            {
+              "title": "should reject NIB less than minimum",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-c9ded694aab9d105f58f",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 190,
+              "column": 3
+            },
+            {
+              "title": "should accept NIB, NPWP and ID number with valid length",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-cee2a74e4ce7e0cda41f",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 205,
+              "column": 3
+            },
+            {
+              "title": "should reject NIB with alphabet characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-e0f0de52bef32b547780",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 235,
+              "column": 3
+            },
+            {
+              "title": "should reject NPWP less than minimum",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-cf8be5da513a6e0be884",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 251,
+              "column": 3
+            },
+            {
+              "title": "should reject NPWP with alphabet characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-498ea95a36dcebbb2d7a",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 266,
+              "column": 3
+            },
+            {
+              "title": "should reject ID number less than minimum",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84fe9aae89bd46cbfa22-810c3c45176c29c41ef0",
+              "file": "e2e/auth/onboarding.spec.js",
+              "line": 282,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\auth\\register.spec.js",
+      "file": "e2e/auth/register.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Register Flow Tests",
+          "file": "e2e/auth/register.spec.js",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should show all required fields on register page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-c3a9c91e44c4ea4d87ad",
+              "file": "e2e/auth/register.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should show validation errors for empty fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-c8d0aa646abb6a08998f",
+              "file": "e2e/auth/register.spec.js",
+              "line": 31,
+              "column": 3
+            },
+            {
+              "title": "should reject duplicate email registration",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-02c731d4fe599f0ef425",
+              "file": "e2e/auth/register.spec.js",
+              "line": 51,
+              "column": 3
+            },
+            {
+              "title": "should reject email with invalid format",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-a0df4da8c7ba372f589b",
+              "file": "e2e/auth/register.spec.js",
+              "line": 63,
+              "column": 3
+            },
+            {
+              "title": "should normalize email to lowercase",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-b6cf02de6d7385c4e826",
+              "file": "e2e/auth/register.spec.js",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "should reject fullname less than 3 characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-280c5b9fc651eadab36f",
+              "file": "e2e/auth/register.spec.js",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "should reject fullname exceeding maximum length",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-3071bb12cf208b0032b1",
+              "file": "e2e/auth/register.spec.js",
+              "line": 102,
+              "column": 3
+            },
+            {
+              "title": "should reject username less than 6 characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-f9ee49b5fcaa3b0c6669",
+              "file": "e2e/auth/register.spec.js",
+              "line": 116,
+              "column": 3
+            },
+            {
+              "title": "should reject username with space",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-98fc1343a18512ce35cd",
+              "file": "e2e/auth/register.spec.js",
+              "line": 128,
+              "column": 3
+            },
+            {
+              "title": "should reject username with special characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-78630b29a09174d860bb",
+              "file": "e2e/auth/register.spec.js",
+              "line": 140,
+              "column": 3
+            },
+            {
+              "title": "should handle username with uppercase",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-fdee43f95f28b080393a",
+              "file": "e2e/auth/register.spec.js",
+              "line": 152,
+              "column": 3
+            },
+            {
+              "title": "should reject phone with less than minimum digits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-3338b6b565d8c3c869de",
+              "file": "e2e/auth/register.spec.js",
+              "line": 165,
+              "column": 3
+            },
+            {
+              "title": "should handle phone with special characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-48caf3cd86af0cb8467b",
+              "file": "e2e/auth/register.spec.js",
+              "line": 177,
+              "column": 3
+            },
+            {
+              "title": "should reject password less than 8 characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-3019fd59c21bb4b1128c",
+              "file": "e2e/auth/register.spec.js",
+              "line": 190,
+              "column": 3
+            },
+            {
+              "title": "should handle password without special characters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-6ce79b2cc677f294046e",
+              "file": "e2e/auth/register.spec.js",
+              "line": 202,
+              "column": 3
+            },
+            {
+              "title": "should reject password same as username",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-4291617bcab95ff38b97",
+              "file": "e2e/auth/register.spec.js",
+              "line": 214,
+              "column": 3
+            },
+            {
+              "title": "should complete full register flow with mail.tm, email verification, and onboarding",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07d850d3d33bd81fc0cd-2b0e2b0bce9b32f09e14",
+              "file": "e2e/auth/register.spec.js",
+              "line": 228,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\check-all\\navigation.spec.js",
+      "file": "e2e/check-all/navigation.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Check All Page Navigation Tests",
+          "file": "e2e/check-all/navigation.spec.js",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "access register page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-c5d185b5986b8fd4e391",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 40,
+              "column": 3
+            },
+            {
+              "title": "access conversation your inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-387748c62223568525b3",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "access conversation unassigned",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-e6a6170f6f512834b4ae",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 51,
+              "column": 3
+            },
+            {
+              "title": "access conversation all",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-e3caeb3c7843ada56d2f",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "access conversation spam",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-98800fb38923cde81de7",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "access conversation starred",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-af930b253d5ac8b6d0f2",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 63,
+              "column": 3
+            },
+            {
+              "title": "access group conversation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-2e2c2a0c110ca8419e9c",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 67,
+              "column": 3
+            },
+            {
+              "title": "access conversation whatsapp web channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-d850b8bf96d6c7832089",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "access conversation team",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-d6b75e9a521ed13a6c39",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 77,
+              "column": 3
+            },
+            {
+              "title": "access ticket page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-d746cbf8c804aa161b3c",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 85,
+              "column": 3
+            },
+            {
+              "title": "access ticket closed tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-ca086649cceee31b108b",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 91,
+              "column": 3
+            },
+            {
+              "title": "access create ticket drawer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-24f03a59a32c4c8aa1f7",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 99,
+              "column": 3
+            },
+            {
+              "title": "access broadcast page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-0ea03e6cf6e0adafde4c",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 105,
+              "column": 3
+            },
+            {
+              "title": "access statistic page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-fb0cfa205984ced4bfee",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "access contact page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-3b8bc83bf76f8bebd7c7",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 117,
+              "column": 3
+            },
+            {
+              "title": "access setting page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-0e2224002c98e658c408",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 123,
+              "column": 3
+            },
+            {
+              "title": "access profile menu",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "aa8ba4997bbf132bd0d1-28856f1714cdb871e6cd",
+              "file": "e2e/check-all/navigation.spec.js",
+              "line": 129,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\agent-validation.spec.js",
+      "file": "e2e/conversation/agent-validation.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Agent Assignment & Validation Tests",
+          "file": "e2e/conversation/agent-validation.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should show conversation status (Close or Reopen button)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9c6ab7e89cd7e54e3716-a7199cc942e4234d576e",
+              "file": "e2e/conversation/agent-validation.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should show Team Inbox section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9c6ab7e89cd7e54e3716-777f784ecb84039d7f5b",
+              "file": "e2e/conversation/agent-validation.spec.js",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "should show Channel Source in detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9c6ab7e89cd7e54e3716-66302d62ca2944ba39a8",
+              "file": "e2e/conversation/agent-validation.spec.js",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "should show Conversation ID",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9c6ab7e89cd7e54e3716-009e5bc80de1c955379f",
+              "file": "e2e/conversation/agent-validation.spec.js",
+              "line": 44,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\chat-list.spec.js",
+      "file": "e2e/conversation/chat-list.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Chat List Validation Tests",
+          "file": "e2e/conversation/chat-list.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display chat list container on inbox page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-c23ddcf30365106e965b",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should display chat list items when chats exist",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d123e1adab61a436a12f",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "should show all inbox section navigation buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-ccceb410e49d09c3bacf",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "should show all available channel navigation buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d42b457559bf287f46cc",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 38,
+              "column": 3
+            },
+            {
+              "title": "should navigate to your-inbox and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-90166ccfbe31c29f93d2",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to unassigned and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-93da5bdc2dca1b0f4154",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to all and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-fb9aaeb840c45d886b9b",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to spam and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-971a5e33ec90f1b25068",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to starred and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d119a46a9b8569a03441",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to junk and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-9421ce2babedbc1c36f8",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: widget",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-69b99cd38eec947c28ba",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: whatsapp_api",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-311e8c0f034eca094506",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: whatsapp_web",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-0a64f552fbf20808a427",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: instagram",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-b0baedd605564aef96a6",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: facebook_messenger",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-251143335431dc5be48c",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: email",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-72b29240fe853a3551b1",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: telegram",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-01dd833857fae0df421d",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should open chat on click and show chat room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-a78ad2655d05a0e2b7a9",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 67,
+              "column": 3
+            },
+            {
+              "title": "should show chat list title on page load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-1c164992b8e737a8a1ed",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 72,
+              "column": 3
+            },
+            {
+              "title": "should switch between multiple nav sections",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d95b7aae751fc70b4eec",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 77,
+              "column": 3
+            },
+            {
+              "title": "should navigate via sidebar button click",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-f20774b53f4c806d1098",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 86,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\collect-elements.spec.js",
+      "file": "e2e/conversation/collect-elements.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Conversation Interactive Element Collection",
+          "file": "e2e/conversation/collect-elements.spec.js",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "collect interactive elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "82168d1950cffc0b0637-05915ced739e6b08bbbd",
+              "file": "e2e/conversation/collect-elements.spec.js",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\conversation-history.spec.js",
+      "file": "e2e/conversation/conversation-history.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Conversation History Tests",
+          "file": "e2e/conversation/conversation-history.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should show Conversation History section in detail panel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "40ab87c2bdf4dc45b6e1-175ea5d9fb3b483cc601",
+              "file": "e2e/conversation/conversation-history.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "should display history items when available",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "40ab87c2bdf4dc45b6e1-ed6b8d32488adc13c6d5",
+              "file": "e2e/conversation/conversation-history.spec.js",
+              "line": 30,
+              "column": 3
+            },
+            {
+              "title": "should show empty state when no history",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "40ab87c2bdf4dc45b6e1-27caba850d4b32ffb0d9",
+              "file": "e2e/conversation/conversation-history.spec.js",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "should show history for conversations with previous interactions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "40ab87c2bdf4dc45b6e1-661be071c749744b5153",
+              "file": "e2e/conversation/conversation-history.spec.js",
+              "line": 53,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\empty-state.spec.js",
+      "file": "e2e/conversation/empty-state.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Conversation Empty State Tests",
+          "file": "e2e/conversation/empty-state.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "accessing conversation page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-246b71d36d4e8d74fd74",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 24,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-b8c725f9940bfe162ddd",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - unassigned",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-e1e425d78d6ae312e488",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - all inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-8ba4af83f140ab4cbe06",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - starred",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-25697b029f513f57a13e",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - spam",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-7c179f28b3b738852edd",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - junk",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-b82506d5ad51db08439d",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox - validate empty state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-9653af140cc5edad4582",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 53,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox - validate title section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-c2e7db76659669606e40",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox - testing filter component placement and visibility",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-aa5552ebb7ce99306ccc",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 64,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\endpoint-detect.spec.js",
+      "file": "e2e/conversation/endpoint-detect.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Endpoint Detection - conversation/your-inbox",
+          "file": "e2e/conversation/endpoint-detect.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "captures endpoints used on /conversation/your-inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "8f7325f49ec948597349-e4b7bfa14a80c038c472",
+              "file": "e2e/conversation/endpoint-detect.spec.js",
+              "line": 23,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\inbound-outbound.spec.js",
+      "file": "e2e/conversation/inbound-outbound.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Inbound & Outbound Message Tests",
+          "file": "e2e/conversation/inbound-outbound.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should send outbound message via Widget channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6c5dcbc80c011e0c39ae-6c679fcac15a9c2cf998",
+              "file": "e2e/conversation/inbound-outbound.spec.js",
+              "line": 29,
+              "column": 5
+            },
+            {
+              "title": "should send outbound message via WhatsApp Web channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6c5dcbc80c011e0c39ae-4e40b282d9ff20c3e1ce",
+              "file": "e2e/conversation/inbound-outbound.spec.js",
+              "line": 29,
+              "column": 5
+            },
+            {
+              "title": "should send outbound message via Instagram channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6c5dcbc80c011e0c39ae-a4ecaca8e776a4bd13b4",
+              "file": "e2e/conversation/inbound-outbound.spec.js",
+              "line": 29,
+              "column": 5
+            },
+            {
+              "title": "should send outbound message via Email channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6c5dcbc80c011e0c39ae-9fb1c7e4a06d9920c0a4",
+              "file": "e2e/conversation/inbound-outbound.spec.js",
+              "line": 29,
+              "column": 5
+            },
+            {
+              "title": "should display inbound message from customer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6c5dcbc80c011e0c39ae-cc9063ae204205622bf9",
+              "file": "e2e/conversation/inbound-outbound.spec.js",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "should handle multiple outbound messages in sequence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6c5dcbc80c011e0c39ae-447475740bfed63e97c0",
+              "file": "e2e/conversation/inbound-outbound.spec.js",
+              "line": 45,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\inbox.spec.js",
+      "file": "e2e/conversation/inbox.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Inbox Page Tests",
+          "file": "e2e/conversation/inbox.spec.js",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate to your inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-4fbe127d3ad0ac19db5d",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "should navigate to unassigned inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-1de4405b9cb59e248c47",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "should navigate to all conversations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-d0570bf0c10e2db8a3e1",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "should open first chat and send message",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-342119b819e70e50415f",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 38,
+              "column": 3
+            },
+            {
+              "title": "should test channel navigation - widget",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-1bc06912359b3fd11646",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 55,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Multi-Channel Message Tests",
+          "file": "e2e/conversation/inbox.spec.js",
+          "line": 64,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should send message via Widget channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-c53a22b5a74feaac6d5d",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 87,
+              "column": 5
+            },
+            {
+              "title": "should send message via WhatsApp Web channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-59da3b574f8bc1f19083",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 87,
+              "column": 5
+            },
+            {
+              "title": "should send message via WhatsApp API channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-79616697e8d66d41c246",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 87,
+              "column": 5
+            },
+            {
+              "title": "should send message via Instagram channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-52751922cfd37c8a6b9c",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 87,
+              "column": 5
+            },
+            {
+              "title": "should send message via Email channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-cb47a3a2f3ce1b64e2d1",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 87,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\loop-login.spec.js",
+      "file": "e2e/conversation/loop-login.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Loop Login Tests",
+          "file": "e2e/conversation/loop-login.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "loop login smoke with default account",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Source Cypress flow depends on external user list data that is not yet present in Playwright support.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\loop-login.spec.js",
+                        "line": 24,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "80c0da272823d2f3abab-1d53e24c20845940e04e",
+              "file": "e2e/conversation/loop-login.spec.js",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\runner-checker.spec.js",
+      "file": "e2e/conversation/runner-checker.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Conversation Runner Checker Tests",
+          "file": "e2e/conversation/runner-checker.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "accessing conversation page - widget",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ea3bd4ce31a3b8bb9dfb-c05f65515844a92fa7d1",
+              "file": "e2e/conversation/runner-checker.spec.js",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\conversation\\sla-metrics.spec.js",
+      "file": "e2e/conversation/sla-metrics.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "SLA Metrics Tests - FRT/RLT/TTC/Wait Time",
+          "file": "e2e/conversation/sla-metrics.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should open chat room with conversation detail visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-f9ab8d0437628ca37dd8",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should show SLA badge on conversation card in list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-47a8002e74b3a986ca5f",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "should show close or reopen button when chat opened",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-53135267a8e0fd9e2496",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 36,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\rbac\\role-validation.spec.js",
+      "file": "e2e/rbac/role-validation.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Role-Based Access Control Test",
+          "file": "e2e/rbac/role-validation.spec.js",
+          "line": 132,
+          "column": 6,
+          "specs": [
+            {
+              "title": "validate access for admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0cc040cbb9ec3fabd4ea-8bf732b6b509ea30e27f",
+              "file": "e2e/rbac/role-validation.spec.js",
+              "line": 142,
+              "column": 5
+            },
+            {
+              "title": "validate access for supervisor",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0cc040cbb9ec3fabd4ea-282c5a7bb9d5aaae3af9",
+              "file": "e2e/rbac/role-validation.spec.js",
+              "line": 142,
+              "column": 5
+            },
+            {
+              "title": "validate access for agent",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0cc040cbb9ec3fabd4ea-890ee57c42fc09f5ad54",
+              "file": "e2e/rbac/role-validation.spec.js",
+              "line": 142,
+              "column": 5
+            },
+            {
+              "title": "validate access for crm",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0cc040cbb9ec3fabd4ea-5ca34e4b02fa79073dac",
+              "file": "e2e/rbac/role-validation.spec.js",
+              "line": 142,
+              "column": 5
+            },
+            {
+              "title": "validate access for tlc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0cc040cbb9ec3fabd4ea-1b2689b9590adb7ae0db",
+              "file": "e2e/rbac/role-validation.spec.js",
+              "line": 142,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\socket\\conversation.spec.js",
+      "file": "e2e/socket/conversation.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Conversation Socket Tests",
+          "file": "e2e/socket/conversation.spec.js",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "connect to websocket successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "01d0ff701b00baea92e0-f7b39549557b541b23b9",
+              "file": "e2e/socket/conversation.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "generate random data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "01d0ff701b00baea92e0-e19823474d709fdfe06a",
+              "file": "e2e/socket/conversation.spec.js",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\ticket\\ticketing.spec.js",
+      "file": "e2e/ticket/ticketing.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ticketing Smoke Tests",
+          "file": "e2e/ticket/ticketing.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "access ticketing page and verify main elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Source Cypress file is mostly a duplicate auth/register suite and does not map to a distinct ticket workflow.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\ticketing.spec.js",
+                        "line": 27,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b0a42679679911f45778-484c0fa3ccfa827f4cac",
+              "file": "e2e/ticket/ticketing.spec.js",
+              "line": 21,
               "column": 3
             }
           ]
@@ -624,11 +2846,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-08T13:36:49.604Z",
-    "duration": 37848.88699999999,
-    "expected": 3,
-    "skipped": 0,
-    "unexpected": 5,
+    "startTime": "2026-05-23T15:51:23.575Z",
+    "duration": 154.784,
+    "expected": 0,
+    "skipped": 121,
+    "unexpected": 0,
     "flaky": 0
   }
 }

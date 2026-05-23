@@ -29,7 +29,7 @@ test.describe('Auth Login Tests', () => {
 
   test('check login error state', async () => {
     await authPage.login('invalid-user', 'wrong-pass', { expectSuccess: false });
-    await expect(authPage.page.getByTestId('login-error-message')).toBeVisible();
+    await authPage.verifyLoginErrorMessage();
   });
 
   test('valid login with admin credentials', async () => {
@@ -41,13 +41,12 @@ test.describe('Auth Login Tests', () => {
   test('invalid login with wrong password', async () => {
     const credentials = config.getDefaultAccount();
     await authPage.login(credentials.identifier, 'wrongpassword123', { expectSuccess: false });
-    await expect(authPage.page.getByTestId('login-error-message')).toBeVisible();
+    await authPage.verifyLoginErrorMessage();
   });
 
   test('login with empty fields', async () => {
     await authPage.login('', '', { expectSuccess: false });
-    await expect(authPage.keywordInput).toHaveAttribute('aria-invalid', 'true');
-    await expect(authPage.passwordInput).toHaveAttribute('aria-invalid', 'true');
+    await authPage.verifyEmptyLoginValidation();
   });
 
   test('try login with ROLE SUPERVISOR', async () => {

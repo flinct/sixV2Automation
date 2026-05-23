@@ -1,0 +1,977 @@
+{
+  "collectedAt": "2026-05-23T11:11:00.006Z",
+  "url": "https://v2.satuinbox.com/id/conversation/your-inbox",
+  "total": 97,
+  "elements": [
+    {
+      "uniqueCaller": "href=/notification",
+      "tag": "a",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "a",
+      "index": 0
+    },
+    {
+      "uniqueCaller": "button::index=1",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "button",
+      "index": 1
+    },
+    {
+      "uniqueCaller": "href=/settings/organization/roles",
+      "tag": "a",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "a",
+      "index": 2
+    },
+    {
+      "uniqueCaller": "button::index=3",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "button",
+      "index": 3
+    },
+    {
+      "uniqueCaller": "div::index=4",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "div[type=\"button\"]",
+      "index": 4
+    },
+    {
+      "uniqueCaller": "button::Kotak Pesan Anda 0",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Kotak Pesan Anda 0",
+      "selector": "button",
+      "index": 5
+    },
+    {
+      "uniqueCaller": "button::Belum Ditugaskan 0",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Belum Ditugaskan 0",
+      "selector": "button",
+      "index": 6
+    },
+    {
+      "uniqueCaller": "button::Semua 0",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Semua 0",
+      "selector": "button",
+      "index": 7
+    },
+    {
+      "uniqueCaller": "button::Spam 0",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Spam 0",
+      "selector": "button",
+      "index": 8
+    },
+    {
+      "uniqueCaller": "button::Berbintang 0",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Berbintang 0",
+      "selector": "button",
+      "index": 9
+    },
+    {
+      "uniqueCaller": "button::Folder Sampah 0",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Folder Sampah 0",
+      "selector": "button",
+      "index": 10
+    },
+    {
+      "uniqueCaller": "div::Saluran",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Saluran",
+      "selector": "div",
+      "index": 11
+    },
+    {
+      "uniqueCaller": "h3::Saluran",
+      "tag": "h3",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Saluran",
+      "selector": "h3",
+      "index": 12
+    },
+    {
+      "uniqueCaller": "id=radix-_R_kpfiul5vivb_",
+      "tag": "button",
+      "id": "radix-_R_kpfiul5vivb_",
+      "name": null,
+      "role": null,
+      "text": "Saluran",
+      "selector": "button[id=\"radix-_R_kpfiul5vivb_\"][type=\"button\"]",
+      "index": 13
+    },
+    {
+      "uniqueCaller": "id=radix-_R_2kpfiul5vivb_",
+      "tag": "div",
+      "id": "radix-_R_2kpfiul5vivb_",
+      "name": null,
+      "role": "region",
+      "text": null,
+      "selector": "div[id=\"radix-_R_2kpfiul5vivb_\"][role=\"region\"]",
+      "index": 14
+    },
+    {
+      "uniqueCaller": "div::Kotak Masuk Tim",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Kotak Masuk Tim",
+      "selector": "div",
+      "index": 15
+    },
+    {
+      "uniqueCaller": "h3::Kotak Masuk Tim",
+      "tag": "h3",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Kotak Masuk Tim",
+      "selector": "h3",
+      "index": 16
+    },
+    {
+      "uniqueCaller": "id=radix-_R_spfiul5vivb_",
+      "tag": "button",
+      "id": "radix-_R_spfiul5vivb_",
+      "name": null,
+      "role": null,
+      "text": "Kotak Masuk Tim",
+      "selector": "button[id=\"radix-_R_spfiul5vivb_\"][type=\"button\"]",
+      "index": 17
+    },
+    {
+      "uniqueCaller": "id=radix-_R_2spfiul5vivb_",
+      "tag": "div",
+      "id": "radix-_R_2spfiul5vivb_",
+      "name": null,
+      "role": "region",
+      "text": null,
+      "selector": "div[id=\"radix-_R_2spfiul5vivb_\"][role=\"region\"]",
+      "index": 18
+    },
+    {
+      "uniqueCaller": "aria-label=Alihkan pencarian",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "button[type=\"button\"][aria-label=\"Alihkan pencarian\"]",
+      "index": 19
+    },
+    {
+      "uniqueCaller": "button::Terbuka",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Terbuka",
+      "selector": "button[type=\"button\"]",
+      "index": 20
+    },
+    {
+      "uniqueCaller": "button::Semua",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Semua",
+      "selector": "button[type=\"button\"]",
+      "index": 21
+    },
+    {
+      "uniqueCaller": "button::Terbaru",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Terbaru",
+      "selector": "button[type=\"button\"]",
+      "index": 22
+    },
+    {
+      "uniqueCaller": "aria-label=Tata Letak dan Visibilitas",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "button[type=\"button\"][data-slot=\"dialog-trigger\"][aria-label=\"Tata Letak dan Visibilitas\"]",
+      "index": 23
+    },
+    {
+      "uniqueCaller": "aria-label=Filter Lanjutan",
+      "tag": "button",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "button[type=\"button\"][data-slot=\"dialog-trigger\"][aria-label=\"Filter Lanjutan\"]",
+      "index": 24
+    },
+    {
+      "uniqueCaller": "div::index=25",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "div",
+      "index": 25
+    },
+    {
+      "uniqueCaller": "svg::index=26",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 26
+    },
+    {
+      "uniqueCaller": "path::index=27",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 27
+    },
+    {
+      "uniqueCaller": "path::index=28",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 28
+    },
+    {
+      "uniqueCaller": "svg::index=29",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 29
+    },
+    {
+      "uniqueCaller": "path::index=30",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 30
+    },
+    {
+      "uniqueCaller": "path::index=31",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 31
+    },
+    {
+      "uniqueCaller": "div::index=32",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "div",
+      "index": 32
+    },
+    {
+      "uniqueCaller": "span::index=33",
+      "tag": "span",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "span",
+      "index": 33
+    },
+    {
+      "uniqueCaller": "svg::index=34",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 34
+    },
+    {
+      "uniqueCaller": "path::index=35",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 35
+    },
+    {
+      "uniqueCaller": "path::index=36",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 36
+    },
+    {
+      "uniqueCaller": "div::Kotak Pesan Anda",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Kotak Pesan Anda",
+      "selector": "div",
+      "index": 37
+    },
+    {
+      "uniqueCaller": "svg::index=38",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 38
+    },
+    {
+      "uniqueCaller": "path::index=39",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 39
+    },
+    {
+      "uniqueCaller": "path::index=40",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 40
+    },
+    {
+      "uniqueCaller": "path::index=41",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 41
+    },
+    {
+      "uniqueCaller": "path::index=42",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 42
+    },
+    {
+      "uniqueCaller": "p::Kotak Pesan Anda",
+      "tag": "p",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Kotak Pesan Anda",
+      "selector": "p",
+      "index": 43
+    },
+    {
+      "uniqueCaller": "p::0",
+      "tag": "p",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "0",
+      "selector": "p",
+      "index": 44
+    },
+    {
+      "uniqueCaller": "div::Belum Ditugaskan",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Belum Ditugaskan",
+      "selector": "div",
+      "index": 45
+    },
+    {
+      "uniqueCaller": "svg::index=46",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 46
+    },
+    {
+      "uniqueCaller": "path::index=47",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 47
+    },
+    {
+      "uniqueCaller": "path::index=48",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 48
+    },
+    {
+      "uniqueCaller": "path::index=49",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 49
+    },
+    {
+      "uniqueCaller": "path::index=50",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 50
+    },
+    {
+      "uniqueCaller": "path::index=51",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 51
+    },
+    {
+      "uniqueCaller": "path::index=52",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 52
+    },
+    {
+      "uniqueCaller": "p::Belum Ditugaskan",
+      "tag": "p",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Belum Ditugaskan",
+      "selector": "p",
+      "index": 53
+    },
+    {
+      "uniqueCaller": "div::Semua",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Semua",
+      "selector": "div",
+      "index": 55
+    },
+    {
+      "uniqueCaller": "svg::index=56",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 56
+    },
+    {
+      "uniqueCaller": "path::index=57",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 57
+    },
+    {
+      "uniqueCaller": "path::index=58",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 58
+    },
+    {
+      "uniqueCaller": "path::index=59",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 59
+    },
+    {
+      "uniqueCaller": "p::Semua",
+      "tag": "p",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Semua",
+      "selector": "p",
+      "index": 60
+    },
+    {
+      "uniqueCaller": "div::Spam",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Spam",
+      "selector": "div",
+      "index": 62
+    },
+    {
+      "uniqueCaller": "svg::index=63",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 63
+    },
+    {
+      "uniqueCaller": "path::index=64",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 64
+    },
+    {
+      "uniqueCaller": "path::index=65",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 65
+    },
+    {
+      "uniqueCaller": "path::index=66",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 66
+    },
+    {
+      "uniqueCaller": "p::Spam",
+      "tag": "p",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Spam",
+      "selector": "p",
+      "index": 67
+    },
+    {
+      "uniqueCaller": "div::Berbintang",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Berbintang",
+      "selector": "div",
+      "index": 69
+    },
+    {
+      "uniqueCaller": "svg::index=70",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 70
+    },
+    {
+      "uniqueCaller": "path::index=71",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 71
+    },
+    {
+      "uniqueCaller": "p::Berbintang",
+      "tag": "p",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Berbintang",
+      "selector": "p",
+      "index": 72
+    },
+    {
+      "uniqueCaller": "div::Folder Sampah",
+      "tag": "div",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Folder Sampah",
+      "selector": "div",
+      "index": 74
+    },
+    {
+      "uniqueCaller": "svg::index=75",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 75
+    },
+    {
+      "uniqueCaller": "path::index=76",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 76
+    },
+    {
+      "uniqueCaller": "path::index=77",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 77
+    },
+    {
+      "uniqueCaller": "path::index=78",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 78
+    },
+    {
+      "uniqueCaller": "path::index=79",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 79
+    },
+    {
+      "uniqueCaller": "path::index=80",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 80
+    },
+    {
+      "uniqueCaller": "p::Folder Sampah",
+      "tag": "p",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Folder Sampah",
+      "selector": "p",
+      "index": 81
+    },
+    {
+      "uniqueCaller": "svg::index=83",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 83
+    },
+    {
+      "uniqueCaller": "path::index=84",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 84
+    },
+    {
+      "uniqueCaller": "svg::index=85",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 85
+    },
+    {
+      "uniqueCaller": "path::index=86",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 86
+    },
+    {
+      "uniqueCaller": "path::index=87",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 87
+    },
+    {
+      "uniqueCaller": "span::Terbuka",
+      "tag": "span",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Terbuka",
+      "selector": "span",
+      "index": 88
+    },
+    {
+      "uniqueCaller": "svg::index=89",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 89
+    },
+    {
+      "uniqueCaller": "path::index=90",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 90
+    },
+    {
+      "uniqueCaller": "span::Semua",
+      "tag": "span",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Semua",
+      "selector": "span",
+      "index": 91
+    },
+    {
+      "uniqueCaller": "svg::index=92",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 92
+    },
+    {
+      "uniqueCaller": "path::index=93",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 93
+    },
+    {
+      "uniqueCaller": "span::Terbaru",
+      "tag": "span",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": "Terbaru",
+      "selector": "span",
+      "index": 94
+    },
+    {
+      "uniqueCaller": "svg::index=95",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 95
+    },
+    {
+      "uniqueCaller": "path::index=96",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 96
+    },
+    {
+      "uniqueCaller": "svg::index=97",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 97
+    },
+    {
+      "uniqueCaller": "path::index=98",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 98
+    },
+    {
+      "uniqueCaller": "path::index=99",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 99
+    },
+    {
+      "uniqueCaller": "svg::index=100",
+      "tag": "svg",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "svg",
+      "index": 100
+    },
+    {
+      "uniqueCaller": "path::index=101",
+      "tag": "path",
+      "id": null,
+      "name": null,
+      "role": null,
+      "text": null,
+      "selector": "path",
+      "index": 101
+    }
+  ]
+}

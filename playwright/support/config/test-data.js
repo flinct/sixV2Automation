@@ -1,7 +1,7 @@
 const testAccounts = {
   goddummy: {
-    identifier: 'goddummy',
-    password: 'asdqwe12',
+    identifier: 'chickentester01',
+    password: 'Asdqwe12@',
     role: 'admin',
     env: ['dev', 'local'],
   },
@@ -191,6 +191,11 @@ function getAccountByLoginType(loginType, env = 'dev') {
   if (!account) {
     throw new Error(`Account not found for loginType: ${loginType}`);
   }
+
+  if (Array.isArray(account.env) && !account.env.includes(env)) {
+    throw new Error(`Account '${loginType}' is not configured for env '${env}'`);
+  }
+
   return {
     identifier: account.identifier,
     password: account.password,
@@ -198,7 +203,17 @@ function getAccountByLoginType(loginType, env = 'dev') {
   };
 }
 
+function getRequestedLoginType() {
+  return process.env.LOGIN_TYPE || null;
+}
+
 function getDefaultAccount(env = 'dev') {
+  const requestedLoginType = getRequestedLoginType();
+
+  if (requestedLoginType) {
+    return getAccountByLoginType(requestedLoginType, env);
+  }
+
   if (env === 'prod') {
     return getAccountByLoginType('goddummyprod', env);
   }
@@ -214,4 +229,5 @@ module.exports = {
   testData,
   getAccountByLoginType,
   getDefaultAccount,
+  getRequestedLoginType,
 };

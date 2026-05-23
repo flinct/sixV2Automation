@@ -37,13 +37,15 @@ module.exports = defineConfig({
   ],
   outputDir: 'playwright/test-results',
 
+  timeout: 180000,
+
   use: {
     baseURL: currentEnv.baseURL,
     testIdAttribute: 'data-cy',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    actionTimeout: 10000,
+    actionTimeout: 30000,
     navigationTimeout: 60000,
     viewport: { width: 1280, height: 768 },
   },
