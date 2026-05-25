@@ -1,5 +1,7 @@
 # AGENTS.md - FE + Automation Index (Compressed)
 
+> **Policy:** Update this file every time scripts change or new tests added.
+
 ## Sources
 - FE: `C:\Users\MyBook SAGA 12\Desktop\FE satuinbox\omnichannel-satuinbox-fe`
 - Auto: `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation` (this repo)
@@ -43,17 +45,35 @@ playwright/
 | `check-all.page.js` | CheckAllPage | Cross-page nav smoke |
 | `user-rbac.page.js` | UserRbacPage | RBAC access validation |
 | `live-chat.page.js` | LiveChatPage | Widget live chat |
+| `account-whatsapp.page.js` | AccountWhatsappPage | WhatsApp account monitoring |
+| `endpoint-detect.page.js` | EndpointDetectPage | API route capture utility |
 
-## Test Files (Conversation Focus)
+## Test Files (All)
 | File | Tests | Scope |
 |------|-------|-------|
-| `chat-list.spec.js` | 21 | Nav sections (6), channels (7), click/open/switch |
-| `inbound-outbound.spec.js` | 6 | Outbound per channel, inbound, multi-msg |
-| `sla-metrics.spec.js` | 3 | Detail panel, SLA badge, close button |
-| `agent-validation.spec.js` | 4 | Status, team inbox, channel source, conv ID |
-| `conversation-history.spec.js` | 4 | History section, items, empty state |
-| `inbox.spec.js` | 11 | Legacy nav + multi-channel |
-| `empty-state.spec.js` | 10 | Empty states per nav |
+| `conversation/chat-list.spec.js` | 21 | Nav sections (6), channels (7), click/open/switch |
+| `conversation/inbox.spec.js` | 10 | Legacy nav + multi-channel |
+| `conversation/empty-state.spec.js` | 10 | Empty states per nav |
+| `conversation/inbound-outbound.spec.js` | 6 | Outbound per channel, inbound, multi-msg |
+| `conversation/sla-metrics.spec.js` | 3 | Detail panel, SLA badge, close button |
+| `conversation/agent-validation.spec.js` | 4 | Status, team inbox, channel source, conv ID |
+| `conversation/conversation-history.spec.js` | 4 | History section, items, empty state |
+| `conversation/endpoint-detect.spec.js` | 1 | API endpoint capture |
+| `conversation/collect-elements.spec.js` | 1 | Element collection |
+| `conversation/loop-login.spec.js` | 1 | Login/logout loop |
+| `conversation/runner-checker.spec.js` | 1 | Widget channel send message |
+| `auth/login.spec.js` | 8 | Login page, valid/invalid, role, token expiry |
+| `auth/register.spec.js` | 17 | Field validation, duplicate, full flow |
+| `auth/onboarding.spec.js` | 9 | Org name, NIB, NPWP, ID number validation |
+| `socket/conversation.spec.js` | 2 | WebSocket connect, random data |
+| `check-all/navigation.spec.js` | 17 | Cross-module nav smoke tests |
+| `rbac/role-validation.spec.js` | 5 | 5 roles x page access |
+| `ticket/ticketing.spec.js` | 1 | Ticketing page smoke |
+
+| `auth/auth-legacy.spec.js` | 51 | Legacy Cypress regression stubs (all fixme) |
+| `team/team.spec.js` | 3 | Team page stubs (all fixme) |
+
+**Total: 121 active tests, 18 files (20 with fixme stubs)**
 
 ## Config
 | File | Content |

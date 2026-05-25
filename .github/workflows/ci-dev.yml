@@ -1,0 +1,70 @@
+name: try send message then log response
+
+on:
+  push: # Run the tests on every push
+    branches:
+      - main
+  schedule:
+    # - cron: "*/5 * * * *" #jalan setiap 5 menit sekali
+    # - cron: "30 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * *"
+    - cron: "0 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * *"
+    # - cron: "0 0 * * *"
+    # - cron: "0 0,8,16 * * *"
+    # - cron: "0 4,9,17,23 * * *" #broadcast
+    # - cron: "30 1,9,17 * * *"  # Runs at 1:30 AM, 9:30 AM, and 5:30 PM (UTC)
+    # - cron: "15 2,10,18 * * *" # Runs at 2:15 AM, 10:15 AM, and 6:15 PM (UTC)
+
+jobs:
+  cypress-run-dev:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set timestamp
+        run: echo "LOG_TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+      - name: Cypress run - Dev -
+        env:
+          CYPRESS_baseUrl: "https://dev.satuinbox.com"
+          CYPRESS_loginType: "chickentester"
+        # run: npx cypress run --spec "cypress/e2e/1SAP-send random message2-9.cy.js"
+        run: npx cypress run --spec "cypress/e2e/Regresi/2_Regres_MessageLogs.cy.js" #run for broadcast
+
+      # - name: List JSON report files
+      #   run: find cypress/reports/final-report -name "*.json"
+
+      # - name: Merge and generate Mochawesome report
+      #   run: |
+      #     npx mochawesome-merge cypress/reports/final-report/*.json > mochawesome.json
+      #     npx mochawesome-report-generator mochawesome.json -o mochawesome-report
+
+      # - name: List logs folder content
+      #   run: ls -lah cypress/logs || echo "No logs directory"
+
+      - name: Copy latest log to fixed name
+        run: cp cypress/logs/session_log_*.json cypress/logs/session_log_latest.json
+
+      - name: Send Email with Report
+        env:
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: node send-report.js
+
+      - name: Upload Cypress Logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: message-logs-${{ env.LOG_TIMESTAMP }}
+          path: cypress/logs
