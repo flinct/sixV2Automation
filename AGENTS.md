@@ -142,7 +142,7 @@ playwright/
 | `live-chat.page.js` | LiveChatPage | Widget live chat |
 | `account-whatsapp.page.js` | AccountWhatsappPage | WhatsApp account monitoring |
 | `endpoint-detect.page.js` | EndpointDetectPage | API route capture utility |
-| `ticket-linked-bubble.page.js` | TicketLinkedBubblePage | Bubble select, create ticket, linked messages/drawer |
+| `ticket-linked-bubble.page.js` | TicketLinkedBubblePage | Bubble select, create ticket, append to ticket (AddToTicketModal), remove linked bubble (LinkedMessagesSection), navigation (LinkedConversationPanel), reply sync |
 | `member.page.js` | MemberPage | Member list, toggle active/deactive, status badge, row menu |
 
 ## Test Files (All)
@@ -168,9 +168,9 @@ playwright/
 | `check-all/navigation.spec.js` | 17 | Cross-module nav smoke tests |
 | `rbac/role-validation.spec.js` | 5 | 5 roles x page access |
 | `ticket/ticketing.spec.js` | 1 | Ticketing page smoke |
-| `ticket/linked-bubble.spec.js` | 29 | Linked bubble: existing (4 active + 3 fixme) + new feature scaffold (22 fixme) |
+| `ticket/linked-bubble.spec.js` | 45 | Linked bubble: existing (4 active + 3 fixme) + append (5 active) + remove (4 active) + navigation (2 active) + sync (9 fixme) + concurrency (5 fixme) + regression (7 active + 1 fixme) + data integrity (5 fixme) |
 
-**Total: 170 active tests, 20 files (21 with fixme stubs)**
+**Total: 181 active tests, 20 files (21 with fixme stubs)**
 
 ## Config
 | File | Content |

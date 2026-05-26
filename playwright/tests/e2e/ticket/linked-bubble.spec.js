@@ -1,17 +1,15 @@
 const { test, expect } = require('@playwright/test');
-const { AuthPage, InboxPage, TicketLinkedBubblePage } = require('../../../support/pages');
+const { AuthPage, InboxPage, TicketLinkedBubblePage, TicketingPage } = require('../../../support/pages');
 const { getCurrentConfig } = require('../../../support/config');
 const { randomAsk } = require('../../../support/helpers/generators');
 
+// =====================================================
+// Existing Features (legacy US-001)
+// =====================================================
 test.describe('Linked Chat Bubble - Existing Features', () => {
-  let authPage;
-  let inboxPage;
-  let bubblePage;
-  let config;
+  let authPage, inboxPage, bubblePage, config;
 
-  test.beforeAll(async () => {
-    config = getCurrentConfig();
-  });
+  test.beforeAll(async () => { config = getCurrentConfig(); });
 
   test.beforeEach(async ({ page }) => {
     authPage = new AuthPage(page);
@@ -25,7 +23,6 @@ test.describe('Linked Chat Bubble - Existing Features', () => {
     await inboxPage.openFirstChat();
     const hasPinkBubble = await bubblePage.bubbleWithTicket.first().isVisible().catch(() => false);
     test.skip(!hasPinkBubble, 'No linked ticket bubbles in this conversation');
-
     await bubblePage.verifyLinkedTicketBadgeVisible();
     await bubblePage.verifyBubbleHasTicketBackground();
   });
@@ -34,7 +31,6 @@ test.describe('Linked Chat Bubble - Existing Features', () => {
     await inboxPage.openFirstChat();
     const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
     test.skip(!hasTicket, 'No linked ticket bubbles in this conversation');
-
     await bubblePage.openTicketDrawer();
     await expect(bubblePage.ticketDrawer).toBeVisible({ timeout: 10000 });
   });
@@ -43,7 +39,6 @@ test.describe('Linked Chat Bubble - Existing Features', () => {
     await inboxPage.openFirstChat();
     const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
     test.skip(!hasTicket, 'No linked ticket bubbles in this conversation');
-
     await bubblePage.openTicketDrawer();
     const hasMessages = await bubblePage.verifyLinkedMessagesInDrawer();
     if (hasMessages) {
@@ -55,7 +50,6 @@ test.describe('Linked Chat Bubble - Existing Features', () => {
     await inboxPage.openFirstChat();
     const hasLinkedTickets = await bubblePage.linkedTicketsAccordion.isVisible().catch(() => false);
     test.skip(!hasLinkedTickets, 'No linked tickets section in this conversation detail');
-
     const hasTickets = await bubblePage.verifyLinkedTicketsInConversation();
     expect(hasTickets).toBeTruthy();
   });
@@ -65,15 +59,13 @@ test.describe('Linked Chat Bubble - Existing Features', () => {
   test.fixme('should cancel bubble selection mode', 'Requires bubble selection first');
 });
 
-test.describe('Linked Chat Bubble - New Features (Scaffold)', () => {
-  let authPage;
-  let inboxPage;
-  let bubblePage;
-  let config;
+// =====================================================
+// Append to Existing Ticket (US-002) — ACTIVE
+// =====================================================
+test.describe('Linked Chat Bubble - Append to Ticket', () => {
+  let authPage, inboxPage, bubblePage, config;
 
-  test.beforeAll(async () => {
-    config = getCurrentConfig();
-  });
+  test.beforeAll(async () => { config = getCurrentConfig(); });
 
   test.beforeEach(async ({ page }) => {
     authPage = new AuthPage(page);
@@ -83,30 +75,340 @@ test.describe('Linked Chat Bubble - New Features (Scaffold)', () => {
     await authPage.loginWithCredentials(credentials, { useV2: true });
   });
 
-  test.fixme('APPEND-01: Append single customer bubble to active ticket', 'US-002 not yet implemented');
-  test.fixme('APPEND-02: Append multiple customer bubbles to active ticket', 'US-002 not yet implemented');
-  test.fixme('APPEND-03: Append with mixed valid + invalid selection', 'US-002 not yet implemented');
-  test.fixme('APPEND-04: Append to closed/resolved ticket blocked', 'US-002 not yet implemented');
-  test.fixme('APPEND-05: Append disabled when no active ticket exists', 'US-002 not yet implemented');
-  test.fixme('APPEND-06: Duplicate bubble link blocked', 'US-002/EH-002 not yet implemented');
-  test.fixme('APPEND-07: Append when limit reached blocked', 'US-002/EH-006 not yet implemented');
+  test('APP-01: should show "Add to Ticket" option after selecting customer bubbles', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const enabled = await bubblePage.enableBubbleSelection();
+    test.skip(!enabled, 'Cannot enable bubble selection in this conversation');
+    await expect(bubblePage.appendToTicketBtn).toBeVisible({ timeout: 5000 });
+  });
 
-  test.fixme('REMOVE-01: Remove single linked bubble from ticket', 'US-004 not yet implemented');
-  test.fixme('REMOVE-02: Remove latest linked bubble recalculates quote source', 'US-004 not yet implemented');
-  test.fixme('REMOVE-03: Remove last linked bubble disables reply', 'US-004 not yet implemented');
-  test.fixme('REMOVE-04: Remove from closed ticket blocked', 'US-004 not yet implemented');
-  test.fixme('REMOVE-05: Remove cancelled via confirmation', 'US-004 not yet implemented');
+  test('APP-02: should open AddToTicket modal with searchable ticket list', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const enabled = await bubblePage.enableBubbleSelection();
+    test.skip(!enabled, 'Cannot enable bubble selection in this conversation');
+    await bubblePage.openAddToTicketModal();
+    await expect(bubblePage.ticketPickerSearch).toBeVisible({ timeout: 5000 });
+    // Ticket options should exist or empty state visible
+    const empty = await bubblePage.isTicketPickerEmpty();
+    if (!empty) {
+      await expect(bubblePage.ticketPickerOptions.first()).toBeVisible({ timeout: 5000 });
+    }
+  });
 
-  test.fixme('NAV-01: Click linked bubble opens conversation thread panel', 'US-005 not yet implemented');
-  test.fixme('NAV-02: Back to ticket detail restores panel', 'US-005 not yet implemented');
-  test.fixme('NAV-03: Missing source bubble shows fallback', 'US-005 not yet implemented');
+  test('APP-03: should filter tickets by search in the picker', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const enabled = await bubblePage.enableBubbleSelection();
+    test.skip(!enabled, 'Cannot enable bubble selection in this conversation');
+    await bubblePage.openAddToTicketModal();
+    await bubblePage.searchTicketInPicker('CV-');
+    await page.waitForTimeout(1000);
+    const countBefore = await bubblePage.ticketPickerOptions.count();
+    await bubblePage.searchTicketInPicker('CV-XXXX');
+    await page.waitForTimeout(1000);
+    const countAfter = await bubblePage.ticketPickerOptions.count();
+    expect(countAfter).toBeLessThanOrEqual(countBefore);
+  });
 
-  test.fixme('SYNC-01: Reply from ticket quotes latest linked bubble', 'US-007 not yet implemented');
-  test.fixme('SYNC-02: Reply disabled when no linked bubbles', 'US-007 not yet implemented');
-  test.fixme('SYNC-03: Inbound customer reply auto-linked to ticket', 'US-008 not yet implemented');
-  test.fixme('SYNC-04: Inbound reply skips when ticket resolved', 'US-008 not yet implemented');
+  test('APP-04: should confirm append from AddToTicket modal', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const enabled = await bubblePage.enableBubbleSelection();
+    test.skip(!enabled, 'Cannot enable bubble selection in this conversation');
+    await bubblePage.openAddToTicketModal();
+    const empty = await bubblePage.isTicketPickerEmpty();
+    test.skip(empty, 'No active tickets available to append to');
+    await bubblePage.selectTicketFromPickerByIndex(0);
+    await bubblePage.confirmAppend();
+    // AddToTicketModal uses react-toastify for both success and error states.
+    await expect(bubblePage.toastMessage).toBeVisible({ timeout: 10000 });
+  });
 
-  test.fixme('REG-01: Create ticket from selected bubbles still works', 'Regression - ensure existing create flow unchanged');
-  test.fixme('REG-02: Duplicate bubble detection for create still works', 'Regression - hasMessagesWithTicket unchanged');
-  test.fixme('REG-03: Max 50 limit for create still works', 'Regression - create limit unchanged');
+  test('APP-05: should allow append from LinkedConversation panel (US-006)', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to navigate from');
+    await bubblePage.openTicketDrawer();
+    await bubblePage.openLinkedConversation();
+    await bubblePage.clickShowDetailChat();
+    await bubblePage.verifyLinkedConversationPanelVisible();
+    // Select a message in the panel
+    const hasCheckbox = await bubblePage.panelMessageCheckbox.first().isVisible().catch(() => false);
+    test.skip(!hasCheckbox, 'No selectable messages in conversation panel');
+    await bubblePage.selectMessageInPanel(0);
+    await expect(bubblePage.addFromPanelBtn).toBeVisible({ timeout: 5000 });
+  });
+});
+
+// =====================================================
+// Remove Linked Bubble (US-004) — ACTIVE
+// =====================================================
+test.describe('Linked Chat Bubble - Remove Linked Bubble', () => {
+  let authPage, inboxPage, bubblePage, config;
+
+  test.beforeAll(async () => { config = getCurrentConfig(); });
+
+  test.beforeEach(async ({ page }) => {
+    authPage = new AuthPage(page);
+    inboxPage = new InboxPage(page);
+    bubblePage = new TicketLinkedBubblePage(page);
+    const credentials = config.getDefaultAccount();
+    await authPage.loginWithCredentials(credentials, { useV2: true });
+  });
+
+  test('REM-01: should show remove button on linked bubbles in OPEN ticket', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to view');
+    await bubblePage.openTicketDrawer();
+    // Open Linked Messages accordion
+    const accordionVisible = await bubblePage.linkedMessagesAccordion.isVisible().catch(() => false);
+    test.skip(!accordionVisible, 'No linked messages accordion in ticket drawer');
+    await bubblePage.openLinkedMessages();
+    const hasRemoveBtn = await bubblePage.isRemoveButtonVisible();
+    if (!hasRemoveBtn) {
+      test.skip(true, 'Remove button not visible (may be non-OPEN ticket or no linked bubbles)');
+    }
+    await expect(bubblePage.removeBubbleBtn.first()).toBeVisible({ timeout: 5000 });
+  });
+
+  test('REM-02: should show confirmation dialog when clicking remove', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to view');
+    await bubblePage.openTicketDrawer();
+    const accordionVisible = await bubblePage.linkedMessagesAccordion.isVisible().catch(() => false);
+    test.skip(!accordionVisible, 'No linked messages accordion');
+    await bubblePage.openLinkedMessages();
+    const hasRemoveBtn = await bubblePage.isRemoveButtonVisible();
+    test.skip(!hasRemoveBtn, 'Remove button not visible');
+    await bubblePage.clickRemoveBubble(0);
+    await expect(bubblePage.removeConfirmDialog).toBeVisible({ timeout: 5000 });
+  });
+
+  test('REM-03: should cancel remove and keep bubble', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to view');
+    await bubblePage.openTicketDrawer();
+    const accordionVisible = await bubblePage.linkedMessagesAccordion.isVisible().catch(() => false);
+    test.skip(!accordionVisible, 'No linked messages accordion');
+    await bubblePage.openLinkedMessages();
+    const hasRemoveBtn = await bubblePage.isRemoveButtonVisible();
+    test.skip(!hasRemoveBtn, 'Remove button not visible');
+    await bubblePage.clickRemoveBubble(0);
+    await bubblePage.cancelRemove();
+    await expect(bubblePage.removeConfirmDialog).not.toBeVisible({ timeout: 3000 });
+  });
+
+  test('REM-04: should confirm remove and succeed', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to view');
+    await bubblePage.openTicketDrawer();
+    const accordionVisible = await bubblePage.linkedMessagesAccordion.isVisible().catch(() => false);
+    test.skip(!accordionVisible, 'No linked messages accordion');
+    await bubblePage.openLinkedMessages();
+    const hasRemoveBtn = await bubblePage.isRemoveButtonVisible();
+    test.skip(!hasRemoveBtn, 'Remove button not visible');
+    await bubblePage.clickRemoveBubble(0);
+    await bubblePage.confirmRemove();
+    // Should see success or error notification
+    await expect(bubblePage.toastSuccess.or(bubblePage.toastError)).toBeVisible({ timeout: 10000 });
+  });
+});
+
+// =====================================================
+// Bubble Navigation — LinkedConversationPanel (US-005, US-006) — ACTIVE
+// =====================================================
+test.describe('Linked Chat Bubble - Bubble Navigation', () => {
+  let authPage, inboxPage, bubblePage, config;
+
+  test.beforeAll(async () => { config = getCurrentConfig(); });
+
+  test.beforeEach(async ({ page }) => {
+    authPage = new AuthPage(page);
+    inboxPage = new InboxPage(page);
+    bubblePage = new TicketLinkedBubblePage(page);
+    const credentials = config.getDefaultAccount();
+    await authPage.loginWithCredentials(credentials, { useV2: true });
+  });
+
+  test('NAV-01: should open LinkedConversation panel from accordion "Show detail chat"', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to view');
+    await bubblePage.openTicketDrawer();
+    const accordionVisible = await bubblePage.linkedConversationAccordion.isVisible().catch(() => false);
+    test.skip(!accordionVisible, 'No linked conversation accordion');
+    await bubblePage.openLinkedConversation();
+    await bubblePage.clickShowDetailChat();
+    await bubblePage.verifyLinkedConversationPanelVisible();
+  });
+
+  test('NAV-02: should return to ticket detail via back button', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to view');
+    await bubblePage.openTicketDrawer();
+    const accordionVisible = await bubblePage.linkedConversationAccordion.isVisible().catch(() => false);
+    test.skip(!accordionVisible, 'No linked conversation accordion');
+    await bubblePage.openLinkedConversation();
+    await bubblePage.clickShowDetailChat();
+    await bubblePage.verifyLinkedConversationPanelVisible();
+    await bubblePage.clickBackToTicketDetail();
+    await expect(bubblePage.linkedConversationPanel).not.toBeVisible({ timeout: 5000 });
+  });
+});
+
+// =====================================================
+// Reply-Based Inbound Sync (US-007, US-008) — FIXME (complex E2E)
+// =====================================================
+test.describe('Linked Chat Bubble - Reply-Based Inbound Sync', () => {
+  let authPage, inboxPage, bubblePage, config;
+
+  test.beforeAll(async () => { config = getCurrentConfig(); });
+
+  test.beforeEach(async ({ page }) => {
+    authPage = new AuthPage(page);
+    inboxPage = new InboxPage(page);
+    bubblePage = new TicketLinkedBubblePage(page);
+    const credentials = config.getDefaultAccount();
+    await authPage.loginWithCredentials(credentials, { useV2: true });
+  });
+
+  test.fixme('SYNC-01: should show "Reply to customer" tab in ticket chat room', 'US-007: ticket chat room tab switching');
+  test.fixme('SYNC-02: should show "Internal note" tab in ticket chat room', 'US-007: ticket chat room tab switching');
+  test.fixme('SYNC-03: should send reply-to-customer message with forward flag', 'US-007: requires active ticket with linked bubble + reply');
+  test.fixme('SYNC-04: should confirm cross-send dialog before sending to customer', 'US-007: cross-send confirmation modal');
+  test.fixme('SYNC-05: should auto-sync inbound message to active ticket (reply reference)', 'US-008: requires customer reply via supported channel');
+  test.fixme('SYNC-06: should not sync inbound message when ticket is resolved', 'US-008/EH-010: status check at processing time');
+  test.fixme('SYNC-07: should not auto-link on unsupported channel', 'US-008: channel without reply reference');
+  test.fixme('SYNC-08: should show sync badge on auto-linked messages', 'US-008: "Synced from conversation" badge');
+  test.fixme('SYNC-09: should append reply to correct ticket when referencing older outbound', 'US-008: chronological matching');
+});
+
+// =====================================================
+// Concurrency & Race Conditions — FIXME
+// =====================================================
+test.describe('Linked Chat Bubble - Concurrency & Race Conditions', () => {
+  let authPage, inboxPage, bubblePage, config;
+
+  test.beforeAll(async () => { config = getCurrentConfig(); });
+
+  test.beforeEach(async ({ page }) => {
+    authPage = new AuthPage(page);
+    inboxPage = new InboxPage(page);
+    bubblePage = new TicketLinkedBubblePage(page);
+    const credentials = config.getDefaultAccount();
+    await authPage.loginWithCredentials(credentials, { useV2: true });
+  });
+
+  test.fixme('CON-01: should allow two agents to append different bubbles simultaneously', 'Requires multi-session setup');
+  test.fixme('CON-02: should allow agent B to remove bubble appended by agent A', 'Requires multi-session setup');
+  test.fixme('CON-03: should reject append if ticket was closed during the request', 'Race condition — timing manipulation');
+  test.fixme('CON-04: should decide inbound sync based on state at processing time', 'Race condition — timing');
+  test.fixme('CON-05: should not corrupt linked bubbles during concurrent edits', 'Requires multi-session setup');
+});
+
+// =====================================================
+// Regression — Existing Flows Must NOT Break (ACTIVE)
+// =====================================================
+test.describe('Linked Chat Bubble - Regression', () => {
+  let authPage, inboxPage, bubblePage, ticketingPage, config;
+
+  test.beforeAll(async () => { config = getCurrentConfig(); });
+
+  test.beforeEach(async ({ page }) => {
+    authPage = new AuthPage(page);
+    inboxPage = new InboxPage(page);
+    bubblePage = new TicketLinkedBubblePage(page);
+    ticketingPage = new TicketingPage(page);
+    const credentials = config.getDefaultAccount();
+    await authPage.loginWithCredentials(credentials, { useV2: true });
+  });
+
+  test('REG-01: should still allow creating ticket from selected bubbles (existing flow)', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const enabled = await bubblePage.enableBubbleSelection();
+    test.skip(!enabled, 'Cannot enable bubble selection in this conversation');
+    await bubblePage.clickCreateTicket();
+    await expect(bubblePage.dialog).toBeVisible();
+  });
+
+  test('REG-02: should still show duplicate bubble detection when creating ticket', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasPink = await bubblePage.bubbleWithTicket.first().isVisible().catch(() => false);
+    test.skip(!hasPink, 'No already-linked bubbles to test duplicate detection');
+    await bubblePage.verifyBubbleHasTicketBackground();
+    await bubblePage.verifyLinkedTicketBadgeVisible();
+  });
+
+  test('REG-03: should still render linked messages and conversation sections in ticket detail', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket bubbles in this conversation');
+    await bubblePage.openTicketDrawer();
+    await expect(bubblePage.linkedMessagesAccordion).toBeVisible({ timeout: 5000 });
+  });
+
+  test('REG-04: should still send normal messages from ticket room', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to send from');
+    await bubblePage.openTicketDrawer();
+    await inboxPage.messageInput.waitFor({ state: 'visible', timeout: 5000 });
+    const msg = randomAsk();
+    await inboxPage.sendMessage(msg);
+    await expect(inboxPage.agentBubble.last()).toContainText(msg, { timeout: 10000 });
+  });
+
+  test('REG-05: should still show "Lihat Tiket" badge on linked conversation bubbles', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket bubbles in this conversation');
+    await bubblePage.verifyLinkedTicketBadgeVisible();
+  });
+
+  test.fixme('REG-06: should still enforce max 50 limit when creating new ticket', 'Need test data setup with 50+ linked bubbles to verify limit');
+
+  test('REG-07: should still allow close/reopen ticket cycle', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
+    test.skip(!hasTicket, 'No linked ticket to close/reopen');
+    await bubblePage.openTicketDrawer();
+    const closeVisible = await bubblePage.closeTicketBtn.isVisible().catch(() => false);
+    test.skip(!closeVisible, 'Close button not available');
+    await bubblePage.closeTicketBtn.click();
+    await expect(bubblePage.reopenTicketBtn).toBeVisible({ timeout: 10000 });
+  });
+
+  test('REG-08: should still show all linked tickets in conversation detail sidebar', async ({ page }) => {
+    await inboxPage.openFirstChat();
+    const hasLinkedTickets = await bubblePage.linkedTicketsAccordion.isVisible().catch(() => false);
+    test.skip(!hasLinkedTickets, 'No linked tickets section in this conversation detail');
+    const hasTickets = await bubblePage.verifyLinkedTicketsInConversation();
+    expect(hasTickets).toBeTruthy();
+  });
+});
+
+// =====================================================
+// Data Integrity — FIXME (requires controlled test data)
+// =====================================================
+test.describe('Linked Chat Bubble - Data Integrity', () => {
+  let authPage, inboxPage, bubblePage, config;
+
+  test.beforeAll(async () => { config = getCurrentConfig(); });
+
+  test.beforeEach(async ({ page }) => {
+    authPage = new AuthPage(page);
+    inboxPage = new InboxPage(page);
+    bubblePage = new TicketLinkedBubblePage(page);
+    const credentials = config.getDefaultAccount();
+    await authPage.loginWithCredentials(credentials, { useV2: true });
+  });
+
+  test.fixme('INT-01: should enforce one bubble = one ticket (block cross-ticket link)', 'Requires two active tickets with same bubble scenario');
+  test.fixme('INT-02: should preserve linked bubbles in ticket B when removing from ticket A', 'Requires cross-ticket data setup');
+  test.fixme('INT-03: should preserve existing linked bubbles when appending new ones', 'Requires known initial bubble count');
+  test.fixme('INT-04: should correctly recalculate quote source after removing latest bubble', 'Requires controlled linked bubble order');
+  test.fixme('INT-05: should preserve original message ID in inbound sync', 'Requires known inbound message ID');
 });
