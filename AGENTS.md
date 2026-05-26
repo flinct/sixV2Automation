@@ -1,9 +1,104 @@
-# AGENTS.md - FE + Automation Index (Compressed)
+# AGENTS.md - Master Index + Agent Instructions
 
-> **Policy:** Update this file every time scripts change or new tests added.
+> **Policy:** This file is both an index AND a set of binding instructions for AI agents writing automation scripts. Read this file FIRST before any automation task. Update this file every time scripts change or new tests added.
+
+---
+
+## Agent Instructions
+
+### 1. Pre-Work Checklist
+Before writing ANY automation code, you MUST:
+1. **Read this file fully** (AGENTS.md) to understand conventions, available pages, config, and test patterns.
+2. **Check `memory/` folder** — read `memory/rbac-memory.md` for RBAC rules if the task involves roles/permissions/feature access.
+3. **Scan existing page objects** in `playwright/support/pages/` to see what locators and methods already exist. NEVER duplicate selectors.
+4. **Check `playwright/support/pages/index.js`** to see all exported classes and the `CHANNELS` constant.
+5. **Check `playwright/support/config/`** for available accounts, endpoints, environments.
+
+### 2. Test File Conventions
+- **Location:** `playwright/tests/e2e/<category>/<feature>.spec.js`
+- **Imports (always use require):**
+  ```javascript
+  const { test, expect } = require('@playwright/test');
+  const { AuthPage, InboxPage } = require('../../../support/pages');  // or other pages
+  const { getCurrentConfig } = require('../../../support/config');
+  const { randomAsk } = require('../../../support/helpers/generators');  // if needed
+  ```
+- **Structure (mandatory):**
+  ```javascript
+  test.describe('Feature Name', () => {
+    let authPage, inboxPage, config;  // declare all vars
+    test.beforeAll(async () => { config = getCurrentConfig(); });
+    test.beforeEach(async ({ page }) => {
+      authPage = new AuthPage(page);
+      inboxPage = new InboxPage(page);   // instantiate only pages you need
+      const credentials = config.getDefaultAccount();
+      await authPage.loginWithCredentials(credentials, { useV2: true });
+    });
+    test('should ...', async ({ page }) => { ... });
+  });
+  ```
+- **Naming:** `test('should do something', ...)` — descriptive sentence case.
+- **Skipping:** Use `test.skip(condition, 'reason')` for conditional skip, `test.fixme('title', 'why not implemented')` for stubs.
+- **Assertions:** Always use `@playwright/test` `expect` (jest-like). Prefer `await expect(locator).toBeVisible()`, `toHaveText()`, `toHaveURL()`, `toContainText()` over manual checks.
+- **Timeouts:** Default actionTimeout 30s (from config). Only add explicit `.waitFor({ timeout: ... })` when you need to extend beyond default.
+
+### 3. Page Object Conventions
+- **Location:** `playwright/support/pages/<feature>.page.js`
+- **Export pattern:**
+  ```javascript
+  class FeaturePage {
+    constructor(page) {
+      this.page = page;
+      this.someButton = page.getByTestId('Some-Button');
+      this.someField = page.locator('input[name="field"]');
+    }
+    async someAction() { ... }
+  }
+  module.exports = { FeaturePage };
+  ```
+- **Locator priority:** `getByTestId()` > `getByRole()` > `getByText()` > `locator()` with CSS selectors.
+- **Locale-aware selectors:** Use regex with both ID and EN (e.g. `/Tutup|Close/i`, `/Kirim|Send/i`).
+- **Register in index:** Add `const { FeaturePage } = require('./feature.page');` and `module.exports = { ..., FeaturePage }` to `playwright/support/pages/index.js`.
+- **CHANNELS constant:** Defined in `pages/index.js`. Import with `const { CHANNELS } = require('../../../support/pages')`.
+
+### 4. Config Usage
+- **Environment:** Default is `dev`. Override with `ENV=prod npx playwright test`.
+- **Accounts:** Use `config.getDefaultAccount()` for the admin test user. Use `config.getAccountByLoginType(key, envName)` for specific roles.
+- **Available keys:** `chickentester01` (admin, default), `cekerayam01` (admin), `mataayam01` (supervisor), `leherayam01` (agent).
+- **Login methods:**
+  - `authPage.loginWithCredentials(credentials, { useV2: true })` — for beforeEach
+  - `authPage.login(identifier, password, { useV2: true, expectSuccess: false })` — for negative tests
+- **Endpoints:** Use `config.endpoints.someEndpoint` (see `endpoints.js` for all available routes).
+
+### 5. When You Create New Files
+AFTER creating a new test spec or page object, you MUST update this AGENTS.md:
+- **New test file:** Add row to "Test Files (All)" table with filename, test count, and scope description.
+- **New page object:** Add row to "Page Objects Index" table with filename, class name, and what it covers.
+- **New helper/config:** Add entry under "Config" or "Key Helpers" table.
+- **Keep test count accurate:** Update "Total: N active tests" line.
+
+### 6. RBAC Awareness
+When writing tests that involve feature access by different roles:
+- Read `memory/rbac-memory.md` for the complete RBAC matrix.
+- Key rules: agents see own contacts, supervisors see team, admins see all.
+- Privacy: agents see masked PII, supervisor+ see full.
+- Ticket views differ per role (agent: my tickets only; supervisor: team tickets; admin: all).
+- Use `mataayam01` for supervisor tests, `leherayam01` for agent tests.
+
+### 7. Scripts Reference
+| Command | Description |
+|---------|-------------|
+| `npm run pw:test` | Playwright all tests |
+| `npm run pw:test:chrome` | Chromium only |
+| `npm run pw:report` | Show HTML report |
+| `ENV=prod npx playwright test` | Run on prod |
+| `LOGIN_TYPE=xxx npx playwright test` | Use specific account |
+
+---
 
 ## Sources
 - FE: `C:\Users\MyBook SAGA 12\Desktop\FE satuinbox\omnichannel-satuinbox-fe`
+- BE: `C:\Users\MyBook SAGA 12\Desktop\BE satuinbox\omnichannel-satuinbox-be`
 - Auto: `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation` (this repo)
 
 ---
@@ -47,6 +142,8 @@ playwright/
 | `live-chat.page.js` | LiveChatPage | Widget live chat |
 | `account-whatsapp.page.js` | AccountWhatsappPage | WhatsApp account monitoring |
 | `endpoint-detect.page.js` | EndpointDetectPage | API route capture utility |
+| `ticket-linked-bubble.page.js` | TicketLinkedBubblePage | Bubble select, create ticket, linked messages/drawer |
+| `member.page.js` | MemberPage | Member list, toggle active/deactive, status badge, row menu |
 
 ## Test Files (All)
 | File | Tests | Scope |
@@ -65,15 +162,15 @@ playwright/
 | `auth/login.spec.js` | 8 | Login page, valid/invalid, role, token expiry |
 | `auth/register.spec.js` | 17 | Field validation, duplicate, full flow |
 | `auth/onboarding.spec.js` | 9 | Org name, NIB, NPWP, ID number validation |
+| `auth/member-toggle-active.spec.js` | 6 | Member activate/deactivate UI + API (active tests) |
+| `auth/member-toggle-active-scaffold.spec.js` | 39 | Member toggle scaffold (all fixme, pending feature) |
 | `socket/conversation.spec.js` | 2 | WebSocket connect, random data |
 | `check-all/navigation.spec.js` | 17 | Cross-module nav smoke tests |
 | `rbac/role-validation.spec.js` | 5 | 5 roles x page access |
 | `ticket/ticketing.spec.js` | 1 | Ticketing page smoke |
+| `ticket/linked-bubble.spec.js` | 29 | Linked bubble: existing (4 active + 3 fixme) + new feature scaffold (22 fixme) |
 
-| `auth/auth-legacy.spec.js` | 51 | Legacy Cypress regression stubs (all fixme) |
-| `team/team.spec.js` | 3 | Team page stubs (all fixme) |
-
-**Total: 121 active tests, 18 files (20 with fixme stubs)**
+**Total: 170 active tests, 20 files (21 with fixme stubs)**
 
 ## Config
 | File | Content |
@@ -111,32 +208,7 @@ playwright/
 - Send button: `/Kirim|Send/i` with `{ force: true }`
 - Close: `/Tutup|Close/i`, Reopen: `/Buka|Reopen/i`
 
-## Scripts
-| Command | Description |
-|---------|-------------|
-| `npm run pw:test` | Playwright all tests |
-| `npm run pw:test:chrome` | Chromium only |
-| `npm run pw:report` | Show HTML report |
-| `ENV=prod npx playwright test` | Run on prod |
-| `LOGIN_TYPE=xxx npx playwright test` | Use specific account |
 
-## Test Pattern
-```javascript
-const { test, expect } = require('@playwright/test');
-const { AuthPage, InboxPage } = require('../../../support/pages');
-const { getCurrentConfig } = require('../../../support/config');
-
-test.describe('Feature', () => {
-  let authPage, inboxPage, config;
-  test.beforeAll(async () => { config = getCurrentConfig(); });
-  test.beforeEach(async ({ page }) => {
-    authPage = new AuthPage(page);
-    inboxPage = new InboxPage(page);
-    await authPage.loginWithCredentials(config.getDefaultAccount(), { useV2: true });
-  });
-  test('should ...', async ({ page }) => { ... });
-});
-```
 
 ---
 # PART 2: FE REPO (Omnichannel)
@@ -238,3 +310,47 @@ Status: PENDING | PROCESSING | SENT | DELIVERED | READ | FAILED | RETRY
 | `/broadcast/messages` | Broadcast |
 | `/statistic` | Statistics |
 | `/settings/inbox/sla` | SLA settings |
+
+---
+# PART 3: BE REPO (Omnichannel)
+
+## Architecture
+```
+apps/                  - 21 microservices (Nx monorepo)
+  api-gateway/         - HTTP/REST gateway (NestJS, port 3000)
+  auth-service/        - Auth, roles, permissions, sessions
+  people-service/      - Users, members, teams, contacts, privacy policy
+  company-service/     - Companies, orgs, tags, shifts
+  conversation-service/- Conversations, SLA, messages
+  ticket-service/      - Tickets, stages, bulk replies
+  broadcast-service/   - Broadcast campaigns, templates
+  channel-service/     - Channel management (WhatsApp, IG, etc.)
+  notification-service/- Notifications (in-app, email)
+  widget/              - Customer chat widget logic
+  whatsapp/            - WhatsApp Web integration
+  whatsapp-api/        - WhatsApp Business API
+  instagram/           - Instagram messaging
+  messenger/           - Facebook Messenger
+  email/               - Email channel
+  media-service/       - File upload/storage
+  payment-service/     - Payment/subscription
+  analytics-service/   - Analytics & reporting
+  audit-service/       - Audit logging
+  sales-service/       - Sales (leads, visits, comments)
+libs/                  - Shared libraries (4)
+  common/              - Enums, decorators, guards, utils, constants
+  cache/               - Redis caching decorators
+  proto-types/         - gRPC type definitions
+  security/            - Encryption, hashing, token services
+proto/                 - gRPC proto definitions (22 files)
+```
+
+## RBAC System
+See `memory/rbac-memory.md` for complete RBAC reference:
+- 9 roles with permission matrices
+- 50+ permission actions across 22 resources
+- Contact scope (area + visibility) for contact-level access
+- Privacy masking (PII) per role
+- Ticket view config per role
+- Guard chain: JwtAuthGuard → RolesGuard + PermissionsGuard
+- Session invalidation triggers

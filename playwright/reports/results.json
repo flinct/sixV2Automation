@@ -267,6 +267,1299 @@
       ]
     },
     {
+      "title": "e2e\\auth\\member-toggle-active-scaffold.spec.js",
+      "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Scaffold - Member Toggle (Pending)",
+          "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-001: Deactivate active member via PATCH",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 4,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-214b9e72c92737ddd480",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 4,
+              "column": 8
+            },
+            {
+              "title": "TC-002: Reactivate deactivated member",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 5,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-f41d2ada484a5652b2d1",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 5,
+              "column": 8
+            },
+            {
+              "title": "TC-003: Toggle to same state (idempotent)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 6,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-77e6bfbc490d9fedc71c",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 6,
+              "column": 8
+            },
+            {
+              "title": "TC-004: Toggle non-existent user returns 404",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 7,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-7c3ca2ad9a824567ca56",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 7,
+              "column": 8
+            },
+            {
+              "title": "TC-005: Unauthenticated request returns 401",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-0052f70da98d7066853d",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 8,
+              "column": 8
+            },
+            {
+              "title": "TC-006: Unauthorized request returns 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 9,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-363d79909ceefec6f57d",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 9,
+              "column": 8
+            },
+            {
+              "title": "TC-007: Deactivated login returns \"Akun dinonaktifkan\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 10,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-7eaa67d5a2ffaf229a57",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 10,
+              "column": 8
+            },
+            {
+              "title": "TC-008: Reactivated user can login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-fbde792731b0396dfa18",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 11,
+              "column": 8
+            },
+            {
+              "title": "TC-009: Refresh token blocked for deactivated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-13e89f572891cfb72c20",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 12,
+              "column": 8
+            },
+            {
+              "title": "TC-010: Force logout old token returns 401",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-d035ddc47a2842f23d50",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 13,
+              "column": 8
+            },
+            {
+              "title": "TC-011: Open AUX interval preserved",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 14,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-d7e276599c09eecd1062",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 14,
+              "column": 8
+            },
+            {
+              "title": "TC-012: AUX analytics preserved",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-80bf0221c3f99426e863",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 15,
+              "column": 8
+            },
+            {
+              "title": "TC-013: Round Robin excludes deactivated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 16,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-0c68b0311c5d70e07c66",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 16,
+              "column": 8
+            },
+            {
+              "title": "TC-014: Reactivated eligible for Round Robin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 17,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-9bdedf00040e72652b6b",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 17,
+              "column": 8
+            },
+            {
+              "title": "TC-015: Conversations remain assigned",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 18,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-f6c9fb156e93d1effd8a",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 18,
+              "column": 8
+            },
+            {
+              "title": "TC-016: maxConversation unchanged",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 19,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-2595f96a7f0bba39aee8",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 19,
+              "column": 8
+            },
+            {
+              "title": "TC-017: Member list without isActive filter shows all",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 20,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-5f3391eca1bf97d16054",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 20,
+              "column": 8
+            },
+            {
+              "title": "TC-018: Soft-deleted hidden from member list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 21,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-5b70183eba70ef1da993",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 21,
+              "column": 8
+            },
+            {
+              "title": "TC-019: Assignable list excludes deactivated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 22,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-3920ec18baf600fcc414",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 22,
+              "column": 8
+            },
+            {
+              "title": "TC-020: findMembersByIds returns deactivated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 23,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-7147f397253ecd58760d",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 23,
+              "column": 8
+            },
+            {
+              "title": "TC-021: Search shows deactivated in settings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 24,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-f11d862251578ee66076",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 24,
+              "column": 8
+            },
+            {
+              "title": "TC-022: Search excludes deactivated in assignment",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 25,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-5f975be70342049a1e75",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 25,
+              "column": 8
+            },
+            {
+              "title": "TC-023: Status badge Aktif/Nonaktif visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 26,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-e1a68f4a465512c662d4",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 26,
+              "column": 8
+            },
+            {
+              "title": "TC-024: Row menu shows deactivate/activate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 27,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-131c13c8be31ac30cf93",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 27,
+              "column": 8
+            },
+            {
+              "title": "TC-025: Confirmation modal on toggle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 28,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-e6c025baecee4ac1e59c",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 28,
+              "column": 8
+            },
+            {
+              "title": "TC-026: Success toast on confirm toggle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 29,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-b908854d31c86693c446",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 29,
+              "column": 8
+            },
+            {
+              "title": "TC-027: Error toast on failed toggle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 30,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-53fa1d0d5aca6dd47ea1",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 30,
+              "column": 8
+            },
+            {
+              "title": "TC-028: Deactivation shows preservation note",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 31,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-c054ae4ddc35f099ef7c",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 31,
+              "column": 8
+            },
+            {
+              "title": "TC-029: Admin can deactivate own account",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 32,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-888370922016decd43d9",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 32,
+              "column": 8
+            },
+            {
+              "title": "TC-030: Last Admin deactivation allowed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 33,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-7bb02592c19bfbe743f5",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 33,
+              "column": 8
+            },
+            {
+              "title": "TC-031: Concurrent toggle requests",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 34,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-b108ccd92fbb64a0a50a",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 34,
+              "column": 8
+            },
+            {
+              "title": "TC-032: Mobile self-deactivation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 35,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-201527f9f0f1efd3e121",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 35,
+              "column": 8
+            },
+            {
+              "title": "TC-033: Mobile invalid token returns 401",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 36,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-500ea64a80b19c3272d7",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 36,
+              "column": 8
+            },
+            {
+              "title": "TC-034: Mobile re-registration after reactivation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 37,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-04541650615468b3c69d",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 37,
+              "column": 8
+            },
+            {
+              "title": "EH-003: Network error toast on toggle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 38,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-b331b4f5543dddceae11",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 38,
+              "column": 8
+            },
+            {
+              "title": "EH-004: Server error toast on toggle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 39,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-e1089972dace2e364f62",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 39,
+              "column": 8
+            },
+            {
+              "title": "FR-033: Member page GET without isActive",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 40,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-859bb30950b57fe1ae38",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 40,
+              "column": 8
+            },
+            {
+              "title": "FR-034: Assignable adds isActive=true",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 41,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-0a01ce0d27f4adba89ea",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 41,
+              "column": 8
+            },
+            {
+              "title": "FR-035: Conversation assign excludes deactivated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\auth\\member-toggle-active-scaffold.spec.js",
+                        "line": 42,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "defc51051c1a9fad8e46-f5381f13933c2026434e",
+              "file": "e2e/auth/member-toggle-active-scaffold.spec.js",
+              "line": 42,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\auth\\member-toggle-active.spec.js",
+      "file": "e2e/auth/member-toggle-active.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Member Activate/Deactivate - UI",
+          "file": "e2e/auth/member-toggle-active.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Member page loads with title, tabs, and search",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1401d650744f78140ece-aa6966d595987b5f5df4",
+              "file": "e2e/auth/member-toggle-active.spec.js",
+              "line": 16,
+              "column": 3
+            },
+            {
+              "title": "Member settings page shows member table",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1401d650744f78140ece-adb6b457e22ced4c5804",
+              "file": "e2e/auth/member-toggle-active.spec.js",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "Row menu button (three dots) is visible for first member",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1401d650744f78140ece-697f3578fa032e0024af",
+              "file": "e2e/auth/member-toggle-active.spec.js",
+              "line": 31,
+              "column": 3
+            },
+            {
+              "title": "Search filters member list by name",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1401d650744f78140ece-749e4864855dea333414",
+              "file": "e2e/auth/member-toggle-active.spec.js",
+              "line": 36,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Member Activate/Deactivate - API",
+          "file": "e2e/auth/member-toggle-active.spec.js",
+          "line": 45,
+          "column": 6,
+          "specs": [
+            {
+              "title": "API: Fetch member list requires auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1401d650744f78140ece-496a3ada0108a2f76e19",
+              "file": "e2e/auth/member-toggle-active.spec.js",
+              "line": 46,
+              "column": 3
+            },
+            {
+              "title": "TC-005: Unauthenticated request returns 401",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1401d650744f78140ece-0abd9a57710a936c69ca",
+              "file": "e2e/auth/member-toggle-active.spec.js",
+              "line": 60,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "e2e\\auth\\onboarding.spec.js",
       "file": "e2e/auth/onboarding.spec.js",
       "column": 0,
@@ -2797,6 +4090,215 @@
       ]
     },
     {
+      "title": "e2e\\ticket\\linked-bubble.spec.js",
+      "file": "e2e/ticket/linked-bubble.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Linked Chat Bubble - Existing Features",
+          "file": "e2e/ticket/linked-bubble.spec.js",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should show \"See Ticket\" badge on bubble with linked ticket",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Requires hover + action menu interaction",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 63,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 64,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 65,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "799ca78c0412e4e6c889-be88832a7931f6c174eb",
+              "file": "e2e/ticket/linked-bubble.spec.js",
+              "line": 24,
+              "column": 3
+            },
+            {
+              "title": "should open ticket drawer from \"See Ticket\" link on bubble",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Requires hover + action menu interaction",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 63,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 64,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 65,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "799ca78c0412e4e6c889-4e169c6f4224e3e2b890",
+              "file": "e2e/ticket/linked-bubble.spec.js",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "should show linked messages in ticket drawer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Requires hover + action menu interaction",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 63,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 64,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 65,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "799ca78c0412e4e6c889-2512664ea18e66ce17f2",
+              "file": "e2e/ticket/linked-bubble.spec.js",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "should show linked tickets in conversation detail sidebar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Requires hover + action menu interaction",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 63,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 64,
+                        "column": 8
+                      }
+                    },
+                    {
+                      "type": "fixme",
+                      "description": "Requires bubble selection first",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\ticket\\linked-bubble.spec.js",
+                        "line": 65,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "799ca78c0412e4e6c889-b013af44860590f8c623",
+              "file": "e2e/ticket/linked-bubble.spec.js",
+              "line": 54,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "e2e\\ticket\\ticketing.spec.js",
       "file": "e2e/ticket/ticketing.spec.js",
       "column": 0,
@@ -2846,10 +4348,10 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-25T01:25:49.679Z",
-    "duration": 155.37599999999998,
+    "startTime": "2026-05-25T09:37:31.516Z",
+    "duration": 145.75799999999992,
     "expected": 0,
-    "skipped": 121,
+    "skipped": 170,
     "unexpected": 0,
     "flaky": 0
   }

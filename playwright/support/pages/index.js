@@ -14,6 +14,8 @@ const { EndpointDetectPage } = require('./endpoint-detect.page');
 const { LiveChatPage } = require('./live-chat.page');
 const { ConversationDetailPage } = require('./conversation-detail.page');
 const { ConversationHistoryPage } = require('./conversation-history.page');
+const { TicketLinkedBubblePage } = require('./ticket-linked-bubble.page');
+const { MemberPage } = require('./member.page');
 
 module.exports = {
   CHANNELS: [
@@ -41,4 +43,6 @@ module.exports = {
   LiveChatPage,
   ConversationDetailPage,
   ConversationHistoryPage,
+  TicketLinkedBubblePage,
+  MemberPage,
 };
