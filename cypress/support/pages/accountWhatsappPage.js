@@ -4,34 +4,34 @@ import { timeout } from "async";
 const baseUrl = Cypress.config("baseUrl");
 
 const Configuration = {
-  "https://staging.satuinbox.com": {
-    parentNumber: "6285135430944",
-    loginBody: { keyword: "goddummystaging", password: "asdqwe12" },
-    loginUrl: "https://staging.satuinbox.com/api/v1/auth/login",
+  "https://staging.example.test": {
+    parentNumber: "6280000000000",
+    loginBody: { keyword: "goddummystaging", password: "testpassword1" },
+    loginUrl: "https://staging.example.test/api/v1/auth/login",
     whatsappUrl:
-      "https://staging.satuinbox.com/api/v1/account-whatsapp?limit=9000",
-    sendMessageUrl: "https://staging.satuinbox.com/api/v1/message/text?key=",
+      "https://staging.example.test/api/v1/account-whatsapp?limit=9000",
+    sendMessageUrl: "https://staging.example.test/api/v1/message/text?key=",
     randomGlobalDelay: Math.floor(Math.random() * 1000) + 300,
   },
-  "https://dev.satuinbox.com": {
-    parentNumber: "6285135431734",
-    // loginBody: { "keyword": "goddummy", "password": "asdqwe12" },
-    loginBody: { keyword: "chickentester01", password: "asdqwe12" },
-    loginUrl: "https://dev.satuinbox.com/api/v1/auth/login",
-    whatsappUrl: "https://dev.satuinbox.com/api/v1/account-whatsapp?limit=9000",
-    sendMessageUrl: "https://dev.satuinbox.com/api/v1/message/text?key=",
+  "https://dev.example.test": {
+    parentNumber: "6280000000000",
+    // loginBody: { "keyword": "goddummy", "password": "testpassword1" },
+    loginBody: { keyword: "chickentester01", password: "testpassword1" },
+    loginUrl: "https://dev.example.test/api/v1/auth/login",
+    whatsappUrl: "https://dev.example.test/api/v1/account-whatsapp?limit=9000",
+    sendMessageUrl: "https://dev.example.test/api/v1/message/text?key=",
     sendBroadcastUrl:
-      "https://dev.satuinbox.com/api/v1/open/broadcast?account_number_whatsapp=",
-    instanceInfoUrl: "https://dev.satuinbox.com/api/v1/instance/info?key=",
+      "https://dev.example.test/api/v1/open/broadcast?account_number_whatsapp=",
+    instanceInfoUrl: "https://dev.example.test/api/v1/instance/info?key=",
     randomGlobalDelay: Math.floor(Math.random() * 1000) + 300,
-    // sendBroadcastUrl : 'https://dev.satuinbox.com/api/v1/broadcast/?key='
+    // sendBroadcastUrl : 'https://dev.example.test/api/v1/broadcast/?key='
   },
-  "https://sap.satuinbox.com": {
-    parentNumber: "6285147211094",
-    loginBody: { keyword: "goddummyprod", password: "TongTji89" },
-    loginUrl: "https://api.satuinbox.com/v1/auth/login",
-    whatsappUrl: "https://api.satuinbox.com/v1/account-whatsapp?limit=9000",
-    sendMessageUrl: "https://api.satuinbox.com/v1/message/text?key=",
+  "https://sap.example.test": {
+    parentNumber: "6280000000000",
+    loginBody: { keyword: "goddummyprod", password: "TestPassword1!" },
+    loginUrl: "https://api.example.test/v1/auth/login",
+    whatsappUrl: "https://api.example.test/v1/account-whatsapp?limit=9000",
+    sendMessageUrl: "https://api.example.test/v1/message/text?key=",
     // randomGlobalDelay : Math.floor(Math.random() * 3000000) + 60000, //1 jam wait time
     randomGlobalDelay: Math.floor(Math.random() * 1800000) + 60000, //30 menit wait time
   },
@@ -145,7 +145,7 @@ class accountWhatsappPage {
     cy.softAssert(cy.nav_link_Ticket().click(), "navigate to group chat");
     cy.wait(1000);
     cy.url().then((url) => {
-      if (url === "https://dev.satuinbox.com/ticket") {
+      if (url === "https://dev.example.test/ticket") {
         cy.wait(1000);
         cy.log("success direct to group chat page");
       } else {

@@ -1,81 +1,78 @@
-# sixV2Automation
+# QA Automation Portfolio - Omnichannel SaaS
 
-Repository automation test untuk Cypress, script load test widget socket, dan health check QR.
+Portfolio project untuk automation testing platform customer communication multi-channel. Nama produk, endpoint, credential, dan data pelanggan sudah dianonimkan agar aman dipublikasikan.
 
-## Prerequisites
+## Highlights
 
-- Node.js 18+
-- npm
-- (Opsional) k6 untuk stress test QR flow
+| Area | Detail |
+|---|---|
+| Framework | Playwright, Cypress, k6 |
+| Coverage | Auth, onboarding, inbox conversation, ticketing, RBAC, socket, navigation smoke |
+| Architecture | Page Object Model, centralized config, reusable helpers, generated test data |
+| Browser Matrix | Chromium, Firefox, WebKit |
+| Test Suite | 181 active Playwright tests plus legacy Cypress regression assets |
+| Non-Functional | Socket.IO load testing, QR health check, proxy precheck, report automation |
 
-## Setup
+## What This Shows
+
+- Building maintainable E2E automation with Page Object Model.
+- Migrating legacy Cypress coverage into a modern Playwright suite.
+- Validating role-based access control across admin, supervisor, and agent flows.
+- Testing real-time conversation behavior through WebSocket and Socket.IO flows.
+- Separating secrets and environment-specific values from source code.
+- Producing reports for CI and stakeholder review.
+
+## Repository Map
+
+```text
+playwright/
+  tests/e2e/              Playwright E2E specs
+  support/pages/          Page objects and shared locators
+  support/config/         Environment, account, endpoint config
+  support/helpers/        Generators, temp email helper, utilities
+cypress/                  Legacy regression suite and fixtures
+k6/                       Load and stress test scripts
+scripts/                  Socket load, QR health, report utilities
+docs/                     Portfolio case study and test strategy
+```
+
+## Run Locally
+
+1. Install dependencies.
 
 ```powershell
 npm install
+npm run pw:install
 ```
 
-## Menjalankan Cypress (interactive)
+2. Configure local secrets.
 
 ```powershell
-$env:CYPRESS_baseUrl="https://dev-v2.satuinbox.com"; $env:CYPRESS_loginType="cekerayam01"; npx cypress open
+Copy-Item .env.example .env
 ```
 
-## Menjalankan Widget Socket Load Test
-
-### Opsi 1 (single-line)
+3. Run Playwright.
 
 ```powershell
-$env:BASE_URL="https://dev-v2.satuinbox.com"; $env:LOG_LEVEL="debug"; $env:MODE="throughput"; $env:TARGET_CONNECTIONS="50"; $env:RUN_DURATION_MS="300000"; node scripts/widget-socket-load-2.js
+npm run pw:test:chrome
+npm run pw:report
 ```
 
-### Opsi 2 (dengan EMIT_EVERY_MS)
+4. Run load test example.
 
 ```powershell
-$env:BASE_URL="https://dev-v2.satuinbox.com"; $env:MODE="throughput"; $env:TARGET_CONNECTIONS="50"; $env:RUN_DURATION_MS="300000"; $env:EMIT_EVERY_MS="200"; $env:LOG_LEVEL="info"; node scripts/widget-socket-load-2.js
-```
-
-### Opsi 3 (prepare mode)
-
-```powershell
-$env:BASE_URL="https://dev-v2.satuinbox.com"
-$env:MODE="throughput"
-$env:TARGET_CONNECTIONS="50"
-$env:PREPARE_MODE="perClient"
-$env:RUN_DURATION_MS="300000"
-$env:EMIT_EVERY_MS="200"
-$env:LOG_LEVEL="info"
-node scripts/widget-socket-load-2.js
-```
-
-## Menjalankan Stress Test QR (k6)
-
-```powershell
-$env:BASE_URL="https://dev-v2.satuinbox.com"
-$env:CYPRESS_loginType="cekerayam01"
-node scripts/print-k6-env-from-cypress.js | Invoke-Expression
-k6 run .\k6\wa_qr_fullflow.js
-```
-
-k6 run --vus 100 --duration 5m `  -e BASE_URL=https://dev-v2.satuinbox.com`
-"C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\k6\socketLoadMultichannel.js"
-
-k6 run --vus 50 --duration 5m `  -e BASE_URL=https://dev-v2.satuinbox.com`
--e MODE=throughput `  -e EMIT_EVERY_MS=200`
-"C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\k6\socketLoadMultichannel.js"
-
-## Script npm yang tersedia
-
-```powershell
+$env:BASE_URL="https://app.example.test"
+$env:SIGNATURE_KEY="replace-with-ci-secret"
 npm run widget:socket:load
-npm run widget:socket:load-2
-npm run wa:qr:health
-npm run proxy:precheck
-npm run copysend
-npm run sendemail
 ```
 
-## Referensi Command
+## Documentation
 
-Daftar command manual tersimpan di:
+- `docs/case-study.md` - portfolio story, problem, solution, and outcomes.
+- `docs/test-strategy.md` - coverage model, selector strategy, and CI approach.
+- `docs/security-and-sanitization.md` - what was redacted before publishing.
+- `docs/loadTests.md` - load and health-check command reference.
 
-- `cypress/e2e/1commandLine.js`
+## Security Note
+
+This repo is intended for portfolio review. Use `.env.example` as a template and keep real credentials in local `.env` files or CI secret storage only.

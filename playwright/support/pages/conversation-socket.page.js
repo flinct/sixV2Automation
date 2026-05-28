@@ -11,49 +11,16 @@ class ConversationSocketPage {
   }
 
   resolveEnvironmentConfig(baseUrl) {
-    if (baseUrl.includes('ngrok-free.dev')) {
-      return {
-        channelId: '694222d0c553d64073737291',
-        signatureKey: 'sk_mi83pedn_PmN_rMg_OpaV0ecMFtfheZZXoLcdf8N7',
-        accountChannels: [
-          { id: '69422310c553d640737372a6', topic: 'amatukam-test widget' },
-          { id: '69684f3fb4118ee5f0a315ba', topic: 'test timestaps-test topik' },
-        ],
-        conversationSocket: `wss://${baseUrl}/conversations`,
-      };
-    }
+    const accountChannels = process.env.CONVERSATION_ACCOUNT_CHANNELS_JSON
+      ? JSON.parse(process.env.CONVERSATION_ACCOUNT_CHANNELS_JSON)
+      : [{ id: process.env.CONVERSATION_ACCOUNT_CHANNEL_ID || 'account-channel-id', topic: process.env.CONVERSATION_TOPIC || 'general' }];
 
-    if (baseUrl.includes('dev-v2.satuinbox.com')) {
-      return {
-        channelId: '692fe8eaaff05e8a1623e0d3',
-        signatureKey: 'sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if',
-        accountChannels: [
-          { id: '698ef3aada258f2a5a46bf89', topic: 'hey' },
-          { id: '6964ac1d2a5dbde9a5c6fa28', topic: 'tumbler biru' },
-          { id: '69783b0154be8e7508b4af08', topic: 'CS harga' },
-          { id: '69782d3654be8e7508b4abfe', topic: 'Complain' },
-          { id: '6964ab6929de985a0fe73e48', topic: 'kipas angin' },
-        ],
-        conversationSocket: `wss://${baseUrl}/conversations`,
-      };
-    }
-
-    if (baseUrl.includes('v2.satuinbox.com')) {
-      return {
-        channelId: '692fe8eaaff05e8a1623e0d3',
-        signatureKey: 'sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if',
-        accountChannels: [
-          { id: '6996bcd952ef87df9e414fd3', topic: 'Complain' },
-          { id: '69649c6b905d65859c36f81c', topic: 'remote control' },
-          { id: '697845cf1782f1bd889b6bfc', topic: 'CS harga' },
-          { id: '6964931c905d65859c36f618', topic: 'kipas angin' },
-          { id: '69a9c8c86e7924748d4af383', topic: 'Hayoh kumaha' },
-        ],
-        conversationSocket: `wss://${baseUrl}/conversations`,
-      };
-    }
-
-    throw new Error(`Unknown baseUrl: ${baseUrl}`);
+    return {
+      channelId: process.env.CONVERSATION_CHANNEL_ID || 'channel-id',
+      signatureKey: process.env.CONVERSATION_WIDGET_SIGNATURE_KEY || '',
+      accountChannels,
+      conversationSocket: `${process.env.CONVERSATION_SOCKET_URL || `wss://${baseUrl}`}/conversations`,
+    };
   }
 
   async connectSocket(token) {

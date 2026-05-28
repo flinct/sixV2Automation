@@ -1,7 +1,7 @@
 const baseUrl = Cypress.config("baseUrl");
 class elementNavigation {
   defaultUrl() {
-    // cy.visit("https://dev-v2.satuinbox.com/id");
+    // cy.visit("https://dev.example.test/id");
     // cy.visit(baseUrl + "/id/conversation/your-inbox");
     // cy.visit("/id/conversation/your-inbox");
     // cy.visit(baseUrl);

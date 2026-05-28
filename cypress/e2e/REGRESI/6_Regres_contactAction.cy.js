@@ -39,7 +39,7 @@ describe('testing auth page', ()=>{
     });
     
   it.only('handover chat at unassigned tab', () => {
-    cy.visit('https://dev.satuinbox.com/contact');
+    cy.visit('https://dev.example.test/contact');
     cy.viewport(1366, 768);
     contactAction.elementCheckingContactPage();
   });

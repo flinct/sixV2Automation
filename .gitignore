@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Playwright output
+playwright/reports/
+playwright/test-results/
+test-results/
+playwright/.cache/
+
+# Cypress output
+cypress/reports/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+cypress/logs/
+
+# Load-test and generated reports
+k6/report/
+scripts/report/
+summary*.txt
+summary*.html
+docker-*.log
+docker-compose-*.log
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

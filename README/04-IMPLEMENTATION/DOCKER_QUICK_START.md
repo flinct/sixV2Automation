@@ -34,7 +34,7 @@ docker system df
 **Buka PowerShell di project directory:**
 
 ```powershell
-cd "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation"
+cd "<repo>"
 ```
 
 **Create file: `Dockerfile`**
@@ -51,7 +51,7 @@ RUN npm ci --production
 COPY scripts/ ./scripts/
 RUN mkdir -p scripts/report
 
-ENV BASE_URL=https://dev-v2.satuinbox.com
+ENV BASE_URL=https://dev.example.test
 ENV MODE=throughput
 ENV TARGET_CONNECTIONS=50
 ENV RUN_DURATION_MS=300000
@@ -84,7 +84,7 @@ services:
     container_name: load-test-machine-1
     hostname: load-test-1
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: https://dev.example.test
       MODE: throughput
       TARGET_CONNECTIONS: 50
       RUN_DURATION_MS: 300000
@@ -100,7 +100,7 @@ services:
     container_name: load-test-machine-2
     hostname: load-test-2
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: https://dev.example.test
       MODE: throughput
       TARGET_CONNECTIONS: 50
       RUN_DURATION_MS: 300000
@@ -118,7 +118,7 @@ services:
     container_name: load-test-machine-3
     hostname: load-test-3
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: https://dev.example.test
       MODE: throughput
       TARGET_CONNECTIONS: 50
       RUN_DURATION_MS: 300000
@@ -152,7 +152,7 @@ ls docker-compose.yml
 
 ```powershell
 # Go to project directory
-cd "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation"
+cd "<repo>"
 
 # Build image (pertama kali, ambil 2-3 menit)
 docker-compose build
@@ -327,13 +327,13 @@ docker-compose build --no-cache
 docker-compose up
 ```
 
-### Cannot reach server (dev-v2.satuinbox.com)
+### Cannot reach server (dev.example.test)
 ```powershell
 # Test dari container
 docker exec load-test-machine-1 ping 8.8.8.8
 
 # Check DNS
-docker exec load-test-machine-1 nslookup dev-v2.satuinbox.com
+docker exec load-test-machine-1 nslookup dev.example.test
 ```
 
 ---

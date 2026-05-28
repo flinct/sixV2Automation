@@ -13,9 +13,9 @@ const loginType = Cypress.env("loginType");
 
 const config = env_config(baseUrl);
 
-const customer_number = 6289655057778;
+const customer_number = 6280000000000;
 
-const customerNumber = "6289655057778";
+const customerNumber = "6280000000000";
 
 class inboxPage {
   activeChannel = null;

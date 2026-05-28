@@ -90,12 +90,9 @@ function envStr(name, def) {
 }
 
 function deriveApiBase(baseUrl) {
+  if (__ENV.API_BASE) return __ENV.API_BASE;
   if (!baseUrl) return "";
-  if (baseUrl === "https://dev-v2.satuinbox.com")
-    return "https://dev-v2-api.satuinbox.com/";
-  if (baseUrl === "https://v2.satuinbox.com")
-    return "https://v2-api.satuinbox.com/";
-  return "";
+  return `${baseUrl.replace(/\/+$/g, "")}/api/v1`;
 }
 
 function joinUrl(base, path) {

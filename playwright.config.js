@@ -1,24 +1,28 @@
 const { defineConfig, devices } = require('@playwright/test');
-const path = require('path');
+require('dotenv').config();
 
 const ENV = process.env.ENV || 'dev';
 
+function envValue(name, fallback) {
+  return process.env[name] || fallback;
+}
+
 const environments = {
   local: {
-    baseURL: 'http://localhost:3002',
-    apiBase: 'https://dev-v2-api.satuinbox.com/',
+    baseURL: envValue('LOCAL_BASE_URL', 'http://localhost:3002'),
+    apiBase: envValue('LOCAL_API_BASE', 'http://localhost:3000/'),
   },
   dev: {
-    baseURL: 'https://dev-v2.satuinbox.com',
-    apiBase: 'https://dev-v2-api.satuinbox.com/',
+    baseURL: envValue('DEV_BASE_URL', envValue('E2E_BASE_URL', 'https://app.example.test')),
+    apiBase: envValue('DEV_API_BASE', envValue('E2E_API_BASE', 'https://api.example.test/')),
   },
   staging: {
-    baseURL: 'https://staging.satuinbox.com',
-    apiBase: 'https://staging.satuinbox.com/api/v1',
+    baseURL: envValue('STAGING_BASE_URL', 'https://staging.example.test'),
+    apiBase: envValue('STAGING_API_BASE', 'https://staging-api.example.test/'),
   },
   prod: {
-    baseURL: 'https://v2.satuinbox.com',
-    apiBase: 'https://v2-api.satuinbox.com/',
+    baseURL: envValue('PROD_BASE_URL', 'https://app.example.test'),
+    apiBase: envValue('PROD_API_BASE', 'https://api.example.test/'),
   },
 };
 

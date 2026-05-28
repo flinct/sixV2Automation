@@ -11,7 +11,7 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.4/index.js";
  *   login (auto refresh) -> create account-channel -> init instance -> poll QR
  *
  * Credentials + x-api-key can be populated from Cypress mapping via:
- *   $env:BASE_URL="https://dev-v2.satuinbox.com"
+ *   $env:BASE_URL="https://app.example.test"
  *   $env:CYPRESS_loginType="cekerayam01"
  *   node scripts/print-k6-env-from-cypress.js | Invoke-Expression
  *
@@ -143,11 +143,11 @@ const TOKEN_REFRESH_SKEW_SEC = __ENV.TOKEN_REFRESH_SKEW_SEC
   : 60;
 
 if (!BASE_URL) {
-  throw new Error("Missing BASE_URL (e.g. https://dev-v2.satuinbox.com)");
+  throw new Error("Missing BASE_URL (e.g. https://app.example.test)");
 }
 if (!API_BASE) {
   throw new Error(
-    "Unable to derive API_BASE from BASE_URL. Set API_BASE explicitly (e.g. https://dev-v2-api.satuinbox.com/)",
+    "Unable to derive API_BASE from BASE_URL. Set API_BASE explicitly (e.g. https://api.example.test/)",
   );
 }
 if (!LOGIN_PASSWORD || (!LOGIN_IDENTIFIER && !LOGIN_KEYWORD)) {
@@ -158,11 +158,9 @@ if (!LOGIN_PASSWORD || (!LOGIN_IDENTIFIER && !LOGIN_KEYWORD)) {
 
 function deriveApiBase(baseUrl) {
   if (!baseUrl) return "";
-  if (baseUrl === "https://dev-v2.satuinbox.com")
-    return "https://dev-v2-api.satuinbox.com/";
-  if (baseUrl === "https://v2.satuinbox.com")
-    return "https://v2-api.satuinbox.com/";
-  return "";
+  if (__ENV.API_BASE) return __ENV.API_BASE;
+  if (!baseUrl) return "";
+  return `${baseUrl.replace(/\/+$/g, "")}/api/v1`;
 }
 
 function joinUrl(base, path) {

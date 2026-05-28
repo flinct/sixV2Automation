@@ -8,13 +8,13 @@
 // Cypress.Commands.add("connectSocket", (token, baseUrl) => {
 //   return new Cypress.Promise((resolve) => {
 //     socketInstance = io(config.conversationSocket, {
-//       // socketInstance = io("https://dev-v2-api.satuinbox.com/conversations", {
+//       // socketInstance = io("https://dev-api.example.test/conversations", {
 //       // socketInstance = io("https://unwinded-diann-protrusile.ngrok-free.dev/", {
 //       transports: ["websocket"],
 //       forceNew: true,
 //       auth: token ? { token } : undefined,
 //       extraHeaders: {
-//         Origin: "https://dev-v2.satuinbox.com",
+//         Origin: "https://dev.example.test",
 //       },
 //     });
 //     Cypress.log({ name: "SOCKET URL", message: `${baseUrl}/conversations` });

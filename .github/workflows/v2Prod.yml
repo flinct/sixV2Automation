@@ -23,7 +23,7 @@ jobs:
 
       - name: Cypress run - SAP
         env:
-          CYPRESS_baseUrl: "https://sap.satuinbox.com"
+          CYPRESS_baseUrl: "https://sap.example.test"
         run: npx cypress run --spec "cypress/e2e/1SAP-send random message2-8.cy.js"
 
   

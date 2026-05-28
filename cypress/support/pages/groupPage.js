@@ -8,7 +8,7 @@ class groupPage {
     cy.softAssert(cy.nav_link_Group().click(), "navigate to group chat");
     cy.wait(1000);
     cy.url().then((url) => {
-      // if (url === "https://dev.satuinbox.com/group") {
+      // if (url === "https://dev.example.test/group") {
       if (
         /^(https:\/\/(dev|staging|ticketing)\.satuinbox\.com\/group)$/.test(url)
       ) {

@@ -12,7 +12,7 @@ function getHeaderByLoginType(config, baseUrl, loginType) {
     if (loginType === "crm_dev") return config.loginBody_crm;
     if (loginType === "tlc_dev") return config.loginBody_tlc;
   }
-  if (baseUrl === "https://dev-v2.satuinbox.com") {
+  if (baseUrl === "https://dev.example.test") {
     if (loginType === "chickentester") return config.loginBody_CT2;
     if (loginType === "cekerayam01") return config.loginBody_cekerayam01;
     if (loginType === "testerdummy01") return config.loginBody_testerdummy01;
@@ -25,7 +25,7 @@ function getHeaderByLoginType(config, baseUrl, loginType) {
     if (loginType === "crm_dev") return config.loginBody_crm;
     if (loginType === "tlc_dev") return config.loginBody_tlc;
   }
-  if (baseUrl === "https://v2.satuinbox.com") {
+  if (baseUrl === "https://v2.example.test") {
     if (loginType === "tantaffgo") return config.header_tantaffgo;
     if (loginType === "danyatmin01") return config.header_tantaffgo;
     if (loginType === "danyspv01") return config.loginBody_danyspvsatu;
@@ -53,7 +53,7 @@ function getLoginBodyByLoginType(config, baseUrl, loginType) {
     if (loginType === "tlc_dev") return config.loginBody_tlc;
   }
 
-  if (baseUrl === "https://dev-v2.satuinbox.com") {
+  if (baseUrl === "https://dev.example.test") {
     if (loginType === "chickentester") return config.loginBody_CT2;
     if (loginType === "cekerayam01") return config.loginBody_cekerayam01;
     if (loginType === "testerdummy01") return config.loginBody_testerdummy01;
@@ -66,7 +66,7 @@ function getLoginBodyByLoginType(config, baseUrl, loginType) {
     if (loginType === "crm_dev") return config.loginBody_crm;
     if (loginType === "tlc_dev") return config.loginBody_tlc;
   }
-  if (baseUrl === "https://v2.satuinbox.com") {
+  if (baseUrl === "https://v2.example.test") {
     if (loginType === "tantaffgo") return config.loginBody_tantaffgo;
     if (loginType === "danyatmin01") return config.loginBody_danyatminsatu;
     if (loginType === "danyspv01") return config.loginBody_danyspvsatu;

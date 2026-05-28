@@ -12,7 +12,7 @@
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
 // Cypress.Commands.add('visit',() =>{
-//     cy.visit('https://dev.satuinbox.com/');
+//     cy.visit('https://dev.example.test/');
 // })
 
 import { regexp } from "assert-plus";

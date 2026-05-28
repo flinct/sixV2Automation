@@ -4,31 +4,31 @@ export function env_config(baseUrl) {
   // cy.log(baseUrl);
   let base;
   if (baseUrl === "http://localhost:3002") {
-    base = "https://dev-v2-api.satuinbox.com/";
+    base = "https://dev-api.example.test/";
     // return base;
   }
-  if (baseUrl === "https://dev.satuinbox.com") {
-    base = "https://dev.satuinbox.com/api/v1";
+  if (baseUrl === "https://dev.example.test") {
+    base = "https://dev.example.test/api/v1";
     // return base;
   }
-  if (baseUrl === "https://staging.satuinbox.com") {
-    base = "https://staging.satuinbox.com/api/v1";
+  if (baseUrl === "https://staging.example.test") {
+    base = "https://staging.example.test/api/v1";
     // return base;
   }
-  if (baseUrl === "https://dev-v2.satuinbox.com") {
-    base = "https://dev-v2-api.satuinbox.com/";
+  if (baseUrl === "https://dev.example.test") {
+    base = "https://dev-api.example.test/";
     // return base;
   }
-  if (baseUrl === "https://v2.satuinbox.com") {
-    base = "https://v2-api.satuinbox.com/";
+  if (baseUrl === "https://v2.example.test") {
+    base = "https://api.example.test/";
     // return base;
   }
   if (
     baseUrl !== "http://localhost:3002" &&
-    baseUrl !== "https://dev.satuinbox.com" &&
-    baseUrl !== "https://staging.satuinbox.com" &&
-    baseUrl !== "https://dev-v2.satuinbox.com" &&
-    baseUrl !== "https://v2.satuinbox.com"
+    baseUrl !== "https://dev.example.test" &&
+    baseUrl !== "https://staging.example.test" &&
+    baseUrl !== "https://dev.example.test" &&
+    baseUrl !== "https://v2.example.test"
   ) {
     throw new Error(`Unknown baseUrl: ${baseUrl}`);
   }
@@ -485,86 +485,86 @@ export function env_config(baseUrl) {
     visitStatistic: "/statistic",
     //--------------PATH-----------------
 
-    loginBody: { keyword: "goddummyprod", password: "TongTji89" },
-    loginBody_GD_dev: { keyword: "goddummy", password: "asdqwe12" },
+    loginBody: { keyword: "goddummyprod", password: "TestPassword1!" },
+    loginBody_GD_dev: { keyword: "goddummy", password: "testpassword1" },
     loginBody_testing270520252: {
       keyword: "testing270520252",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
-    loginBody_CT: { keyword: "chickentester01", password: "asdqwe12" },
-    loginBody_ms2: { keyword: "messagelogdua", password: "Asdqwe12@" },
+    loginBody_CT: { keyword: "chickentester01", password: "testpassword1" },
+    loginBody_ms2: { keyword: "messagelogdua", password: "TestPassword1!" },
     loginBody_prodtestingjuli: {
       keyword: "prodtestingjuli",
-      password: "asdqwe12",
+      password: "testpassword1",
     },
     loginBody_prodtestingakun1dua: {
       keyword: "prodtestingakun1dua",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     loginBody_goddumstag: {
       keyword: "goddumstag",
-      password: "Asdqwe12!",
+      password: "TestPassword1!",
     },
 
     //---------goddummyprod2 SAP----------
     loginBody_goddummyprod2: {
       identifier: "goddummyprod2",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     //---------goddummyprod2 SAP----------
 
     //---------tester dummy prod -------
     // loginBody_testerdummy01: {
     //   identifier: "testerdummy01",
-    //   password: "Asdqwe12@",
+    //   password: "TestPassword1!",
     // },
     loginBody_testerdummy01: {
       identifier: "testerdummyprod01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     //---------tester dummy prod -------
 
     //----------tantaffgo---------- prod
     loginBody_tantaffgo: {
       identifier: "tantaffgo01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     loginBody_danyatminsatu: {
       //adm
       identifier: "danyatmin01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     loginBody_danyspvsatu: {
       //spv
       identifier: "danyspv01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     loginBody_danyaagentsatu: {
       //agent
       identifier: "danyagent01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     //----------tantaffgo----------
 
     //-------chickentester-------- dev
     loginBody_CT2: {
       identifier: "chickentester01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     loginBody_cekerayam01: {
       //adm
       identifier: "cekerayam01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     loginBody_mataayam01: {
       //spv
       identifier: "mataayam01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     loginBody_leherayam01: {
       //agent
       identifier: "leherayam01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
     },
     //-------chickentester--------
 
@@ -573,44 +573,44 @@ export function env_config(baseUrl) {
     loginBody_supervisor: {
       //agent
       identifier: "pusatadmin10",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     loginBody_agent: {
       //agent
       identifier: "aprilch",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     loginBody_crm: {
       //agent
       identifier: "crmagent01",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     loginBody_tlc: {
       //agent
       identifier: "jbaagent01",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
 
     //prod
     loginBody_supervisorProd: {
       //agent
       identifier: "pusatadmin10",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     loginBody_agentProd: {
       //agent
       identifier: "aprilch",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     loginBody_crmProd: {
       //agent
       identifier: "crmagent01",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     loginBody_tlcProd: {
       //agent
       identifier: "jbaagent01",
-      password: "Password1@",
+      password: "TestPassword1!",
     },
     //-------roleValidation--------
 
@@ -618,20 +618,20 @@ export function env_config(baseUrl) {
       //goddummyprod
       "x-api-key":
         // "ae1bd41cfbe437bb5755068ab5d2038aa240660d87c5cdca0f69001a3a52e3c5",
-        "10f1d5e1eb1ea0cb632f2d02edf2ccf896efb73123e7b3f484db5cb52a19dbc6",
+        "REDACTED_API_KEY",
     },
     header_tantaffgo: {
-      "x-signature-key": "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
+      "x-signature-key": "sk_REDACTED",
     },
     header_automation01: {
-      "x-signature-key": "sk_moic2ycf_nXXxomZIUKhIE-p493wF3biOfdK_th4h",
+      "x-signature-key": "sk_REDACTED",
     },
     randomGlobalDelay: Math.floor(Math.random() * 1800000) + 60000, //1 menit + random wait time
     randomGlobalDelayStaging: Math.floor(Math.random() * 2000) + 10000, //1 menit + random wait time
-    parentNumber: "6285147211094",
-    parentNumber2: "6285135431734",
-    targetMessage_me: "6289655057778",
-    targetMessage_dummy: "6285135431270",
+    parentNumber: "6280000000000",
+    parentNumber2: "6280000000000",
+    targetMessage_me: "6280000000000",
+    targetMessage_dummy: "6280000000000",
   };
 
   // const config = environmentConfig[baseUrl];

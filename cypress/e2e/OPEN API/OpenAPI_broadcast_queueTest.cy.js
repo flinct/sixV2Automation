@@ -47,26 +47,26 @@ describe("Open API broadcast", () => {
         {
           name: "{{bcName}} \n sender {{senderValue}} \n or teamInboxId : {{teamInboxIdValue}}",
           channel: "whatsapp_web",
-          teamInboxId: "{{teamInboxIdValue}}", //"6285147210475" > milo dino > CT dev - 2
+          teamInboxId: "{{teamInboxIdValue}}", //"6280000000000" > milo dino > CT dev - 2
           //   "teamInboxId": "695ddaa2c68b8965d1cd9390",
-          //   "teamInboxId": "693673cbb7fe7a8631b34627", //+6285135425714 > raydric archer > CT dev - 2
+          //   "teamInboxId": "693673cbb7fe7a8631b34627", //6280000000000 > raydric archer > CT dev - 2
           //   "sender": "628514721", //
-          //   "sender": "6285147211094", //hello world
-          //   "sender": "6285147406307", //superman
-          //   "sender": "6285119477345", //w3schooll
-          //   "sender": "6285135425714", //CT dev - 2
-          //   "sender": "6285135431734", //tantaffgo PROD
+          //   "sender": "6280000000000", //hello world
+          //   "sender": "6280000000000", //superman
+          //   "sender": "6280000000000", //w3schooll
+          //   "sender": "6280000000000", //CT dev - 2
+          //   "sender": "6280000000000", //tantaffgo PROD
           sender: "{{senderValue}}",
-          //   "sender": "6285177846734", //tested dummy
-          //   "sender": "6285147211089", //satuinbox01-2
-          //   "sender": "6285135431746",
-          //   "sender": "6285119477317", //nomor testing 1
-          //   "sender": "6285185064773", //nomor testing 2
-          audience: ["6289655057778"],
+          //   "sender": "6280000000000", //tested dummy
+          //   "sender": "6280000000000", //satuinbox01-2
+          //   "sender": "6280000000000",
+          //   "sender": "6280000000000", //nomor testing 1
+          //   "sender": "6280000000000", //nomor testing 2
+          audience: ["6280000000000"],
           // "message": "{{randomQuote}} , {{scheduleAt}},{{senderValue}}",
           message:
             "{{randomQuote}} , {{scheduleAt}}, test BC from {{senderValue}}",
-          //   "message": "Pelanggan kami yang terhormat Tim delivery kami MALEACHI ARGA KRISWANTO - 6285147210617 telah mengantarkan paket Anda dengan No.AWB JKT1500213675851, namun tidak sukses terkirim karena ALAMAT TIDAK SESUAI dan saat ini paket dalam proses pengembalian ke cabang. Untuk detailnya dapat diakses ke Website SAP Express ",
+          //   "message": "Pelanggan kami yang terhormat Tim delivery kami MALEACHI ARGA KRISWANTO - 6280000000000 telah mengantarkan paket Anda dengan No.AWB JKT1500213675851, namun tidak sukses terkirim karena ALAMAT TIDAK SESUAI dan saat ini paket dalam proses pengembalian ke cabang. Untuk detailnya dapat diakses ke Website SAP Express ",
           //   "message": "",
           //   "message": "Halo 👋🙂, paket kamu sudah dikirim 🚚📦",
           scheduleAt: "{{scheduleAt}}",
@@ -125,8 +125,8 @@ describe("Open API broadcast", () => {
     messagePrefix = "",
   ) {
     const responseTimes = [];
-    // const staticNumber = 6285135425714; //staging
-    // const staticNumber = 6285158876037; //dev
+    // const staticNumber = 6280000000000; //staging
+    // const staticNumber = 6280000000000; //dev
 
     // accountList.forEach((accountNumbers) => {
     cy.wait(delayBetween).then(() => {
@@ -189,7 +189,7 @@ describe("Open API broadcast", () => {
     cy.task("log", "start");
     getAllList();
     const dummyNumbers = [
-      6285135425714, 6285147211084, 6285135431231,
+      6280000000000, 6280000000000, 6280000000000,
       // , 4, 5, 6, 7, 8
     ];
 
@@ -264,45 +264,45 @@ describe("Open API broadcast", () => {
     let prefix = "";
     let staticNumber = "";
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       delay = config.randomGlobalDelayStaging;
       delay = 0;
       prefix = "";
-      // staticNumber = 6285158876037; //dev
-      // staticNumber = 6285198965689; //dev messagelogsatu
+      // staticNumber = 6280000000000; //dev
+      // staticNumber = 6280000000000; //dev messagelogsatu
       if (loginType === "chickentester") {
-        staticNumber = 6285147210593; //dev chickentester 851 4721 0593
+        staticNumber = 6280000000000; //dev chickentester 851 4721 0593
       }
       if (loginType === "messagelogdua") {
-        staticNumber = 6285147211094; //dev chickentester 851 4721 0593
+        staticNumber = 6280000000000; //dev chickentester 851 4721 0593
       }
       if (loginType === "goddummy") {
-        staticNumber = 6285147210544; //dev chickentester 851 4721 0593
+        staticNumber = 6280000000000; //dev chickentester 851 4721 0593
       }
-      // staticNumber = 6285147210557; //dev chickentester 851 4721 0557
-    } else if (baseUrl === "https://staging.satuinbox.com") {
+      // staticNumber = 6280000000000; //dev chickentester 851 4721 0557
+    } else if (baseUrl === "https://staging.example.test") {
       delay = config.randomGlobalDelayStaging;
       prefix = "STAGING :";
       if (loginType === "chickentester") {
-        staticNumber = 6285147211084; //staging chickentester
+        staticNumber = 6280000000000; //staging chickentester
       }
-    } else if (baseUrl === "https://stagaws.satuinbox.com") {
+    } else if (baseUrl === "https://staging-aws.example.test") {
       delay = config.randomGlobalDelayStaging;
       prefix = "STAGING :";
       if (loginType === "chickentester") {
-        staticNumber = 6285147211084; //staging chickentester
+        staticNumber = 6280000000000; //staging chickentester
       }
     } else {
       // delay = config.randomGlobalDelay;
       delay = config.randomGlobalDelayStaging;
       // prefix = "PROD :";
       prefix = "";
-      // staticNumber = 6285135431722; //testing270520252
-      // staticNumber = 6285135431746; //testing270520252
-      // staticNumber = 6285158876037; //testing270520252 -tiana-
-      // staticNumber = 6285147210595; //prodtestingjuli
-      // staticNumber = 6285147211097; //prodtestingjuli
-      staticNumber = 6285135424828; //prodtestingjuli
+      // staticNumber = 6280000000000; //testing270520252
+      // staticNumber = 6280000000000; //testing270520252
+      // staticNumber = 6280000000000; //testing270520252 -tiana-
+      // staticNumber = 6280000000000; //prodtestingjuli
+      // staticNumber = 6280000000000; //prodtestingjuli
+      staticNumber = 6280000000000; //prodtestingjuli
     }
 
     // sendBroadcastMessage(accountNumbers, delay, prefix);

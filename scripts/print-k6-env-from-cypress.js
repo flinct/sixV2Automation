@@ -3,7 +3,7 @@
  * Print PowerShell env assignments for k6 from Cypress config.
  *
  * Usage (PowerShell):
- *   $env:BASE_URL="https://dev-v2.satuinbox.com"
+ *   $env:BASE_URL="https://dev.example.test"
  *   $env:CYPRESS_loginType="cekerayam01"
  *   node scripts/print-k6-env-from-cypress.js | Invoke-Expression
  *

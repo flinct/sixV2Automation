@@ -4,7 +4,7 @@
 
 All HTML reports are now saved to:
 ```
-C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report
+<repo>\scripts\report
 ```
 
 This directory is **automatically created** if it doesn't exist.
@@ -24,7 +24,7 @@ Format: `load-test-YYYY-MM-DD-HHMMSS.html`
 
 ### Option 1: Use Default Directory (Simplest)
 ```powershell
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "throughput"
 $env:TARGET_CONNECTIONS = "50"
 node scripts/widget-socket-load-2.js
@@ -35,7 +35,7 @@ node scripts/widget-socket-load-2.js
 ### Option 2: Custom Directory (Override)
 ```powershell
 $env:REPORT_OUTPUT = "C:\custom\path\my-report.html"
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 node scripts/widget-socket-load-2.js
 
 # Report saved to: C:\custom\path\my-report.html
@@ -43,8 +43,8 @@ node scripts/widget-socket-load-2.js
 
 ### Option 3: Custom Filename with Default Directory
 ```powershell
-$env:REPORT_OUTPUT = "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\my-custom-name.html"
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:REPORT_OUTPUT = "<repo>\scripts\report\my-custom-name.html"
+$env:BASE_URL = "https://dev.example.test"
 node scripts/widget-socket-load-2.js
 
 # Report saved to: scripts/report/my-custom-name.html
@@ -69,25 +69,25 @@ sixV2Automation/
 
 ### Method 1: PowerShell - Open Latest Report
 ```powershell
-$latestReport = Get-ChildItem "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report" -Filter "*.html" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+$latestReport = Get-ChildItem "<repo>\scripts\report" -Filter "*.html" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 Invoke-Item $latestReport.FullName
 ```
 
 ### Method 2: Windows Explorer
 ```powershell
-explorer "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report"
+explorer "<repo>\scripts\report"
 ```
 
 Then double-click any `.html` file to open in browser.
 
 ### Method 3: Direct Path
 ```powershell
-Invoke-Item "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\load-test-2026-04-09-143000.html"
+Invoke-Item "<repo>\scripts\report\load-test-2026-04-09-143000.html"
 ```
 
 ### Method 4: Python HTTP Server
 ```powershell
-cd "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report"
+cd "<repo>\scripts\report"
 python -m http.server 8000
 
 # Then open: http://localhost:8000
@@ -106,7 +106,7 @@ python -m http.server 8000
 ### REPORT_OUTPUT
 - **Type**: String (file path)
 - **Default**: Auto-generated in `scripts/report/` folder
-- **Example**: `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\my-test.html`
+- **Example**: `<repo>\scripts\report\my-test.html`
 
 If not specified:
 - Directory: `scripts/report/` (auto-created)
@@ -127,7 +127,7 @@ If not specified:
 [INFO ] progress { created: 50, connected: 50, emits: 5000 }
 ...
 [INFO ] done { created: 50, connected: 50, connectErrors: 0, emits: 72939 }
-[REPORT] HTML report generated: C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\load-test-2026-04-09-143000.html
+[REPORT] HTML report generated: <repo>\scripts\report\load-test-2026-04-09-143000.html
 ```
 
 ## Accessing Reports Programmatically
@@ -138,7 +138,7 @@ const { generateHTMLReport, DEFAULT_REPORT_DIR } = require('./report-generator')
 
 // Reports are saved in DEFAULT_REPORT_DIR
 console.log('Reports location:', DEFAULT_REPORT_DIR);
-// Output: C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report
+// Output: <repo>\scripts\report
 
 // List all reports
 const fs = require('fs');
@@ -152,15 +152,15 @@ To delete old reports:
 
 ```powershell
 # Delete reports older than 30 days
-Get-ChildItem "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report" -Filter "*.html" | 
+Get-ChildItem "<repo>\scripts\report" -Filter "*.html" | 
   Where-Object {$_.LastWriteTime -lt (Get-Date).AddDays(-30)} | 
   Remove-Item
 
 # Or delete all reports
-Remove-Item "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\*"
+Remove-Item "<repo>\scripts\report\*"
 
 # Keep only latest 5 reports
-Get-ChildItem "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report" -Filter "*.html" | 
+Get-ChildItem "<repo>\scripts\report" -Filter "*.html" | 
   Sort-Object LastWriteTime -Descending | 
   Select-Object -Skip 5 | 
   Remove-Item
@@ -177,7 +177,7 @@ Get-ChildItem "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report" -
 **Solution**: 
 ```powershell
 # Set full control permissions
-icacls "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report" /grant:r "%USERNAME%":F /t
+icacls "<repo>\scripts\report" /grant:r "%USERNAME%":F /t
 ```
 
 ### Wrong Directory
@@ -191,14 +191,14 @@ echo $env:REPORT_OUTPUT  # Should be empty for default
 
 ```bash
 # Default location
-C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report
+<repo>\scripts\report
 
 # Run test (auto-generates report)
 node scripts/widget-socket-load-2.js
 
 # Open latest report
-Invoke-Item (Get-ChildItem "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\*.html" | Sort-Object LastWriteTime -Descending | Select-Object -First 1)
+Invoke-Item (Get-ChildItem "<repo>\scripts\report\*.html" | Sort-Object LastWriteTime -Descending | Select-Object -First 1)
 
 # List all reports
-Get-ChildItem "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\*.html"
+Get-ChildItem "<repo>\scripts\report\*.html"
 ```

@@ -52,7 +52,7 @@ describe("Open API broadcast", () => {
     return {
       broadcastMessage: [
         // {
-        //   numberWhatsappCustomer: "6289655057778",
+        //   numberWhatsappCustomer: "6280000000000",
         //   // message: `{[Haloo|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]} ${timestamp}`,
         //   message: [
         //     `{[Haloo|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]} ${timestamp}`,
@@ -72,8 +72,8 @@ describe("Open API broadcast", () => {
         // },
         {
           //test delay wpm
-          numberWhatsappCustomer: "6289655057778",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -87,8 +87,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6282120813181",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -102,8 +102,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6283849306083",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -117,8 +117,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "628817761425",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -132,8 +132,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285121929365",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -147,8 +147,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285722569341",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -162,8 +162,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285795294098",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -177,8 +177,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6287728940621",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -192,8 +192,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6289618319350",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -207,8 +207,8 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "62811224084",
-          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          numberWhatsappCustomer: "6280000000000",
+          message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           // templateId: "86667", // id template broadcast (optional)
           properties: {
             contactName: `asd nama`,
@@ -300,20 +300,20 @@ describe("Open API broadcast", () => {
         );
 
         // const dummyAccount = [
-        //   "6285135574834",
-        //   "6285135574807",
-        //   // "6285135574815",
-        //   // "6285135574816",
-        //   // "6285135574820",
-        //   // "6285135574837",
-        //   // "6285135574825",
-        //   // "6285135574867",
-        //   // "6285135574855",
-        //   // "6285135574853",
-        //   // "6285135574843",
-        //   // "6285135574847",
-        //   // "6285135574840",
-        //   // "6285135574828",
+        //   "6280000000000",
+        //   "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
+        //   // "6280000000000",
         // ];
         // cy.task("log", `check dummy : ${JSON.stringify(dummyAccount.length)}`);
         return cy.wrap(listActive.length);
@@ -396,26 +396,26 @@ describe("Open API broadcast", () => {
       // cy.wrap(accountNumbers).as("accountNumbers");
       // cy.wrap(lisActiveAccountNumbers).as("accountNumbers");
       const dummyAccount = [
-        // "6285147211084",
-        // "6285135425714",
-        "6285135574834",
-        "6285135574885", //suspended number
-        "6285135574807",
-        "6285135574815",
-        // "6285135574834",
-        // "6285135574807",
-        // "6285135574815",
-        // "6285135574816",
-        // "6285135574820",
-        // "6285135574837",
-        // "6285135574825",
-        // "6285135574867",
-        // "6285135574855",
-        // "6285135574853",
-        // "6285135574843",
-        // "6285135574847",
-        // "6285135574840",
-        // "6285135574828",
+        // "6280000000000",
+        // "6280000000000",
+        "6280000000000",
+        "6280000000000", //suspended number
+        "6280000000000",
+        "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
+        // "6280000000000",
       ];
       cy.wrap(dummyAccount).as("accountNumbers");
     });
@@ -429,8 +429,8 @@ describe("Open API broadcast", () => {
     messagePrefix = ""
   ) {
     const responseTimes = [];
-    // const staticNumber = 6285135425714; //staging
-    // const staticNumber = 6285158876037; //dev
+    // const staticNumber = 6280000000000; //staging
+    // const staticNumber = 6280000000000; //dev
 
     // accountList.forEach((accountNumbers) => {
     cy.wait(delayBetween).then(() => {
@@ -481,24 +481,24 @@ describe("Open API broadcast", () => {
   }
 
   const receiverDummy = [
-    6285198965708,
-    6285134815456,
-    6285134815455,
-    6285198966012,
-    6285147210475,
-    6285147210464,
-    6285147211089,
-    6285147210454,
-    6285147210622,
-    6285147210455,
-    6285198970020,
-    6285147211090,
-    6285147210623,
-    6285198966048,
-    6285185030663,
-    6285185030654,
-    6285147028890,
-    6285147028918, //contoh invalid number,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000,
+    6280000000000, //contoh invalid number,
   ];
   function getRandomReceivers(receiverDummy) {
     const randomCount = Math.floor(Math.random() * receiverDummy.length) + 1;
@@ -517,7 +517,7 @@ describe("Open API broadcast", () => {
     timestamp
   ) {
     const messageBody = [
-      `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuotes}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+      `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuotes}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
       `${randomChat}\n\n${randomQuotes}\n\n${timestamp}`,
       `${randomChat2}\n\n${randomQuotes}\n\n${timestamp}`,
 
@@ -600,7 +600,7 @@ describe("Open API broadcast", () => {
     cy.task("log", "start");
     getAllList();
     // const dummyNumbers = [
-    //   6285135425714, 6285147211084, 6285135431231,
+    //   6280000000000, 6280000000000, 6280000000000,
     //   // , 4, 5, 6, 7, 8
     // ];
 
@@ -770,7 +770,7 @@ describe("Open API broadcast", () => {
       //             {
       //               // numberWhatsappCustomer: receiver.toString(),
       //               numberWhatsappCustomer: receiver.toString(),
-      //               // numberWhatsappCustomer: "6289655057778",
+      //               // numberWhatsappCustomer: "6280000000000",
       //               // message: `${randomChat}\n\n${randomQuotes}\n\n${timestamp}`,
       //               message: randomMessage,
       //               properties: {
@@ -1104,9 +1104,9 @@ describe("Open API broadcast", () => {
           //     broadcastMessage: [
           //       {
           //         //test delay wpm
-          //         // numberWhatsappCustomer: "6289655057778",
+          //         // numberWhatsappCustomer: "6280000000000",
           //         numberWhatsappCustomer: receiver,
-          //         message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6285966254483* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6285966254483 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
+          //         message: `{[Hello|Hi|Hey there|How’s it going?|Nice to hear from you|What’s up?]} ${generateRandomName()}\nyour number AWB ${numberAWB()}\n${randomQuote}\n{[Pelanggan yang terhorma\nKurir kami *Gundala* - *6280000000000* telah mengantarkan paket Anda dengan No.AWB *${numberAWB()}*, namun tidak sukses terkirim karena *ALAMAT TIDAK LENGKAP* dan saat ini paket dalam proses pengembalian ke cabang.\nUntuk detailnya dapat diakses ke Website SAP Express\n#Sahabatpengiriman\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah berusaha mengantarkan paket Anda dengan No.AWB ${numberAWB()},\n namun pengiriman tidak berhasil karena NOMOR TELEPON PENERIMA TIDAK VALID.\nSaat ini paket dalam proses pengembalian ke cabang.\nUntuk informasi lebih lanjut dapat diakses melalui Website SAP Express\n#Pengiriman cepat\n#PenyelamatCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mencoba mengantarkan paket Anda dengan No.AWB ${numberAWB()}, namun tidak berhasil karena PENERIMA TIDAK ADA DI TEMPAT. Paket sedang dalam proses pengembalian ke cabang.\nUntuk informasi lebih lengkap silakan cek di Website SAP Express\n#Kirim paket cepat dong!\n#Jagonyacod|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah mengantarkan paket Anda No.AWB ${numberAWB()}, tetapi pengiriman gagal karena ALAMAT SALAH. Paket akan dikembalikan ke cabang.\nDetail lengkap bisa dicek di Website SAP Express\n#Cepat sampai\n#rajanyaCOD|Pelanggan yang terhormat\nKurir kami Gundala - 6280000000000 telah melakukan pengantaran paket No.AWB ${numberAWB()}, namun gagal karena PAKET TIDAK DITERIMA PENERIMA. Saat ini paket sedang dikembalikan ke cabang.\nInformasi lebih lanjut dapat diakses di Website SAP Express\n#Halu kalo pake ga sampai sampai\n#JagonyaPengiriman]}\n{[Wishing you a pleasant day. | I hope you have a wonderful day ahead. | All the best for today. | Have a productive day]}\n\n${timestamp}`,
           //         properties: {
           //           contactName: `asd nama`,
           //           division: `${generateRandomDivision()}`,
@@ -1159,45 +1159,45 @@ describe("Open API broadcast", () => {
     let prefix = "";
     let staticNumber = "";
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       delay = config.randomGlobalDelayStaging;
       delay = 0;
       prefix = "";
-      // staticNumber = 6285158876037; //dev
-      // staticNumber = 6285198965689; //dev messagelogsatu
+      // staticNumber = 6280000000000; //dev
+      // staticNumber = 6280000000000; //dev messagelogsatu
       if (loginType === "chickentester") {
-        staticNumber = 6285147210593; //dev chickentester 851 4721 0593
+        staticNumber = 6280000000000; //dev chickentester 851 4721 0593
       }
       if (loginType === "messagelogdua") {
-        staticNumber = 6285147211094; //dev chickentester 851 4721 0593
+        staticNumber = 6280000000000; //dev chickentester 851 4721 0593
       }
       if (loginType === "goddummy") {
-        staticNumber = 6285147210544; //dev chickentester 851 4721 0593
+        staticNumber = 6280000000000; //dev chickentester 851 4721 0593
       }
-      // staticNumber = 6285147210557; //dev chickentester 851 4721 0557
-    } else if (baseUrl === "https://staging.satuinbox.com") {
+      // staticNumber = 6280000000000; //dev chickentester 851 4721 0557
+    } else if (baseUrl === "https://staging.example.test") {
       delay = config.randomGlobalDelayStaging;
       prefix = "STAGING :";
       if (loginType === "chickentester") {
-        staticNumber = 6285147211084; //staging chickentester
+        staticNumber = 6280000000000; //staging chickentester
       }
-    } else if (baseUrl === "https://stagaws.satuinbox.com") {
+    } else if (baseUrl === "https://staging-aws.example.test") {
       delay = config.randomGlobalDelayStaging;
       prefix = "STAGING :";
       if (loginType === "chickentester") {
-        staticNumber = 6285147211084; //staging chickentester
+        staticNumber = 6280000000000; //staging chickentester
       }
     } else {
       // delay = config.randomGlobalDelay;
       delay = config.randomGlobalDelayStaging;
       // prefix = "PROD :";
       prefix = "";
-      // staticNumber = 6285135431722; //testing270520252
-      // staticNumber = 6285135431746; //testing270520252
-      // staticNumber = 6285158876037; //testing270520252 -tiana-
-      // staticNumber = 6285147210595; //prodtestingjuli
-      // staticNumber = 6285147211097; //prodtestingjuli
-      staticNumber = 6285135424828; //prodtestingjuli
+      // staticNumber = 6280000000000; //testing270520252
+      // staticNumber = 6280000000000; //testing270520252
+      // staticNumber = 6280000000000; //testing270520252 -tiana-
+      // staticNumber = 6280000000000; //prodtestingjuli
+      // staticNumber = 6280000000000; //prodtestingjuli
+      staticNumber = 6280000000000; //prodtestingjuli
     }
 
     // sendBroadcastMessage(accountNumbers, delay, prefix);
@@ -1233,4 +1233,4 @@ describe("Open API broadcast", () => {
     sendBroadcastBetweenAccounts();
   });
 });
-//requestPOST 401 /api/v1/open/broadcast?accountNumberWhatsapp=6285135574825
+//requestPOST 401 /api/v1/open/broadcast?accountNumberWhatsapp=6280000000000

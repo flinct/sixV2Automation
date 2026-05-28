@@ -5,7 +5,7 @@
  * Goal: stress-test conversations socket + widget open-api flow in parallel.
  *
  * Env vars (required unless default noted):
- * - BASE_URL: e.g. https://dev-v2.satuinbox.com or https://v2.satuinbox.com
+ * - BASE_URL: e.g. https://app.example.test
  * - SIGNATURE_KEY: widget x-signature-key (open-api)
  * - X_API_KEY: x-api-key (for api/account-channel list)  [optional]
  *   If omitted, set WIDGET_ACCOUNT_CHANNEL_IDS to a comma-separated list of widget accountChannelId values.
@@ -93,18 +93,10 @@ function uuid() {
 }
 
 function apiBaseFromBaseUrl(baseUrl) {
-  // mirrors cypress/support/01_url_page.js mapping
-  if (baseUrl === "https://dev-v2.satuinbox.com")
-    return "https://dev-v2-api.satuinbox.com/";
-  if (baseUrl === "https://v2.satuinbox.com")
-    return "https://v2-api.satuinbox.com/";
-  if (baseUrl === "https://app.satuinbox.com")
-    return "https://app.satuinbox.com/api/v1";
-  if (baseUrl === "https://dev.satuinbox.com")
-    return "https://dev.satuinbox.com/api/v1";
-  if (baseUrl === "https://staging.satuinbox.com")
-    return "https://staging.satuinbox.com/api/v1";
-  throw new Error(`Unknown BASE_URL mapping: ${baseUrl}`);
+  const apiBase = process.env.API_BASE || process.env.E2E_API_BASE;
+  if (apiBase) return apiBase;
+  if (!baseUrl) throw new Error("Missing BASE_URL or API_BASE");
+  return `${baseUrl.replace(/\/+$/g, "")}/api/v1`;
 }
 
 function joinUrl(base, path) {
@@ -390,36 +382,13 @@ class WidgetAgent {
 function envDefaultsFromBaseUrl(baseUrl) {
   if (typeof baseUrl !== "string") return {};
 
-  // Hardcoded defaults per environment (requested)
-  if (baseUrl.includes("dev-v2.satuinbox.com")) {
-    return {
-      channelId: "692fe8eaaff05e8a1623e0d3",
-      signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
-      accountChannels: [
-        { id: "698ef3aada258f2a5a46bf89", topic: "hey" },
-        { id: "6964ac1d2a5dbde9a5c6fa28", topic: "tumbler biru" },
-        { id: "69783b0154be8e7508b4af08", topic: "CS harga" },
-        { id: "69782d3654be8e7508b4abfe", topic: "Complain" },
-        { id: "6964ab6929de985a0fe73e48", topic: "kipas angin" },
-      ],
-    };
-  }
-
-  if (baseUrl.includes("v2.satuinbox.com")) {
-    return {
-      channelId: "694b55ffbb886b39e785d2c0",
-      signatureKey: "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
-      accountChannels: [
-        { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
-        { id: "69649c6b905d65859c36f81c", topic: "remote control" },
-        { id: "697845cf1782f1bd889b6bfc", topic: "CS harga" },
-        { id: "6964931c905d65859c36f618", topic: "kipas angin" },
-        { id: "69a9c8c86e7924748d4af383", topic: "Hayoh kumaha" },
-      ],
-    };
-  }
-
-  return {};
+  return {
+    channelId: process.env.WIDGET_CHANNEL_ID || "",
+    signatureKey: process.env.SIGNATURE_KEY || "",
+    accountChannels: process.env.WIDGET_ACCOUNT_CHANNEL_IDS
+      ? process.env.WIDGET_ACCOUNT_CHANNEL_IDS.split(",").map((id) => ({ id: id.trim(), topic: process.env.TOPIC_PREFIX || "loadtest" }))
+      : [],
+  };
 }
 
 async function main() {

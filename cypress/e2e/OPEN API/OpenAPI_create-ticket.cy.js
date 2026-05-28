@@ -158,7 +158,7 @@ describe("Open API create ticketing", () => {
         //   "messageTicket": [
         //     {
         //       "idMessage": "3F1DE433F02E9FBADEB1",
-        //       "from": "628817761425",
+        //       "from": "6280000000000",
         //       "content": "halo",
         //       "media": [
         //         {
@@ -300,7 +300,7 @@ describe("Open API create ticketing", () => {
         //   "messageTicket": [
         //     {
         //       "idMessage": "3F1DE433F02E9FBADEB1",
-        //       "from": "628817761425",
+        //       "from": "6280000000000",
         //       "content": "halo",
         //       "media": [
         //         {

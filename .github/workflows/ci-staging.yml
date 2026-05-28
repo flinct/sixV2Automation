@@ -23,6 +23,6 @@ jobs:
 
       - name: Cypress run - Staging
         env:
-          CYPRESS_baseUrl: "https://staging.satuinbox.com"
+          CYPRESS_baseUrl: "https://staging.example.test"
         # run: npx cypress run --spec "cypress/e2e/1SAP-send random message2-9.cy.js"
         run: npx cypress run --spec "cypress/e2e/OPEN_API/OpenAPI_broadcast.cy.js" #run for broadcast

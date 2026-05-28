@@ -24,13 +24,13 @@ describe("Open API create ticketing", () => {
   const config = env_config(baseUrl);
 
   function getHeaderByLoginType(config, baseUrl, loginType) {
-    if (baseUrl === "https://app.satuinbox.com") {
+    if (baseUrl === "https://app.example.test") {
       if (loginType === "goddummyprod") return config.headers;
       if (loginType === "testing270520252")
         return config.headers_testing270520252;
     }
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       if (loginType === "chickentester") return config.headers_CT;
       if (loginType === "goddevsa1") return config.headers_GD;
       if (loginType === "messagelogsatu") return config.headers_ms1;
@@ -39,13 +39,13 @@ describe("Open API create ticketing", () => {
     throw new Error(`No headers found for baseUrl: ${baseUrl} `);
   }
   function getLoginBodyByLoginType(config, baseUrl, loginType) {
-    if (baseUrl === "https://app.satuinbox.com") {
+    if (baseUrl === "https://app.example.test") {
       if (loginType === "goddummyprod") return config.loginBody;
       if (loginType === "testing270520252")
         return config.loginBody_testing270520252;
     }
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       if (loginType === "chickentester") return config.loginBody_CT;
       if (loginType === "goddevsa1") return config.loginBody_SAP;
       if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
@@ -171,7 +171,7 @@ describe("Open API create ticketing", () => {
             //   "messageTicket": [
             //     {
             //       "idMessage": "3F1DE433F02E9FBADEB1",
-            //       "from": "628817761425",
+            //       "from": "6280000000000",
             //       "content": "halo",
             //       "media": [
             //         {

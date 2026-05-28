@@ -31,9 +31,9 @@ Penjelasan detail tentang bagaimana Docker containers mendapatkan IP berbeda.
 │         ↓ (Port forwarding jika perlu)           │
 │  Host Network: 192.168.1.* (your WiFi/LAN)    │
 │         ↑ (Outbound internet)                  │
-│  172.20.0.2 → dev-v2.satuinbox.com             │
-│  172.20.0.3 → dev-v2.satuinbox.com             │
-│  172.20.0.4 → dev-v2.satuinbox.com             │
+│  172.20.0.2 → dev.example.test             │
+│  172.20.0.3 → dev.example.test             │
+│  172.20.0.4 → dev.example.test             │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -223,13 +223,13 @@ docker network inspect load-test-network
 
 ## 🌍 HOW SERVER SEES THESE IPs
 
-### Container Makes Request to dev-v2.satuinbox.com
+### Container Makes Request to dev.example.test
 
 ```
 Container 1 (172.20.0.2)
   → Node.js script
     → socket.io-client
-      → WebSocket connection to dev-v2.satuinbox.com
+      → WebSocket connection to dev.example.test
         → Docker NAT/Routing
           → Server receives connection from 172.20.0.2
 ```
@@ -301,7 +301,7 @@ docker exec load-test-machine-1 ping 172.20.0.3
 docker exec load-test-machine-1 curl http://load-test-2:3000
 
 # But in our case: No services listening on containers
-# So: Only outbound connections to dev-v2.satuinbox.com
+# So: Only outbound connections to dev.example.test
 ```
 
 ### Containers CANNOT access host ports (by default)
@@ -328,7 +328,7 @@ docker exec load-test-machine-1 curl http://localhost:3000
 │    ↓                                    │
 │  socket.io-client library              │
 │    ↓                                    │
-│  io('https://dev-v2.satuinbox.com')   │
+│  io('https://dev.example.test')   │
 │    ↓                                    │
 │  TCP/IP Stack: 172.20.0.2:random_port │
 │    ↓                                    │
@@ -352,7 +352,7 @@ docker exec load-test-machine-1 curl http://localhost:3000
 └─────────────────────────────────────────┘
          ↓
 ┌─────────────────────────────────────────┐
-│   Target Server (dev-v2.satuinbox.com) │
+│   Target Server (dev.example.test) │
 │                                         │
 │   [Server sees source IP: 172.20.0.2]  │
 │   (Connection #1 from 172.20.0.2)      │

@@ -235,7 +235,7 @@ const testExamples = `
 describe('Satuinbox Chat Channel Navigation', () => {
   
   beforeEach(() => {
-    cy.visit('https://v2.satuinbox.com/id/conversation/your-inbox');
+    cy.visit('https://v2.example.test/id/conversation/your-inbox');
     cy.wait(1000); // Wait untuk load
   });
 

@@ -1,15 +1,15 @@
 //-------------------CYPRESS--------------------
-$env:CYPRESS_baseUrl="https://dev-v2.satuinbox.com"; $env:CYPRESS_loginType="cekerayam01"; npx cypress open
+$env:CYPRESS_baseUrl="https://dev.example.test"; $env:CYPRESS_loginType="cekerayam01"; npx cypress open
 
 //run time 5 menit WIDGET LOAD
-$env:BASE_URL = "https://dev-v2.satuinbox.com"; $env:LOG_LEVEL = "debug"; $env:MODE = "throughput"; $env:TARGET_CONNECTIONS = "50"; $env:RUN_DURATION_MS = "300000"; node scripts/widget-socket-load-2.js
+$env:BASE_URL = "https://dev.example.test"; $env:LOG_LEVEL = "debug"; $env:MODE = "throughput"; $env:TARGET_CONNECTIONS = "50"; $env:RUN_DURATION_MS = "300000"; node scripts/widget-socket-load-2.js
 
-$env:BASE_URL = "https://dev-v2.satuinbox.com"; $env:MODE="throughput"
+$env:BASE_URL = "https://dev.example.test"; $env:MODE="throughput"
 $env:TARGET_CONNECTIONS = "50";
 $env:RUN_DURATION_MS = "300000"; $env:EMIT_EVERY_MS = "200"; $env:LOG_LEVEL = "info"; node scripts/widget-socket-load-2.js
 
 //shared mode tidak usah kirim prepare_mode / perClient
-$env:BASE_URL = "https://dev-v2.satuinbox.com";
+$env:BASE_URL = "https://dev.example.test";
 $env:MODE = "throughput";
 $env:TARGET_CONNECTIONS = "50";
 $env:PREPARE_MODE = "perClient";
@@ -18,7 +18,7 @@ $env:EMIT_EVERY_MS = "200";
 $env:LOG_LEVEL = "info"; node scripts/widget-socket-load-2.js
 
 //stress test get qr code
-$env:BASE_URL = "https://dev-v2.satuinbox.com";
+$env:BASE_URL = "https://dev.example.test";
 $env:CYPRESS_loginType = "cekerayam01";
 node scripts/print-k6-env-from-cypress.js | Invoke-Expression
 
@@ -56,7 +56,7 @@ cari conflict atau requirement yang tidak relevan tapi ada di PRD
 impact ketika development dilakukan
 
 dengan rule yang ada
-analisa PRD {....} C:\Users\MyBook SAGA 12\Desktop\PRDanalisis\PRD\Contact
+analisa PRD {....} <local-prd-folder>
 
 cari conflict atau requirement yang tidak relevan tapi ada di PRD
 impact ketika development dilakukan
@@ -114,9 +114,9 @@ NEXT_PUBLIC_CRIKKET_HOST=https://qa.satuinbox.dev
 // 42 / conversations, ["typing.stop", { "conversationId": "69ae51d541b5f868986420bc" }]
 
 // notification new message
-// 42 / conversations, ["notification.new.message", { "id": "69afd9ea36356229abc6b5cc", "externalMessageId": "3EB035A6DAC1CDC171DCB7", "conversationId": "69ae51d541b5f868986420bc", "sender": { "referenceId": "694b628187314d75441402ac", "name": "Dany Atmin Satu", "type": "agent", "email": "bajol72253@m3player.com", "lastSyncedAt": "2026-03-10T08:44:26.003Z" }, "accountChannel": { "id": "699fa642e4f819f6774b2af1", "name": "akun 1734 4", "phoneNumber": "+6285135431734", "accountStatus": "used", "connectionStatus": "active" }, "content": "sending", "direction": "outbound", "type": "text", "status": "pending", "isFromBroadcast": false, "isEdited": false, "timestamp": "2026-03-10T08:44:24.800Z", "primaryMessage": false, "references": [], "isPinned": false, "pinnedAt": null, "isDeleted": false, "isCsat": false, "deletedAt": null, "deletedBy": null, "createdAt": "2026-03-10T08:44:26.003Z", "updatedAt": "2026-03-10T08:45:00.762Z", "**v": 0, "attachments": [], "tempMessageId": "1a9a8caf-46b5-4bce-ac0e-a9c2b8ad0b10", "conversation": null }]
-// 42 / conversations, ["message.status", { "\_id": "69afd9ea36356229abc6b5cc", "externalMessageId": "3EB035A6DAC1CDC171DCB7", "conversationId": "69ae51d541b5f868986420bc", "sender": { "referenceId": "694b628187314d75441402ac", "name": "Dany Atmin Satu", "type": "agent", "email": "bajol72253@m3player.com", "lastSyncedAt": "2026-03-10T08:44:26.003Z" }, "accountChannel": { "id": "699fa642e4f819f6774b2af1", "name": "akun 1734 4", "phoneNumber": "+6285135431734", "accountStatus": "used", "connectionStatus": "active" }, "content": "sending", "direction": "outbound", "type": "text", "status": "delivered", "isFromBroadcast": false, "isEdited": false, "timestamp": "2026-03-10T08:44:24.800Z", "primaryMessage": false, "references": [], "isPinned": false, "pinnedAt": null, "isDeleted": false, "isCsat": false, "deletedAt": null, "deletedBy": null, "createdAt": "2026-03-10T08:44:26.003Z", "updatedAt": "2026-03-10T08:45:03.060Z", "**v": 0, "deliveredAt": "2026-03-10T08:45:01.925Z", "id": "69afd9ea36356229abc6b5cc" }]
-// 42/conversations,["notification.message.status",{"\_id":"69afd9ea36356229abc6b5cc","externalMessageId":"3EB035A6DAC1CDC171DCB7","conversationId":"69ae51d541b5f868986420bc","sender":{"referenceId":"694b628187314d75441402ac","name":"Dany Atmin Satu","type":"agent","email":"bajol72253@m3player.com","lastSyncedAt":"2026-03-10T08:44:26.003Z"},"accountChannel":{"id":"699fa642e4f819f6774b2af1","name":"akun 1734 4","phoneNumber":"+6285135431734","accountStatus":"used","connectionStatus":"active"},"content":"sending","direction":"outbound","type":"text","status":"delivered","isFromBroadcast":false,"isEdited":false,"timestamp":"2026-03-10T08:44:24.800Z","primaryMessage":false,"references":[],"isPinned":false,"pinnedAt":null,"isDeleted":false,"isCsat":false,"deletedAt":null,"deletedBy":null,"createdAt":"2026-03-10T08:44:26.003Z","updatedAt":"2026-03-10T08:45:03.060Z","\_\_v":0,"deliveredAt":"2026-03-10T08:45:01.925Z","id":"69afd9ea36356229abc6b5cc"}]
+// 42 / conversations, ["notification.new.message", { "id": "69afd9ea36356229abc6b5cc", "externalMessageId": "3EB035A6DAC1CDC171DCB7", "conversationId": "69ae51d541b5f868986420bc", "sender": { "referenceId": "694b628187314d75441402ac", "name": "Dany Atmin Satu", "type": "agent", "email": "bajol72253@m3player.com", "lastSyncedAt": "2026-03-10T08:44:26.003Z" }, "accountChannel": { "id": "699fa642e4f819f6774b2af1", "name": "akun 1734 4", "phoneNumber": "6280000000000", "accountStatus": "used", "connectionStatus": "active" }, "content": "sending", "direction": "outbound", "type": "text", "status": "pending", "isFromBroadcast": false, "isEdited": false, "timestamp": "2026-03-10T08:44:24.800Z", "primaryMessage": false, "references": [], "isPinned": false, "pinnedAt": null, "isDeleted": false, "isCsat": false, "deletedAt": null, "deletedBy": null, "createdAt": "2026-03-10T08:44:26.003Z", "updatedAt": "2026-03-10T08:45:00.762Z", "**v": 0, "attachments": [], "tempMessageId": "1a9a8caf-46b5-4bce-ac0e-a9c2b8ad0b10", "conversation": null }]
+// 42 / conversations, ["message.status", { "\_id": "69afd9ea36356229abc6b5cc", "externalMessageId": "3EB035A6DAC1CDC171DCB7", "conversationId": "69ae51d541b5f868986420bc", "sender": { "referenceId": "694b628187314d75441402ac", "name": "Dany Atmin Satu", "type": "agent", "email": "bajol72253@m3player.com", "lastSyncedAt": "2026-03-10T08:44:26.003Z" }, "accountChannel": { "id": "699fa642e4f819f6774b2af1", "name": "akun 1734 4", "phoneNumber": "6280000000000", "accountStatus": "used", "connectionStatus": "active" }, "content": "sending", "direction": "outbound", "type": "text", "status": "delivered", "isFromBroadcast": false, "isEdited": false, "timestamp": "2026-03-10T08:44:24.800Z", "primaryMessage": false, "references": [], "isPinned": false, "pinnedAt": null, "isDeleted": false, "isCsat": false, "deletedAt": null, "deletedBy": null, "createdAt": "2026-03-10T08:44:26.003Z", "updatedAt": "2026-03-10T08:45:03.060Z", "**v": 0, "deliveredAt": "2026-03-10T08:45:01.925Z", "id": "69afd9ea36356229abc6b5cc" }]
+// 42/conversations,["notification.message.status",{"\_id":"69afd9ea36356229abc6b5cc","externalMessageId":"3EB035A6DAC1CDC171DCB7","conversationId":"69ae51d541b5f868986420bc","sender":{"referenceId":"694b628187314d75441402ac","name":"Dany Atmin Satu","type":"agent","email":"bajol72253@m3player.com","lastSyncedAt":"2026-03-10T08:44:26.003Z"},"accountChannel":{"id":"699fa642e4f819f6774b2af1","name":"akun 1734 4","phoneNumber":"6280000000000","accountStatus":"used","connectionStatus":"active"},"content":"sending","direction":"outbound","type":"text","status":"delivered","isFromBroadcast":false,"isEdited":false,"timestamp":"2026-03-10T08:44:24.800Z","primaryMessage":false,"references":[],"isPinned":false,"pinnedAt":null,"isDeleted":false,"isCsat":false,"deletedAt":null,"deletedBy":null,"createdAt":"2026-03-10T08:44:26.003Z","updatedAt":"2026-03-10T08:45:03.060Z","\_\_v":0,"deliveredAt":"2026-03-10T08:45:01.925Z","id":"69afd9ea36356229abc6b5cc"}]
 // 42 / conversations, 0["join.conversation", { "conversationId": "69b13c902f1451435c2e7105" }]
 // 42/conversations,1["join.conversation",{"conversationId":"69b13c902f1451435c2e7105"}]
 

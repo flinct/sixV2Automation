@@ -7,28 +7,28 @@ describe("Role-Based Access Control Test", () => {
   const inboxAction = new inboxPage();
   const baseUrl = Cypress.config("baseUrl");
   const config = env_config(baseUrl);
-  // const baseUrl = "https://dev-v2.satuinbox.com";
+  // const baseUrl = "https://dev.example.test";
 
   const roleNameRule = {
     admin: {
-      "https://dev-v2.satuinbox.com": "admin_dev",
-      "https://v2.satuinbox.com": "admin",
+      "https://dev.example.test": "admin_dev",
+      "https://v2.example.test": "admin",
     },
     supervisor: {
-      "https://dev-v2.satuinbox.com": "spv_dev",
-      "https://v2.satuinbox.com": "supervisor",
+      "https://dev.example.test": "spv_dev",
+      "https://v2.example.test": "supervisor",
     },
     agent: {
-      "https://dev-v2.satuinbox.com": "agent_dev",
-      "https://v2.satuinbox.com": "agent",
+      "https://dev.example.test": "agent_dev",
+      "https://v2.example.test": "agent",
     },
     crm: {
-      "https://dev-v2.satuinbox.com": "crm_dev",
-      "https://v2.satuinbox.com": "crm",
+      "https://dev.example.test": "crm_dev",
+      "https://v2.example.test": "crm",
     },
     tlc: {
-      "https://dev-v2.satuinbox.com": "tlc_dev",
-      "https://v2.satuinbox.com": "tlc",
+      "https://dev.example.test": "tlc_dev",
+      "https://v2.example.test": "tlc",
     },
   };
 
@@ -41,7 +41,7 @@ describe("Role-Based Access Control Test", () => {
     {
       name: resolveRoleName("admin", baseUrl),
       username: "cekerayam01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
       allowedPages: [
         config.visitGeneralSetting,
         config.visitRole,
@@ -69,7 +69,7 @@ describe("Role-Based Access Control Test", () => {
     {
       name: resolveRoleName("supervisor", baseUrl),
       username: "pusatadmin10",
-      password: "Password1@",
+      password: "TestPassword1!",
       allowedPages: [
         //     "/conversation",
         //     "/ticketing",
@@ -104,7 +104,7 @@ describe("Role-Based Access Control Test", () => {
     {
       name: resolveRoleName("agent", baseUrl),
       username: "aprilch",
-      password: "Password1@",
+      password: "TestPassword1!",
       allowedPages: [
         //     "/conversation",
         //     "/ticketing",
@@ -128,7 +128,7 @@ describe("Role-Based Access Control Test", () => {
     {
       name: resolveRoleName("crm", baseUrl),
       username: "crmagent01",
-      password: "Password1@",
+      password: "TestPassword1!",
       allowedPages: [
         //     "/conversation",
         //     "/ticketing",
@@ -153,7 +153,7 @@ describe("Role-Based Access Control Test", () => {
     {
       name: resolveRoleName("tlc", baseUrl),
       username: "jbaagent01",
-      password: "Password1@",
+      password: "TestPassword1!",
       allowedPages: [
         //     "/conversation",
         //     "/broadcast/messages",
@@ -262,7 +262,7 @@ describe("Role-Based Access Control Test", () => {
   // Test untuk setiap role
   roles.forEach((role) => {
     describe(`Testing access for ${role.name}`, () => {
-      if (baseUrl === "https://dev-v2.satuinbox.com") {
+      if (baseUrl === "https://dev.example.test") {
         const paramLogin = role.name;
         // authAction.loginAsSupervisor(paramLogin);
         beforeEach(() => {
@@ -271,7 +271,7 @@ describe("Role-Based Access Control Test", () => {
           authAction.loginOverride(paramLogin);
         });
       }
-      if (baseUrl === "https://v2.satuinbox.com") {
+      if (baseUrl === "https://v2.example.test") {
         const paramLogin = role.name;
         // authAction.loginAsSupervisor(paramLogin);
         beforeEach(() => {

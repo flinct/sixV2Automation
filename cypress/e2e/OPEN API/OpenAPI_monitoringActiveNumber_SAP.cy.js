@@ -101,12 +101,12 @@ describe("Open API broadcast", () => {
   ];
 
   function getHeaderByLoginType(config, baseUrl, loginType) {
-    if (baseUrl === "https://app.satuinbox.com") {
+    if (baseUrl === "https://app.example.test") {
       if (loginType === "goddummyprod") return config.headers;
       if (loginType === "testing270520252")
         return config.headers_testing270520252;
     }
-    if (baseUrl === "https://appaws.satuinbox.com") {
+    if (baseUrl === "https://app-aws.example.test") {
       if (loginType === "goddummyprod") return config.headers;
       if (loginType === "testing270520252")
         return config.headers_testing270520252;
@@ -114,14 +114,14 @@ describe("Open API broadcast", () => {
         return config.headers_prodtestingjuli;
     }
 
-    if (baseUrl === "https://staging.satuinbox.com") {
+    if (baseUrl === "https://staging.example.test") {
       if (loginType === "chickentester") return config.headers_CT_staging;
       // if (loginType === "goddevsa1") return config.headers_GD;
       // if (loginType === "goddummy") return config.headers_GD;
       // if (loginType === "messagelogsatu") return config.headers_ms1;
       // if (loginType === "messagelogdua") return config.headers_ms2;
     }
-    if (baseUrl === "https://stagaws.satuinbox.com") {
+    if (baseUrl === "https://staging-aws.example.test") {
       if (loginType === "chickentester") return config.headers_CT_staging;
       // if (loginType === "goddevsa1") return config.headers_GD;
       // if (loginType === "goddummy") return config.headers_GD;
@@ -129,7 +129,7 @@ describe("Open API broadcast", () => {
       // if (loginType === "messagelogdua") return config.headers_ms2;
     }
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       if (loginType === "chickentester") return config.headers_CT;
       if (loginType === "goddevsa1") return config.headers_GD;
       if (loginType === "goddummy") return config.headers_GD;
@@ -140,12 +140,12 @@ describe("Open API broadcast", () => {
     throw new Error(`No headers found for baseUrl: ${baseUrl} `);
   }
   function getLoginBodyByLoginType(config, baseUrl, loginType) {
-    if (baseUrl === "https://app.satuinbox.com") {
+    if (baseUrl === "https://app.example.test") {
       if (loginType === "goddummyprod") return config.loginBody;
       if (loginType === "testing270520252")
         return config.loginBody_testing270520252;
     }
-    if (baseUrl === "https://appaws.satuinbox.com") {
+    if (baseUrl === "https://app-aws.example.test") {
       if (loginType === "goddummyprod") return config.loginBody;
       if (loginType === "testing270520252")
         return config.loginBody_testing270520252;
@@ -153,14 +153,14 @@ describe("Open API broadcast", () => {
         return config.loginBody_prodtestingjuli;
     }
 
-    if (baseUrl === "https://staging.satuinbox.com") {
+    if (baseUrl === "https://staging.example.test") {
       if (loginType === "chickentester") return config.loginBody_CT;
       // if (loginType === "goddevsa1") return config.loginBody_SAP;
       // if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
       // if (loginType === "goddummy") return config.loginBody_GD_dev;
       // if (loginType === "messagelogdua") return config.loginBody_ms2;
     }
-    if (baseUrl === "https://stagaws.satuinbox.com") {
+    if (baseUrl === "https://staging-aws.example.test") {
       if (loginType === "chickentester") return config.loginBody_CT;
       // if (loginType === "goddevsa1") return config.loginBody_SAP;
       // if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
@@ -168,7 +168,7 @@ describe("Open API broadcast", () => {
       // if (loginType === "messagelogdua") return config.loginBody_ms2;
     }
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       if (loginType === "chickentester") return config.loginBody_CT;
       if (loginType === "goddevsa1") return config.loginBody_SAP;
       if (loginType === "goddummysa") return config.loginBodySuperAdminSap;

@@ -62,35 +62,35 @@ describe("Open API broadcast", () => {
   ];
 
   function getHeaderByLoginType(config, baseUrl, loginType) {
-    if (baseUrl === "https://app.satuinbox.com") {
+    if (baseUrl === "https://app.example.test") {
       if (loginType === "goddummyprod")
         return {
           //goddummyprod
           "x-api-key":
             // "ae1bd41cfbe437bb5755068ab5d2038aa240660d87c5cdca0f69001a3a52e3c5",
-            "10f1d5e1eb1ea0cb632f2d02edf2ccf896efb73123e7b3f484db5cb52a19dbc6",
+            "REDACTED_API_KEY",
         };
       // if (loginType === "goddummyprod") return config.headers;
       if (loginType === "testing270520252")
         return config.headers_testing270520252;
     }
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       if (loginType === "chickentester") return config.headers_CT;
       if (loginType === "goddevsa1") return config.headers_GD;
       if (loginType === "messagelogsatu") return config.headers_ms1;
     }
   }
   function getLoginBodyByLoginType(config, baseUrl, loginType) {
-    if (baseUrl === "https://app.satuinbox.com") {
+    if (baseUrl === "https://app.example.test") {
       if (loginType === "goddummyprod")
-        return { keyword: "goddummyprod", password: "TongTji89" };
+        return { keyword: "goddummyprod", password: "TestPassword1!" };
       // if (loginType === "goddummyprod") return config.loginBody;
       if (loginType === "testing270520252")
         return config.loginBody_testing270520252;
     }
 
-    if (baseUrl === "https://dev.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       if (loginType === "chickentester") return config.loginBody;
       if (loginType === "goddevsa1") return config.loginBody_SAP;
       if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
@@ -108,7 +108,7 @@ describe("Open API broadcast", () => {
     cy.request({
       method: "POST",
       // url: config.loginUrl,
-      url: "https://satuinbox.com/api/v1/auth/login",
+      url: "https://example.test/api/v1/auth/login",
       body: selectedBody,
     }).then((response) => {
       const accessToken = response.body.tokens.access.token;
@@ -118,12 +118,12 @@ describe("Open API broadcast", () => {
         method: "GET",
         // url: config.whatsappUrl_filterJabodetabek3 + jabodetabekDiv,
         url:
-          "https://satuinbox.com/api/v1/account-whatsapp?&page=1&limit=999&populate=division.agents&division=" +
+          "https://example.test/api/v1/account-whatsapp?&page=1&limit=999&populate=division.agents&division=" +
           jabodetabekDiv,
         headers: { Authorization: `Bearer ${accessToken}` },
         // headers: {
         //   "x-api-key":
-        //     "10f1d5e1eb1ea0cb632f2d02edf2ccf896efb73123e7b3f484db5cb52a19dbc6",
+        //     "REDACTED_API_KEY",
         // },
       }).then((responseJabodetabek) => {
         const results = responseJabodetabek.body.results;

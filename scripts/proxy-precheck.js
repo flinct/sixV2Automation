@@ -13,7 +13,7 @@
  * Env:
  * - PROXY_LIST_FILE: input file path (default: scripts/ipList)
  * - PROXY_OK_FILE: output file path (default: scripts/ipList.ok)
- * - TEST_URL: URL to fetch through proxy (default: https://v2-api.satuinbox.com/)
+ * - TEST_URL: URL to fetch through proxy (default: https://api.example.test/)
  * - TIMEOUT_MS: per-proxy timeout (default: 8000)
  * - CONCURRENCY: number of parallel checks (default: 20)
  * - LIMIT: max proxies to test from the list (default: 0 = all)
@@ -70,7 +70,7 @@ async function fetchViaProxy({ proxyUrl, testUrl, timeoutMs }) {
 async function main() {
   const input = envStr("PROXY_LIST_FILE", "scripts/ipList");
   const output = envStr("PROXY_OK_FILE", "scripts/ipList.ok");
-  const testUrl = envStr("TEST_URL", "https://v2-api.satuinbox.com/");
+  const testUrl = envStr("TEST_URL", "https://api.example.test/");
 
   const timeoutMs = envInt("TIMEOUT_MS", 20000);
   const concurrency = Math.max(1, envInt("CONCURRENCY", 20));

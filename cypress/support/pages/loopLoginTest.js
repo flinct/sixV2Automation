@@ -65,7 +65,7 @@ const selectedBody = getLoginBodyByLoginType(config, baseUrl, loginType);
 // ];
 const dataLogin = userName.map((usernameValue) => ({
   keyword: usernameValue,
-  password: "Password1@",
+  password: "TestPassword1!",
 }));
 
 class authPage {
@@ -88,7 +88,7 @@ class authPage {
   loopLoginTest() {
     // this.visitLoginPage();
     // elementAuth.keyword().type("chickentester01");
-    // elementAuth.password().type("Asdqwe12@");
+    // elementAuth.password().type("TestPassword1!");
     // elementAuth.buttonLogin().click();
     this.visitLoginPage();
     cy.wait(2000);

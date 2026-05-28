@@ -1,154 +1,63 @@
+require('dotenv').config();
+
+function envValue(name, fallback = '') {
+  return process.env[name] || fallback;
+}
+
+function account(identifierEnv, passwordEnv, role, env, identifierFallback) {
+  return {
+    identifier: envValue(identifierEnv, identifierFallback),
+    password: envValue(passwordEnv, 'replace-me'),
+    role,
+    env,
+  };
+}
+
 const testAccounts = {
-  goddummy: {
-    identifier: 'chickentester01',
-    password: 'Asdqwe12@',
-    role: 'admin',
-    env: ['dev', 'local'],
-  },
-  goddummyprod: {
-    identifier: 'goddummyprod',
-    password: 'TongTji89',
-    role: 'admin',
-    env: ['prod'],
-  },
-  goddummyprod2: {
-    identifier: 'goddummyprod2',
-    password: 'Password1@',
-    role: 'admin',
-    env: ['prod'],
-  },
-  goddumstag: {
-    identifier: 'goddumstag',
-    password: 'Asdqwe12!',
-    role: 'admin',
-    env: ['staging'],
-  },
+  goddummy: account('E2E_DEV_ADMIN_USER', 'E2E_DEV_ADMIN_PASSWORD', 'admin', ['dev', 'local'], 'dev-admin'),
+  goddummyprod: account('E2E_PROD_ADMIN_USER', 'E2E_PROD_ADMIN_PASSWORD', 'admin', ['prod'], 'prod-admin'),
+  goddummyprod2: account('E2E_PROD_ADMIN_2_USER', 'E2E_PROD_ADMIN_2_PASSWORD', 'admin', ['prod'], 'prod-admin-2'),
+  goddumstag: account('E2E_STAGING_ADMIN_USER', 'E2E_STAGING_ADMIN_PASSWORD', 'admin', ['staging'], 'staging-admin'),
 
-  cekerayam01: {
-    identifier: 'cekerayam01',
-    password: 'Asdqwe12@',
-    role: 'admin',
-    env: ['dev'],
-  },
-  mataayam01: {
-    identifier: 'mataayam01',
-    password: 'Asdqwe12@',
-    role: 'supervisor',
-    env: ['dev'],
-  },
-  leherayam01: {
-    identifier: 'leherayam01',
-    password: 'Asdqwe12@',
-    role: 'agent',
-    env: ['dev'],
-  },
+  cekerayam01: account('E2E_DEV_ADMIN_USER', 'E2E_DEV_ADMIN_PASSWORD', 'admin', ['dev'], 'dev-admin'),
+  mataayam01: account('E2E_DEV_SUPERVISOR_USER', 'E2E_DEV_SUPERVISOR_PASSWORD', 'supervisor', ['dev'], 'dev-supervisor'),
+  leherayam01: account('E2E_DEV_AGENT_USER', 'E2E_DEV_AGENT_PASSWORD', 'agent', ['dev'], 'dev-agent'),
 
-  chickentester01: {
-    identifier: 'chickentester01',
-    password: 'Asdqwe12@',
-    role: 'admin',
-    env: ['dev'],
-  },
-  CT2: {
-    identifier: 'chickentester01',
-    password: 'Asdqwe12@',
-    role: 'admin',
-    env: ['dev'],
-  },
+  chickentester01: account('E2E_DEV_ADMIN_USER', 'E2E_DEV_ADMIN_PASSWORD', 'admin', ['dev'], 'dev-admin'),
+  CT2: account('E2E_DEV_ADMIN_USER', 'E2E_DEV_ADMIN_PASSWORD', 'admin', ['dev'], 'dev-admin'),
 
-  messagelogdua: {
-    identifier: 'messagelogdua',
-    password: 'Asdqwe12@',
-    role: 'agent',
-    env: ['dev', 'prod'],
-  },
-  prodtestingjuli: {
-    identifier: 'prodtestingjuli',
-    password: 'asdqwe12',
-    role: 'agent',
-    env: ['prod'],
-  },
-  prodtestingakun1dua: {
-    identifier: 'prodtestingakun1dua',
-    password: 'Asdqwe12@',
-    role: 'agent',
-    env: ['prod'],
-  },
-  testerdummy01: {
-    identifier: 'testerdummyprod01',
-    password: 'Asdqwe12@',
-    role: 'agent',
-    env: ['prod'],
-  },
+  messagelogdua: account('E2E_MESSAGE_LOG_USER', 'E2E_MESSAGE_LOG_PASSWORD', 'agent', ['dev', 'prod'], 'message-log-agent'),
+  prodtestingjuli: account('E2E_PROD_AGENT_USER', 'E2E_PROD_AGENT_PASSWORD', 'agent', ['prod'], 'prod-agent'),
+  prodtestingakun1dua: account('E2E_PROD_AGENT_2_USER', 'E2E_PROD_AGENT_2_PASSWORD', 'agent', ['prod'], 'prod-agent-2'),
+  testerdummy01: account('E2E_PROD_TESTER_USER', 'E2E_PROD_TESTER_PASSWORD', 'agent', ['prod'], 'prod-tester'),
 
-  tantaffgo01: {
-    identifier: 'tantaffgo01',
-    password: 'Asdqwe12@',
-    role: 'admin',
-    env: ['prod'],
-  },
-  danyatmin01: {
-    identifier: 'danyatmin01',
-    password: 'Asdqwe12@',
-    role: 'admin',
-    env: ['prod'],
-  },
-  danyspv01: {
-    identifier: 'danyspv01',
-    password: 'Asdqwe12@',
-    role: 'supervisor',
-    env: ['prod'],
-  },
-  danyagent01: {
-    identifier: 'danyagent01',
-    password: 'Asdqwe12@',
-    role: 'agent',
-    env: ['prod'],
-  },
+  tantaffgo01: account('E2E_PROD_ADMIN_USER', 'E2E_PROD_ADMIN_PASSWORD', 'admin', ['prod'], 'prod-admin'),
+  danyatmin01: account('E2E_PROD_ADMIN_USER', 'E2E_PROD_ADMIN_PASSWORD', 'admin', ['prod'], 'prod-admin'),
+  danyspv01: account('E2E_PROD_SUPERVISOR_USER', 'E2E_PROD_SUPERVISOR_PASSWORD', 'supervisor', ['prod'], 'prod-supervisor'),
+  danyagent01: account('E2E_PROD_AGENT_USER', 'E2E_PROD_AGENT_PASSWORD', 'agent', ['prod'], 'prod-agent'),
 
-  testing270520252: {
-    identifier: 'testing270520252',
-    password: 'Asdqwe12@',
-    role: 'admin',
-    env: ['dev'],
-  },
+  testing270520252: account('E2E_DEV_ADMIN_2_USER', 'E2E_DEV_ADMIN_2_PASSWORD', 'admin', ['dev'], 'dev-admin-2'),
 
   roleValidation: {
-    supervisor: {
-      identifier: 'pusatadmin10',
-      password: 'Password1@',
-      role: 'supervisor',
-    },
-    agent: {
-      identifier: 'aprilch',
-      password: 'Password1@',
-      role: 'agent',
-    },
-    crm: {
-      identifier: 'crmagent01',
-      password: 'Password1@',
-      role: 'agent',
-    },
-    tlc: {
-      identifier: 'jbaagent01',
-      password: 'Password1@',
-      role: 'agent',
-    },
+    supervisor: account('E2E_RBAC_SUPERVISOR_USER', 'E2E_RBAC_SUPERVISOR_PASSWORD', 'supervisor', ['dev', 'prod'], 'rbac-supervisor'),
+    agent: account('E2E_RBAC_AGENT_USER', 'E2E_RBAC_AGENT_PASSWORD', 'agent', ['dev', 'prod'], 'rbac-agent'),
+    crm: account('E2E_RBAC_CRM_USER', 'E2E_RBAC_CRM_PASSWORD', 'agent', ['dev', 'prod'], 'rbac-crm-agent'),
+    tlc: account('E2E_RBAC_TLC_USER', 'E2E_RBAC_TLC_PASSWORD', 'agent', ['dev', 'prod'], 'rbac-tlc-agent'),
   },
 };
 
 const apiKeys = {
-  default: '10f1d5e1eb1ea0cb632f2d02edf2ccf896efb73123e7b3f484db5cb52a19dbc6',
-  tantaffgo: 'sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM',
-  automation01: 'sk_moic2ycf_nXXxomZIUKhIE-p493wF3biOfdK_th4h',
+  default: envValue('E2E_API_KEY'),
+  tantaffgo: envValue('E2E_TANTAFFGO_SIGNATURE_KEY'),
+  automation01: envValue('E2E_AUTOMATION_SIGNATURE_KEY'),
 };
 
 const testData = {
-  parentNumber: '6285147211094',
-  parentNumber2: '6285135431734',
-  targetMessage_me: '6289655057778',
-  targetMessage_dummy: '6285135431270',
-  customerNumber: '6289655057778',
+  parentNumber: envValue('E2E_PARENT_NUMBER', '6280000000000'),
+  parentNumber2: envValue('E2E_PARENT_NUMBER_2', '6280000000000'),
+  targetMessage_me: envValue('E2E_TARGET_NUMBER', '6280000000000'),
+  targetMessage_dummy: envValue('E2E_TARGET_NUMBER_2', '6280000000000'),
+  customerNumber: envValue('E2E_CUSTOMER_NUMBER', '6280000000000'),
 
   channelTypes: {
     widget: 'widget',

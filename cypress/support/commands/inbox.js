@@ -196,7 +196,7 @@ Cypress.Commands.add("selectButton_assign", () => {
     'button.bg-primary[type="button"][aria-haspopup="dialog"][aria-expanded="false"][data-state="closed"]'
   ).contains("Assign");
 });
-const customerNumber = "6289655057778";
+const customerNumber = "6280000000000";
 Cypress.Commands.add("checkbox_chatList", () => {
   function formatNumber(customerNumber) {
     return customerNumber.replace(

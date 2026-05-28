@@ -372,7 +372,7 @@ export class ConversationPage {
 ```javascript
 describe('Conversation Page - Sidebar Navigation', () => {
   beforeEach(() => {
-    cy.visit('https://v2.satuinbox.com/id/conversation/your-inbox')
+    cy.visit('https://v2.example.test/id/conversation/your-inbox')
     cy.wait(2000)
   })
 
@@ -424,4 +424,4 @@ describe('Conversation Page - Sidebar Navigation', () => {
 
 **Last Updated**: 2025
 **Halaman**: Satuinbox Conversation (Your Inbox)
-**URL**: https://v2.satuinbox.com/id/conversation/your-inbox
+**URL**: https://v2.example.test/id/conversation/your-inbox

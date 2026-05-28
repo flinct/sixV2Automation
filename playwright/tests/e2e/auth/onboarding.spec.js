@@ -1,9 +1,12 @@
 const { test, expect } = require("@playwright/test");
+const path = require("path");
 const { AuthPage } = require("../../../support/pages");
 const { getCurrentConfig } = require("../../../support/config");
 const { MailTmHelper } = require("../../../support/helpers/mail-tm");
 
-const tempPassword = "Asdqwe12@";
+const tempPassword = process.env.E2E_TEMP_PASSWORD || "TestPassword1!";
+const nibFixture = path.resolve(__dirname, "../../../..", "cypress/fixtures/107.jpg");
+const ktpFixture = path.resolve(__dirname, "../../../..", "cypress/fixtures/cupangstore8.jpg");
 const randomNib = () =>
   Math.floor(10 ** 12 + Math.random() * 9 * 10 ** 12).toString();
 const randomNpwp = () =>
@@ -100,9 +103,7 @@ async function fillOnboardingForm(page, opts = {}) {
       .filter({ hasText: /Unggah NIB/i })
       .locator("..")
       .locator('input[type="file"]')
-      .setInputFiles(
-        "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\cypress\\fixtures\\107.jpg",
-      );
+      .setInputFiles(nibFixture);
   }
   if (opts.uploadKtp !== false) {
     await page
@@ -110,9 +111,7 @@ async function fillOnboardingForm(page, opts = {}) {
       .filter({ hasText: /Unggah KTP/i })
       .locator("..")
       .locator('input[type="file"]')
-      .setInputFiles(
-        "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\cypress\\fixtures\\cupangstore8.jpg",
-      );
+      .setInputFiles(ktpFixture);
   }
 }
 

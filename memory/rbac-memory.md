@@ -1,6 +1,6 @@
 # RBAC Memory - Omnichannel BE
 
-> **Source:** `C:\Users\MyBook SAGA 12\Desktop\BE satuinbox\omnichannel-satuinbox-be`
+> **Source:** private backend monorepo reference redacted for portfolio publication
 
 ---
 

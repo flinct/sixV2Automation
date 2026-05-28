@@ -59,7 +59,7 @@ Complete guide untuk setup 3 Docker containers sebagai distributed load test den
 ### Files You Need to Create
 
 ```
-C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\
+<repo>\
 
 ├── Dockerfile                    ← NEW (create from DOCKER_QUICK_START.md)
 ├── docker-compose.yml            ← NEW (create from DOCKER_QUICK_START.md)
@@ -244,7 +244,7 @@ After completing this setup:
 → Rebuild: `docker-compose build --no-cache`
 
 ### Issue: Cannot reach server
-→ Check DNS: `docker exec load-test-machine-1 nslookup dev-v2.satuinbox.com`
+→ Check DNS: `docker exec load-test-machine-1 nslookup dev.example.test`
 → Check network: `docker exec load-test-machine-1 ping 8.8.8.8`
 
 ### Issue: Reports not generated

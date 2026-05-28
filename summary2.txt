@@ -1,9 +1,0 @@
-Rangkuman Integrasi Crikket:
-1. Masalah Awal: Crikket tidak tampil di repo FE (omnichannel-satuinbox-fe) akibat dependensi workspace:* yang tidak dapat diresolusi dan integrasi salah.
-2. Solusi Tersedia: Kloning repo Crikket, membangun SDK lokal, menyalin capture.global.js ke direktori public omnichannel, memperbaiki logika pemuatan skrip (menggunakan window.CrikketCapture).
-
-3. Masalah Kritis Saat Ini: Error CORS saat mengakses bucket S3 Crikket QA (tidak ada header Access-Control-Allow-Origin untuk http://localhost:3005).
-4. Langkah Perbaikan CORS:
-   - Tambahkan http://localhost:3005 ke kebijakan CORS bucket S3 crikket-qa.s3.ap-southeast-3.amazonaws.com.
-   - Verifikasi konfigurasi self-hosted Crikket menyertakan S3_CORS_ALLOWED_ORIGINS=http://localhost:3005.
-   - Perbarui daftar CORS_ALLOWED_ORIGINS di endpoint API Crikket https://qa.satuinbox.dev dan restart server.

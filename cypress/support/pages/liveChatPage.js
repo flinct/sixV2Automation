@@ -9,9 +9,9 @@ const baseUrl = Cypress.config("baseUrl");
 const config = env_config(baseUrl);
 let errorLogs = [];
 
-const customer_number = 6289655057778;
+const customer_number = 6280000000000;
 
-const customerNumber = "6289655057778";
+const customerNumber = "6280000000000";
 
 function formatCustomerNumber(customerNumber) {
   return customerNumber.replace(/(\d{2})(\d{3})(\d{4})(\d{4})/, "$1 $2 $3 $4");

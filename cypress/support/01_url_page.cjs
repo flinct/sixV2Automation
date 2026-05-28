@@ -11,34 +11,34 @@ function getCredentialsForEnvironment(baseUrl) {
   }
 
   // Dev-v2 environment
-  if (baseUrl.includes("dev-v2.satuinbox.com")) {
+  if (baseUrl.includes("dev.example.test")) {
     return {
       username: "cekerayam01", // from loginBody_cekerayam01
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
       description: "cekerayam01 - Admin user for dev-v2"
     };
   }
 
   // Production v2 environment  
-  if (baseUrl.includes("v2.satuinbox.com") && !baseUrl.includes("dev-v2")) {
+  if (baseUrl.includes("v2.example.test") && !baseUrl.includes("dev-v2")) {
     return {
       username: "goddummyprod",
-      password: "TongTji89",
+      password: "TestPassword1!",
       description: "goddummyprod - Prod user for v2"
     };
   }
 
   // Dev environment (v1)
-  if (baseUrl.includes("dev.satuinbox.com")) {
+  if (baseUrl.includes("dev.example.test")) {
     return {
       username: "chickentester01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
       description: "chickentester01 - Test user for dev"
     };
   }
 
   // Production environment (v1)
-  if (baseUrl.includes("app.satuinbox.com")) {
+  if (baseUrl.includes("app.example.test")) {
     return {
       username: "admin",
       password: "admin",
@@ -47,7 +47,7 @@ function getCredentialsForEnvironment(baseUrl) {
   }
 
   // Staging environment
-  if (baseUrl.includes("staging.satuinbox.com")) {
+  if (baseUrl.includes("staging.example.test")) {
     return {
       username: "stagingadmin",
       password: "StagingPass123",
@@ -66,21 +66,21 @@ function getAllCredentials() {
     // Dev-v2
     cekerayam01: {
       identifier: "cekerayam01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
       role: "admin",
       environment: "dev-v2"
     },
     // v2
     goddummyprod: {
       identifier: "goddummyprod",
-      password: "TongTji89",
+      password: "TestPassword1!",
       role: "admin",
       environment: "v2"
     },
     // Dev
     chickentester01: {
       identifier: "chickentester01",
-      password: "Asdqwe12@",
+      password: "TestPassword1!",
       role: "tester",
       environment: "dev"
     },

@@ -29,7 +29,7 @@ class conversationSocketPage {
     if (baseUrl.includes("ngrok-free.dev")) {
       return {
         channelId: "694222d0c553d64073737291",
-        signatureKey: "sk_mi83pedn_PmN_rMg_OpaV0ecMFtfheZZXoLcdf8N7",
+        signatureKey: "sk_REDACTED",
         accountChannels: [
           { id: "69422310c553d640737372a6", topic: "amatukam-test widget" },
           {
@@ -40,10 +40,10 @@ class conversationSocketPage {
       };
     }
 
-    if (baseUrl.includes("dev-v2.satuinbox.com")) {
+    if (baseUrl.includes("dev.example.test")) {
       return {
         channelId: "692fe8eaaff05e8a1623e0d3",
-        signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
+        signatureKey: "sk_REDACTED",
         accountChannels: [
           { id: "698ef3aada258f2a5a46bf89", topic: "hey" },
           { id: "6964ac1d2a5dbde9a5c6fa28", topic: "tumbler biru" },
@@ -54,10 +54,10 @@ class conversationSocketPage {
       };
     }
 
-    if (baseUrl.includes("v2.satuinbox.com")) {
+    if (baseUrl.includes("v2.example.test")) {
       return {
         channelId: "692fe8eaaff05e8a1623e0d3",
-        signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
+        signatureKey: "sk_REDACTED",
         accountChannels: [
           { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
           { id: "69649c6b905d65859c36f81c", topic: "remote control" },

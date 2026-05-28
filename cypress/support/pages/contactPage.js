@@ -7,7 +7,7 @@ class contactPage {
         // cy.softAssert(cy.contactNav().click(),'navigate to group chat');
         cy.wait(1000);
         cy.url().then((url) => {
-            if (url === "https://dev.satuinbox.com/contact") {
+            if (url === "https://dev.example.test/contact") {
                 cy.wait(1000);
                 cy.log('success direct to contact page')
             } else {

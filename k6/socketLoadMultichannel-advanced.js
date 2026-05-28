@@ -27,31 +27,17 @@ const errorRate = new Rate("errors");
 // Configuration
 // ========================================
 function getDefaults(baseUrl) {
-  if (baseUrl.includes("dev-v2.satuinbox.com")) {
-    return {
-      channelId: "692fe8eaaff05e8a1623e0d3",
-      signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
-      accountChannels: [
-        { id: "698ef3aada258f2a5a46bf89", topic: "hey" },
-        { id: "6964ac1d2a5dbde9a5c6fa28", topic: "tumbler biru" },
-        { id: "69783b0154be8e7508b4af08", topic: "CS harga" },
-      ],
-    };
-  }
-  if (baseUrl.includes("v2.satuinbox.com")) {
-    return {
-      channelId: "694b55ffbb886b39e785d2c0",
-      signatureKey: "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
-      accountChannels: [
-        { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
-        { id: "69649c6b905d65859c36f81c", topic: "remote control" },
-      ],
-    };
-  }
-  return { channelId: "", signatureKey: "", accountChannels: [] };
+  return {
+    channelId: __ENV.WIDGET_CHANNEL_ID || "",
+    signatureKey: __ENV.SIGNATURE_KEY || "",
+    accountChannels: (__ENV.WIDGET_ACCOUNT_CHANNEL_IDS || "")
+      .split(",")
+      .filter(Boolean)
+      .map((id) => ({ id: id.trim(), topic: __ENV.TOPIC_PREFIX || "loadtest" })),
+  };
 }
 
-const BASE_URL = __ENV.BASE_URL || "https://dev-v2.satuinbox.com";
+const BASE_URL = __ENV.BASE_URL || "https://app.example.test";
 const defaults = getDefaults(BASE_URL);
 const SIGNATURE_KEY = __ENV.SIGNATURE_KEY || defaults.signatureKey || "";
 const MODE = (__ENV.MODE || "soak").toLowerCase();
@@ -60,10 +46,9 @@ const EMIT_EVERY_MS = parseInt(__ENV.EMIT_EVERY_MS || "2000");
 const DEBUG = (__ENV.DEBUG || "false").toLowerCase() === "true";
 
 function getApiBase(url) {
-  if (url === "https://dev-v2.satuinbox.com")
-    return "https://dev-v2-api.satuinbox.com/";
-  if (url === "https://v2.satuinbox.com") return "https://v2-api.satuinbox.com/";
-  return "";
+  if (__ENV.API_BASE) return __ENV.API_BASE;
+  if (!url) return "";
+  return `${url.replace(/\/+$/g, "")}/api/v1`;
 }
 
 function uuid() {

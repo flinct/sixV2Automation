@@ -7,7 +7,7 @@ class ticketingPage {
     cy.softAssert(cy.nav_link_Ticket().click(), "navigate to group chat");
     cy.wait(1000);
     cy.url().then((url) => {
-      if (url === "https://dev.satuinbox.com/ticket") {
+      if (url === "https://dev.example.test/ticket") {
         cy.wait(1000);
         cy.log("success direct to group chat page");
       } else {

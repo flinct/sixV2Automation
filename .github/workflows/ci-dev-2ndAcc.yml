@@ -37,7 +37,7 @@ jobs:
 
       - name: Cypress run - Dev -
         env:
-          CYPRESS_baseUrl: "https://dev.satuinbox.com"
+          CYPRESS_baseUrl: "https://dev.example.test"
           # CYPRESS_loginType: "chickentester"
           CYPRESS_loginType: "messagelogsatu"
         # run: npx cypress run --spec "cypress/e2e/1SAP-send random message2-9.cy.js"

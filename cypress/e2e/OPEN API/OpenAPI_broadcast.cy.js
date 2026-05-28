@@ -23,7 +23,7 @@ describe("Open API broadcast", () => {
     return {
       broadcastMessage: [
         {
-          numberWhatsappCustomer: "6289655057778",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -38,7 +38,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285135430934",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -53,7 +53,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285147210599",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -68,7 +68,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285147211100",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -83,7 +83,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285135425746",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -98,7 +98,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285147211129",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -113,7 +113,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285147211061",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -128,7 +128,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285198965975",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -143,7 +143,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285198966005",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -158,7 +158,7 @@ describe("Open API broadcast", () => {
           },
         },
         {
-          numberWhatsappCustomer: "6285135421718",
+          numberWhatsappCustomer: "6280000000000",
           message: `${generateRandomName()}\n
           your number AWB ${numberAWB()}\n
           ${randomQuote}`,
@@ -256,7 +256,7 @@ describe("Open API broadcast", () => {
     cy.task("log", "start");
     getAllList();
     const dummyNumbers = [
-      6285135425714, 6285147211084, 6285135431231,
+      6280000000000, 6280000000000, 6280000000000,
       // , 4, 5, 6, 7, 8
     ];
 
@@ -336,10 +336,10 @@ describe("Open API broadcast", () => {
       let delay;
       let prefix = "";
 
-      if (baseUrl === "https://dev.satuinbox.com") {
+      if (baseUrl === "https://dev.example.test") {
         delay = config.randomGlobalDelayDev;
         prefix = "";
-      } else if (baseUrl === "https://staging.satuinbox.com") {
+      } else if (baseUrl === "https://staging.example.test") {
         delay = config.randomGlobalDelayStaging;
         prefix = "STAGING :";
       } else {

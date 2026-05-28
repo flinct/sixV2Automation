@@ -1,9 +1,12 @@
 const { test, expect } = require('@playwright/test');
+const path = require('path');
 const { AuthPage } = require('../../../support/pages');
 const { getCurrentConfig } = require('../../../support/config');
 const { MailTmHelper } = require('../../../support/helpers/mail-tm');
 
-const tempPassword = 'Asdqwe12@';
+const tempPassword = process.env.E2E_TEMP_PASSWORD || 'TestPassword1!';
+const nibFixture = path.resolve(__dirname, '../../../..', 'cypress/fixtures/107.jpg');
+const ktpFixture = path.resolve(__dirname, '../../../..', 'cypress/fixtures/cupangstore8.jpg');
 
 test.describe('Register Flow Tests', () => {
   let authPage;
@@ -205,8 +208,8 @@ test.describe('Register Flow Tests', () => {
     await authPage.regUsername.fill('testuser' + number);
     await authPage.regEmail.fill('testuser' + number + '@testatc.com');
     await authPage.regPhone.fill('081234567' + (number % 10));
-    await authPage.regPassword.fill('Asdqwe123');
-    await authPage.regPasswordConfirm.fill('Asdqwe123');
+    await authPage.regPassword.fill('testpassword13');
+    await authPage.regPasswordConfirm.fill('testpassword13');
     await authPage.registerButton.click();
     await authPage.page.waitForTimeout(3000);
   });
@@ -268,7 +271,7 @@ test.describe('Register Flow Tests', () => {
       const verificationUrl = mailTmHelper.extractVerificationLink(fullMessage);
 
       expect(verificationUrl).not.toBeNull();
-      expect(verificationUrl).toContain('v2.satuinbox.com/verification?token=');
+      expect(verificationUrl).toContain(process.env.VERIFICATION_URL_CONTAINS || '/verification?token=');
 
       // Step 5: Visit verification URL
       await page.goto(verificationUrl);
@@ -295,11 +298,11 @@ test.describe('Register Flow Tests', () => {
 
       // Upload NIB document
       await page.locator('label').filter({ hasText: /Unggah NIB/i }).locator('..').locator('input[type="file"]')
-        .setInputFiles('C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\cypress\\fixtures\\107.jpg');
+        .setInputFiles(nibFixture);
 
       // Upload KTP document
       await page.locator('label').filter({ hasText: /Unggah KTP/i }).locator('..').locator('input[type="file"]')
-        .setInputFiles('C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\cypress\\fixtures\\cupangstore8.jpg');
+        .setInputFiles(ktpFixture);
 
       // Submit onboarding
       const submitButton = page.getByRole('button', { name: /kirim/i });

@@ -127,7 +127,7 @@ docker ps
 ### 📋 Struktur Directory untuk Docker
 
 ```
-C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\
+<repo>\
 ├── Dockerfile                          ← Create baru
 ├── docker-compose.yml                  ← Create baru
 ├── .dockerignore                       ← Create baru (optional)
@@ -145,7 +145,7 @@ C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\
 
 ### Step 1: Buat Dockerfile
 
-**File:** `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\Dockerfile`
+**File:** `<repo>\Dockerfile`
 
 ```dockerfile
 FROM node:18-alpine
@@ -165,7 +165,7 @@ COPY scripts/ ./scripts/
 RUN mkdir -p scripts/report
 
 # Set default env vars (bisa override saat run)
-ENV BASE_URL=https://dev-v2.satuinbox.com
+ENV BASE_URL=https://dev.example.test
 ENV MODE=throughput
 ENV TARGET_CONNECTIONS=50
 ENV RUN_DURATION_MS=300000
@@ -178,7 +178,7 @@ CMD ["node", "scripts/widget-socket-load-2.js"]
 
 ### Step 2: Buat docker-compose.yml
 
-**File:** `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\docker-compose.yml`
+**File:** `<repo>\docker-compose.yml`
 
 ```yaml
 version: '3.8'
@@ -190,7 +190,7 @@ services:
     container_name: load-test-machine-1
     hostname: load-test-1
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: https://dev.example.test
       MODE: throughput
       TARGET_CONNECTIONS: 50
       RUN_DURATION_MS: 300000
@@ -214,7 +214,7 @@ services:
     container_name: load-test-machine-2
     hostname: load-test-2
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: https://dev.example.test
       MODE: throughput
       TARGET_CONNECTIONS: 50
       RUN_DURATION_MS: 300000
@@ -240,7 +240,7 @@ services:
     container_name: load-test-machine-3
     hostname: load-test-3
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: https://dev.example.test
       MODE: throughput
       TARGET_CONNECTIONS: 50
       RUN_DURATION_MS: 300000
@@ -278,7 +278,7 @@ networks:
 
 ### Step 3: Buat .dockerignore (Optional)
 
-**File:** `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\.dockerignore`
+**File:** `<repo>\.dockerignore`
 
 ```
 node_modules
@@ -306,7 +306,7 @@ dummy
 ### Step 1: Build Docker Image
 
 ```powershell
-cd "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation"
+cd "<repo>"
 
 # Build image (pertama kali saja, ambil waktu ~2-3 menit)
 docker-compose build
@@ -363,7 +363,7 @@ Reports otomatis tersimpan di `scripts/report/` karena volume mounting:
 
 ```powershell
 # Lihat semua reports (dari ketiga containers)
-ls "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\report\"
+ls "<repo>\scripts\report\"
 
 # Output:
 # load-test-2026-04-09-143000.html
@@ -498,7 +498,7 @@ docker logs load-test-machine-1 --tail 20
 docker exec load-test-machine-1 ping -c 4 8.8.8.8
 
 # Test DNS
-docker exec load-test-machine-1 nslookup dev-v2.satuinbox.com
+docker exec load-test-machine-1 nslookup dev.example.test
 
 # Check network
 docker network inspect sixv2automation_load-test-network

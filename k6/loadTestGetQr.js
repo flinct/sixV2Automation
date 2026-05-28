@@ -26,16 +26,11 @@ import http from "k6/http";
      },
    };
 
-   const BASE_URL = __ENV.BASE_URL; // e.g. https://v2.satuinbox.com atau https://dev-v2.satuinbox.com
-   const API_BASE =
-     BASE_URL === "https://v2.satuinbox.com"
-       ? "https://v2-api.satuinbox.com"
-       : BASE_URL === "https://dev-v2.satuinbox.com"
-         ? "https://dev-v2-api.satuinbox.com"
-         : null;
+   const BASE_URL = __ENV.BASE_URL; // e.g. https://app.example.test
+   const API_BASE = __ENV.API_BASE || (BASE_URL ? `${BASE_URL.replace(/\/+$/g, "")}/api/v1` : null);
 
    if (!BASE_URL || !API_BASE) {
-     throw new Error("Set BASE_URL to https://v2.satuinbox.com or https://dev-v2.satuinbox.com");
+     throw new Error("Set BASE_URL or API_BASE");
    }
 
    const X_API_KEY = __ENV.X_API_KEY || "";

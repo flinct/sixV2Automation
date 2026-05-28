@@ -143,7 +143,7 @@ class AuthPage {
       username: `${prefix}user${timestamp}`,
       email: `${prefix}${timestamp}@testmail.com`,
       phone: `08${Math.floor(Math.random() * 90000000) + 10000000}`,
-      password: 'Asdqwe12@',
+      password: process.env.E2E_TEMP_PASSWORD || 'TestPassword1!',
     };
   }
 }

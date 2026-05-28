@@ -14,7 +14,7 @@ RUN mkdir -p scripts/report
 COPY scripts/entrypoint.sh ./
 RUN chmod +x ./entrypoint.sh
 
-ENV BASE_URL=https://dev-v2.satuinbox.com
+ENV BASE_URL=https://app.example.test
 ENV MODE=throughput
 ENV TARGET_CONNECTIONS=50
 ENV RUN_DURATION_MS=300000

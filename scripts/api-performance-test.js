@@ -109,17 +109,10 @@ async function makeRequest(urlStr, options = {}) {
 
 // Get API base from BASE_URL
 function apiBaseFromBaseUrl(baseUrl) {
-  if (baseUrl === 'https://dev-v2.satuinbox.com')
-    return 'https://dev-v2-api.satuinbox.com/';
-  if (baseUrl === 'https://v2.satuinbox.com')
-    return 'https://v2-api.satuinbox.com/';
-  if (baseUrl === 'https://app.satuinbox.com')
-    return 'https://app.satuinbox.com/api/v1';
-  if (baseUrl === 'https://dev.satuinbox.com')
-    return 'https://dev.satuinbox.com/api/v1';
-  if (baseUrl === 'https://staging.satuinbox.com')
-    return 'https://staging.satuinbox.com/api/v1';
-  throw new Error(`Unknown BASE_URL: ${baseUrl}`);
+  const apiBase = process.env.API_BASE || process.env.E2E_API_BASE;
+  if (apiBase) return apiBase;
+  if (!baseUrl) throw new Error('Missing BASE_URL or API_BASE');
+  return `${baseUrl.replace(/\/+$/g, '')}/api/v1`;
 }
 
 function joinUrl(base, path) {
@@ -215,7 +208,7 @@ async function testVirtualUser(vuId, apiBase, credentials) {
 async function main() {
   const log = makeLogger();
 
-  const baseUrl = process.env.BASE_URL || 'https://dev-v2.satuinbox.com';
+  const baseUrl = process.env.BASE_URL || process.env.E2E_BASE_URL || 'https://app.example.test';
   const apiBase = apiBaseFromBaseUrl(baseUrl);
 
   const USERNAME = envStr('API_TEST_USERNAME', '');

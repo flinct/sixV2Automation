@@ -81,7 +81,7 @@ class MailTmHelper {
 
   /**
    * Extract verification link from email message
-   * Looks for a link containing v2.satuinbox.com/verification?token=
+   * Looks for a verification link in the configured target application.
    * @param {Object} message The email message object from mail.tm API
    * @returns {string|null} verification URL or null if not found
    */
@@ -102,9 +102,8 @@ class MailTmHelper {
       ),
     );
     
-    const verificationUrl = decodedLinks.find((link) =>
-      link.includes('v2.satuinbox.com/verification?token='),
-    );
+    const verificationMarker = process.env.VERIFICATION_URL_CONTAINS || '/verification?token=';
+    const verificationUrl = decodedLinks.find((link) => link.includes(verificationMarker));
     
     return verificationUrl || null;
   }

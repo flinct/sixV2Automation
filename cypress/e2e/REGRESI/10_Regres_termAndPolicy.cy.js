@@ -507,8 +507,8 @@ describe("testing auth page", () => {
         );
       });
     const privacy_contact_expectedTexts3 = [
-      "support@satuinbox.com",
-      "https://satuinbox.com",
+      "support@example.test",
+      "https://example.test",
       "PT Ordo Nusa Digital",
     ];
 
@@ -861,10 +861,10 @@ describe("testing auth page", () => {
         cy.wrap($el).should("include.text", term_contact_expectedTexts[index]);
       });
     const term_contact_expectedTexts2 = [
-      // "Email: support@satuinbox.com", //email changed to icon
-      // "Website: https://satuinbox.com", //website changed to icon
-      "support@satuinbox.com",
-      "https://satuinbox.com",
+      // "Email: support@example.test", //email changed to icon
+      // "Website: https://example.test", //website changed to icon
+      "support@example.test",
+      "https://example.test",
     ];
     cy.term_contact()
       .scrollIntoView()

@@ -97,9 +97,9 @@ When writing tests that involve feature access by different roles:
 ---
 
 ## Sources
-- FE: `C:\Users\MyBook SAGA 12\Desktop\FE satuinbox\omnichannel-satuinbox-fe`
-- BE: `C:\Users\MyBook SAGA 12\Desktop\BE satuinbox\omnichannel-satuinbox-be`
-- Auto: `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation` (this repo)
+- FE: private frontend monorepo reference redacted for portfolio publication
+- BE: private backend monorepo reference redacted for portfolio publication
+- Auto: this QA automation portfolio repo
 
 ---
 # PART 1: AUTOMATION REPO
@@ -178,16 +178,16 @@ playwright/
 | `playwright.config.js` | ENV=dev, 3 projects (chromium/firefox/webkit), actionTimeout 30s, data-cy attr |
 | `support/config/environments.js` | local/dev/staging/prod + apiBase |
 | `support/config/endpoints.js` | ApiEndpoints class: all API routes |
-| `support/config/test-data.js` | Accounts (goddummy, chickentester01, dany*, dll), apiKeys, channelTypes |
+| `support/config/test-data.js` | Env-driven account placeholders, apiKeys, channelTypes |
 | `support/config/index.js` | getConfig() aggregator |
 
 ## Key Accounts (Dev)
 | Login | Password | Role |
 |-------|----------|------|
-| chickentester01 | Asdqwe12@ | admin (DEFAULT) |
-| cekerayam01 | Asdqwe12@ | admin |
-| mataayam01 | Asdqwe12@ | supervisor |
-| leherayam01 | Asdqwe12@ | agent |
+| `E2E_DEV_ADMIN_USER` | `E2E_DEV_ADMIN_PASSWORD` | admin (DEFAULT) |
+| `E2E_DEV_ADMIN_USER` | `E2E_DEV_ADMIN_PASSWORD` | admin |
+| `E2E_DEV_SUPERVISOR_USER` | `E2E_DEV_SUPERVISOR_PASSWORD` | supervisor |
+| `E2E_DEV_AGENT_USER` | `E2E_DEV_AGENT_PASSWORD` | agent |
 
 ## Key Helpers
 | File | Functions |

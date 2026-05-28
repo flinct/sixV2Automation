@@ -12,7 +12,7 @@ Runs parallel socket.io clients to stress-test the **Widget** channel flow:
 ### Run (PowerShell)
 
 ```powershell
-$env:BASE_URL="https://dev-v2.satuinbox.com"
+$env:BASE_URL="https://app.example.test"
 $env:SIGNATURE_KEY="sk_..."
 $env:X_API_KEY="..."
 $env:WIDGET_CHANNEL_ID="..."
@@ -34,7 +34,7 @@ PASS if response contains `qrCode` and it starts with `data:image`.
 ### Run (PowerShell)
 
 ```powershell
-$env:BASE_URL="https://dev-v2.satuinbox.com"
+$env:BASE_URL="https://app.example.test"
 $env:X_API_KEY="..."  # if required
 
 $env:ITERATIONS="20"

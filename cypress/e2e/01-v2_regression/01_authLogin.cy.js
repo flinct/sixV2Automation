@@ -66,21 +66,21 @@ describe("testing LOGIN page", () => {
     authAction.loginInvalidUsername();
   });
   it("try login with ROLE SUPERVISOR", () => {
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       const paramLogin = "mataayam01"; //spv
       authAction.loginAsSupervisor(paramLogin);
     }
-    if (baseUrl === "https://v2.satuinbox.com") {
+    if (baseUrl === "https://v2.example.test") {
       const paramLogin = "danyspv01";
       authAction.loginAsSupervisor(paramLogin);
     }
   });
   it("try login with ROLE AGENT", () => {
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       const paramLogin = "leherayam01";
       authAction.loginAsAgent(paramLogin);
     }
-    if (baseUrl === "https://v2.satuinbox.com") {
+    if (baseUrl === "https://v2.example.test") {
       const paramLogin = "danyagent01";
       authAction.loginAsAgent(paramLogin);
     }

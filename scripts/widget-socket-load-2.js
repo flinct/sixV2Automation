@@ -11,7 +11,7 @@
  * so you can isolate pure Socket.IO/WS scaling behaviour.
  *
  * Required:
- * - BASE_URL: e.g. https://v2.satuinbox.com OR https://dev-v2.satuinbox.com
+ * - BASE_URL: e.g. https://app.example.test
  * - SIGNATURE_KEY: widget signature key (used only when SOCKET_AUTH_MODE=signatureKey)
  *
  * Optional:
@@ -40,8 +40,8 @@
  *   Or enable auto-prepare (default: true when either id is missing):
  *   - AUTO_PREPARE=true|false (default true)
  *   - PREPARE_MODE=shared|perClient (default shared)
- *   - WIDGET_CHANNEL_ID (optional; otherwise uses hardcoded default per BASE_URL)
- *   - WIDGET_ACCOUNT_CHANNEL_IDS (optional; comma-separated; otherwise uses hardcoded default per BASE_URL)
+ *   - WIDGET_CHANNEL_ID
+ *   - WIDGET_ACCOUNT_CHANNEL_IDS (comma-separated)
  *   - TOPIC_PREFIX (default loadtest)
  *   - JOIN_EVENT (default join.conversation)
  *
@@ -102,17 +102,10 @@ function sleep(ms) {
 }
 
 function apiBaseFromBaseUrl(baseUrl) {
-  if (baseUrl === "https://dev-v2.satuinbox.com")
-    return "https://dev-v2-api.satuinbox.com/";
-  if (baseUrl === "https://v2.satuinbox.com")
-    return "https://v2-api.satuinbox.com/";
-  if (baseUrl === "https://app.satuinbox.com")
-    return "https://app.satuinbox.com/api/v1";
-  if (baseUrl === "https://dev.satuinbox.com")
-    return "https://dev.satuinbox.com/api/v1";
-  if (baseUrl === "https://staging.satuinbox.com")
-    return "https://staging.satuinbox.com/api/v1";
-  throw new Error(`Unknown BASE_URL mapping: ${baseUrl}`);
+  const apiBase = process.env.API_BASE || process.env.E2E_API_BASE;
+  if (apiBase) return apiBase;
+  if (!baseUrl) throw new Error("Missing BASE_URL or API_BASE");
+  return `${baseUrl.replace(/\/+$/g, "")}/api/v1`;
 }
 
 function joinUrl(base, path) {
@@ -434,54 +427,17 @@ async function main() {
   const apiBase = apiBaseFromBaseUrl(baseUrl);
   const socketUrl = joinUrl(apiBase, "conversations");
 
-  // Hardcoded defaults per environment (mirrors scripts/widget-socket-load.js)
   function envDefaultsFromBaseUrl(baseUrlStr) {
     if (typeof baseUrlStr !== "string") return {};
-
-    if (baseUrlStr.includes("dev-v2.satuinbox.com")) {
-      return {
-        channelId: "692fe8eaaff05e8a1623e0d3",
-        signatureKey: "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if",
-        // Credentials for API testing (imported from 01_url_page.cjs)
-        apiUsername: "cekerayam01",
-        apiPassword: "Asdqwe12@",
-        accountChannels: [
-          { id: "69325a7eeb9e605baa8e7723", topic: "pengiriman" },
-          { id: "69a9adc1fc7e6da3893922ba", topic: "Bintang" },
-          { id: "697c6b9c15caa8d61ec7e0cb", topic: "jambu " },
-          { id: "6964ab6929de985a0fe73e48", topic: "kipas angin" },
-          { id: "69783b0154be8e7508b4af08", topic: "CS Harga" },
-          { id: "6964ac042a5dbde9a5c6fa0a", topic: "tumbler ijo" },
-          { id: "69649cc6a16d19e2849ef8bf", topic: "remote control" },
-          { id: "69325be0eb9e605baa8e7747", topic: "technical" },
-          { id: "698ef3aada258f2a5a46bf89", topic: "hey" },
-          { id: "69782d3654be8e7508b4abfe", topic: "Complain" },
-          { id: "6964ac1d2a5dbde9a5c6fa28", topic: "tumbler biru" },
-        ],
-      };
-    }
-
-    if (
-      baseUrlStr.includes("v2.satuinbox.com") &&
-      !baseUrlStr.includes("dev-v2")
-    ) {
-      return {
-        channelId: "694b55ffbb886b39e785d2c0",
-        signatureKey: "sk_mjjm7yx2_-K2UbqX1qiyK6LvbbClG291GbWXM9fbM",
-        // Credentials for API testing (imported from 01_url_page.cjs)
-        apiUsername: "danyatmin01",
-        apiPassword: "Asdqwe12@",
-        accountChannels: [
-          { id: "6996bcd952ef87df9e414fd3", topic: "Complain" },
-          { id: "69649c6b905d65859c36f81c", topic: "remote control" },
-          { id: "697845cf1782f1bd889b6bfc", topic: "CS harga" },
-          { id: "6964931c905d65859c36f618", topic: "kipas angin" },
-          { id: "69a9c8c86e7924748d4af383", topic: "Hayoh kumaha" },
-        ],
-      };
-    }
-
-    return {};
+    return {
+      channelId: process.env.WIDGET_CHANNEL_ID || "",
+      signatureKey: process.env.SIGNATURE_KEY || "",
+      apiUsername: process.env.API_TEST_USERNAME || "",
+      apiPassword: process.env.API_TEST_PASSWORD || "",
+      accountChannels: process.env.WIDGET_ACCOUNT_CHANNEL_IDS
+        ? process.env.WIDGET_ACCOUNT_CHANNEL_IDS.split(",").map((id) => ({ id: id.trim(), topic: process.env.TOPIC_PREFIX || "loadtest" }))
+        : [],
+    };
   }
 
   const defaults = envDefaultsFromBaseUrl(baseUrl);

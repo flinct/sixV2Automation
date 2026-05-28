@@ -269,7 +269,7 @@ Alasan:
 {
   "testId": "2026-04-09T04-18-43",
   "config": {
-    "baseUrl": "https://dev-v2.satuinbox.com",
+    "baseUrl": "https://dev.example.test",
     "mode": "throughput",
     "targetConnections": 50,
     "duration": "5 minutes"
@@ -315,7 +315,7 @@ End Time:          2026-04-09T04:20:43.789Z
 Duration:          120 seconds
 
 Configuration:
-  Base URL:        https://dev-v2.satuinbox.com
+  Base URL:        https://dev.example.test
   Mode:            throughput
   Target VU:       50
   Emit Interval:   200ms

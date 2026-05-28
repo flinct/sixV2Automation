@@ -9,9 +9,9 @@ const baseUrl = Cypress.config("baseUrl");
 const config = env_config(baseUrl);
 let errorLogs = [];
 
-const customer_number = 6289655057778;
+const customer_number = 6280000000000;
 
-const customerNumber = "6289655057778";
+const customerNumber = "6280000000000";
 
 function formatCustomerNumber(customerNumber) {
   return customerNumber.replace(/(\d{2})(\d{3})(\d{4})(\d{4})/, "$1 $2 $3 $4");
@@ -58,7 +58,7 @@ function getTokenThenBroadcast() {
           // ]
         },
         // {
-        //     "number_whatsapp_customer": "6289655057778",
+        //     "number_whatsapp_customer": "6280000000000",
         //     "message": "Terima kasih menjadi customer setia kami!, mari antar paketmu ke kami dan paketmu sampi esok hari :) | Broadcast - SAP 2:25PM",
         //     "id_template": "48688", // id template broadcast (optional)
         //     "properties":
@@ -354,7 +354,7 @@ function createUser(roleText) {
     "manageTeam_TextboxEmail"
   );
   // cy.softAssert(
-  //   cy.manageTeam_TextboxPassword().type("Asdqwe12@"),
+  //   cy.manageTeam_TextboxPassword().type("TestPassword1!"),
   //   "manageTeam_TextboxPassword"
   // );
   cy.softAssert(
@@ -576,7 +576,7 @@ function createUser_staticName(roleText) {
     "manageTeam_TextboxEmail"
   );
   // cy.softAssert(
-  //   cy.manageTeam_TextboxPassword().type("Asdqwe12@"),
+  //   cy.manageTeam_TextboxPassword().type("TestPassword1!"),
   //   "manageTeam_TextboxPassword"
   // );
   cy.softAssert(

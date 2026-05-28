@@ -180,7 +180,7 @@ wsl --list --verbose
 # Syntax: wsl --import [distro-name] [install-location] [tar-file] --version 2
 
 wsl --import docker-desktop-data `
-  "C:\Users\MyBook SAGA 12\AppData\Local\Docker\wsl\data" `
+  "C:\Users\<Username>\AppData\Local\Docker\wsl\data" `
   "C:\Docker-Backup\docker-desktop-data-backup.tar" `
   --version 2
 
@@ -228,7 +228,7 @@ C:\Users\<Username>\AppData\Local\Docker\wsl\data\ext4.vhdx
 # Atau gunakan PowerShell:
 
 # Get current size
-$diskPath = "C:\Users\MyBook SAGA 12\AppData\Local\Docker\wsl\data\ext4.vhdx"
+$diskPath = "C:\Users\<Username>\AppData\Local\Docker\wsl\data\ext4.vhdx"
 (Get-Item $diskPath).Length / 1GB
 
 # Expected: ~4.7 GB

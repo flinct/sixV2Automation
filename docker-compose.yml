@@ -6,7 +6,8 @@ services:
     container_name: load-test-machine-1
     hostname: load-test-1
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: ${BASE_URL:-https://app.example.test}
+      API_BASE: ${API_BASE:-https://api.example.test/}
       MODE: throughput
       # MODE: soak
       TARGET_CONNECTIONS: 75
@@ -23,7 +24,8 @@ services:
     container_name: load-test-machine-2
     hostname: load-test-2
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: ${BASE_URL:-https://app.example.test}
+      API_BASE: ${API_BASE:-https://api.example.test/}
       MODE: throughput
       # MODE: soak
       TARGET_CONNECTIONS: 75
@@ -42,7 +44,8 @@ services:
     container_name: load-test-machine-3
     hostname: load-test-3
     environment:
-      BASE_URL: https://dev-v2.satuinbox.com
+      BASE_URL: ${BASE_URL:-https://app.example.test}
+      API_BASE: ${API_BASE:-https://api.example.test/}
       MODE: throughput
       # MODE: soak
       TARGET_CONNECTIONS: 75
@@ -61,7 +64,7 @@ services:
   #   container_name: load-test-machine-4
   #   hostname: load-test-4
   #   environment:
-  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     BASE_URL: ${BASE_URL:-https://app.example.test}
   #     MODE: throughput
   #     # MODE: soak
   #     TARGET_CONNECTIONS: 50
@@ -80,7 +83,7 @@ services:
   #   container_name: load-test-machine-5
   #   hostname: load-test-5
   #   environment:
-  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     BASE_URL: ${BASE_URL:-https://app.example.test}
   #     MODE: throughput
   #     # MODE: soak
   #     TARGET_CONNECTIONS: 50
@@ -99,7 +102,7 @@ services:
   #   container_name: load-test-machine-6
   #   hostname: load-test-6
   #   environment:
-  #     BASE_URL: https://dev-v2.satuinbox.com
+  #     BASE_URL: ${BASE_URL:-https://app.example.test}
   #     MODE: throughput
   #     # MODE: soak
   #     TARGET_CONNECTIONS: 50

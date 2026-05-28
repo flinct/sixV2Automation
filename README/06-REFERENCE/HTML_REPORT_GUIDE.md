@@ -40,7 +40,7 @@ REPORT_OUTPUT=my-reports/custom-report.html node widget-socket-load-2.js
 
 ### Example with Full Parameters
 ```bash
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "throughput"
 $env:TARGET_CONNECTIONS = "50"
 $env:REPORT_OUTPUT = "reports/my-test-report.html"
@@ -99,7 +99,7 @@ node widget-socket-load-2.js
 
 ### 1. Simple Test (Soak Mode)
 ```bash
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "soak"
 $env:TARGET_CONNECTIONS = "50"
 node widget-socket-load-2.js
@@ -109,7 +109,7 @@ node widget-socket-load-2.js
 
 ### 2. Throughput Test with Custom Report
 ```bash
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "throughput"
 $env:TARGET_CONNECTIONS = "100"
 $env:EMIT_EVERY_MS = "200"
@@ -121,7 +121,7 @@ node widget-socket-load-2.js
 
 ### 3. Long Running Stress Test
 ```bash
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "throughput"
 $env:TARGET_CONNECTIONS = "500"
 $env:RUN_DURATION_MS = "600000"
@@ -188,7 +188,7 @@ python -m http.server 8000
 
 ```bash
 # Required
-BASE_URL                    # e.g., https://dev-v2.satuinbox.com
+BASE_URL                    # e.g., https://dev.example.test
 
 # Optional Report-specific
 REPORT_OUTPUT              # Custom report file path (default: reports/load-test-report.html)
@@ -205,7 +205,7 @@ RUN_DURATION_MS          # Test duration
 
 ### Quick Baseline (Soak)
 ```bash
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:TARGET_CONNECTIONS = "10"
 $env:RUN_DURATION_MS = "30000"
 node widget-socket-load-2.js
@@ -214,7 +214,7 @@ node widget-socket-load-2.js
 
 ### Medium Stress (Throughput)
 ```bash
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "throughput"
 $env:TARGET_CONNECTIONS = "100"
 $env:EMIT_EVERY_MS = "500"
@@ -225,7 +225,7 @@ node widget-socket-load-2.js
 
 ### Heavy Stress (Throughput)
 ```bash
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "throughput"
 $env:TARGET_CONNECTIONS = "500"
 $env:EMIT_EVERY_MS = "200"

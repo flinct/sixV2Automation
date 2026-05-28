@@ -1,15 +1,15 @@
 // const userDataSpam = [
-//     { number : "1", keyword : "god@devagent.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent2.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent3.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent4.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent5.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent6.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent7.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent8.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent9.com", password : "asdqwe12"},
-//     { number : "1", keyword : "god@devagent10.com", password : "asdqwe12"}
-//     // { number : "1", keyword : "god@devagent.com", password : "asdqwe12"},
+//     { number : "1", keyword : "god@devagent.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent2.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent3.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent4.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent5.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent6.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent7.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent8.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent9.com", password : "testpassword1"},
+//     { number : "1", keyword : "god@devagent10.com", password : "testpassword1"}
+//     // { number : "1", keyword : "god@devagent.com", password : "testpassword1"},
 //     // { number : '123', keyword : 'rubi@mas.com', password : 'priu123'},
 //     // { number : '6289', keyword : 'gan@settings.com', password : 'ghuasad11'},
 //     // { number : '99731', keyword : 'empat@gasing.com', password : 'asdoo9877'},
@@ -66,8 +66,8 @@ const numbers = [
   ];
   
   const passwords = [
-    // "asdqwe12", 
-    "TongTji89"
+    // "testpassword1", 
+    "TestPassword1!"
     // "priu123", "ghuasad11", "asdoo9877", 
     // "123ioiasdfg", "097bnnb6", "asd88761", "asdiiii97", 
     // "vcxbmn86", "asdii7123mr"
@@ -77,7 +77,7 @@ const numbers = [
     number,
     keyword: keywords[index],
     // password: passwords[index]//kalo pass uniq pake ini
-    password: 'asdqwe12'
+    password: 'testpassword1'
   }));
   
 

@@ -139,7 +139,7 @@
 
 // // // Set the base URL according to your target environment
 // // const baseUrl = "https://unwinded-diann-protrusile.ngrok-free.dev/"; // local alfaz
-// const baseUrl = "https://dev-v2-api.satuinbox.com/"; // dev environment
+// const baseUrl = "https://dev-api.example.test/"; // dev environment
 
 // // Environment-specific settings
 // let channelId, signatureKey, accountChannels;
@@ -147,15 +147,15 @@
 // if (baseUrl.includes("ngrok-free.dev")) {
 //   // Local alfaz configuration
 //   channelId = "694222d0c553d64073737291";
-//   signatureKey = "sk_mi83pedn_PmN_rMg_OpaV0ecMFtfheZZXoLcdf8N7";
+//   signatureKey = "sk_REDACTED";
 //   accountChannels = [
 //     { id: "69422310c553d640737372a6", topic: "amatukam-test widget" },
 //     { id: "69684f3fb4118ee5f0a315ba", topic: "test timestaps-test topik" },
 //   ];
-// } else if (baseUrl.includes("dev-v2-api.satuinbox.com")) {
+// } else if (baseUrl.includes("dev-api.example.test")) {
 //   // Dev environment configuration
 //   channelId = "692fe8eaaff05e8a1623e0d3";
-//   signatureKey = "sk_mio7hnje_KXM6RXnFXBUqK-3_wBpnVVWfBlgPH-if";
+//   signatureKey = "sk_REDACTED";
 //   accountChannels = [
 //     { id: "698ef3aada258f2a5a46bf89", topic: "hey" },
 //     { id: "6964ac1d2a5dbde9a5c6fa28", topic: "tumbler biru" },

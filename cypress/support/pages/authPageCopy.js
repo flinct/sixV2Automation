@@ -50,15 +50,15 @@ class authPage {
   //   const key = `${baseUrl}_${loginType}`;
 
   //   const loginMap = {
-  //     "https://satuinbox.com_goddummyprodemail": () =>
+  //     "https://example.test_goddummyprodemail": () =>
   //       cy.login_prod_by_username("myUsername", "myPassword"), //godummy prod email,
-  //     "https://dev.satuinbox.com_chickentester": () =>
+  //     "https://dev.example.test_chickentester": () =>
   //       cy.login_chickentester_email("myUsername", "myPassword"), //chickentester dev email,
-  //     "https://dev.satuinbox.com_godummydev": () =>
+  //     "https://dev.example.test_godummydev": () =>
   //       cy.login_dev_by_username("myUsername", "myPassword"), //godummy dev email,
-  //     "https://staging.satuinbox.com_chickentesterstagingemail": () =>
+  //     "https://staging.example.test_chickentesterstagingemail": () =>
   //       cy.login_staging_by_email("myUsername", "myPassword"), //chickentester staging email,
-  //     "https://niagakara.satuinbox.com_niagakarausername": () =>
+  //     "https://niagakara.example.test_niagakarausername": () =>
   //       cy.login_niagakara("myUsername", "myPassword"), //niagakara username,
   //   };
 
@@ -154,7 +154,7 @@ class authPage {
 
     const loginBody = this.reGetConfigLogiType();
 
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       this.visitLoginPageV2();
     } else {
       this.visitLoginPage();
@@ -186,7 +186,7 @@ class authPage {
 
     const loginBody = this.reGetConfigLogiType();
 
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       this.visitLoginPageV2();
     } else {
       this.visitLoginPage();
@@ -218,7 +218,7 @@ class authPage {
 
     const loginBody = this.reGetConfigLogiType();
 
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       this.visitLoginPageV2();
     } else {
       this.visitLoginPage();
@@ -250,7 +250,7 @@ class authPage {
 
     const loginBody = this.reGetConfigLogiType();
 
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       this.visitLoginPageV2();
     } else {
       this.visitLoginPage();
@@ -276,7 +276,7 @@ class authPage {
     cy.task("log", "-----SUCCESSFULL LOGIN as AGENT------");
   }
   loginDummy_testerDummy01() {
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       this.visitLoginPageV2();
     } else {
       this.visitLoginPage();
@@ -292,7 +292,7 @@ class authPage {
         .password({
           timeout: 15000,
         })
-        .type("Asdqwe12@");
+        .type("TestPassword1!");
       // .type(body.password);
       elementAuth
         .buttonLogin({
@@ -303,7 +303,7 @@ class authPage {
     cy.url().should("include", `/conversation/your-inbox`);
   }
   loginDummy_testerDummy02() {
-    if (baseUrl === "https://dev-v2.satuinbox.com") {
+    if (baseUrl === "https://dev.example.test") {
       this.visitLoginPageV2();
     } else {
       this.visitLoginPage();
@@ -319,7 +319,7 @@ class authPage {
         .password({
           timeout: 15000,
         })
-        .type("Asdqwe12@");
+        .type("TestPassword1!");
       // .type(body.password);
       elementAuth
         .buttonLogin({
@@ -408,8 +408,8 @@ class authPage {
     elementAuth.regUsername().type("testduplicateemail");
     elementAuth.regEmail().type("duplicate@email.com");
     elementAuth.regPhone().type("08" + randomPhoneNumber); //0855695874
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
     cy.wait(2000);
   }
@@ -432,8 +432,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08" + randomPhoneNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //validate
@@ -476,8 +476,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08" + randomPhoneNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     // elementAuth.buttonDaftar().click();
 
     //validate login with email
@@ -504,8 +504,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08" + randomPhoneNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
     cy.wait(500);
     //validate
@@ -528,8 +528,8 @@ class authPage {
     elementAuth.regUsername().type("invalidemail");
     elementAuth.regEmail().type("invalid@mail.");
     elementAuth.regPhone().type("08" + randomPhoneNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
     cy.wait(500);
     //validate
@@ -552,8 +552,8 @@ class authPage {
     elementAuth.regUsername().type("invalidemail");
     elementAuth.regEmail().type("invalidmail.");
     elementAuth.regPhone().type("08" + randomPhoneNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
     cy.wait(500);
     //validate
@@ -590,8 +590,8 @@ class authPage {
     elementAuth.regUsername().type("testatc" + randomNumber2);
     elementAuth.regEmail().type(randomNumber + "@testatc.com");
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //success
@@ -623,8 +623,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -656,8 +656,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -688,8 +688,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -720,8 +720,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -750,8 +750,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08" + randomNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
 
     //error steps
     //validate
@@ -784,8 +784,8 @@ class authPage {
     elementAuth.regUsername().type("te");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -816,8 +816,8 @@ class authPage {
       .type("testmaxusernameisthirtyfivedigitsdsadsadsa"); //42 digits
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -846,8 +846,8 @@ class authPage {
     elementAuth.regUsername().type("test regUsername"); //spacing
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -876,8 +876,8 @@ class authPage {
     elementAuth.regUsername().type("asd!@#$%^&*()_+");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -916,8 +916,8 @@ class authPage {
     elementAuth.regUsername().type("chickentester01");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //validate duplicate username message
@@ -956,8 +956,8 @@ class authPage {
     elementAuth.regUsername().type("CHICKENTESTER01");
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -987,8 +987,8 @@ class authPage {
     elementAuth.regUsername().type(username); //trailing spacing
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     // elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1031,10 +1031,10 @@ class authPage {
     elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("6285173223344");
+    elementAuth.regPhone().type("6280000000000");
     // elementAuth.regPhone().type("0896" + randomNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     cy.intercept("POST", "/api/auth/register").as("register");
     elementAuth.buttonDaftar().click();
 
@@ -1092,10 +1092,10 @@ class authPage {
     elementAuth.regFullname().type(indentifierRegres + fullname);
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
-    elementAuth.regPhone().type("6285173223344");
+    elementAuth.regPhone().type("6280000000000");
     // elementAuth.regPhone().type("62896" + randomNumber);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     cy.intercept("POST", "/api/auth/register").as("register");
     elementAuth.buttonDaftar().click();
 
@@ -1145,8 +1145,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("089600001"); //9 digits
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1175,8 +1175,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960"); //5 digits
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1205,8 +1205,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08"); //2 digits
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1235,8 +1235,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("0896000000011"); //13 digits
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1265,8 +1265,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000000112345"); //17 digits
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1295,8 +1295,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("0896000000011234567891234"); //25 digits
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1325,8 +1325,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08960000!@#$");
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1369,8 +1369,8 @@ class authPage {
     elementAuth.regEmail().type(email);
     // elementAuth.regPhone().type(numberWithSpace);
     elementAuth.regPhone().type(numberWithSpace);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1424,8 +1424,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type(numberWithTrailingSpace);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1461,8 +1461,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("02960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1493,8 +1493,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type(" 02960000" + randomNumber2);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1536,8 +1536,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type(numberWithTrailingSpace);
-    elementAuth.regPassword().type("Asdqwe12@");
-    elementAuth.regPasswordConfirm().type("Asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1595,8 +1595,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
-    elementAuth.regPassword().type("Asdqwe12@!#$%^&*("); //17 chars
-    elementAuth.regPasswordConfirm().type("Asdqwe12@!#$%^&*(");
+    elementAuth.regPassword().type("TestPassword1!!#$%^&*("); //17 chars
+    elementAuth.regPasswordConfirm().type("TestPassword1!!#$%^&*(");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1625,8 +1625,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
-    elementAuth.regPassword().type("Asdqwe123");
-    elementAuth.regPasswordConfirm().type("Asdqwe123");
+    elementAuth.regPassword().type("testpassword13");
+    elementAuth.regPasswordConfirm().type("testpassword13");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1657,8 +1657,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
-    elementAuth.regPassword().type("asdqwe12@");
-    elementAuth.regPasswordConfirm().type("asdqwe12@");
+    elementAuth.regPassword().type("TestPassword1!");
+    elementAuth.regPasswordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1753,8 +1753,8 @@ class authPage {
     elementAuth.regUsername().type(username);
     elementAuth.regEmail().type(email);
     elementAuth.regPhone().type("08961234" + number);
-    elementAuth.regPassword().type("Asdqwe12 @");
-    elementAuth.regPasswordConfirm().type("Asdqwe12 @");
+    elementAuth.regPassword().type("testpassword1 @");
+    elementAuth.regPasswordConfirm().type("testpassword1 @");
     // elementAuth.buttonDaftar().click();
 
     //error steps
@@ -1779,8 +1779,8 @@ class authPage {
     const mailTmGetToken = "https://api.mail.tm/token";
     const mailTmGetAllMsg = "https://api.mail.tm/messages";
     const mailTmGetMsgById = "https://api.mail.tm/messages/";
-    const password = "Asdqwe12@";
-    const newpassword = "newasdqwe12";
+    const password = "TestPassword1!";
+    const newpassword = "newtestpassword1";
 
     const usernameSuperAdmin = "satuinbox";
     const passwordSuperAdmin = "_-ng9E0ftEz5$d(I";
@@ -1832,8 +1832,8 @@ class authPage {
       elementAuth.regUsername().type(trimFromFullName);
       elementAuth.regEmail().type(tempMail);
       elementAuth.regPhone().type("628" + randomPhoneNumber);
-      elementAuth.regPassword().clear().type("Asdqwe12@");
-      elementAuth.regPasswordConfirm().clear().type("Asdqwe12@");
+      elementAuth.regPassword().clear().type("TestPassword1!");
+      elementAuth.regPasswordConfirm().clear().type("TestPassword1!");
       elementAuth.buttonDaftar().click();
       elementAuth.buttonDaftar({ timeout: 10000 }).should("not.exist");
       // cy.wait(5000);
@@ -1852,8 +1852,8 @@ class authPage {
     // elementAuth.username().type("testatc" + randomNumber2);
     // elementAuth.emai().type(randomNumber + "@testatc.com");
     // elementAuth.phone().type("08960000" + randomNumber2);
-    // elementAuth.password().type("Asdqwe12@");
-    // elementAuth.passwordConfirm().type("Asdqwe12@");
+    // elementAuth.password().type("TestPassword1!");
+    // elementAuth.passwordConfirm().type("TestPassword1!");
     // elementAuth.buttonDaftar().click();
 
     // //get all message from temp email
@@ -1980,8 +1980,8 @@ class authPage {
     elementAuth.username().type("testatc" + randomNumber2);
     elementAuth.email().type(randomNumber + "@testatc.com");
     elementAuth.phone().type("08960000" + randomNumber2);
-    elementAuth.password().type("Asdqwe12@");
-    elementAuth.passwordConfirm().type("Asdqwe12@");
+    elementAuth.password().type("TestPassword1!");
+    elementAuth.passwordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     cy.wait(2000);
@@ -2028,8 +2028,8 @@ class authPage {
     elementAuth.username().type("testatc" + randomNumber2);
     elementAuth.email().type(randomNumber + "@testatc.com");
     elementAuth.phone().type("08960000" + randomNumber2);
-    elementAuth.password().type("Asdqwe12@");
-    elementAuth.passwordConfirm().type("Asdqwe12@");
+    elementAuth.password().type("TestPassword1!");
+    elementAuth.passwordConfirm().type("TestPassword1!");
     elementAuth.buttonDaftar().click();
 
     cy.wait(2000);
@@ -2099,7 +2099,7 @@ class authPage {
 
   registerAndResetWithMailTm() {
     const mailSlurpApiKey =
-      "sk_mFLuOb6wN19FJHQy_HL8T4acs2vp4caUR6vCeVM1p8ay90Xh9jQn6VzmWIjBZLo4qDGJ5cCGadocsXpiw";
+      "sk_REDACTED";
 
     // const firstTextMailAndName = "registermailtm" + randomNumber;
     const firstTextMailAndName = "registermailtm" + randomText;
@@ -2109,8 +2109,8 @@ class authPage {
     const mailTmGetToken = "https://api.mail.tm/token";
     const mailTmGetAllMsg = "https://api.mail.tm/messages";
     const mailTmGetMsgById = "https://api.mail.tm/messages/";
-    const password = "Asdqwe12@";
-    const newpassword = "newasdqwe12";
+    const password = "TestPassword1!";
+    const newpassword = "newtestpassword1";
 
     const usernameSuperAdmin = "satuinbox";
     const passwordSuperAdmin = "_-ng9E0ftEz5$d(I";
@@ -2163,8 +2163,8 @@ class authPage {
       elementAuth.regUsername().type(trimFromFullName);
       elementAuth.regEmail().type(tempMail);
       elementAuth.regPhone().type("628" + randomPhoneNumber);
-      elementAuth.regPassword().clear().type("Asdqwe12@");
-      elementAuth.regPasswordConfirm().clear().type("Asdqwe12@");
+      elementAuth.regPassword().clear().type("TestPassword1!");
+      elementAuth.regPasswordConfirm().clear().type("TestPassword1!");
       elementAuth.buttonDaftar().click();
       elementAuth.buttonDaftar({ timeout: 10000 }).should("not.exist");
       // cy.wait(5000);

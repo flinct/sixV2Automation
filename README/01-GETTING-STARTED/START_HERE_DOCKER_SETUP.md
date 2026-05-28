@@ -41,7 +41,7 @@ COPY package*.json ./
 RUN npm ci --production
 COPY scripts/ ./scripts/
 RUN mkdir -p scripts/report
-ENV BASE_URL=https://dev-v2.satuinbox.com
+ENV BASE_URL=https://dev.example.test
 ENV MODE=throughput
 ENV TARGET_CONNECTIONS=50
 ENV RUN_DURATION_MS=300000
@@ -94,7 +94,7 @@ docker system df
 
 **Create File 1: Dockerfile**
 
-Save as: `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\Dockerfile`
+Save as: `<repo>\Dockerfile`
 
 ```dockerfile
 FROM node:18-alpine
@@ -107,7 +107,7 @@ RUN npm ci --production
 COPY scripts/ ./scripts/
 RUN mkdir -p scripts/report
 
-ENV BASE_URL=https://dev-v2.satuinbox.com
+ENV BASE_URL=https://dev.example.test
 ENV MODE=throughput
 ENV TARGET_CONNECTIONS=50
 ENV RUN_DURATION_MS=300000
@@ -119,7 +119,7 @@ CMD ["node", "scripts/widget-socket-load-2.js"]
 
 **Create File 2: docker-compose.yml**
 
-Save as: `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\docker-compose.yml`
+Save as: `<repo>\docker-compose.yml`
 
 Copy from: **DOCKER_QUICK_START.md** → Step 3
 
@@ -132,7 +132,7 @@ Copy from: **DOCKER_QUICK_START.md** → Step 3
 **Open PowerShell in project directory:**
 
 ```powershell
-cd "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation"
+cd "<repo>"
 ```
 
 **Build image (first time only, takes 2-3 min):**
@@ -321,7 +321,7 @@ DOCKER_QUICK_START.md → Copy-paste steps - 20 minutes
 → Rebuild: `docker-compose build --no-cache`
 
 **Problem: Cannot reach server**
-→ Test DNS: `docker exec load-test-machine-1 nslookup dev-v2.satuinbox.com`
+→ Test DNS: `docker exec load-test-machine-1 nslookup dev.example.test`
 
 **More issues?**
 → See DOCKER_MULTI_MACHINE_SETUP.md → TROUBLESHOOTING

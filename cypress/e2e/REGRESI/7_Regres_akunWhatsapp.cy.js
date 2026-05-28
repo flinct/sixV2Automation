@@ -41,7 +41,7 @@ describe('testing auth page', ()=>{
     });
     
   it.only('handover chat at unassigned tab', () => {
-    cy.visit('https://dev.satuinbox.com/setting/account-whatsapp');
+    cy.visit('https://dev.example.test/setting/account-whatsapp');
     cy.viewport(1366, 768);
     cy.wait(1000);
     

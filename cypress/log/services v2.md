@@ -1,6 +1,6 @@
 saat disconnect dan rescar qr, ada kemungkinan engine down
 
-chat-wa-broadcast-engine | engine: socket value m : 6287712348703 {"messages":[{"key":{"remoteJid":"120363403539389657@g.us","fromMe":false,"id":"3EB00D49A2E7E267EF48A9","participant":"6281237769022@s.whatsapp.net"},"messageTimestamp":1750605664,"pushName":"Mara Admin Claim","broadcast":false,"message":{"extendedTextMessage":{"text":"C1DFOGMN paket belum diterima ka bantu dimksimalkan kembali","contextInfo":{"stanzaId":"3EB0987AD59D2E10A6DFDE","participant":"6289644929424@s.whatsapp.net","quotedMessage":{"conversation":"C1DFOGMN / 88LP1749689735716 dalam pengiriman kak","messageContextInfo":{"messageSecret":"z/lOvlt3NqfU4RHpUGwu42+MFCPACOEw0cdcwwtZ8qc="}},"disappearingMode":{"initiator":"CHANGED_IN_CHAT"}},"inviteLinkGroupTypeV2":"DEFAULT"},"messageContextInfo":{"messageSecret":"Rt2unvRLoZrI3AMU35yX028z6xiyRht/mrpIN3klpTQ="}}}],"type":"notify"}
+chat-wa-broadcast-engine | engine: socket value m : 6280000000000 {"messages":[{"key":{"remoteJid":"120363403539389657@g.us","fromMe":false,"id":"3EB00D49A2E7E267EF48A9","participant":"6280000000000@s.whatsapp.net"},"messageTimestamp":1750605664,"pushName":"Mara Admin Claim","broadcast":false,"message":{"extendedTextMessage":{"text":"C1DFOGMN paket belum diterima ka bantu dimksimalkan kembali","contextInfo":{"stanzaId":"3EB0987AD59D2E10A6DFDE","participant":"6280000000000@s.whatsapp.net","quotedMessage":{"conversation":"C1DFOGMN / 88LP1749689735716 dalam pengiriman kak","messageContextInfo":{"messageSecret":"z/lOvlt3NqfU4RHpUGwu42+MFCPACOEw0cdcwwtZ8qc="}},"disappearingMode":{"initiator":"CHANGED_IN_CHAT"}},"inviteLinkGroupTypeV2":"DEFAULT"},"messageContextInfo":{"messageSecret":"Rt2unvRLoZrI3AMU35yX028z6xiyRht/mrpIN3klpTQ="}}}],"type":"notify"}
 chat-wa-broadcast-engine | backendurl http://chat-wa-broadcast:8000
 chat-wa-broadcast-engine | engine: saving..
 chat-wa-broadcast-engine | validate message
@@ -13,7 +13,7 @@ chat-wa-broadcast-engine | at WebSocketClient.<anonymous> (/app/node_modules/@wh
 chat-wa-broadcast-engine | at WebSocketClient.emit (node:events:524:28)
 chat-wa-broadcast-engine | at /app/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:236:35
 chat-wa-broadcast-engine | at Object.decodeFrame (/app/node_modules/@whiskeysockets/baileys/lib/Utils/noise-handler.js:144:17)
-chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_REDACTED:95:5) {
 chat-wa-broadcast-engine | data: [Object],
 chat-wa-broadcast-engine | isBoom: true,
 chat-wa-broadcast-engine | isServer: true,
@@ -21,21 +21,21 @@ chat-wa-broadcast-engine | output: [Object]
 chat-wa-broadcast-engine | },
 chat-wa-broadcast-engine | date: 2025-06-22T20:47:27.080Z
 chat-wa-broadcast-engine | }
-chat-wa-broadcast-engine | } 6287712348703
-chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6287712348703
-chat-wa-broadcast-engine | engine: init 6287712348703
+chat-wa-broadcast-engine | } 6280000000000
+chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6280000000000
+chat-wa-broadcast-engine | engine: init 6280000000000
 chat-wa-broadcast-engine | using WA v2.3000.1023223821, isLatest: true
-chat-wa-broadcast-engine | engine: socket whatsapp re-init 6287712348703 503
+chat-wa-broadcast-engine | engine: socket whatsapp re-init 6280000000000 503
 chat-wa-broadcast-engine | engine: connection.update {
 chat-wa-broadcast-engine | connection: 'connecting',
 chat-wa-broadcast-engine | receivedPendingNotifications: false,
 chat-wa-broadcast-engine | qr: undefined
-chat-wa-broadcast-engine | } 6287712348703
-chat-wa-broadcast-engine | engine: socket whatsapp connecting 6287712348703
-chat-wa-broadcast-engine | engine: connection.update { isOnline: true } 6287712348703
-chat-wa-broadcast-engine | engine: connection.update { connection: 'open' } 6287712348703
-chat-wa-broadcast-engine | engine: connection.update { receivedPendingNotifications: true } 6287712348703
-chat-wa-broadcast-engine | engine: socket whatsapp receiver pending notification (true) 6287712348703
+chat-wa-broadcast-engine | } 6280000000000
+chat-wa-broadcast-engine | engine: socket whatsapp connecting 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { isOnline: true } 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { connection: 'open' } 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { receivedPendingNotifications: true } 6280000000000
+chat-wa-broadcast-engine | engine: socket whatsapp receiver pending notification (true) 6280000000000
 chat-wa-broadcast-engine | engine: connection.update {
 chat-wa-broadcast-engine | connection: 'close',
 chat-wa-broadcast-engine | lastDisconnect: {
@@ -44,7 +44,7 @@ chat-wa-broadcast-engine | at WebSocketClient.<anonymous> (/app/node_modules/@wh
 chat-wa-broadcast-engine | at WebSocketClient.emit (node:events:524:28)
 chat-wa-broadcast-engine | at /app/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:236:35
 chat-wa-broadcast-engine | at Object.decodeFrame (/app/node_modules/@whiskeysockets/baileys/lib/Utils/noise-handler.js:144:17)
-chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_REDACTED:95:5) {
 chat-wa-broadcast-engine | data: [Object],
 chat-wa-broadcast-engine | isBoom: true,
 chat-wa-broadcast-engine | isServer: true,
@@ -52,21 +52,21 @@ chat-wa-broadcast-engine | output: [Object]
 chat-wa-broadcast-engine | },
 chat-wa-broadcast-engine | date: 2025-06-22T20:53:25.756Z
 chat-wa-broadcast-engine | }
-chat-wa-broadcast-engine | } 6287712348703
-chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6287712348703
-chat-wa-broadcast-engine | engine: init 6287712348703
+chat-wa-broadcast-engine | } 6280000000000
+chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6280000000000
+chat-wa-broadcast-engine | engine: init 6280000000000
 chat-wa-broadcast-engine | using WA v2.3000.1023223821, isLatest: true
-chat-wa-broadcast-engine | engine: socket whatsapp re-init 6287712348703 503
+chat-wa-broadcast-engine | engine: socket whatsapp re-init 6280000000000 503
 chat-wa-broadcast-engine | engine: connection.update {
 chat-wa-broadcast-engine | connection: 'connecting',
 chat-wa-broadcast-engine | receivedPendingNotifications: false,
 chat-wa-broadcast-engine | qr: undefined
-chat-wa-broadcast-engine | } 6287712348703
-chat-wa-broadcast-engine | engine: socket whatsapp connecting 6287712348703
-chat-wa-broadcast-engine | engine: connection.update { isOnline: true } 6287712348703
-chat-wa-broadcast-engine | engine: connection.update { connection: 'open' } 6287712348703
-chat-wa-broadcast-engine | engine: connection.update { receivedPendingNotifications: true } 6287712348703
-chat-wa-broadcast-engine | engine: socket whatsapp receiver pending notification (true) 6287712348703
+chat-wa-broadcast-engine | } 6280000000000
+chat-wa-broadcast-engine | engine: socket whatsapp connecting 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { isOnline: true } 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { connection: 'open' } 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { receivedPendingNotifications: true } 6280000000000
+chat-wa-broadcast-engine | engine: socket whatsapp receiver pending notification (true) 6280000000000
 chat-wa-broadcast-engine | engine: connection.update {
 chat-wa-broadcast-engine | connection: 'close',
 chat-wa-broadcast-engine | lastDisconnect: {
@@ -75,7 +75,7 @@ chat-wa-broadcast-engine | at WebSocketClient.<anonymous> (/app/node_modules/@wh
 chat-wa-broadcast-engine | at WebSocketClient.emit (node:events:524:28)
 chat-wa-broadcast-engine | at /app/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:236:35
 chat-wa-broadcast-engine | at Object.decodeFrame (/app/node_modules/@whiskeysockets/baileys/lib/Utils/noise-handler.js:144:17)
-chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_REDACTED:95:5) {
 chat-wa-broadcast-engine | data: [Object],
 chat-wa-broadcast-engine | isBoom: true,
 chat-wa-broadcast-engine | isServer: true,
@@ -83,8 +83,8 @@ chat-wa-broadcast-engine | output: [Object]
 chat-wa-broadcast-engine | },
 chat-wa-broadcast-engine | date: 2025-06-22T20:53:38.962Z
 chat-wa-broadcast-engine | }
-chat-wa-broadcast-engine | } 6287712348703
-chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6287712348703
+chat-wa-broadcast-engine | } 6280000000000
+chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6280000000000
 chat-wa-broadcast-engine | engine: connection.update {
 chat-wa-broadcast-engine | connection: 'close',
 chat-wa-broadcast-engine | lastDisconnect: {
@@ -93,7 +93,7 @@ chat-wa-broadcast-engine | at WebSocketClient.<anonymous> (/app/node_modules/@wh
 chat-wa-broadcast-engine | at WebSocketClient.emit (node:events:524:28)
 chat-wa-broadcast-engine | at /app/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:236:35
 chat-wa-broadcast-engine | at Object.decodeFrame (/app/node_modules/@whiskeysockets/baileys/lib/Utils/noise-handler.js:144:17)
-chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+chat-wa-broadcast-engine | at process.processTicksAndRejections (node:internal/process/task_REDACTED:95:5) {
 chat-wa-broadcast-engine | data: [Object],
 chat-wa-broadcast-engine | isBoom: true,
 chat-wa-broadcast-engine | isServer: true,
@@ -101,31 +101,31 @@ chat-wa-broadcast-engine | output: [Object]
 chat-wa-broadcast-engine | },
 chat-wa-broadcast-engine | date: 2025-06-22T20:53:46.233Z
 chat-wa-broadcast-engine | }
-chat-wa-broadcast-engine | } 6285147211129
-chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6285147211129
-chat-wa-broadcast-engine | engine: init 6285147211129
+chat-wa-broadcast-engine | } 6280000000000
+chat-wa-broadcast-engine | statusErrorWhatsappCode 503 6280000000000
+chat-wa-broadcast-engine | engine: init 6280000000000
 chat-wa-broadcast-engine | using WA v2.3000.1023223821, isLatest: true
-chat-wa-broadcast-engine | engine: socket whatsapp re-init 6285147211129 503
+chat-wa-broadcast-engine | engine: socket whatsapp re-init 6280000000000 503
 chat-wa-broadcast-engine | engine: connection.update {
 chat-wa-broadcast-engine | connection: 'connecting',
 chat-wa-broadcast-engine | receivedPendingNotifications: false,
 chat-wa-broadcast-engine | qr: undefined
-chat-wa-broadcast-engine | } 6285147211129
-chat-wa-broadcast-engine | engine: socket whatsapp connecting 6285147211129
-chat-wa-broadcast-engine | engine: connection.update { isOnline: true } 6285147211129
-chat-wa-broadcast-engine | engine: connection.update { connection: 'open' } 6285147211129
-chat-wa-broadcast-engine | engine: connection.update { receivedPendingNotifications: true } 6285147211129
-chat-wa-broadcast-engine | engine: socket whatsapp receiver pending notification (true) 6285147211129
+chat-wa-broadcast-engine | } 6280000000000
+chat-wa-broadcast-engine | engine: socket whatsapp connecting 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { isOnline: true } 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { connection: 'open' } 6280000000000
+chat-wa-broadcast-engine | engine: connection.update { receivedPendingNotifications: true } 6280000000000
+chat-wa-broadcast-engine | engine: socket whatsapp receiver pending notification (true) 6280000000000
 
-app-1 | engine: init 6285147210454
+app-1 | engine: init 6280000000000
 app-1 | using WA v2.3000.1023223821, isLatest: true
 app-1 | engine: connection.update {
 app-1 | connection: 'connecting',
 app-1 | receivedPendingNotifications: false,
 app-1 | qr: undefined
-app-1 | } 6285147210454
-app-1 | engine: socket whatsapp connecting 6285147210454
-app-1 | engine: connection.update { connection: 'open' } 6285147210454
+app-1 | } 6280000000000
+app-1 | engine: socket whatsapp connecting 6280000000000
+app-1 | engine: connection.update { connection: 'open' } 6280000000000
 app-1 | get from db
 app-1 | engine: error update name failed Error: App state key not present!
 app-1 | at appPatch (/app/node_modules/@whiskeysockets/baileys/lib/Socket/chats.js:573:19)
@@ -133,7 +133,7 @@ app-1 | at chatModify (/app/node_modules/@whiskeysockets/baileys/lib/Socket/chat
 app-1 | at Object.updateProfileName (/app/node_modules/@whiskeysockets/baileys/lib/Socket/chats.js:249:15)
 app-1 | at WhatsAppInstance.updateProfileName (/app/instance/whatsapp.instance.js:692:33)
 app-1 | at EventEmitter.<anonymous> (/app/instance/whatsapp.instance.js:372:24)
-app-1 | at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+app-1 | at process.processTicksAndRejections (node:internal/process/task_REDACTED:95:5) {
 app-1 | data: null,
 app-1 | isBoom: true,
 app-1 | isServer: false,
@@ -147,8 +147,8 @@ app-1 | },
 app-1 | headers: {}
 app-1 | }
 app-1 | }
-app-1 | engine: connection.update { receivedPendingNotifications: true } 6285147210454
-app-1 | engine: socket whatsapp receiver pending notification (true) 6285147210454
+app-1 | engine: connection.update { receivedPendingNotifications: true } 6280000000000
+app-1 | engine: socket whatsapp receiver pending notification (true) 6280000000000
 app-1 | engine: connection.update {
 app-1 | connection: 'close',
 app-1 | lastDisconnect: {
@@ -157,7 +157,7 @@ app-1 | at WebSocketClient.<anonymous> (/app/node_modules/@whiskeysockets/bailey
 app-1 | at WebSocketClient.emit (node:events:524:28)
 app-1 | at /app/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:236:35
 app-1 | at Object.decodeFrame (/app/node_modules/@whiskeysockets/baileys/lib/Utils/noise-handler.js:144:17)
-app-1 | at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+app-1 | at process.processTicksAndRejections (node:internal/process/task_REDACTED:95:5) {
 app-1 | data: [Object],
 app-1 | isBoom: true,
 app-1 | isServer: false,
@@ -165,13 +165,13 @@ app-1 | output: [Object]
 app-1 | },
 app-1 | date: 2025-06-23T10:04:01.463Z
 app-1 | }
-app-1 | } 6285147210454
-app-1 | statusErrorWhatsappCode 440 6285147210454
+app-1 | } 6280000000000
+app-1 | statusErrorWhatsappCode 440 6280000000000
 
 <<<<<<< Updated upstream
-DEFAULT 2025-06-25T08:22:54.965083Z statusErrorWhatsappCode 408 6285198965689
+DEFAULT 2025-06-25T08:22:54.965083Z statusErrorWhatsappCode 408 6280000000000
 {
-"textPayload": "statusErrorWhatsappCode 408 6285198965689",
+"textPayload": "statusErrorWhatsappCode 408 6280000000000",
 "insertId": "685bb1de000eb9db8203043c",
 "resource": {
 "type": "cloud_run_revision",
@@ -190,34 +190,34 @@ DEFAULT 2025-06-25T08:22:54.965083Z statusErrorWhatsappCode 408 6285198965689
 "logName": "projects/orderfaz-gcp/logs/run.googleapis.com%2Fstdout",
 "receiveTimestamp": "2025-06-25T08:22:55.207340713Z"
 }
-DEFAULT 2025-06-25T08:22:57.393079Z engine: init 6285198965689
-DEFAULT 2025-06-25T08:23:28.992361Z engine: socket whatsapp re-init 6285198965689 408
-DEFAULT 2025-06-25T08:23:28.993156Z } 6285198965689
-DEFAULT 2025-06-25T08:23:28.993160Z engine: socket whatsapp connecting 6285198965689
-DEFAULT 2025-06-25T08:23:47.792630Z engine: connection.update { isOnline: true } 6285198965689
-DEFAULT 2025-06-25T08:23:47.992743Z engine: connection.update { connection: 'open' } 6285198965689
-DEFAULT 2025-06-25T08:23:48.493485Z engine: connection.update { receivedPendingNotifications: true } 6285198965689
-DEFAULT 2025-06-25T08:23:48.493494Z engine: socket whatsapp receiver pending notification (true) 6285198965689
-DEFAULT 2025-06-25T08:24:06.129885Z } 6285198965689
-DEFAULT 2025-06-25T08:24:06.129894Z statusErrorWhatsappCode 401 6285198965689
-DEFAULT 2025-06-25T08:24:06.133959Z engine: state dropped collection session whatsapp 6285198965689
+DEFAULT 2025-06-25T08:22:57.393079Z engine: init 6280000000000
+DEFAULT 2025-06-25T08:23:28.992361Z engine: socket whatsapp re-init 6280000000000 408
+DEFAULT 2025-06-25T08:23:28.993156Z } 6280000000000
+DEFAULT 2025-06-25T08:23:28.993160Z engine: socket whatsapp connecting 6280000000000
+DEFAULT 2025-06-25T08:23:47.792630Z engine: connection.update { isOnline: true } 6280000000000
+DEFAULT 2025-06-25T08:23:47.992743Z engine: connection.update { connection: 'open' } 6280000000000
+DEFAULT 2025-06-25T08:23:48.493485Z engine: connection.update { receivedPendingNotifications: true } 6280000000000
+DEFAULT 2025-06-25T08:23:48.493494Z engine: socket whatsapp receiver pending notification (true) 6280000000000
+DEFAULT 2025-06-25T08:24:06.129885Z } 6280000000000
+DEFAULT 2025-06-25T08:24:06.129894Z statusErrorWhatsappCode 401 6280000000000
+DEFAULT 2025-06-25T08:24:06.133959Z engine: state dropped collection session whatsapp 6280000000000
 ERROR 2025-06-25T08:25:48.790366Z [protoPayload.serviceName: run.googleapis.com] [protoPayload.methodName: /Services.ReplaceService] [protoPayload.resourceName: namespaces/orderfaz-gcp/revisions/whatsapp-bot-00026-jfx] Ready condition status changed to False for Revision whatsapp-bot-00026-jfx with message: The user-provided container failed to start and listen on the port defined provided by the PORT=5003 environment variable within the allocated timeout. This can happen when the container port is misconfigured or if the timeout is too short. The health check timeout can be extended. Logs for this revision might contain more information. Logs URL: https://console.cloud.google.com/logs/viewer?project=orderfaz-gcp&resource=cloud_run_revision/service_name/whatsapp-bot/revision_name/whatsapp-bot-00026-jfx&advancedFilter=resource.type%3D%22cloud_run_revision%22%0Aresource.labels.service_name%3D%22whatsapp-bot%22%0Aresource.labels.revision_name%3D%22whatsapp-bot-00026-jfx%22 For more troubleshooting guidance, see https://cloud.google.com/run/docs/troubleshooting#container-failed-to-start
 ERROR 2025-06-25T08:25:48.854418Z [protoPayload.serviceName: run.googleapis.com] [protoPayload.methodName: /Services.ReplaceService] [protoPayload.resourceName: namespaces/orderfaz-gcp/services/whatsapp-bot] Ready condition status changed to False for Service whatsapp-bot with message: Revision 'whatsapp-bot-00026-jfx' is not ready and cannot serve traffic. The user-provided container failed to start and listen on the port defined provided by the PORT=5003 environment variable within the allocated timeout. This can happen when the container port is misconfigured or if the timeout is too short. The health check timeout can be extended. Logs for this revision might contain more information. Logs URL: https://console.cloud.google.com/logs/viewer?project=orderfaz-gcp&resource=cloud_run_revision/service_name/whatsapp-bot/revision_name/whatsapp-bot-00026-jfx&advancedFilter=resource.type%3D%22cloud_run_revision%22%0Aresource.labels.service_name%3D%22whatsapp-bot%22%0Aresource.labels.revision_name%3D%22whatsapp-bot-00026-jfx%22 For more troubleshooting guidance, see https://cloud.google.com/run/docs/troubleshooting#container-failed-to-start
-DEFAULT 2025-06-25T08:25:59.724446Z engine: init 6285198965689
-DEFAULT 2025-06-25T08:25:59.874960Z } 6285198965689
-DEFAULT 2025-06-25T08:25:59.874963Z engine: socket whatsapp connecting 6285198965689
-DEFAULT 2025-06-25T08:26:00.862404Z } 6285198965689
-DEFAULT 2025-06-25T08:26:22.492787Z engine: connection.update { isNewLogin: true, qr: undefined } 6285198965689
-DEFAULT 2025-06-25T08:26:22.492797Z engine: socket whatsapp new login 6285198965689
-DEFAULT 2025-06-25T08:26:24.893054Z } 6285198965689
-DEFAULT 2025-06-25T08:26:24.893065Z statusErrorWhatsappCode 515 6285198965689
-DEFAULT 2025-06-25T08:26:30.092667Z engine: init 6285198965689
-DEFAULT 2025-06-25T08:26:48.792147Z engine: socket whatsapp re-init 6285198965689 515
-DEFAULT 2025-06-25T08:26:48.936703Z } 6285198965689
-DEFAULT 2025-06-25T08:26:48.936706Z engine: socket whatsapp connecting 6285198965689
-DEFAULT 2025-06-25T08:27:29.092320Z engine: connection.update { connection: 'open' } 6285198965689
-DEFAULT 2025-06-25T08:27:29.693114Z engine: connection.update { receivedPendingNotifications: true } 6285198965689
-DEFAULT 2025-06-25T08:27:29.693123Z engine: socket whatsapp receiver pending notification (true) 6285198965689
+DEFAULT 2025-06-25T08:25:59.724446Z engine: init 6280000000000
+DEFAULT 2025-06-25T08:25:59.874960Z } 6280000000000
+DEFAULT 2025-06-25T08:25:59.874963Z engine: socket whatsapp connecting 6280000000000
+DEFAULT 2025-06-25T08:26:00.862404Z } 6280000000000
+DEFAULT 2025-06-25T08:26:22.492787Z engine: connection.update { isNewLogin: true, qr: undefined } 6280000000000
+DEFAULT 2025-06-25T08:26:22.492797Z engine: socket whatsapp new login 6280000000000
+DEFAULT 2025-06-25T08:26:24.893054Z } 6280000000000
+DEFAULT 2025-06-25T08:26:24.893065Z statusErrorWhatsappCode 515 6280000000000
+DEFAULT 2025-06-25T08:26:30.092667Z engine: init 6280000000000
+DEFAULT 2025-06-25T08:26:48.792147Z engine: socket whatsapp re-init 6280000000000 515
+DEFAULT 2025-06-25T08:26:48.936703Z } 6280000000000
+DEFAULT 2025-06-25T08:26:48.936706Z engine: socket whatsapp connecting 6280000000000
+DEFAULT 2025-06-25T08:27:29.092320Z engine: connection.update { connection: 'open' } 6280000000000
+DEFAULT 2025-06-25T08:27:29.693114Z engine: connection.update { receivedPendingNotifications: true } 6280000000000
+DEFAULT 2025-06-25T08:27:29.693123Z engine: socket whatsapp receiver pending notification (true) 6280000000000
 =======
 app-1 | 24-June-2025 03:57:23 error: ::ffff:127.0.0.1 - GET /api/v1/dashboard/ticketing?startDate=2025-06-01&endDate=2025-06-24&handoverAgents=66e0fca76e375bb16516d8a2 400 - 562.476 ms - message: "handoverAgents" is not allowed
 app-1 | AxiosError: Request failed with status code 429
@@ -225,9 +225,9 @@ app-1 | at settle (/app/node_modules/axios/dist/node/axios.cjs:1983:12)
 app-1 | at Unzip.handleStreamEnd (/app/node_modules/axios/dist/node/axios.cjs:3085:11)
 app-1 | at Unzip.emit (node:events:536:35)
 app-1 | at endReadableNT (node:internal/streams/readable:1698:12)
-app-1 | at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+app-1 | at process.processTicksAndRejections (node:internal/process/task_REDACTED:82:21)
 app-1 | at Axios.request (/app/node_modules/axios/dist/node/axios.cjs:4224:41)
-app-1 | at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+app-1 | at process.processTicksAndRejections (node:internal/process/task_REDACTED:95:5)
 app-1 | at async googleChatReporter (/app/src/utils/googleChatReporter.js:24:7)
 app-1 | at async errorHandler (/app/src/middlewares/error.js:40:3) {
 app-1 | code: 'ERR_BAD_REQUEST',

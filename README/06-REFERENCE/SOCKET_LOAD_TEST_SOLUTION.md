@@ -28,13 +28,13 @@ k6 raw `ws` module skips these steps.
 **Command**:
 ```powershell
 # Set environment
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "throughput"
 $env:TARGET_CONNECTIONS = "50"
 $env:EMIT_EVERY_MS = "200"
 
 # Run
-node "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\scripts\widget-socket-load-2.js"
+node "<repo>\scripts\widget-socket-load-2.js"
 ```
 
 **Why This Works**:
@@ -70,10 +70,10 @@ preparedRooms: 50
 **Command**:
 ```bash
 k6 run --vus 50 --duration 5m \
-  -e BASE_URL=https://dev-v2.satuinbox.com \
+  -e BASE_URL=https://dev.example.test \
   -e MODE=throughput \
   -e EMIT_EVERY_MS=200 \
-  "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\k6\socketLoadMultichannel.js"
+  "<repo>\k6\socketLoadMultichannel.js"
 ```
 
 **What Changed**:
@@ -118,7 +118,7 @@ xk6 build --with github.com/NullIsObject/xk6-socket.io
 **Then run**:
 ```bash
 ./k6 run --vus 50 --duration 5m \
-  -e BASE_URL=https://dev-v2.satuinbox.com \
+  -e BASE_URL=https://dev.example.test \
   socketLoadMultichannel.js
 ```
 
@@ -194,7 +194,7 @@ xk6 build --with github.com/NullIsObject/xk6-socket.io
 ### Step 1: Verify Solution Works
 ```powershell
 # Option 1: Node.js (5 seconds)
-$env:BASE_URL = "https://dev-v2.satuinbox.com"
+$env:BASE_URL = "https://dev.example.test"
 $env:MODE = "soak"
 $env:TARGET_CONNECTIONS = "10"
 $env:RUN_DURATION_MS = "30000"
@@ -202,7 +202,7 @@ node scripts/widget-socket-load-2.js
 
 # Option 2: k6 (5 seconds)
 k6 run --vus 10 --duration 30s \
-  -e BASE_URL=https://dev-v2.satuinbox.com \
+  -e BASE_URL=https://dev.example.test \
   k6/socketLoadMultichannel.js
 ```
 
@@ -263,7 +263,7 @@ k6 version
 
 # Check BASE_URL correct
 k6 run --vus 1 --duration 10s \
-  -e BASE_URL=https://dev-v2.satuinbox.com \
+  -e BASE_URL=https://dev.example.test \
   k6/socketLoadMultichannel.js
 ```
 

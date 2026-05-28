@@ -29,9 +29,9 @@ describe("testing auth page", () => {
 
   const config = env_config(baseUrl);
 
-  const mainUrl2 = "https://dev.satuinbox.com/";
-  const visit_user_grup = "https://dev.satuinbox.com/setting/manage-group";
-  const visit_register = "https://dev.satuinbox.com/register";
+  const mainUrl2 = "https://dev.example.test/";
+  const visit_user_grup = "https://dev.example.test/setting/manage-group";
+  const visit_register = "https://dev.example.test/register";
 
   // Global fail handler
   // Cypress.on('fail', (error, runnable) => {

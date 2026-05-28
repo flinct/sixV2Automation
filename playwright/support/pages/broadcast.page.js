@@ -52,7 +52,7 @@ class BroadcastPage {
       name: `bcName sender ${sender}`,
       channel: 'whatsapp_web',
       sender: sender,
-      audience: ['6289655057778'],
+      audience: [process.env.E2E_BROADCAST_AUDIENCE || '6280000000000'],
       message: `${randomValue}, test BC from ${sender}`,
       scheduleAt: '2026-02-04T22:00:31.198Z',
       properties: [{
@@ -71,7 +71,7 @@ class BroadcastPage {
 
   async getWhatsappAccounts(apiRequest, config) {
     const response = await apiRequest.get(config.endpoints.getAllNomorWhatsapp, {
-      headers: { 'x-api-key': '10f1d5e1eb1ea0cb632f2d02edf2ccf896efb73123e7b3f484db5cb52a19dbc6' },
+      headers: { 'x-api-key': config.apiKeys.default },
     });
     const data = await response.json();
     const whatsappAccount = [];

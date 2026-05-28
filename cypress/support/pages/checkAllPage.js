@@ -17,51 +17,51 @@ const loginType = Cypress.env("loginType");
 
 const config = env_config(baseUrl);
 
-const customer_number = 6289655057778;
+const customer_number = 6280000000000;
 
-const customerNumber = "6289655057778";
+const customerNumber = "6280000000000";
 
 function getHeaderByLoginType(config, baseUrl, loginType) {
-  if (baseUrl === "https://app.satuinbox.com") {
+  if (baseUrl === "https://app.example.test") {
     if (loginType === "goddummyprod") return config.headers;
     if (loginType === "testing270520252")
       return config.headers_testing270520252;
   }
 
-  if (baseUrl === "https://dev.satuinbox.com") {
+  if (baseUrl === "https://dev.example.test") {
     if (loginType === "chickentester") return config.headers_CT;
     if (loginType === "goddevsa1") return config.headers_GD;
     if (loginType === "messagelogsatu") return config.headers_ms1;
   }
 
-  if (baseUrl === "https://staging.satuinbox.com") {
+  if (baseUrl === "https://staging.example.test") {
     if (loginType === "chickentester") return config.headers_CT_staging;
     if (loginType === "goddevsa1") return config.headers_GD;
     if (loginType === "messagelogsatu") return config.headers_ms1;
   }
 }
 function getLoginBodyByLoginType(config, baseUrl, loginType) {
-  if (baseUrl === "https://app.satuinbox.com") {
+  if (baseUrl === "https://app.example.test") {
     if (loginType === "goddummyprod") return config.loginBody;
     if (loginType === "testing270520252")
       return config.loginBody_testing270520252;
   }
 
-  if (baseUrl === "https://dev.satuinbox.com") {
+  if (baseUrl === "https://dev.example.test") {
     if (loginType === "chickentester") return config.loginBody_CT;
     if (loginType === "goddevsa1") return config.loginBody_SAP;
     if (loginType === "goddummysa") return config.loginBodySuperAdminSap;
     if (loginType === "spongebobkotak") return config.loginBody_bikini;
   }
 
-  if (baseUrl === "https://dev-v2.satuinbox.com") {
+  if (baseUrl === "https://dev.example.test") {
     if (loginType === "chickentester") return config.loginBody_CT;
     if (loginType === "goddevsa1") return config.loginBody_SAP;
     if (loginType === "helloworld") return config.loginBody_helloWorld;
     if (loginType === "spongebobkotak") return config.loginBody_bikini;
   }
 
-  if (baseUrl === "https://staging.satuinbox.com") {
+  if (baseUrl === "https://staging.example.test") {
     if (loginType === "chickentester") return config.loginBody_CT;
     if (loginType === "goddevsa1") return config.loginBody_SAP;
     if (loginType === "goddummysa") return config.loginBodySuperAdminSap;

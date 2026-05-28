@@ -220,7 +220,7 @@ COPY package*.json ./
 RUN npm ci --production
 COPY scripts/ ./scripts/
 RUN mkdir -p scripts/report
-ENV BASE_URL=https://dev-v2.satuinbox.com
+ENV BASE_URL=https://dev.example.test
 ENV MODE=throughput
 ENV TARGET_CONNECTIONS=50
 ENV RUN_DURATION_MS=300000
@@ -230,13 +230,13 @@ CMD ["node", "scripts/widget-socket-load-2.js"]
 "@ | Out-File -Encoding UTF8 Dockerfile
 ```
 
-**Location:** `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\Dockerfile`
+**Location:** `<repo>\Dockerfile`
 
 **2.2: Create docker-compose.yml**
 
 See: `DOCKER_QUICK_START.md` Step 3 (copy-paste ready)
 
-**Location:** `C:\Users\MyBook SAGA 12\Desktop\sixV2Automation\docker-compose.yml`
+**Location:** `<repo>\docker-compose.yml`
 
 **2.3: (Optional) Create .dockerignore**
 
@@ -249,7 +249,7 @@ Reduces image size from ~350MB to ~250MB.
 **3.1: Build Image**
 
 ```powershell
-cd "C:\Users\MyBook SAGA 12\Desktop\sixV2Automation"
+cd "<repo>"
 docker-compose build
 # Wait 2-3 minutes
 ```

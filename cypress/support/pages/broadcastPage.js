@@ -127,7 +127,7 @@ class broadcastPage {
       name: `bcName sender ${sender}`,
       channel: "whatsapp_web",
       sender: sender,
-      audience: ["6289655057778"],
+      audience: ["6280000000000"],
       message: `${randomValue}, test BC from ${sender}`,
       // scheduleAt: "{{scheduleAt}}",
       scheduleAt: "2026-02-04T22:00:31.198Z",

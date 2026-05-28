@@ -13,7 +13,7 @@
  *   "API_BASE": "http://localhost:3000",
  *   "ACCOUNT_ID_ACTIVE": "acc_abc123",
  *   "ACCOUNT_ID_NEW": "acc_new999",
- *   "TARGET_PHONE": "628123456789",
+ *   "TARGET_PHONE": "6280000000000",
  *   "WEBHOOK_URL": "http://localhost:4000/webhook",
  *   "ADMIN_TOKEN": "Bearer xxx"
  * }

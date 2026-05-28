@@ -8,7 +8,7 @@ const { ProxyAgent } = require("undici");
  * PASS criteria: qrCode string exists and starts with "data:image" (or any non-empty string, configurable)
  *
  * Required env:
- * - BASE_URL: e.g. https://dev-v2.satuinbox.com or https://v2.satuinbox.com
+ * - BASE_URL: e.g. https://app.example.test
  * - X_API_KEY: x-api-key (if your endpoints require it)
  *
  * Optional env:
@@ -62,11 +62,10 @@ function sleep(ms) {
 }
 
 function apiBaseFromBaseUrl(baseUrl) {
-  if (baseUrl === "https://dev-v2.satuinbox.com")
-    return "https://dev-v2-api.satuinbox.com/";
-  if (baseUrl === "https://v2.satuinbox.com")
-    return "https://v2-api.satuinbox.com/";
-  throw new Error(`Unknown BASE_URL mapping: ${baseUrl}`);
+  const apiBase = process.env.API_BASE || process.env.E2E_API_BASE;
+  if (apiBase) return apiBase;
+  if (!baseUrl) throw new Error("Missing BASE_URL or API_BASE");
+  return `${baseUrl.replace(/\/+$/g, "")}/api/v1`;
 }
 
 function joinUrl(base, path) {
