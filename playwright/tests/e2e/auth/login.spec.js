@@ -2,6 +2,9 @@ const { test, expect } = require('@playwright/test');
 const { AuthPage } = require('../../../support/pages');
 const { getCurrentConfig } = require('../../../support/config');
 
+const TOKEN_EXPIRY_WAIT_MS = 15 * 60 * 1000;
+const TOKEN_EXPIRY_TEST_TIMEOUT_MS = 17 * 60 * 1000;
+
 function getSupervisorAccountKey(envName) {
   return envName === 'prod' ? 'danyspv01' : 'mataayam01';
 }
@@ -62,9 +65,10 @@ test.describe('Auth Login Tests', () => {
   });
 
   test('Confirm that the access token truly becomes invalid after 15 minutes', async () => {
+    test.setTimeout(TOKEN_EXPIRY_TEST_TIMEOUT_MS);
     const credentials = config.getDefaultAccount();
     await authPage.login(credentials.identifier, credentials.password, { useV2: true });
-    await authPage.page.waitForTimeout(900000); // 15 minutes
+    await authPage.page.waitForTimeout(TOKEN_EXPIRY_WAIT_MS);
     await authPage.page.reload();
     await expect(authPage.page).toHaveURL(/\/login/);
   });
