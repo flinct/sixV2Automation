@@ -1,13 +1,28 @@
 const { test, expect } = require('@playwright/test');
-const { AuthPage, InboxPage, TicketLinkedBubblePage, TicketingPage } = require('../../../support/pages');
+const { AuthPage, InboxPage, TicketLinkedBubblePage, TicketingPage, LiveChatPage } = require('../../../support/pages');
 const { getCurrentConfig } = require('../../../support/config');
 const { randomAsk } = require('../../../support/helpers/generators');
+
+function fixmeStub(title, reason) {
+  test.fixme(`${title} - ${reason}`, async () => {});
+}
 
 // =====================================================
 // Existing Features (legacy US-001)
 // =====================================================
 test.describe('Linked Chat Bubble - Existing Features', () => {
-  let authPage, inboxPage, bubblePage, config;
+  test.describe.configure({ mode: 'serial' });
+
+  let authPage, inboxPage, bubblePage, liveChatPage, config;
+
+  async function openGeneratedWidgetChat(page, message) {
+    await inboxPage.gotoAll();
+    const generatedChat = page.getByTestId(/^chat-list-/).filter({ hasText: message }).first();
+    await expect(generatedChat).toBeVisible({ timeout: 60000 });
+    await generatedChat.click();
+    await expect(inboxPage.chatRoom).toBeVisible({ timeout: 15000 });
+    await expect(inboxPage.customerBubble.last()).toContainText(message, { timeout: 15000 });
+  }
 
   test.beforeAll(async () => { config = getCurrentConfig(); });
 
@@ -15,48 +30,43 @@ test.describe('Linked Chat Bubble - Existing Features', () => {
     authPage = new AuthPage(page);
     inboxPage = new InboxPage(page);
     bubblePage = new TicketLinkedBubblePage(page);
+    liveChatPage = new LiveChatPage(page);
     const credentials = config.getDefaultAccount();
+
+    const generatedChat = await liveChatPage.generateNewWidgetChat({ topic: 'complain' });
     await authPage.loginWithCredentials(credentials, { useV2: true });
+    await openGeneratedWidgetChat(page, generatedChat.message);
+
+    const enabled = await bubblePage.enableBubbleSelection();
+    expect(enabled).toBeTruthy();
+    await bubblePage.createTicketFromSelectedBubble({ ticketType: 'Complain', priority: 'Low' });
   });
 
   test('should show "See Ticket" badge on bubble with linked ticket', async ({ page }) => {
-    await inboxPage.openFirstChat();
-    const hasPinkBubble = await bubblePage.bubbleWithTicket.first().isVisible().catch(() => false);
-    test.skip(!hasPinkBubble, 'No linked ticket bubbles in this conversation');
     await bubblePage.verifyLinkedTicketBadgeVisible();
     await bubblePage.verifyBubbleHasTicketBackground();
   });
 
   test('should open ticket drawer from "See Ticket" link on bubble', async ({ page }) => {
-    await inboxPage.openFirstChat();
-    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
-    test.skip(!hasTicket, 'No linked ticket bubbles in this conversation');
     await bubblePage.openTicketDrawer();
     await expect(bubblePage.ticketDrawer).toBeVisible({ timeout: 10000 });
   });
 
   test('should show linked messages in ticket drawer', async ({ page }) => {
-    await inboxPage.openFirstChat();
-    const hasTicket = await bubblePage.seeTicketLink.first().isVisible().catch(() => false);
-    test.skip(!hasTicket, 'No linked ticket bubbles in this conversation');
     await bubblePage.openTicketDrawer();
     const hasMessages = await bubblePage.verifyLinkedMessagesInDrawer();
-    if (hasMessages) {
-      await expect(bubblePage.linkedMessagesAccordion).toBeVisible();
-    }
+    expect(hasMessages).toBeTruthy();
+    await expect(bubblePage.linkedMessagesAccordion).toBeVisible();
   });
 
   test('should show linked tickets in conversation detail sidebar', async ({ page }) => {
-    await inboxPage.openFirstChat();
-    const hasLinkedTickets = await bubblePage.linkedTicketsAccordion.isVisible().catch(() => false);
-    test.skip(!hasLinkedTickets, 'No linked tickets section in this conversation detail');
     const hasTickets = await bubblePage.verifyLinkedTicketsInConversation();
     expect(hasTickets).toBeTruthy();
   });
 
-  test.fixme('should enable bubble selection mode via action menu', 'Requires hover + action menu interaction');
-  test.fixme('should show create ticket dialog after selecting bubbles', 'Requires bubble selection first');
-  test.fixme('should cancel bubble selection mode', 'Requires bubble selection first');
+  fixmeStub('should enable bubble selection mode via action menu', 'Requires hover + action menu interaction');
+  fixmeStub('should show create ticket dialog after selecting bubbles', 'Requires bubble selection first');
+  fixmeStub('should cancel bubble selection mode', 'Requires bubble selection first');
 });
 
 // =====================================================
@@ -275,15 +285,15 @@ test.describe('Linked Chat Bubble - Reply-Based Inbound Sync', () => {
     await authPage.loginWithCredentials(credentials, { useV2: true });
   });
 
-  test.fixme('SYNC-01: should show "Reply to customer" tab in ticket chat room', 'US-007: ticket chat room tab switching');
-  test.fixme('SYNC-02: should show "Internal note" tab in ticket chat room', 'US-007: ticket chat room tab switching');
-  test.fixme('SYNC-03: should send reply-to-customer message with forward flag', 'US-007: requires active ticket with linked bubble + reply');
-  test.fixme('SYNC-04: should confirm cross-send dialog before sending to customer', 'US-007: cross-send confirmation modal');
-  test.fixme('SYNC-05: should auto-sync inbound message to active ticket (reply reference)', 'US-008: requires customer reply via supported channel');
-  test.fixme('SYNC-06: should not sync inbound message when ticket is resolved', 'US-008/EH-010: status check at processing time');
-  test.fixme('SYNC-07: should not auto-link on unsupported channel', 'US-008: channel without reply reference');
-  test.fixme('SYNC-08: should show sync badge on auto-linked messages', 'US-008: "Synced from conversation" badge');
-  test.fixme('SYNC-09: should append reply to correct ticket when referencing older outbound', 'US-008: chronological matching');
+  fixmeStub('SYNC-01: should show "Reply to customer" tab in ticket chat room', 'US-007: ticket chat room tab switching');
+  fixmeStub('SYNC-02: should show "Internal note" tab in ticket chat room', 'US-007: ticket chat room tab switching');
+  fixmeStub('SYNC-03: should send reply-to-customer message with forward flag', 'US-007: requires active ticket with linked bubble + reply');
+  fixmeStub('SYNC-04: should confirm cross-send dialog before sending to customer', 'US-007: cross-send confirmation modal');
+  fixmeStub('SYNC-05: should auto-sync inbound message to active ticket (reply reference)', 'US-008: requires customer reply via supported channel');
+  fixmeStub('SYNC-06: should not sync inbound message when ticket is resolved', 'US-008/EH-010: status check at processing time');
+  fixmeStub('SYNC-07: should not auto-link on unsupported channel', 'US-008: channel without reply reference');
+  fixmeStub('SYNC-08: should show sync badge on auto-linked messages', 'US-008: "Synced from conversation" badge');
+  fixmeStub('SYNC-09: should append reply to correct ticket when referencing older outbound', 'US-008: chronological matching');
 });
 
 // =====================================================
@@ -302,11 +312,11 @@ test.describe('Linked Chat Bubble - Concurrency & Race Conditions', () => {
     await authPage.loginWithCredentials(credentials, { useV2: true });
   });
 
-  test.fixme('CON-01: should allow two agents to append different bubbles simultaneously', 'Requires multi-session setup');
-  test.fixme('CON-02: should allow agent B to remove bubble appended by agent A', 'Requires multi-session setup');
-  test.fixme('CON-03: should reject append if ticket was closed during the request', 'Race condition — timing manipulation');
-  test.fixme('CON-04: should decide inbound sync based on state at processing time', 'Race condition — timing');
-  test.fixme('CON-05: should not corrupt linked bubbles during concurrent edits', 'Requires multi-session setup');
+  fixmeStub('CON-01: should allow two agents to append different bubbles simultaneously', 'Requires multi-session setup');
+  fixmeStub('CON-02: should allow agent B to remove bubble appended by agent A', 'Requires multi-session setup');
+  fixmeStub('CON-03: should reject append if ticket was closed during the request', 'Race condition timing manipulation');
+  fixmeStub('CON-04: should decide inbound sync based on state at processing time', 'Race condition timing');
+  fixmeStub('CON-05: should not corrupt linked bubbles during concurrent edits', 'Requires multi-session setup');
 });
 
 // =====================================================
@@ -368,7 +378,7 @@ test.describe('Linked Chat Bubble - Regression', () => {
     await bubblePage.verifyLinkedTicketBadgeVisible();
   });
 
-  test.fixme('REG-06: should still enforce max 50 limit when creating new ticket', 'Need test data setup with 50+ linked bubbles to verify limit');
+  fixmeStub('REG-06: should still enforce max 50 limit when creating new ticket', 'Need test data setup with 50+ linked bubbles to verify limit');
 
   test('REG-07: should still allow close/reopen ticket cycle', async ({ page }) => {
     await inboxPage.openFirstChat();
@@ -406,9 +416,9 @@ test.describe('Linked Chat Bubble - Data Integrity', () => {
     await authPage.loginWithCredentials(credentials, { useV2: true });
   });
 
-  test.fixme('INT-01: should enforce one bubble = one ticket (block cross-ticket link)', 'Requires two active tickets with same bubble scenario');
-  test.fixme('INT-02: should preserve linked bubbles in ticket B when removing from ticket A', 'Requires cross-ticket data setup');
-  test.fixme('INT-03: should preserve existing linked bubbles when appending new ones', 'Requires known initial bubble count');
-  test.fixme('INT-04: should correctly recalculate quote source after removing latest bubble', 'Requires controlled linked bubble order');
-  test.fixme('INT-05: should preserve original message ID in inbound sync', 'Requires known inbound message ID');
+  fixmeStub('INT-01: should enforce one bubble = one ticket (block cross-ticket link)', 'Requires two active tickets with same bubble scenario');
+  fixmeStub('INT-02: should preserve linked bubbles in ticket B when removing from ticket A', 'Requires cross-ticket data setup');
+  fixmeStub('INT-03: should preserve existing linked bubbles when appending new ones', 'Requires known initial bubble count');
+  fixmeStub('INT-04: should correctly recalculate quote source after removing latest bubble', 'Requires controlled linked bubble order');
+  fixmeStub('INT-05: should preserve original message ID in inbound sync', 'Requires known inbound message ID');
 });

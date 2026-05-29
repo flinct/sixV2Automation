@@ -38,7 +38,7 @@ Before writing ANY automation code, you MUST:
   });
   ```
 - **Naming:** `test('should do something', ...)` — descriptive sentence case.
-- **Skipping:** Use `test.skip(condition, 'reason')` for conditional skip, `test.fixme('title', 'why not implemented')` for stubs.
+- **Skipping:** Use `test.skip(condition, 'reason')` for conditional skip. For stubs, do not call `test.fixme('title', 'reason')` inside a `describe` because Playwright treats it as a suite modifier; use `test.fixme('title - reason', async () => {})` or a local helper that declares an individual fixme test.
 - **Assertions:** Always use `@playwright/test` `expect` (jest-like). Prefer `await expect(locator).toBeVisible()`, `toHaveText()`, `toHaveURL()`, `toContainText()` over manual checks.
 - **Timeouts:** Default actionTimeout 30s (from config). Only add explicit `.waitFor({ timeout: ... })` when you need to extend beyond default.
 
@@ -139,10 +139,10 @@ playwright/
 | `team.page.js` | TeamPage | Team settings |
 | `check-all.page.js` | CheckAllPage | Cross-page nav smoke |
 | `user-rbac.page.js` | UserRbacPage | RBAC access validation |
-| `live-chat.page.js` | LiveChatPage | Widget live chat |
+| `live-chat.page.js` | LiveChatPage | Widget live chat, generate new widget chat |
 | `account-whatsapp.page.js` | AccountWhatsappPage | WhatsApp account monitoring |
 | `endpoint-detect.page.js` | EndpointDetectPage | API route capture utility |
-| `ticket-linked-bubble.page.js` | TicketLinkedBubblePage | Bubble select, create ticket, append to ticket (AddToTicketModal), remove linked bubble (LinkedMessagesSection), navigation (LinkedConversationPanel), reply sync |
+| `ticket-linked-bubble.page.js` | TicketLinkedBubblePage | Bubble select, create linked ticket setup, append to ticket (AddToTicketModal), remove linked bubble (LinkedMessagesSection), navigation (LinkedConversationPanel), reply sync |
 | `member.page.js` | MemberPage | Member list, toggle active/deactive, status badge, row menu |
 
 ## Test Files (All)

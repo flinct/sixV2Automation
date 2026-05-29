@@ -39,6 +39,10 @@ $env:LOGIN_TYPE="cekerayam01"
 $env:ENV="dev"
 $env:LOGIN_TYPE="cekerayam01"
 npx playwright test "playwright/tests/e2e/auth/login.spec.js" --headed --project=chromium
+
+$env:ENV="dev"
+$env:LOGIN_TYPE="cekerayam01"
+npx playwright codegen  
 //-------------------PLAYWRIGHT--------------------
 
 -

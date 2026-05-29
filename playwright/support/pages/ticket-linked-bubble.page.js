@@ -1,5 +1,9 @@
 const { expect } = require("@playwright/test");
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 class TicketLinkedBubblePage {
   constructor(page) {
     this.page = page;
@@ -26,13 +30,27 @@ class TicketLinkedBubblePage {
     this.cancelSelectBtn = page.getByRole("button", { name: /cancel|batal/i });
 
     this.dialog = page.locator('[role="dialog"]');
+    this.createTicketDialog = page
+      .locator('[role="dialog"]')
+      .filter({ hasText: /buat tiket baru|create new ticket/i })
+      .first();
     this.searchTicketType = page.locator('input[placeholder*="ticket" i]');
     this.ticketTypeOptions = this.dialog.locator(
       "button:has(div.wrap-break-word)",
     );
+    this.ticketTypeDropdownOptions = page.locator(
+      '[data-radix-popper-content-wrapper] button',
+    );
+    this.priorityDropdownOptions = page.locator(
+      '[data-radix-popper-content-wrapper] [role="option"]',
+    );
     this.confirmCreateBtn = this.dialog.getByRole("button", {
       name: /create.?ticket|buat.?tiket/i,
     });
+    this.createdTicketReviewDialog = page
+      .locator('[role="dialog"]')
+      .filter({ hasText: /tinjau tiket yang dibuat|review created ticket/i })
+      .first();
 
     this.ticketDrawer = page.locator('[role="dialog"]').first();
     this.linkedMessagesAccordion = page.getByRole("button", {
@@ -218,15 +236,85 @@ class TicketLinkedBubblePage {
   }
 
   async selectTicketType(name) {
-    await this.searchTicketType.fill(name);
-    await this.page.waitForTimeout(1000);
-    const option = this.ticketTypeOptions.first();
-    await option.waitFor({ state: "visible", timeout: 5000 });
+    await expect(this.createTicketDialog).toBeVisible({ timeout: 10000 });
+    const trigger = this.createTicketDialog.getByRole("button", {
+      name: /cari dan pilih jenis tiket|search and select ticket type/i,
+    });
+    await trigger.click();
+    await this.page.waitForTimeout(500);
+
+    const dropdown = this.page.locator('[data-radix-popper-content-wrapper]').last();
+    const searchInput = dropdown.locator('input[placeholder*="search" i]');
+    if (await searchInput.isVisible().catch(() => false)) {
+      await searchInput.fill(name);
+    }
+
+    const option = dropdown
+      .locator("button")
+      .filter({ hasText: new RegExp(`^${escapeRegex(name)}$`, "i") })
+      .last();
+    await expect(option).toBeVisible({ timeout: 10000 });
     await option.click();
   }
 
+  async selectPriority(name = "Low") {
+    const trigger = this.createTicketDialog.getByRole("combobox", {
+      name: /prioritas|priority/i,
+    });
+
+    await expect(trigger).toBeVisible({ timeout: 10000 });
+
+    await trigger.click();
+    await this.page.waitForTimeout(500);
+
+    const dropdown = this.page.locator('[data-radix-popper-content-wrapper]').last();
+    const option = dropdown.getByRole("option", {
+      name: new RegExp(`^${escapeRegex(name)}$`, "i"),
+    });
+    await expect(option).toBeVisible({ timeout: 5000 });
+    await option.click();
+    await expect(
+      this.createTicketDialog.locator("button").filter({ hasText: new RegExp(`^${escapeRegex(name)}$`, "i") }).last(),
+    ).toBeVisible({ timeout: 5000 });
+    await this.page.waitForTimeout(1000);
+  }
+
   async confirmCreateTicket() {
-    await this.confirmCreateBtn.click();
+    const createButton = this.createTicketDialog
+      .getByRole("button", { name: /create.?ticket|buat.?tiket/i })
+      .last();
+    await expect(createButton).toBeEnabled({ timeout: 10000 });
+    await createButton.click();
+  }
+
+  async finishCreatedTicketReviewDialog() {
+    if (!(await this.createdTicketReviewDialog.isVisible({ timeout: 10000 }).catch(() => false))) return;
+
+    const continueButton = this.createdTicketReviewDialog
+      .getByRole("button", { name: /lanjut buat|continue/i })
+      .last();
+    await expect(continueButton).toBeVisible({ timeout: 10000 });
+    await continueButton.click();
+    await expect(this.createdTicketReviewDialog).not.toBeVisible({ timeout: 5000 });
+  }
+
+  async createTicketFromSelectedBubble({ ticketType = "Complain", priority = "Low" } = {}) {
+    await this.clickCreateTicket();
+    await this.selectTicketType(ticketType);
+    await this.selectPriority(priority);
+    await this.confirmCreateTicket();
+
+    const priorityError = this.createTicketDialog.getByText(
+      /priority wajib diisi|prioritas wajib diisi|priority.*required/i,
+    );
+    if (await priorityError.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await this.selectPriority(priority);
+      await this.confirmCreateTicket();
+    }
+
+    await this.finishCreatedTicketReviewDialog();
+    await expect(this.seeTicketLink.first()).toBeVisible({ timeout: 30000 });
+    await expect(this.bubbleWithTicket.first()).toBeVisible({ timeout: 30000 });
   }
 
   async cancelSelection() {
