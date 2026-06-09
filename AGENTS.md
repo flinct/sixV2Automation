@@ -100,10 +100,24 @@ When writing tests that involve feature access by different roles:
 - FE: private frontend monorepo reference redacted for portfolio publication
 - BE: private backend monorepo reference redacted for portfolio publication
 - Auto: this QA automation portfolio repo
+- PRD/Test source of truth: `C:\Users\MyBook SAGA 12\Desktop\PRDanalisis\Test\conversation\Conversation.tsv`
+- PRD/Test bridge rules: `C:\Users\MyBook SAGA 12\Desktop\PRDanalisis\Rules\automation-bridge-rule.md`
 
 ---
-# PART 1: AUTOMATION REPO
 
+## Cross-Repo Sync Contract
+
+When conversation test cases change in `PRDanalisis`:
+1. Refresh the TSV/JSON source in `PRDanalisis/Test/conversation/`.
+2. Regenerate automation-ready test data from those files.
+3. Update generated Playwright specs in this repo.
+4. If page objects or test conventions change, update this AGENTS.md and the bridge rule in `PRDanalisis`.
+
+Do not treat the automation repo as the source of truth for test scope; it is the implementation target.
+
+---
+
+# PART 1: AUTOMATION REPO
 ## Structure
 ```
 playwright/
@@ -169,8 +183,16 @@ playwright/
 | `rbac/role-validation.spec.js` | 5 | 5 roles x page access |
 | `ticket/ticketing.spec.js` | 1 | Ticketing page smoke |
 | `ticket/linked-bubble.spec.js` | 45 | Linked bubble: existing (4 active + 3 fixme) + append (5 active) + remove (4 active) + navigation (2 active) + sync (9 fixme) + concurrency (5 fixme) + regression (7 active + 1 fixme) + data integrity (5 fixme) |
+| `conversation/conversation-sync.spec.js` | 0 | DEPRECATED — replaced by 6 convo-*.spec.js files below |
+| `conversation/convo-list-overview.spec.js` | 31 | TC 001-031: conversation list UI, icons, indicators, ellipsis. Active: 001,002,019,022,023,025,026,027,028,029,030,031. fixme: 003-018,020-021,024 (require device/test data) |
+| `conversation/convo-room.spec.js` | 284 | TC 032-315: set reminder (UNDEVELOPED), message input all types, bubble chat, media, delivery, typing |
+| `conversation/convo-detail-panel.spec.js` | 167 | TC 316-482: conversation details + all accordion groups |
+| `conversation/convo-nav.spec.js` | 74 | TC 483-545, 688-698: inbox/unassigned/all/starred/spam/group/channel/team/junk nav |
+| `conversation/convo-list-features.spec.js` | 118 | TC 546-663: list title, status filter, read/unread, sort, advance filter, combining filter, item behavior |
+| `conversation/convo-supplement.spec.js` | 39 | TC 664-713: gap supplement — Chat List, Room, Get New Conversation, Group Handling |
 
-**Total: 181 active tests, 20 files (21 with fixme stubs)**
+**Total: 185 active tests + 713 convo spec stubs (fixme), 27 files**
+**Note:** All 713 convo-*.spec.js tests are currently `test.fixme` stubs. Nav tests (convo-nav.spec.js) have InboxPage call scaffolding ready — implement assertions to activate.
 
 ## Config
 | File | Content |
@@ -179,6 +201,8 @@ playwright/
 | `support/config/environments.js` | local/dev/staging/prod + apiBase |
 | `support/config/endpoints.js` | ApiEndpoints class: all API routes |
 | `support/config/test-data.js` | Env-driven account placeholders, apiKeys, channelTypes |
+| `support/config/conversation-testcases.generated.json` | Generated sync manifest from `PRDanalisis/Test/conversation/Conversation.tsv` |
+| `support/config/conversation-testcases.generated.js` | CommonJS export of the generated conversation testcase manifest |
 | `support/config/index.js` | getConfig() aggregator |
 
 ## Key Accounts (Dev)

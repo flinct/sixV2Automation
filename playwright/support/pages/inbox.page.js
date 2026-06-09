@@ -41,7 +41,7 @@ class InboxPage {
     this.channelTelegram = page.getByRole('button', { name: CHANNELS[6].id });
     this.channelNavs = [this.channelWidget, this.channelWhatsappApi, this.channelWhatsappWeb, this.channelInstagram, this.channelFacebookMessenger, this.channelEmail, this.channelTelegram];
 
-    this.chatListContainer = page.getByTestId('Conversation-Chat-List-Container');
+    this.chatListContainer = page.getByTestId('conversation-list');
     this.chatListHeader = page.getByTestId('Conversation-Chat-List-Header');
     this.chatListTitle = page.getByTestId('Conversation-Chat-List-Page-Section');
     this.chatListToggle = this.chatListHeader.locator('svg').first();

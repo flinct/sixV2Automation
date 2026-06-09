@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@playwright/test": "^1.47.0",
+    "@playwright/test": "^1.60.0",
     "cypress": "^13.17.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-mailslurp": "^1.11.1",
