@@ -93,6 +93,13 @@ When writing tests that involve feature access by different roles:
 | `npm run pw:report` | Show HTML report |
 | `ENV=prod npx playwright test` | Run on prod |
 | `LOGIN_TYPE=xxx npx playwright test` | Use specific account |
+| `npm run inbound:rmq:flood -- --dry-run ...` | Preview RabbitMQ inbound flood envelopes without publishing (script lives under `scripts/inbound-rmq-flood/`) |
+| `npm run inbound:rmq:flood -- ...` | Publish prod-like inbound burst to `message.inbound` / `group.message.inbound` queues, with env/company discovery and balancing options |
+| `npm run convo:size:probe -- --env dev --login-type cekerayam01 --hit-count --label v270-dev` | Capture `/api/conversation` + `/api/conversation/count` timing, payload size, and v2.7.0 bloat-field census (script lives under `scripts/conversation-size-probe/`) |
+| `npm run convo:size:probe:diff -- snapshots/v261.json snapshots/v270.json` | Diff two saved conversation size snapshots |
+| `npm run storm:reproducer -- --env dev --subscribers-file scripts/storm-reproducer/subscribers/dev-bulk.txt` | Start socket-driven storm subscribers that mimic FE invalidation on conversation socket events |
+| `npm run storm:hotpath:probe -- --env dev --login-type admintest --duration-sec 120 --interval-ms 1000` | Continuously probe the exact prod hotpath endpoints (`/conversation` variant-1 + `/conversation/count`) |
+| `bash scripts/storm-reproducer/run-all.sh` | Orchestrate hotpath probe + storm subscribers + inbound flood from one command; supports `STORM_SUBSCRIBERS_FILE`, `FLOOD_COMPANY_IDS`, and `FLOOD_COMPANY_BALANCE` for full multi-company runs |
 
 ---
 
@@ -120,6 +127,7 @@ Do not treat the automation repo as the source of truth for test scope; it is th
 # PART 1: AUTOMATION REPO
 ## Structure
 ```
+scripts/                - Node load/replay helpers; custom RCA harnesses live in dedicated subfolders (e.g. `scripts/inbound-rmq-flood/`)
 playwright/
   tests/e2e/           - Test specs
     auth/              - login, register, onboarding
@@ -141,7 +149,7 @@ playwright/
 | File | Class | Coverage |
 |------|-------|----------|
 | `auth.page.js` | AuthPage | Login, register, logout, onboarding |
-| `inbox.page.js` | InboxPage | Nav (ID/EN), channels, chat list, send msg, bubbles, SLA |
+| `inbox.page.js` | InboxPage | Canonical conversation page object: nav, channels, chat list/card locators, quick actions, room open, screenshot/modal, send msg, bubbles, SLA |
 | `conversation-detail.page.js` | ConversationDetailPage | Detail panel, FRT/TTC/RLT labels |
 | `conversation-history.page.js` | ConversationHistoryPage | History section in detail panel |
 | `conversation-socket.page.js` | ConversationSocketPage | Socket.io connect/disconnect |
@@ -174,6 +182,8 @@ playwright/
 | `conversation/loop-login.spec.js` | 1 | Login/logout loop |
 | `conversation/runner-checker.spec.js` | 1 | Widget channel send message |
 | `auth/login.spec.js` | 8 | Login page, valid/invalid, role, token expiry |
+| `auth/sap-batch-login.spec.js` | 1 | Batch login sweep for all SAP env-driven accounts, writes JSON result summary |
+| `auth/storm-subscribers-login.spec.js` | 1 | Login sweep for every loginType in a storm-reproducer subscriber file (default `scripts/storm-reproducer/subscribers/dev-multi-company.template.txt`), writes JSON + failed.csv, resolves via `testAccounts`, controlled by `PW_SUBSCRIBERS_FILE`, `PW_LOGIN_LIMIT`, `PW_LOGIN_MODE`, `PW_SOFT_LOGIN`, `PW_FAIL_ON_UNRESOLVED` |
 | `auth/register.spec.js` | 17 | Field validation, duplicate, full flow |
 | `auth/onboarding.spec.js` | 9 | Org name, NIB, NPWP, ID number validation |
 | `auth/member-toggle-active.spec.js` | 6 | Member activate/deactivate UI + API (active tests) |
@@ -191,7 +201,7 @@ playwright/
 | `conversation/convo-list-features.spec.js` | 118 | TC 546-663: list title, status filter, read/unread, sort, advance filter, combining filter, item behavior |
 | `conversation/convo-supplement.spec.js` | 39 | TC 664-713: gap supplement — Chat List, Room, Get New Conversation, Group Handling |
 
-**Total: 185 active tests + 713 convo spec stubs (fixme), 27 files**
+**Total: 187 active tests + 713 convo spec stubs (fixme), 29 files**
 **Note:** All 713 convo-*.spec.js tests are currently `test.fixme` stubs. Nav tests (convo-nav.spec.js) have InboxPage call scaffolding ready — implement assertions to activate.
 
 ## Config

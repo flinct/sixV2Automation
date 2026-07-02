@@ -4,14 +4,15 @@ class ConversationDetailPage {
   constructor(page) {
     this.page = page;
 
-    this.detailHeader = page.getByRole('heading', { name: /Detail|Details/i });
-    this.frtLabel = page.getByText(/^FRT$/i);
-    this.ttcLabel = page.getByText(/^TTC$/i);
-    this.rltLabel = page.getByText(/^RLT$/i);
-    this.waitTimeLabel = page.getByText(/Waktu Tunggu|Wait Time/i);
-    this.closeButton = page.getByRole('button', { name: /Tutup|Close/i });
-    this.reopenButton = page.getByRole('button', { name: /Buka|Reopen/i });
-    this.historySection = page.getByRole('heading', { name: /Riwayat|History/i });
+    this.detailHeader = page.getByTestId('Chat-Detail-Title');
+    this.frtLabel = page.getByTestId('Chat-Detail-Sla-frt');
+    this.ttcLabel = page.getByTestId('Chat-Detail-Sla-ttc');
+    this.rltLabel = page.getByTestId('Chat-Detail-Sla-rlt');
+    this.waitTimeLabel = page.getByTestId('Chat-Detail-Sla-wait-time');
+    this.closeButton = page.getByTestId('chatRoom-closeConversationButton');
+    this.reopenButton = page.getByTestId('chatRoom-reopenConversationButton');
+    this.historySection = page.getByTestId('Chat-Detail-Section-history');
+    this.assigneeSection = page.getByTestId('Chat-Detail-Section-assignee');
   }
 
   async verifyDetailPanelVisible() {

@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@playwright/test": "^1.60.0",
+    "amqplib": "^0.10.9",
     "cypress": "^13.17.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-mailslurp": "^1.11.1",
@@ -262,6 +263,13 @@
     "sendemail": "node rename-report2.js && node send-report2.js",
     "widget:socket:load": "node scripts/widget-socket-load.js",
     "widget:socket:load-2": "node scripts/widget-socket-load-2.js",
+    "inbound:rmq:flood": "node scripts/inbound-rmq-flood/inbound-rmq-flood.js",
+    "inbound:rmq:flood:dry": "node scripts/inbound-rmq-flood/inbound-rmq-flood.js --dry-run",
+    "convo:size:probe": "node scripts/conversation-size-probe/conversation-size-probe.js",
+    "convo:size:probe:diff": "node scripts/conversation-size-probe/conversation-size-probe.js --diff",
+    "storm:reproducer": "node scripts/storm-reproducer/storm-reproducer.js",
+    "storm:hotpath:probe": "node scripts/storm-reproducer/hotpath-probe.js",
+    "storm:run-all": "bash scripts/storm-reproducer/run-all.sh",
     "wa:qr:health": "node scripts/wa-qr-health.js",
     "proxy:precheck": "node scripts/proxy-precheck.js",
     "pw:install": "playwright install",

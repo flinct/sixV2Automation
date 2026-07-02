@@ -54,58 +54,20 @@
 
 const { test, expect } = require('@playwright/test');
 const { getCurrentConfig } = require('../../../support/config');
-const { AuthPage } = require('../../../support/pages/auth.page');
-const { InboxPage } = require('../../../support/pages/inbox.page');
+const { AuthPage, InboxPage } = require('../../../support/pages');
 
 // ─── Shared helpers ────────────────────────────────────────────────────────────
 
-/** Returns locator for the nth chat card (1-indexed). */
-const chatCard   = (page, n = 1) => page.locator(`[data-cy="chat-list-${n}"]`);
-const cardPart   = (page, n, part) => page.locator(`[data-cy="chat-list-${n}-${part}"]`);
-
-const chatList   = (page) => page.locator('[data-cy="conversation-list"]');
-const emptyState = (page) => page.locator('[data-cy="conversation-empty-state"]');
-const chatRoom   = (page) => page.locator('#conversation-chatroom-container');
-
-/**
- * Hover over card n to reveal the quick-action (ellipsis) button, then click it.
- * The button is hidden by CSS (hidden group-hover:flex) until hover is active.
- */
-async function openQuickAction(page, n = 1) {
-  console.log(`[openQuickAction] Hovering over chat card ${n}`);
-  const card = chatCard(page, n);
-  await expect(card).toBeVisible({ timeout: 15000 });
-  await card.hover();
-
-  console.log(`[openQuickAction] Waiting for quick-action button on card ${n}`);
-  const btn = cardPart(page, n, 'quick-action');
-  await expect(btn).toBeVisible({ timeout: 5000 });
-
-  console.log(`[openQuickAction] Clicking quick-action button on card ${n}`);
-  await btn.click();
-}
-
-/**
- * Pick a quick-action menu item by label text (bilingual regex).
- * CommandItem (shadcn/cmdk) renders with role="option".
- */
-const menuItem = (page, labelRx) =>
-  page.getByRole('option', { name: labelRx });
-
-/**
- * Ensure at least one chat exists in the current section; skip test if none.
- * Returns the first card locator.
- *
- * NOTE: Tests using this helper require live conversation data in the target
- * inbox section. Seed at least 1 open conversation if running in isolated env.
- */
-async function requireFirstChat(page) {
-  const first = chatCard(page, 1);
-  const hasChat = await first.isVisible({ timeout: 8000 }).catch(() => false);
+async function skipIfNoFirstChat(
+  inboxPage,
+  message = 'No conversations found in this section — skipping data-dependent test'
+) {
+  const hasChat = await inboxPage.hasChat(1);
   if (!hasChat) {
-    test.skip(true, 'No conversations found in this section — skipping data-dependent test');
+    test.skip(true, message);
+    return false;
   }
-  return first;
+  return true;
 }
 
 // ─── Scenario: verify conversation list ───────────────────────────────────────
@@ -130,13 +92,14 @@ test.describe('verify conversation list', () => {
     // Expected: conversation-list OR conversation-empty-state is visible
 
     console.log('[SIX-Convo-001] Navigating to /unassigned');
-    await inboxPage.gotoUnassigned();
+    await inboxPage.goto('unassigned');
 
-    const list  = chatList(page);
-    const empty = emptyState(page);
-
-    console.log('[SIX-Convo-001] Waiting for list container or empty state to appear');
-    await expect(list.or(empty)).toBeVisible({ timeout: 15000 });
+    console.log('[SIX-Convo-001] Waiting for list container, empty state, or section heading to appear');
+    await expect(
+      inboxPage.chatListContainer
+        .or(inboxPage.chatListEmpty)
+        .or(inboxPage.sectionHeading('unassigned'))
+    ).toBeVisible({ timeout: 15000 });
     console.log('[SIX-Convo-001] PASS — container or empty state visible');
   });
 
@@ -147,16 +110,20 @@ test.describe('verify conversation list', () => {
     // Expected: chat room visible after clicking first chat card
 
     console.log('[SIX-Convo-002] Navigating to /unassigned');
-    await inboxPage.gotoUnassigned();
+    await inboxPage.goto('unassigned');
 
     console.log('[SIX-Convo-002] Verifying at least 1 chat exists');
-    await requireFirstChat(page);
+    const hasChat = await inboxPage.hasChat(1);
+    if (!hasChat) {
+      test.skip(true, 'No conversations found in this section — skipping data-dependent test');
+      return;
+    }
 
     console.log('[SIX-Convo-002] Clicking first chat card');
-    await chatCard(page, 1).click();
+    await inboxPage.openChat(1);
 
     console.log('[SIX-Convo-002] Waiting for chat room to appear');
-    await expect(chatRoom(page)).toBeVisible({ timeout: 15000 });
+    await expect(inboxPage.chatRoom).toBeVisible({ timeout: 15000 });
     console.log('[SIX-Convo-002] PASS — chat room visible');
   });
 
@@ -369,12 +336,12 @@ test.describe('verify customer name', () => {
     // Expected: [data-cy="chat-list-1-name"] visible and has non-empty text content
 
     console.log('[SIX-Convo-019] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
+    await inboxPage.goto('your-inbox');
 
     console.log('[SIX-Convo-019] Checking for at least 1 chat card');
-    await requireFirstChat(page);
+    if (!(await skipIfNoFirstChat(inboxPage))) return;
 
-    const name = cardPart(page, 1, 'name');
+    const name = inboxPage.cardName(1);
     console.log('[SIX-Convo-019] Asserting name element is visible');
     await expect(name).toBeVisible({ timeout: 10000 });
 
@@ -401,7 +368,7 @@ test.describe('verify customer name', () => {
   });
 
   // ── SIX-Convo-022 ─────────────────────────────────────────────────────────
-  test('[SIX-Convo-022] customer name — no WA display name shows phone number starting with 62', async ({ page }) => {
+  test('[SIX-Convo-022] customer name — no WA display name shows phone number starting with 62', async () => {
     // Precondition: conversation with unnamed WA contact (no profile name set)
     // DATA: Ideally seed 1 contact without a WA display name (phone-number only)
     // Expected: name field shows phone number starting with "62"
@@ -409,10 +376,9 @@ test.describe('verify customer name', () => {
     //       the name field is simply visible (specific phone requires seeded data)
 
     console.log('[SIX-Convo-022] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
+    await inboxPage.goto('your-inbox');
 
-    const first = chatCard(page, 1);
-    const hasChat = await first.isVisible({ timeout: 8000 }).catch(() => false);
+    const hasChat = await inboxPage.hasChat(1);
     if (!hasChat) {
       console.log('[SIX-Convo-022] No conversations found — skipping');
       test.skip(true, 'No conversations found');
@@ -420,7 +386,7 @@ test.describe('verify customer name', () => {
     }
 
     // Collect all visible name texts from all chat cards
-    const names = await page.locator('[data-cy*="-name"]').allTextContents();
+    const names = await inboxPage.getVisibleChatNames();
     console.log(`[SIX-Convo-022] Collected ${names.length} name(s): ${JSON.stringify(names)}`);
 
     const phonePattern = /^6[0-9]/;
@@ -434,7 +400,7 @@ test.describe('verify customer name', () => {
     } else {
       // Fallback: just verify name field renders (data dependent on env)
       console.log('[SIX-Convo-022] No phone-number name found; verifying name field renders (soft check)');
-      await expect(page.locator('[data-cy="chat-list-1-name"]')).toBeVisible();
+      await expect(inboxPage.cardName(1)).toBeVisible();
       console.log('[SIX-Convo-022] PASS (soft) — name field visible');
     }
   });
@@ -484,41 +450,30 @@ test.describe('verify screenshot', () => {
    * Navigate to first chat in /your-inbox and return the screenshot trigger button.
    * Returns null and skips the test if no chat or no button found.
    */
-  async function openChatAndGetScreenshotBtn(page, inboxPage) {
+  async function openChatAndGetScreenshotBtn(inboxPage) {
     console.log('[openChatAndGetScreenshotBtn] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
+    await inboxPage.goto('your-inbox');
 
-    const hasChat = await chatCard(page, 1).isVisible({ timeout: 8000 }).catch(() => false);
+    const hasChat = await inboxPage.hasChat(1);
     if (!hasChat) {
       console.log('[openChatAndGetScreenshotBtn] No conversations in your-inbox — skipping');
       test.skip(true, 'No conversations in your-inbox');
-      return null;
+      return false;
     }
 
     console.log('[openChatAndGetScreenshotBtn] Clicking first chat card');
-    await chatCard(page, 1).click();
-
-    console.log('[openChatAndGetScreenshotBtn] Waiting for chat room to load');
-    await expect(chatRoom(page)).toBeVisible({ timeout: 15000 });
-
-    // Screenshot trigger is inside [data-cy="Chat-Room-Header"] (DATA_CYPRESS_CHAT_ROOM.CHAT_ROOM_HEADER).
-    // ScreenshotSelection renders: Popover > PopoverTrigger > Button > <IconCameraPlus>
-    // IconCameraPlus (from @tabler/icons-react) renders as:
-    //   <svg class="tabler-icon tabler-icon-camera-plus" ...>
-    // No data-cy on the trigger — using Tabler icon CSS class as selector.
-    const header = page.locator('[data-cy="Chat-Room-Header"]');
-    const screenshotBtn = header.locator('button:has(svg.tabler-icon-camera-plus)').first();
+    await inboxPage.openChat(1);
 
     console.log('[openChatAndGetScreenshotBtn] Checking for screenshot button in header');
-    const hasBtn = await screenshotBtn.isVisible({ timeout: 5000 }).catch(() => false);
+    const hasBtn = await inboxPage.hasScreenshotTrigger();
     if (!hasBtn) {
       console.log('[openChatAndGetScreenshotBtn] Screenshot button not visible — add-on may be inactive for this org');
       test.skip(true, 'Screenshot button not visible — add-on may not be active for this org');
-      return null;
+      return false;
     }
 
     console.log('[openChatAndGetScreenshotBtn] Screenshot button found');
-    return screenshotBtn;
+    return true;
   }
 
   // ── SIX-Convo-023 ─────────────────────────────────────────────────────────
@@ -531,36 +486,27 @@ test.describe('verify screenshot', () => {
     //      with [data-cy="cancel-ss-button"] and [data-cy="send-ss-button"] visible
     //   3. Click send → modal closes; toast shows "Screenshot success" / "Screenshot berhasil"
 
-    const btn = await openChatAndGetScreenshotBtn(page, inboxPage);
-    if (!btn) return;
+    const canUseScreenshot = await openChatAndGetScreenshotBtn(inboxPage);
+    if (!canUseScreenshot) return;
 
     console.log('[SIX-Convo-023] Clicking screenshot trigger button');
-    await btn.click();
-
-    // Dropdown option uses i18n: EN "Entire Room" / ID "Seluruh Ruangan"
-    // Source: packages/i18n/src/translations/conversation/en.json → screenshot.entire-room
-    //         packages/i18n/src/translations/conversation/id.json → screenshot.entire-room
-    const entireRoomOption = page.getByRole('button', { name: /Entire Room|Seluruh Ruangan/i });
-    console.log('[SIX-Convo-023] Waiting for "Entire Room / Seluruh Ruangan" dropdown option');
-    await expect(entireRoomOption).toBeVisible({ timeout: 5000 });
+    await inboxPage.openScreenshotMenu();
 
     console.log('[SIX-Convo-023] Clicking "Entire Room" option');
-    await entireRoomOption.click();
+    await inboxPage.chooseEntireRoomScreenshot();
 
-    // Preview modal — ConversationScreenshotPreviewModal.tsx
-    const modal = page.locator('[data-cy="modal-screenshot-container"]');
     console.log('[SIX-Convo-023] Waiting for screenshot preview modal to appear');
-    await expect(modal).toBeVisible({ timeout: 10000 });
+    await inboxPage.waitForScreenshotModal();
 
     console.log('[SIX-Convo-023] Asserting cancel and send buttons are visible in modal');
-    await expect(page.locator('[data-cy="cancel-ss-button"]')).toBeVisible();
-    await expect(page.locator('[data-cy="send-ss-button"]')).toBeVisible();
+    await expect(inboxPage.screenshotCancelButton).toBeVisible();
+    await expect(inboxPage.screenshotSendButton).toBeVisible();
 
     console.log('[SIX-Convo-023] Clicking send-ss-button to save & send screenshot');
-    await page.locator('[data-cy="send-ss-button"]').click();
+    await inboxPage.sendScreenshot();
 
     console.log('[SIX-Convo-023] Waiting for modal to close after send');
-    await expect(modal).not.toBeVisible({ timeout: 10000 });
+    await expect(inboxPage.screenshotModal).not.toBeVisible({ timeout: 10000 });
 
     // Toast: title = translation('screenshot.screenshot-success') → "Screenshot success" / "Screenshot berhasil"
     // Source: use-submit-conversation-screenshot.ts lines 58-59
@@ -590,29 +536,23 @@ test.describe('verify screenshot', () => {
     // DATA: Screenshot add-on must be enabled for the test org
     // Expected: clicking cancel-ss-button closes modal; no screenshot saved
 
-    const btn = await openChatAndGetScreenshotBtn(page, inboxPage);
-    if (!btn) return;
+    const canUseScreenshot = await openChatAndGetScreenshotBtn(inboxPage);
+    if (!canUseScreenshot) return;
 
     console.log('[SIX-Convo-025] Clicking screenshot trigger button');
-    await btn.click();
-
-    // EN "Entire Room" / ID "Seluruh Ruangan"
-    const entireRoomOption = page.getByRole('button', { name: /Entire Room|Seluruh Ruangan/i });
-    console.log('[SIX-Convo-025] Waiting for "Entire Room / Seluruh Ruangan" dropdown option');
-    await expect(entireRoomOption).toBeVisible({ timeout: 5000 });
+    await inboxPage.openScreenshotMenu();
 
     console.log('[SIX-Convo-025] Clicking "Entire Room" to open preview modal');
-    await entireRoomOption.click();
+    await inboxPage.chooseEntireRoomScreenshot();
 
-    const modal = page.locator('[data-cy="modal-screenshot-container"]');
     console.log('[SIX-Convo-025] Waiting for preview modal to appear');
-    await expect(modal).toBeVisible({ timeout: 10000 });
+    await inboxPage.waitForScreenshotModal();
 
     console.log('[SIX-Convo-025] Clicking cancel-ss-button to discard');
-    await page.locator('[data-cy="cancel-ss-button"]').click();
+    await inboxPage.cancelScreenshot();
 
     console.log('[SIX-Convo-025] Asserting modal is dismissed after cancel');
-    await expect(modal).not.toBeVisible({ timeout: 8000 });
+    await expect(inboxPage.screenshotModal).not.toBeVisible({ timeout: 8000 });
     console.log('[SIX-Convo-025] PASS — modal closed, screenshot discarded');
   });
 });
@@ -659,17 +599,17 @@ test.describe('verify ellipsis', () => {
     //   - Reopened menu shows "Hapus bintang percakapan" / "Unstar conversation" (state confirmed)
 
     console.log('[SIX-Convo-026] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
-    await requireFirstChat(page);
+    await inboxPage.goto('your-inbox');
+    if (!(await skipIfNoFirstChat(inboxPage))) return;
 
-    const starredIcon = cardPart(page, 1, 'starred-icon');
+    const starredIcon = inboxPage.cardStarredIcon(1);
 
     // Guard: if already starred, unstar first so we start from a clean unstarred state
     const isAlreadyStarred = await starredIcon.isVisible({ timeout: 2000 }).catch(() => false);
     if (isAlreadyStarred) {
       console.log('[SIX-Convo-026] Card already starred — resetting to unstarred state first');
-      await openQuickAction(page, 1);
-      await menuItem(page, /Hapus bintang|Unstar conversation/i).click();
+      await inboxPage.openQuickActionMenu(1);
+      await inboxPage.quickAction('star').click();
       console.log('[SIX-Convo-026] Waiting for starred-icon to disappear (API + UI update)');
       await expect(starredIcon).not.toBeVisible({ timeout: 8000 });
       console.log('[SIX-Convo-026] Reset complete — card is now unstarred');
@@ -677,13 +617,13 @@ test.describe('verify ellipsis', () => {
 
     // Main action: open menu and star
     console.log('[SIX-Convo-026] Opening quick-action menu');
-    await openQuickAction(page, 1);
+    await inboxPage.openQuickActionMenu(1);
 
     console.log('[SIX-Convo-026] Asserting "Star conversation / Beri bintang..." option is visible');
-    await expect(menuItem(page, /Beri bintang|Star conversation/i)).toBeVisible({ timeout: 5000 });
+    await expect(inboxPage.quickAction('star')).toContainText(/Beri bintang|Star conversation/i, { timeout: 5000 });
 
     console.log('[SIX-Convo-026] Clicking "Star conversation"');
-    await menuItem(page, /Beri bintang|Star conversation/i).click();
+    await inboxPage.quickAction('star').click();
 
     console.log('[SIX-Convo-026] Waiting for starred-icon badge to appear on card 1');
     await expect(starredIcon).toBeVisible({ timeout: 8000 });
@@ -691,8 +631,8 @@ test.describe('verify ellipsis', () => {
 
     // Reopen menu to confirm state flipped to "Unstar"
     console.log('[SIX-Convo-026] Reopening menu to confirm "Unstar" option is now shown');
-    await openQuickAction(page, 1);
-    await expect(menuItem(page, /Hapus bintang|Unstar conversation/i)).toBeVisible({ timeout: 5000 });
+    await inboxPage.openQuickActionMenu(1);
+    await expect(inboxPage.quickAction('star')).toContainText(/Hapus bintang|Unstar conversation/i, { timeout: 5000 });
     console.log('[SIX-Convo-026] Unstar option confirmed — backend state is starred ✓');
 
     await page.keyboard.press('Escape');
@@ -709,17 +649,17 @@ test.describe('verify ellipsis', () => {
     //   - Reopened menu shows "Beri bintang..." / "Star conversation" (state confirmed)
 
     console.log('[SIX-Convo-027] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
-    await requireFirstChat(page);
+    await inboxPage.goto('your-inbox');
+    if (!(await skipIfNoFirstChat(inboxPage))) return;
 
-    const starredIcon = cardPart(page, 1, 'starred-icon');
+    const starredIcon = inboxPage.cardStarredIcon(1);
 
     // Guard: if NOT starred, star it first so we can test unstar
     const isStarred = await starredIcon.isVisible({ timeout: 2000 }).catch(() => false);
     if (!isStarred) {
       console.log('[SIX-Convo-027] Card not starred — starring first for correct initial state');
-      await openQuickAction(page, 1);
-      await menuItem(page, /Beri bintang|Star conversation/i).click();
+      await inboxPage.openQuickActionMenu(1);
+      await inboxPage.quickAction('star').click();
       console.log('[SIX-Convo-027] Waiting for starred-icon to appear (API + UI update)');
       await expect(starredIcon).toBeVisible({ timeout: 8000 });
       console.log('[SIX-Convo-027] Setup complete — card is now starred');
@@ -727,13 +667,13 @@ test.describe('verify ellipsis', () => {
 
     // Main action: open menu and unstar
     console.log('[SIX-Convo-027] Opening quick-action menu');
-    await openQuickAction(page, 1);
+    await inboxPage.openQuickActionMenu(1);
 
     console.log('[SIX-Convo-027] Asserting "Unstar conversation / Hapus bintang..." option is visible');
-    await expect(menuItem(page, /Hapus bintang|Unstar conversation/i)).toBeVisible({ timeout: 5000 });
+    await expect(inboxPage.quickAction('star')).toContainText(/Hapus bintang|Unstar conversation/i, { timeout: 5000 });
 
     console.log('[SIX-Convo-027] Clicking "Unstar conversation"');
-    await menuItem(page, /Hapus bintang|Unstar conversation/i).click();
+    await inboxPage.quickAction('star').click();
 
     console.log('[SIX-Convo-027] Waiting for starred-icon badge to disappear from card 1');
     await expect(starredIcon).not.toBeVisible({ timeout: 8000 });
@@ -741,8 +681,8 @@ test.describe('verify ellipsis', () => {
 
     // Reopen menu to confirm state flipped to "Star"
     console.log('[SIX-Convo-027] Reopening menu to confirm "Star" option is now shown');
-    await openQuickAction(page, 1);
-    await expect(menuItem(page, /Beri bintang|Star conversation/i)).toBeVisible({ timeout: 5000 });
+    await inboxPage.openQuickActionMenu(1);
+    await expect(inboxPage.quickAction('star')).toContainText(/Beri bintang|Star conversation/i, { timeout: 5000 });
     console.log('[SIX-Convo-027] Star option confirmed — backend state is unstarred ✓');
 
     await page.keyboard.press('Escape');
@@ -760,17 +700,17 @@ test.describe('verify ellipsis', () => {
     //   - Reopened menu shows "Lepas sematan percakapan" / "Unpin conversation" (state confirmed)
 
     console.log('[SIX-Convo-028] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
-    await requireFirstChat(page);
+    await inboxPage.goto('your-inbox');
+    if (!(await skipIfNoFirstChat(inboxPage))) return;
 
-    const pinnedIcon = cardPart(page, 1, 'pinned-icon');
+    const pinnedIcon = inboxPage.cardPinnedIcon(1);
 
     // Guard: if already pinned, unpin first so we start from a clean unpinned state
     const isAlreadyPinned = await pinnedIcon.isVisible({ timeout: 2000 }).catch(() => false);
     if (isAlreadyPinned) {
       console.log('[SIX-Convo-028] Card already pinned — resetting to unpinned state first');
-      await openQuickAction(page, 1);
-      await menuItem(page, /Lepas sematan|Unpin conversation/i).click();
+      await inboxPage.openQuickActionMenu(1);
+      await inboxPage.quickAction('pin').click();
       console.log('[SIX-Convo-028] Waiting for pinned-icon to disappear (API + UI update)');
       await expect(pinnedIcon).not.toBeVisible({ timeout: 8000 });
       console.log('[SIX-Convo-028] Reset complete — card is now unpinned');
@@ -778,13 +718,13 @@ test.describe('verify ellipsis', () => {
 
     // Main action: open menu and pin
     console.log('[SIX-Convo-028] Opening quick-action menu');
-    await openQuickAction(page, 1);
+    await inboxPage.openQuickActionMenu(1);
 
     console.log('[SIX-Convo-028] Asserting "Pin conversation / Sematkan percakapan" option is visible');
-    await expect(menuItem(page, /Sematkan percakapan|Pin conversation/i)).toBeVisible({ timeout: 5000 });
+    await expect(inboxPage.quickAction('pin')).toContainText(/Sematkan percakapan|Pin conversation/i, { timeout: 5000 });
 
     console.log('[SIX-Convo-028] Clicking "Pin conversation"');
-    await menuItem(page, /Sematkan percakapan|Pin conversation/i).click();
+    await inboxPage.quickAction('pin').click();
 
     console.log('[SIX-Convo-028] Waiting for pinned-icon badge to appear on card 1');
     await expect(pinnedIcon).toBeVisible({ timeout: 8000 });
@@ -792,8 +732,8 @@ test.describe('verify ellipsis', () => {
 
     // Reopen menu to confirm state flipped to "Unpin"
     console.log('[SIX-Convo-028] Reopening menu to confirm "Unpin" option is now shown');
-    await openQuickAction(page, 1);
-    await expect(menuItem(page, /Lepas sematan|Unpin conversation/i)).toBeVisible({ timeout: 5000 });
+    await inboxPage.openQuickActionMenu(1);
+    await expect(inboxPage.quickAction('pin')).toContainText(/Lepas sematan|Unpin conversation/i, { timeout: 5000 });
     console.log('[SIX-Convo-028] Unpin option confirmed — backend state is pinned ✓');
 
     await page.keyboard.press('Escape');
@@ -811,17 +751,17 @@ test.describe('verify ellipsis', () => {
     //   - Reopened menu shows "Sematkan percakapan" / "Pin conversation" (state confirmed)
 
     console.log('[SIX-Convo-029] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
-    await requireFirstChat(page);
+    await inboxPage.goto('your-inbox');
+    if (!(await skipIfNoFirstChat(inboxPage))) return;
 
-    const pinnedIcon = cardPart(page, 1, 'pinned-icon');
+    const pinnedIcon = inboxPage.cardPinnedIcon(1);
 
     // Guard: if NOT pinned, pin it first so we can test unpin
     const isPinned = await pinnedIcon.isVisible({ timeout: 2000 }).catch(() => false);
     if (!isPinned) {
       console.log('[SIX-Convo-029] Card not pinned — pinning first for correct initial state');
-      await openQuickAction(page, 1);
-      await menuItem(page, /Sematkan percakapan|Pin conversation/i).click();
+      await inboxPage.openQuickActionMenu(1);
+      await inboxPage.quickAction('pin').click();
       console.log('[SIX-Convo-029] Waiting for pinned-icon to appear (API + UI update)');
       await expect(pinnedIcon).toBeVisible({ timeout: 8000 });
       console.log('[SIX-Convo-029] Setup complete — card is now pinned');
@@ -829,13 +769,13 @@ test.describe('verify ellipsis', () => {
 
     // Main action: open menu and unpin
     console.log('[SIX-Convo-029] Opening quick-action menu');
-    await openQuickAction(page, 1);
+    await inboxPage.openQuickActionMenu(1);
 
     console.log('[SIX-Convo-029] Asserting "Unpin / Lepas sematan percakapan" option is visible');
-    await expect(menuItem(page, /Lepas sematan|Unpin conversation/i)).toBeVisible({ timeout: 5000 });
+    await expect(inboxPage.quickAction('pin')).toContainText(/Lepas sematan|Unpin conversation/i, { timeout: 5000 });
 
     console.log('[SIX-Convo-029] Clicking "Unpin conversation"');
-    await menuItem(page, /Lepas sematan|Unpin conversation/i).click();
+    await inboxPage.quickAction('pin').click();
 
     console.log('[SIX-Convo-029] Waiting for pinned-icon badge to disappear from card 1');
     await expect(pinnedIcon).not.toBeVisible({ timeout: 8000 });
@@ -843,8 +783,8 @@ test.describe('verify ellipsis', () => {
 
     // Reopen menu to confirm state flipped to "Pin"
     console.log('[SIX-Convo-029] Reopening menu to confirm "Pin" option is now shown');
-    await openQuickAction(page, 1);
-    await expect(menuItem(page, /Sematkan percakapan|Pin conversation/i)).toBeVisible({ timeout: 5000 });
+    await inboxPage.openQuickActionMenu(1);
+    await expect(inboxPage.quickAction('pin')).toContainText(/Sematkan percakapan|Pin conversation/i, { timeout: 5000 });
     console.log('[SIX-Convo-029] Pin option confirmed — backend state is unpinned ✓');
 
     await page.keyboard.press('Escape');
@@ -863,33 +803,33 @@ test.describe('verify ellipsis', () => {
     // Cleanup: test auto-unspams in /spam to restore state
 
     console.log('[SIX-Convo-030] Navigating to /your-inbox');
-    await inboxPage.gotoYourInbox();
-    await requireFirstChat(page);
+    await inboxPage.goto('your-inbox');
+    if (!(await skipIfNoFirstChat(inboxPage))) return;
 
     // Capture name and list count before spamming
-    const nameBefore = await cardPart(page, 1, 'name').textContent();
-    const countBefore = await page.locator('[data-cy^="chat-list-"]').count();
+    const nameBefore = await inboxPage.getChatName(1);
+    const countBefore = await inboxPage.getChatCount();
     console.log(`[SIX-Convo-030] Card 1 name: "${nameBefore?.trim()}" | List count before: ${countBefore}`);
 
     console.log('[SIX-Convo-030] Opening quick-action menu');
-    await openQuickAction(page, 1);
+    await inboxPage.openQuickActionMenu(1);
 
     console.log('[SIX-Convo-030] Asserting "Mark as spam / Tandai sebagai spam" option is visible');
-    await expect(menuItem(page, /Tandai sebagai spam|Mark as spam/i)).toBeVisible({ timeout: 5000 });
+    await expect(inboxPage.quickAction('spam')).toContainText(/Tandai sebagai spam|Mark as spam/i, { timeout: 5000 });
 
     console.log('[SIX-Convo-030] Clicking "Mark as spam"');
-    await menuItem(page, /Tandai sebagai spam|Mark as spam/i).click();
+    await inboxPage.quickAction('spam').click();
 
     // Wait for card to be removed from your-inbox (API + socket update + re-render)
     console.log('[SIX-Convo-030] Waiting for list count to decrease after spam action');
-    await expect(page.locator('[data-cy^="chat-list-"]')).toHaveCount(countBefore - 1, { timeout: 8000 });
+    await expect(inboxPage.chatItems).toHaveCount(countBefore - 1, { timeout: 8000 });
     console.log(`[SIX-Convo-030] List count reduced to ${countBefore - 1} ✓`);
 
     // Navigate to /spam and verify the conversation moved there
     console.log('[SIX-Convo-030] Navigating to /spam to verify conversation moved');
-    await inboxPage.gotoSpam();
+    await inboxPage.goto('spam');
 
-    const spamNames = await page.locator('[data-cy*="-name"]').allTextContents();
+    const spamNames = await inboxPage.getVisibleChatNames();
     console.log(`[SIX-Convo-030] Names in /spam: ${JSON.stringify(spamNames)}`);
     const found = spamNames.some((n) => n.trim() === nameBefore?.trim());
     console.log(`[SIX-Convo-030] Conversation "${nameBefore?.trim()}" found in /spam: ${found}`);
@@ -900,9 +840,9 @@ test.describe('verify ellipsis', () => {
     //   the spammed conversation may not be at index 1. Seed env with 0 spam conversations
     //   before running this test for deterministic cleanup.
     console.log('[SIX-Convo-030] Cleanup: opening quick-action on card 1 in /spam');
-    await openQuickAction(page, 1);
+    await inboxPage.openQuickActionMenu(1);
     console.log('[SIX-Convo-030] Cleanup: clicking "Unmark as spam / Batalkan tanda spam"');
-    await menuItem(page, /Batalkan tanda spam|Unmark as spam/i).click();
+    await inboxPage.quickAction('spam').click();
     console.log('[SIX-Convo-030] PASS — spam verified, cleanup complete');
   });
 
@@ -916,9 +856,9 @@ test.describe('verify ellipsis', () => {
     //   - After click: card count in /spam decreases by 1
 
     console.log('[SIX-Convo-031] Navigating to /spam');
-    await inboxPage.gotoSpam();
+    await inboxPage.goto('spam');
 
-    const hasSpamChat = await chatCard(page, 1).isVisible({ timeout: 8000 }).catch(() => false);
+    const hasSpamChat = await inboxPage.hasChat(1);
     if (!hasSpamChat) {
       console.log('[SIX-Convo-031] No spam conversations found — skipping test');
       test.skip(true, 'No spam conversations found — seed at least 1 spam conversation to run this test');
@@ -926,22 +866,22 @@ test.describe('verify ellipsis', () => {
     }
 
     // Capture name and list count before unspamming
-    const countBefore = await page.locator('[data-cy^="chat-list-"]').count();
-    const nameBefore  = await cardPart(page, 1, 'name').textContent();
+    const countBefore = await inboxPage.getChatCount();
+    const nameBefore  = await inboxPage.getChatName(1);
     console.log(`[SIX-Convo-031] Card 1 name: "${nameBefore?.trim()}" | Spam count before: ${countBefore}`);
 
     console.log('[SIX-Convo-031] Opening quick-action menu on card 1 in /spam');
-    await openQuickAction(page, 1);
+    await inboxPage.openQuickActionMenu(1);
 
     console.log('[SIX-Convo-031] Asserting "Unmark as spam / Batalkan tanda spam" option is visible');
-    await expect(menuItem(page, /Batalkan tanda spam|Unmark as spam/i)).toBeVisible({ timeout: 5000 });
+    await expect(inboxPage.quickAction('spam')).toContainText(/Batalkan tanda spam|Unmark as spam/i, { timeout: 5000 });
 
     console.log('[SIX-Convo-031] Clicking "Unmark as spam"');
-    await menuItem(page, /Batalkan tanda spam|Unmark as spam/i).click();
+    await inboxPage.quickAction('spam').click();
 
     // Wait for card to be removed from /spam list
     console.log('[SIX-Convo-031] Waiting for spam list count to decrease after unspam');
-    await expect(page.locator('[data-cy^="chat-list-"]')).toHaveCount(countBefore - 1, { timeout: 8000 });
+    await expect(inboxPage.chatItems).toHaveCount(countBefore - 1, { timeout: 8000 });
     console.log(`[SIX-Convo-031] Spam count reduced to ${countBefore - 1} ✓`);
 
     // Sanity: name was non-empty

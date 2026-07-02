@@ -11,24 +11,30 @@ class AuthPage {
     this.loginButton = page.getByTestId('Login-Submit-Button');
     this.showPasswordButton = page.getByTestId('Show-Password');
 
-    this.resetPasswordLink = page.locator('a[href="/reset-password"]');
-    this.registerLink = page.locator('a[href="/register"]');
+    this.resetPasswordLink = page.getByTestId('Reset-Password-Link');
+    this.registerLink = page.getByTestId('Register-Link');
 
     this.loginForm = page.getByTestId('Login-Form');
     this.loginTitle = this.logo.locator('..').locator('p');
-    this.loginErrorMessage = this.loginForm.getByText(/email dan\/atau password salah|coba lagi|reset password/i);
+    this.loginErrorMessage = page.getByTestId('Auth-Error');
     this.keywordRequiredMessage = this.loginForm.getByText(/username atau email wajib diisi/i);
     this.passwordRequiredMessage = this.loginForm.getByText(/password minimal 8 karakter/i);
 
-    this.regFullname = page.locator('#fullname');
-    this.regUsername = page.locator('#username');
-    this.regEmail = page.locator('#email');
-    this.regPhone = page.locator('#phone');
-    this.regPassword = page.locator('#password');
+    this.regFullname = page.getByTestId('Fullname-Input');
+    this.regUsername = page.getByTestId('Username-Input');
+    this.regEmail = page.getByTestId('Email-Input');
+    this.regPhone = page.getByTestId('Phone-Input');
+    this.regPassword = page.getByTestId('Password-Input');
     this.regPasswordConfirm = page.getByTestId('Re-Enter-Password-Input');
-    this.registerButton = page.getByRole('button', { name: 'Daftar' });
+    this.registerButton = page.getByTestId('Register-Submit-Button');
 
-    // Error messages for registration form - located relative to input fields
+    this.resetForm = page.getByTestId('Reset-Password-Form');
+    this.resetEmailInput = page.getByTestId('Email-Input');
+    this.resetSubmit = page.getByTestId('Reset-Password-Submit-Button');
+    this.setNewPasswordForm = page.getByTestId('Set-New-Password-Form');
+    this.setNewPasswordSubmit = page.getByTestId('Set-New-Password-Submit-Button');
+    this.verifyEmailButton = page.getByTestId('Verify-Email-Button');
+
     this.regFullnameErrorMessage = this.regFullname.locator('..').getByText(/Nama lengkap minimal 3 karakter/i);
     this.regUsernameErrorMessage = this.regUsername.locator('..').getByText(/Nama pengguna minimal 6 karakter/i);
     this.regEmailErrorMessage = this.regEmail.locator('..').getByText(/Email wajib diisi/i);
@@ -40,7 +46,8 @@ class AuthPage {
     this.resendEmailButton = page.getByRole('button', { name: 'Kirim Ulang Email' });
 
     this.sidebar = page.getByTestId('Sidebar-Navigation');
-    this.logoutButton = this.sidebar.locator('div').nth(2);
+    this.userMenu = page.getByTestId('User-Menu');
+    this.logoutButton = page.getByTestId('Logout-Button');
   }
 
   async gotoLogin() {
@@ -55,11 +62,10 @@ class AuthPage {
     await this.page.goto('/register');
   }
 
-    async gotoRegisterV2() {
-      await this.page.goto('/id/register', { waitUntil: 'domcontentloaded' });
-      // Wait for the register form to be visible
-      await this.registerButton.waitFor({ state: 'visible', timeout: 15000 });
-    }
+  async gotoRegisterV2() {
+    await this.page.goto('/id/register', { waitUntil: 'domcontentloaded' });
+    await this.registerButton.waitFor({ state: 'visible', timeout: 15000 });
+  }
 
   async login(identifier, password, options = {}) {
     const { useV2 = false, expectSuccess = true } = options;
@@ -85,8 +91,8 @@ class AuthPage {
   }
 
   async logout() {
-    await this.logoutButton.click({ force: true });
-    await this.page.getByText(/keluar|logout/i).click();
+    await this.userMenu.click();
+    await this.logoutButton.click();
     await this.page.waitForURL(/\/login/);
   }
 
@@ -136,7 +142,6 @@ class AuthPage {
 
   generateRandomTestData(prefix = 'test') {
     const timestamp = Date.now();
-    const randomNum = Math.floor(Math.random() * 100000);
 
     return {
       fullname: `${prefix} User ${timestamp}`,

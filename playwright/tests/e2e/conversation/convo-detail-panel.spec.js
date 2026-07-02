@@ -8,8 +8,7 @@
  */
 const { test, expect } = require('@playwright/test');
 const { getCurrentConfig } = require('../../../support/config');
-const { AuthPage } = require('../../../support/pages/auth.page');
-const { InboxPage } = require('../../../support/pages/inbox.page');
+const { AuthPage, InboxPage } = require('../../../support/pages');
 
 test.describe('Conversation details', () => {
   let authPage, inboxPage, config;

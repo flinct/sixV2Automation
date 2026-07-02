@@ -1,6 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { AuthPage } = require('../../../support/pages/auth.page');
-const { InboxPage } = require('../../../support/pages/inbox.page');
+const { AuthPage, InboxPage } = require('../../../support/pages');
 const { getCurrentConfig } = require('../../../support/config');
 
 test.describe('Inbox Page Tests', () => {

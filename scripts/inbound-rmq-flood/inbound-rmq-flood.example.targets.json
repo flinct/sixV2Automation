@@ -1,0 +1,61 @@
+[
+  {
+    "targetCompanyId": "company-dev-a",
+    "channelProfile": "widget",
+    "channelAccountId": "widget-account-dev-001",
+    "clientContactId": "widget-contact-dev-001"
+  },
+  {
+    "targetCompanyId": "company-dev-b",
+    "channelProfile": "messenger",
+    "channelAccountId": "messenger-account-dev-001",
+    "clientContactId": "messenger-contact-dev-001"
+  },
+  {
+    "targetCompanyId": "company-dev-b",
+    "channelProfile": "instagram",
+    "channelAccountId": "instagram-account-dev-001",
+    "clientContactId": "instagram-contact-dev-001",
+    "postId": "ig-post-dev-001",
+    "rootCommentId": "ig-root-comment-dev-001",
+    "isGroupComment": true
+  },
+  {
+    "targetCompanyId": "company-dev-c",
+    "channelProfile": "email",
+    "channelAccountId": "email-account-dev-001",
+    "clientContactId": "email-contact-dev-001",
+    "subject": "[dev-inbound-flood] Email sample",
+    "htmlContent": "<p>This is a simulated inbound email.</p>",
+    "references": [
+      "<prev-thread-001@example.test>",
+      "<prev-thread-002@example.test>"
+    ]
+  },
+  {
+    "targetCompanyId": "company-dev-a",
+    "channelProfile": "whatsapp",
+    "channelAccountId": "wa-account-dev-001",
+    "clientContactId": "wa-contact-dev-001"
+  },
+  {
+    "targetCompanyId": "company-dev-c",
+    "channelProfile": "whatsapp",
+    "group": true,
+    "channelAccountId": "wa-account-dev-001",
+    "clientContactId": "group-contact-dev-001",
+    "memberContactIds": [
+      "member-contact-dev-001",
+      "member-contact-dev-002",
+      "member-contact-dev-003"
+    ],
+    "isAdmin": [
+      "member-contact-dev-001"
+    ],
+    "senderContactId": "member-contact-dev-002",
+    "memberLids": {
+      "member-contact-dev-001": "6281110000001@lid",
+      "member-contact-dev-002": "6281110000002@lid"
+    }
+  }
+]

@@ -1,6 +1,6 @@
 const { environments, getEnvironment, getCurrentEnvironment } = require('./environments');
 const { ApiEndpoints, pagePaths } = require('./endpoints');
-const { testAccounts, apiKeys, testData, getAccountByLoginType, getDefaultAccount, getRequestedLoginType } = require('./test-data');
+const { testAccounts, apiKeys, testData, getAccountByLoginType, getDefaultAccount, getRequestedLoginType, getSapAgentAccounts } = require('./test-data');
 
 function getConfig(envName) {
   const env = getEnvironment(envName);
@@ -37,5 +37,6 @@ module.exports = {
   testData,
   getAccountByLoginType,
   getDefaultAccount,
+  getSapAgentAccounts,
   getRequestedLoginType,
 };

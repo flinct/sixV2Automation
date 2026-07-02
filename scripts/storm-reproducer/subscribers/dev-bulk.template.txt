@@ -1,0 +1,7 @@
+# One subscriber spec per line
+# Format: loginType[:count]
+
+admintest:1
+cx001:4
+cx002:4
+cx003:4

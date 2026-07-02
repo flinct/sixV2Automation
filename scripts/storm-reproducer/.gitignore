@@ -1,0 +1,3 @@
+# Storm reproducer log directory
+# Logs are useful for debugging RCA runs but should not be committed to git.
+logs/
