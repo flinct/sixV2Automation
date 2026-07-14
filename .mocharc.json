@@ -1,4 +1,7 @@
 {
-  "spec": ["scripts/**/test/*.spec.js"],
+  "spec": [
+    "scripts/**/test/*.spec.js",
+    "playwright/support/**/test/*.spec.js"
+  ],
   "recursive": true
 }

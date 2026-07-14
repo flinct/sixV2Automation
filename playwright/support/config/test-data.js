@@ -110,7 +110,7 @@ const testAccounts = {
     "E2E_PROD_TESTER_USER",
     "E2E_PROD_TESTER_PASSWORD",
     "agent",
-    ["prod"],
+    ["dev", "prod"],
     "prod-tester",
   ),
 
@@ -8240,9 +8240,19 @@ function getAccountByLoginType(loginType, env = "dev") {
     );
   }
 
+  const identifier = account.identifier;
+  const password = account.password;
+  if (!identifier || !password || password === "replace-me") {
+    const identifierEnv = account.meta?.identifierEnv || "<unknown>";
+    const passwordEnv = account.meta?.passwordEnv || "<unknown>";
+    throw new Error(
+      `Account '${loginType}' has unresolved credentials for env '${env}'. Check ${identifierEnv} and ${passwordEnv} in .env`,
+    );
+  }
+
   return {
-    identifier: account.identifier,
-    password: account.password,
+    identifier,
+    password,
     role: account.role,
   };
 }

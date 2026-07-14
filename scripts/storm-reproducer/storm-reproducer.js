@@ -31,6 +31,7 @@ function parseArgs(argv) {
     apiBase: process.env.STORM_API_BASE || '',
     connectTimeoutMs: Number(process.env.STORM_CONNECT_TIMEOUT_MS || 10000),
     shutdownGraceMs: Number(process.env.STORM_SHUTDOWN_GRACE_MS || 5000),
+    failAfter60: String(process.env.STORM_FAIL_AFTER_60 || 'true').trim().toLowerCase() === 'true',
     hotpathEnabled: String(process.env.STORM_HOTPATH_ENABLED || '').trim().toLowerCase() === 'true',
     hotpathIntervalMs: Number(process.env.STORM_HOTPATH_INTERVAL_MS || 1000),
     verbose: false,
@@ -185,6 +186,7 @@ async function buildSubscriber(opts, loginType, instanceIndex, meta = {}) {
   const socket = createSocket(runtime.apiBase.replace(/\/+$/g, ''), token, {
     subPath: 'conversations',
     logger,
+    failAfter60: opts.failAfter60,
   });
 
   await waitForSocketConnect(socket, opts.connectTimeoutMs);
@@ -357,7 +359,9 @@ async function main() {
           subscriber.hotpathProbe.start();
         }
         subscribers.push(subscriber);
-        console.log(`[storm] build progress: ${subscribers.length}/${requestedTotal} subscriber(s) ready (${subscriber.label})`);
+        if (subscribers.length % 10 === 0 || subscribers.length === requestedTotal) {
+          console.log(`[storm] build progress: ${subscribers.length}/${requestedTotal} subscriber(s) ready`);
+        }
       } catch (error) {
         console.warn(`[storm] failed to prepare ${loginType}#${nextIndex}: ${error?.message || error}`);
       }

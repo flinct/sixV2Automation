@@ -228,6 +228,112 @@ STORM_READY_TIMEOUT_SEC=1800 \
 bash scripts/storm-reproducer/run-all.sh
 ```
 
+`PERHATIKAN STORM_FAIL_AFTER_60 SEBELUM RUN`
+ENV=dev \
+LOGIN_TYPE=admintest \
+TOTAL_MESSAGES=4000 \
+DISCOVER_TARGETS=800 \
+STORM_SUBSCRIBERS_FILE=scripts/storm-reproducer/subscribers/dev-multi-company.template.txt \
+STORM_FAIL_AFTER_60=false \
+FLOOD_COMPANY_IDS=684a7dee68bd32a1f552e453 \
+FLOOD_COMPANY_BALANCE=true \
+STORM_HOTPATH_ENABLED=true \
+STORM_HOTPATH_INTERVAL_MS=1000 \
+STORM_ROUTE=your-inbox \
+STORM_DURATION_SEC=600 \
+PROBE_DURATION_SEC=600 \
+PROBE_INTERVAL_MS=1000 \
+STORM_READY_TIMEOUT_SEC=1800 \
+bash scripts/storm-reproducer/run-all.sh
+
+````
+
+lite ver
+ENV=dev \
+LOGIN_TYPE=satuinboxlincah,admintest \
+TOTAL_MESSAGES=50 \
+DISCOVER_TARGETS=10 \
+STORM_SUBSCRIBERS_FILE=scripts/storm-reproducer/subscribers/dev-multi-company.template.txt \
+STORM_FAIL_AFTER_60=true  \
+FLOOD_COMPANY_IDS=6889b71ded520395ba12028b,684a7dee68bd32a1f552e453 \
+FLOOD_COMPANY_BALANCE=true \
+STORM_HOTPATH_ENABLED=true \
+STORM_HOTPATH_INTERVAL_MS=1000 \
+STORM_ROUTE=your-inbox \
+STORM_DURATION_SEC=20 \
+PROBE_DURATION_SEC=20 \
+PROBE_INTERVAL_MS=1000 \
+STORM_READY_TIMEOUT_SEC=1800 \
+bash scripts/storm-reproducer/run-all.sh
+
+ENV=dev \
+LOGIN_TYPE=admintest \
+TOTAL_MESSAGES=5 \
+DISCOVER_TARGETS=10 \
+STORM_SUBSCRIBERS_FILE=scripts/storm-reproducer/subscribers/dev-multi-company.template.txt \
+STORM_FAIL_AFTER_60=true  \
+FLOOD_COMPANY_IDS=684a7dee68bd32a1f552e453 \
+FLOOD_COMPANY_BALANCE=true \
+STORM_HOTPATH_ENABLED=true \
+STORM_HOTPATH_INTERVAL_MS=1000 \
+STORM_ROUTE=your-inbox \
+STORM_DURATION_SEC=20 \
+PROBE_DURATION_SEC=20 \
+PROBE_INTERVAL_MS=1000 \
+STORM_READY_TIMEOUT_SEC=1800 \
+bash scripts/storm-reproducer/run-all.sh
+
+ENV=dev \
+LOGIN_TYPE=goddummyprod2 \
+TOTAL_MESSAGES=5 \
+DISCOVER_TARGETS=10 \
+STORM_SUBSCRIBERS_FILE=scripts/storm-reproducer/subscribers/dev-multi-company.template.txt \
+STORM_FAIL_AFTER_60=true  \
+FLOOD_COMPANY_IDS=684a7dee68bd32a1f552e453 \
+FLOOD_COMPANY_BALANCE=true \
+STORM_HOTPATH_ENABLED=true \
+STORM_HOTPATH_INTERVAL_MS=1000 \
+STORM_ROUTE=your-inbox \
+STORM_DURATION_SEC=20 \
+PROBE_DURATION_SEC=20 \
+PROBE_INTERVAL_MS=1000 \
+STORM_READY_TIMEOUT_SEC=1800 \
+bash scripts/storm-reproducer/run-all.sh
+
+ENV=dev \
+LOGIN_TYPE=cekerayam01 \
+TOTAL_MESSAGES=5 \
+DISCOVER_TARGETS=10 \
+STORM_SUBSCRIBERS_FILE=scripts/storm-reproducer/subscribers/dev-multi-company.template.txt \
+STORM_FAIL_AFTER_60=true  \
+FLOOD_COMPANY_IDS=692e677de6f74788e2e68719 \
+FLOOD_COMPANY_BALANCE=true \
+STORM_HOTPATH_ENABLED=true \
+STORM_HOTPATH_INTERVAL_MS=1000 \
+STORM_ROUTE=your-inbox \
+STORM_DURATION_SEC=20 \
+PROBE_DURATION_SEC=20 \
+PROBE_INTERVAL_MS=1000 \
+STORM_READY_TIMEOUT_SEC=1800 \
+bash scripts/storm-reproducer/run-all.sh
+
+ENV=dev \
+LOGIN_TYPE=cekerayam01,testerdummy01 \
+TOTAL_MESSAGES=5 \
+DISCOVER_TARGETS=10 \
+STORM_SUBSCRIBERS_FILE=scripts/storm-reproducer/subscribers/dev-multi-company.template.txt \
+STORM_FAIL_AFTER_60=true  \
+FLOOD_COMPANY_IDS=692e677de6f74788e2e68719,696f2143246e1c1511117a72 \
+FLOOD_COMPANY_BALANCE=true \
+STORM_HOTPATH_ENABLED=true \
+STORM_HOTPATH_INTERVAL_MS=1000 \
+STORM_ROUTE=your-inbox \
+STORM_DURATION_SEC=20 \
+PROBE_DURATION_SEC=20 \
+PROBE_INTERVAL_MS=1000 \
+STORM_READY_TIMEOUT_SEC=1800 \
+bash scripts/storm-reproducer/run-all.sh
+
 Behavior:
 
 - flood dibalance ke company yang kamu set di `FLOOD_COMPANY_IDS`
@@ -248,7 +354,7 @@ STORM_DURATION_SEC=600 \
 PROBE_DURATION_SEC=600 \
 PROBE_INTERVAL_MS=1000 \
 ./scripts/storm-reproducer/run-all.sh
-```
+````
 
 `test dev akun sap prod`
 `364+ akun`

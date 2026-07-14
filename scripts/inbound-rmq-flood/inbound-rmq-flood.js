@@ -125,6 +125,7 @@ const FLOODTEST_ID_LENGTH = 8;
  * Generate a random N-char alphanumeric ID for floodtest contacts.
  * Used in place of an incrementing seq so two runs can never collide on (runId, seq).
  */
+// Random 8-char alphanumeric ID for floodtest contacts; avoids (runId, seq) collisions.
 function generateFloodtestId(length = FLOODTEST_ID_LENGTH) {
   let out = '';
   for (let i = 0; i < length; i += 1) {
@@ -161,6 +162,7 @@ const FLOODTEST_CONTACT_TEMPLATES = {
   }),
 };
 
+// Metadata stamped on every floodtest-created contact — marks source, run, and creation time.
 function buildFloodtestMetaData(runId) {
   return {
     source: 'inbound-rmq-flood',
@@ -170,6 +172,7 @@ function buildFloodtestMetaData(runId) {
   };
 }
 
+// Parse `--key value` / `--flag` style argv into a plain object.
 function parseArgs(argv) {
   const args = {};
   for (let i = 0; i < argv.length; i += 1) {
@@ -187,6 +190,7 @@ function parseArgs(argv) {
   return args;
 }
 
+// Long-form CLI help text printed on --help.
 function usage() {
   return `
 RabbitMQ inbound flood simulator
@@ -278,12 +282,14 @@ Examples:
 `;
 }
 
+// Parse int with fallback when value missing/invalid.
 function toInt(value, fallback) {
   if (value === undefined || value === null || value === '') return fallback;
   const parsed = Number.parseInt(String(value), 10);
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+// Split comma-separated CLI value into a trimmed, non-empty string array.
 function parseList(value) {
   if (!value) return [];
   return String(value)
@@ -292,6 +298,7 @@ function parseList(value) {
     .filter(Boolean);
 }
 
+// Coerce loose truthy string/boolean values ('1','true','yes') to real boolean.
 function normalizeBoolean(value) {
   if (typeof value === 'boolean') return value;
   if (typeof value === 'string') {
@@ -301,6 +308,7 @@ function normalizeBoolean(value) {
   return Boolean(value);
 }
 
+// Merge multiple metaData objects, preserving nested `whatsapp` sub-object per source.
 function mergeMetaData(...sources) {
   return sources.filter(Boolean).reduce((accumulator, source) => {
     const next = { ...(accumulator || {}), ...(source || {}) };
@@ -316,10 +324,12 @@ function mergeMetaData(...sources) {
   }, undefined);
 }
 
+// Resolve channel profile for a target (target override > CLI option > default 'generic').
 function detectChannelProfile(target, options) {
   return target.channelProfile || options.channelProfile || DEFAULTS.channelProfile;
 }
 
+// Resolve routing (queue + pattern + group flag) for a target based on CLI/group override.
 function resolveRoute(target, options) {
   const isGroup = normalizeBoolean(target.group) || options.group;
   return {
@@ -329,19 +339,23 @@ function resolveRoute(target, options) {
   };
 }
 
+// Read + parse a JSON file from an absolute or relative path.
 function loadJson(filePath) {
   const absolute = path.resolve(filePath);
   return JSON.parse(fs.readFileSync(absolute, 'utf8'));
 }
 
+// Return the first argument that isn't undefined/null/empty string.
 function firstDefined(...values) {
   return values.find((value) => value !== undefined && value !== null && value !== '');
 }
 
+// Return input if array, otherwise empty array — safe iteration guard.
 function ensureArray(value) {
   return Array.isArray(value) ? value : [];
 }
 
+// Normalize backend platform codes (e.g. 'facebook_messenger' -> 'messenger', 'baileys' -> 'whatsapp').
 function normalizeProfileCode(value) {
   const normalized = String(value || '').trim().toLowerCase();
   if (!normalized) return 'generic';
@@ -355,6 +369,7 @@ function normalizeProfileCode(value) {
   return normalized;
 }
 
+// Append query params to a URL, skipping undefined/null/empty values.
 function appendQuery(url, params) {
   const next = new URL(url);
   for (const [key, value] of Object.entries(params || {})) {
@@ -364,10 +379,12 @@ function appendQuery(url, params) {
   return next.toString();
 }
 
+// Mask password in amqp/amqps URL before logging.
 function redactUriCredentials(uri) {
   return String(uri || '').replace(/(amqps?:\/\/[^:\s@]+:)[^@\s]+@/i, '$1***@');
 }
 
+// fetch() wrapper that returns parsed JSON and unwraps undici's hidden cause on failure.
 async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
   let response;
   try {
@@ -412,10 +429,12 @@ async function httpJson(url, { method = 'GET', headers = {}, body } = {}) {
   return json;
 }
 
+// Unwrap `{ data: ... }` envelope from BE responses when present.
 function unwrapData(json) {
   return json && typeof json === 'object' && 'data' in json ? json.data : json;
 }
 
+// Extract `items[]` list from mixed BE response shapes (data.items, items, or bare array).
 function extractItems(json) {
   const data = unwrapData(json);
   if (Array.isArray(data?.items)) return data.items;
@@ -425,14 +444,17 @@ function extractItems(json) {
   return [];
 }
 
+// True when user supplied targets explicitly via --targets-file or --channel-account-id + --client-contact-ids.
 function hasExplicitTargetSource(options) {
   return Boolean(options.targetsFile || (options.channelAccountId && options.clientContactIds));
 }
 
+// Normalize list of ids: coerce to string, trim, drop empties.
 function normalizeIdList(values) {
   return ensureArray(values).map((value) => String(value).trim()).filter(Boolean);
 }
 
+// Apply --company-ids filter to a single companyId (empty filter = allow all).
 function companyMatchesFilter(companyId, options) {
   const allowed = normalizeIdList(options.companyIds);
   if (!allowed.length) return true;
@@ -440,6 +462,35 @@ function companyMatchesFilter(companyId, options) {
   return allowed.includes(String(companyId));
 }
 
+// Build one discovery pair (runtime + companyId + loginType) per requested login/company slot.
+function buildDiscoveryPairs(options, runtime) {
+  const loginTypes = parseList(options.loginType);
+  const companyIds = normalizeIdList(options.companyIds);
+  if (!loginTypes.length) {
+    return [{ runtime, companyId: companyIds[0] || null, requestedCompanyId: companyIds[0] || null, loginType: options.loginType || '' }];
+  }
+  if (companyIds.length > 1 && loginTypes.length !== companyIds.length) {
+    throw new Error(
+      `LOGIN_TYPE count (${loginTypes.length}) must match FLOOD_COMPANY_IDS count (${companyIds.length}) for strict pairing`
+    );
+  }
+  if (companyIds.length === 1) {
+    return loginTypes.map((loginType) => ({
+      runtime: buildRuntimeConfig(options, { loginType }),
+      companyId: companyIds[0],
+      requestedCompanyId: companyIds[0],
+      loginType,
+    }));
+  }
+  return loginTypes.map((loginType, index) => ({
+    runtime: buildRuntimeConfig(options, { loginType }),
+    companyId: companyIds[index] || null,
+    requestedCompanyId: companyIds[index] || null,
+    loginType,
+  }));
+}
+
+// Build runtime bag (config, endpoints, apiBase, credentials, token) for API calls per env/login-type.
 function buildRuntimeConfig(options, override = {}) {
   const { getConfig, getAccountByLoginType, ApiEndpoints } = require('../../playwright/support/config');
   const envName = options.envName || process.env.ENV || process.env.CYPRESS_ENV || 'dev';
@@ -491,6 +542,7 @@ function buildRuntimeConfig(options, override = {}) {
   };
 }
 
+// Ensure runtime has an access token: reuse bearer, else login via credentials.
 async function ensureAccessToken(runtime) {
   if (runtime.accessToken) return runtime.accessToken;
   if (runtime.bearerToken) {
@@ -519,23 +571,27 @@ async function ensureAccessToken(runtime) {
   return accessToken;
 }
 
+// Build 'Authorization: Bearer <token>' header bag for authenticated API calls.
 async function getAuthHeaders(runtime) {
   const token = await ensureAccessToken(runtime);
   return buildBearerAuthHeader(token);
 }
 
+// GET /account-channel/:id — resolve a single account channel for preflight validation.
 async function fetchAccountChannelById(runtime, id) {
   const headers = await getAuthHeaders(runtime);
   const response = await httpJson(runtime.config.endpoints.accountChannelById(id), { headers });
   return unwrapData(response) || response;
 }
 
+// GET /contact/:id — resolve a single contact for preflight validation.
 async function fetchClientContactById(runtime, id) {
   const headers = await getAuthHeaders(runtime);
   const response = await httpJson(runtime.config.endpoints.contactById(id), { headers });
   return unwrapData(response) || response;
 }
 
+// Pull contactInfo.referenceId from mixed BE response shapes (multiple field paths).
 function extractContactReferenceId(item) {
   return firstDefined(
     item?.contactInfo?.referenceId,
@@ -558,10 +614,14 @@ function buildConversationUniquenessKey(channelAccountId, contactReferenceId, cl
   return `${channelPart}:contact:${String(clientContactId || 'unknown-contact')}`;
 }
 
+// Normalize a raw /conversation item into a target { channelAccountId, clientContactId, profile, companyId, ... }.
 function extractConversationTarget(item) {
+  const primaryAccountChannel = Array.isArray(item?.accountChannel)
+    ? item.accountChannel[0]
+    : item?.accountChannel;
   const channelAccountId = firstDefined(
-    item?.accountChannel?.id,
-    item?.accountChannel?._id,
+    primaryAccountChannel?.id,
+    primaryAccountChannel?._id,
     item?.accountChannel?.[0]?.id,
     item?.accountChannel?.[0]?._id,
     item?.accountChannelId,
@@ -593,8 +653,8 @@ function extractConversationTarget(item) {
     firstDefined(
       item?.channel?.platform?.code,
       item?.channel?.platform,
-      item?.accountChannel?.channel?.platform?.code,
-      item?.accountChannel?.platform,
+      primaryAccountChannel?.channel?.platform?.code,
+      primaryAccountChannel?.platform,
       item?.channelAccount?.channel?.platform?.code,
       item?.platform?.code,
       item?.platform,
@@ -604,9 +664,13 @@ function extractConversationTarget(item) {
   );
   const targetCompanyId = firstDefined(
     item?.companyId,
+    item?.company?.companyId,
     item?.company?.id,
     item?.company?._id,
-    item?.accountChannel?.companyId,
+    primaryAccountChannel?.companyId,
+    primaryAccountChannel?.company?.companyId,
+    primaryAccountChannel?.company?.id,
+    primaryAccountChannel?.company?._id,
     item?.channelAccount?.companyId,
     item?.account_channel?.companyId,
   );
@@ -625,6 +689,7 @@ function extractConversationTarget(item) {
   };
 }
 
+// Log human-readable diagnosis when discovery yielded 0 usable targets from a non-empty items[] list.
 function diagnoseDiscoveryFailure(items, options) {
   if (!items.length) {
     console.error('[discover] /api/conversation returned 0 items (check filters / data in this env)');
@@ -649,7 +714,7 @@ function diagnoseDiscoveryFailure(items, options) {
     'channel.platform.code':      sample?.channel?.platform?.code ?? sample?.channel?.platform,
     'platform':                   typeof sample?.platform === 'string' ? sample.platform : sample?.platform?.code,
     'isGroup':                    sample?.isGroup,
-    'companyId':                  sample?.companyId ?? sample?.company?.id,
+    'companyId':                  sample?.companyId ?? sample?.company?.companyId ?? sample?.company?.id,
     'contactInfo (full)':         JSON.stringify(sample?.contactInfo).slice(0, 120),
     'accountChannel (full)':      JSON.stringify(sample?.accountChannel).slice(0, 120),
   };
@@ -667,8 +732,21 @@ function diagnoseDiscoveryFailure(items, options) {
   console.error('[discover] hint: re-run conversation-size-probe with --include-body to capture the full shape, OR adjust extractor paths.');
 }
 
+// Log why a single conversation item was dropped during discovery (profile/company/group filter).
+function diagnoseDiscoveryDrop(item, target, pair, allowedProfiles, reason) {
+  const accountChannel = Array.isArray(item?.accountChannel) ? item.accountChannel[0] : item?.accountChannel;
+  console.error(`[discover] dropped sample reason=${reason}`);
+  console.error(`           pair.loginType                ${JSON.stringify(pair?.loginType || null)}`);
+  console.error(`           pair.companyId                ${JSON.stringify(pair?.companyId || null)}`);
+  console.error(`           target                        ${JSON.stringify(target || null)}`);
+  console.error(`           allowedProfiles               ${JSON.stringify(allowedProfiles ? [...allowedProfiles] : null)}`);
+  console.error(`           root companyId                ${JSON.stringify(item?.companyId ?? item?.company?.companyId ?? item?.company?.id ?? null)}`);
+  console.error(`           accountChannel companyId      ${JSON.stringify(accountChannel?.companyId ?? accountChannel?.company?.companyId ?? accountChannel?.company?.id ?? null)}`);
+  console.error(`           channel.platform.code         ${JSON.stringify(item?.channel?.platform?.code ?? item?.channel?.platform ?? null)}`);
+}
+
+// Discover flood targets by scanning /api/conversation with per-login/company vantage pairs.
 async function discoverTargetsFromConversations(runtime, options) {
-  const discoveryLoginTypes = parseList(options.loginType);
   const requested = Math.max(1, options.discoverTargets);
   const scanBudget = Math.max(options.discoverLimit, requested * 6);
   const pageSize = Math.min(DISCOVER_API_MAX_LIMIT, scanBudget);
@@ -681,11 +759,10 @@ async function discoverTargetsFromConversations(runtime, options) {
   let scanned = 0;
   let pagesFetched = 0;
 
-  const runtimes = discoveryLoginTypes.length
-    ? discoveryLoginTypes.map((loginType) => buildRuntimeConfig(options, { loginType }))
-    : [runtime];
+  const pairs = buildDiscoveryPairs(options, runtime);
 
-  for (const activeRuntime of runtimes) {
+  for (const pair of pairs) {
+    const activeRuntime = pair.runtime;
     const headers = await getAuthHeaders(activeRuntime);
     let page = 1;
     let localScanned = 0;
@@ -712,15 +789,30 @@ async function discoverTargetsFromConversations(runtime, options) {
 
       for (const item of items) {
         const target = extractConversationTarget(item);
-        if (!target) continue;
-        if (target.group) continue;
-        if (allowedProfiles && !allowedProfiles.has(target.channelProfile)) continue;
-        if (target.targetCompanyId && !companyMatchesFilter(target.targetCompanyId, options)) continue;
+        if (!target) {
+          if (!allTargets.length) diagnoseDiscoveryDrop(item, target, pair, allowedProfiles, 'extract-null');
+          continue;
+        }
+        if (target.group) {
+          if (!allTargets.length) diagnoseDiscoveryDrop(item, target, pair, allowedProfiles, 'group');
+          continue;
+        }
+        if (allowedProfiles && !allowedProfiles.has(target.channelProfile)) {
+          if (!allTargets.length) diagnoseDiscoveryDrop(item, target, pair, allowedProfiles, 'profile-filter');
+          continue;
+        }
+        if (pair.companyId && String(target.targetCompanyId || '') !== String(pair.companyId)) {
+          if (!allTargets.length) diagnoseDiscoveryDrop(item, target, pair, allowedProfiles, 'pair-company-filter');
+        }
+        if (target.targetCompanyId && !companyMatchesFilter(target.targetCompanyId, options)) {
+          if (!allTargets.length) diagnoseDiscoveryDrop(item, target, pair, allowedProfiles, 'company-filter');
+          continue;
+        }
         const companyId = target.targetCompanyId || 'unknown-company';
         const dedupeKey = `${companyId}:${target.channelAccountId}:${target.clientContactId}`;
         if (globalSeen.has(dedupeKey)) continue;
         globalSeen.add(dedupeKey);
-        allTargets.push(target);
+        allTargets.push({ ...target, runtime: pair.runtime, loginType: pair.loginType, pairedCompanyId: pair.companyId || null });
       }
 
       localScanned += items.length;
@@ -737,7 +829,7 @@ async function discoverTargetsFromConversations(runtime, options) {
   }
 
   const syntheticTargets = await synthesizeMissingCompanyTargets(
-    runtimes,
+    pairs,
     allTargets,
     globalSeen,
     options
@@ -748,7 +840,7 @@ async function discoverTargetsFromConversations(runtime, options) {
 
   const targets = takePerCompanyQuota(allTargets, options);
   console.log(
-    `[discover] selected ${targets.length} target(s) from recent conversations after scanning ${scanned} conversation row(s) across ${pagesFetched} page(s) using ${runtimes.length} discovery login(s)`
+    `[discover] selected ${targets.length} target(s) from recent conversations after scanning ${scanned} conversation row(s) across ${pagesFetched} page(s) using ${pairs.length} discovery login(s)`
   );
   if (syntheticTargets.length) {
     console.log(`[discover] synthesized ${syntheticTargets.length} new-conversation target(s) for empty companies`);
@@ -758,7 +850,8 @@ async function discoverTargetsFromConversations(runtime, options) {
   return targets;
 }
 
-async function synthesizeMissingCompanyTargets(runtimes, existingTargets, globalSeen, options) {
+// For companies with zero open conversations, synthesize targets by creating new floodtest contacts.
+async function synthesizeMissingCompanyTargets(pairs, existingTargets, globalSeen, options) {
   const requestedCompanies = normalizeIdList(options.companyIds);
   if (!requestedCompanies.length) return [];
   const perCompanyBudget = Math.max(
@@ -778,7 +871,9 @@ async function synthesizeMissingCompanyTargets(runtimes, existingTargets, global
   );
 
   const channelsByCompany = new Map();
-  for (const activeRuntime of runtimes) {
+  for (const pair of pairs) {
+    if (!pair.companyId || !missing.includes(String(pair.companyId))) continue;
+    const activeRuntime = pair.runtime;
     const headers = await getAuthHeaders(activeRuntime);
     let page = 1;
     while (true) {
@@ -791,12 +886,8 @@ async function synthesizeMissingCompanyTargets(runtimes, existingTargets, global
       for (const item of items) {
         if (isSoftDeletedAccountChannel(item)) continue;
         if (!hasLinkedChannel(item)) continue;
-        const companyId = firstDefined(
-          item?.companyId,
-          item?.company?.id,
-          item?.company?._id
-        );
-        if (!companyId || !missing.includes(String(companyId))) continue;
+        const companyId = extractItemCompanyId(item);
+        if (!companyId || String(companyId) !== String(pair.companyId)) continue;
         const channelId = firstDefined(item?.id, item?._id);
         if (!channelId) continue;
         if (!channelsByCompany.has(companyId)) channelsByCompany.set(companyId, new Map());
@@ -804,6 +895,8 @@ async function synthesizeMissingCompanyTargets(runtimes, existingTargets, global
         if (bucket.has(channelId)) continue;
         bucket.set(channelId, {
           channelAccountId: channelId,
+          channelId: firstDefined(item?.channel?.id, item?.channel?._id),
+          companyId,
           channelProfile: normalizeProfileCode(
             firstDefined(
               item?.channel?.platform?.code,
@@ -828,17 +921,33 @@ async function synthesizeMissingCompanyTargets(runtimes, existingTargets, global
       continue;
     }
     const channels = [...bucket.values()];
+    const pair = pairs.find((entry) => String(entry.companyId || '') === String(companyId));
+    if (!pair) {
+      console.warn(`[discover] no runtime pair found for company=${companyId}; skipping synthesis`);
+      continue;
+    }
     for (let index = 0; index < perCompanyBudget; index += 1) {
       const channel = channels[index % channels.length];
-      const syntheticContactId = `syn-${companyId.slice(-6)}-${Date.now().toString(36)}-${index.toString(36)}`;
-      const dedupeKey = `${companyId}:${channel.channelAccountId}:${syntheticContactId}`;
+      let created;
+      try {
+        created = await createFloodtestContact(pair.runtime, options, {
+          id: channel.channelAccountId,
+          channelId: channel.channelId,
+          channelProfile: channel.channelProfile,
+          companyId: channel.companyId,
+        });
+      } catch (error) {
+        console.warn(`[discover] failed creating synthetic contact for company=${companyId} on ${channel.channelProfile}: ${error?.message || error}`);
+        continue;
+      }
+      const dedupeKey = `${companyId}:${channel.channelAccountId}:${created.referenceId}`;
       if (globalSeen.has(dedupeKey)) continue;
       globalSeen.add(dedupeKey);
       synthesized.push({
         channelAccountId: channel.channelAccountId,
         channelProfile: channel.channelProfile || 'generic',
-        clientContactId: syntheticContactId,
-        contactReferenceId: syntheticContactId,
+        clientContactId: created.id,
+        contactReferenceId: created.referenceId,
         conversationId: undefined,
         group: false,
         targetCompanyId: companyId,
@@ -852,6 +961,7 @@ async function synthesizeMissingCompanyTargets(runtimes, existingTargets, global
   return synthesized;
 }
 
+// True if the account-channel is soft-deleted (isDeleted flag or deletedAt timestamp).
 function isSoftDeletedAccountChannel(accountChannel) {
   return (
     accountChannel?.isDeleted === true ||
@@ -860,6 +970,7 @@ function isSoftDeletedAccountChannel(accountChannel) {
   );
 }
 
+// True if the account-channel has a linked channel object (id / platform / any keys).
 function hasLinkedChannel(accountChannel) {
   return Boolean(
     accountChannel?.channel &&
@@ -870,6 +981,7 @@ function hasLinkedChannel(accountChannel) {
   );
 }
 
+// True if the account-channel is safe to use for creating a NEW conversation (active + not deleted + linked).
 function isAccountChannelHealthyForNewConversation(accountChannel) {
   if (!accountChannel) return false;
   if (isSoftDeletedAccountChannel(accountChannel)) return false;
@@ -878,6 +990,7 @@ function isAccountChannelHealthyForNewConversation(accountChannel) {
   return connectionStatus === 'active';
 }
 
+// Extract normalized channel profile code from an account-channel item.
 function extractAccountChannelProfile(accountChannel) {
   return normalizeProfileCode(
     firstDefined(
@@ -890,6 +1003,7 @@ function extractAccountChannelProfile(accountChannel) {
   );
 }
 
+// Extract channelId from a contact item (multiple shapes).
 function extractContactChannelId(contact) {
   return firstDefined(
     contact?.channelId,
@@ -899,6 +1013,18 @@ function extractContactChannelId(contact) {
   );
 }
 
+// Universal company id extractor. Backend dev/prod inconsistent — sometimes
+// item.companyId, sometimes item.company.id, sometimes item.company.companyId.
+function extractItemCompanyId(item) {
+  return firstDefined(
+    item?.companyId,
+    item?.company?.companyId,
+    item?.company?.id,
+    item?.company?._id,
+  );
+}
+
+// Fetch all connectionStatus=active account channels (paged, capped at 10 pages).
 async function fetchActiveAccountChannels(runtime, options) {
   const headers = await getAuthHeaders(runtime);
   const pageSize = DISCOVER_API_MAX_LIMIT;
@@ -918,7 +1044,7 @@ async function fetchActiveAccountChannels(runtime, options) {
     const items = extractItems(response);
     for (const item of items) {
       if (!isAccountChannelHealthyForNewConversation(item)) continue;
-      const companyId = firstDefined(item?.companyId, item?.company?.id, item?.company?._id);
+      const companyId = extractItemCompanyId(item);
       if (!companyMatchesFilter(companyId, options)) continue;
       collected.push({
         id: firstDefined(item?.id, item?._id),
@@ -935,6 +1061,7 @@ async function fetchActiveAccountChannels(runtime, options) {
   return collected;
 }
 
+// Fetch all non-deleted contacts (paged, capped at 10 pages) for Pool B pairing.
 async function fetchValidContacts(runtime, options) {
   const headers = await getAuthHeaders(runtime);
   const pageSize = DISCOVER_API_MAX_LIMIT;
@@ -968,6 +1095,7 @@ async function fetchValidContacts(runtime, options) {
   return collected;
 }
 
+// Build Pool B: existing contact + NEW conversation pairs — random contact paired with a compatible account channel.
 function buildExistingContactNewConversationPool(existingTargets, activeAccountChannels, contacts, requested) {
   if (requested <= 0) return [];
 
@@ -1023,6 +1151,7 @@ function buildExistingContactNewConversationPool(existingTargets, activeAccountC
   return candidates;
 }
 
+// Pick a random active account channel, optionally filtered by preferred channel profiles.
 function pickAccountChannelForProfile(activeAccountChannels, preferredProfiles) {
   if (activeAccountChannels.length === 0) return null;
   const profileSet = preferredProfiles && preferredProfiles.length
@@ -1035,6 +1164,7 @@ function pickAccountChannelForProfile(activeAccountChannels, preferredProfiles) 
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+// POST /contact — create one floodtest contact on the given account channel (marked isFloodTest).
 async function createFloodtestContact(runtime, options, accountChannel) {
   const headers = await getAuthHeaders(runtime);
   const template = FLOODTEST_CONTACT_TEMPLATES[accountChannel.channelProfile]
@@ -1067,6 +1197,7 @@ async function createFloodtestContact(runtime, options, accountChannel) {
   return { id, raw: created, accountChannel, referenceId: tpl.referenceId, floodtestId };
 }
 
+// Build Pool C: create N floodtest contacts and return them as new-conversation target pairs.
 async function buildNewContactNewConversationPool(runtime, options, activeAccountChannels) {
   const wantedCount = Math.max(0, options.newContactCount);
   if (wantedCount <= 0) return { pairs: [], createdContacts: [] };
@@ -1110,6 +1241,7 @@ async function buildNewContactNewConversationPool(runtime, options, activeAccoun
   return { pairs, createdContacts };
 }
 
+// Format a `count profile, count profile` summary of created floodtest contacts.
 function summarizeCreatedContacts(createdContacts) {
   const byProfile = {};
   for (const c of createdContacts) {
@@ -1121,6 +1253,7 @@ function summarizeCreatedContacts(createdContacts) {
     .join(', ');
 }
 
+// Split total messages into (existing-conv, existing-contact-new-conv, new-contact-new-conv) counts by ratio.
 function computePoolSplit(totalMessages, ratioB, ratioC) {
   const ratioBClamped = Math.max(0, Math.min(100, ratioB));
   const ratioCClamped = Math.max(0, Math.min(100, ratioC));
@@ -1209,11 +1342,13 @@ const LOGIN_TYPE_TO_PERSONA = {
   leherayam01:     'agent',
 };
 
+// Map loginType to persona (admin/supervisor/agent), or use forced override.
 function resolvePersonaName(loginType, forced) {
   if (forced) return forced;
   return LOGIN_TYPE_TO_PERSONA[loginType] || 'admin';
 }
 
+// Weighted random pick from a list of tabs with `weight` fields.
 function pickTabWeighted(tabs) {
   // tabs: array of { label, weight, params, needsChannel?, needsTeamInbox? }
   const total = tabs.reduce((sum, t) => sum + t.weight, 0);
@@ -1258,6 +1393,7 @@ const DETAIL_ENDPOINT_SPECS = [
   { name: 'GET /conversation/history?clientContactId',    kind: 'conversationHistory',       requiresContact: true  },
 ];
 
+// Discover platforms and team inboxes visible to a viewer (for per-channel/per-team-inbox tab rotation).
 async function discoverViewerContext(viewer, options) {
   // Discover channels and team inboxes available to this viewer (scoped by login role).
   // Cached in viewer object for reuse in tab rotation.
@@ -1304,6 +1440,7 @@ async function discoverViewerContext(viewer, options) {
   return { channels, teamInboxes };
 }
 
+// Build a viewer object: its own login + runtime + endpoint spec list + metrics buckets.
 async function createViewer(parentOptions, loginType, viewerIndex) {
   // Each viewer gets its own runtime with its own access token (separate login).
   const viewerRuntime = buildRuntimeConfig({
@@ -1333,6 +1470,7 @@ async function createViewer(parentOptions, loginType, viewerIndex) {
   };
 }
 
+// Filter CONVERSATION_TABS down to those the viewer can actually poll (channels/team inboxes discovered).
 function buildAvailableTabs(viewer) {
   // Filter out per-channel / per-team-inbox tabs if discovery returned nothing.
   return Object.values(CONVERSATION_TABS).filter((t) => {
@@ -1342,6 +1480,7 @@ function buildAvailableTabs(viewer) {
   });
 }
 
+// Merge tab params + inject platform / team when the tab requires them.
 function buildTabParams(viewer, tab) {
   const params = { ...tab.params };
   if (tab.needsChannel) {
@@ -1357,6 +1496,7 @@ function buildTabParams(viewer, tab) {
   return params;
 }
 
+// Get-or-create a metrics bucket keyed by endpoint name.
 function ensureMetricBucket(viewer, key) {
   if (!viewer.metrics[key]) {
     viewer.metrics[key] = { count: 0, errors: 0, durations: [] };
@@ -1364,6 +1504,7 @@ function ensureMetricBucket(viewer, key) {
   return viewer.metrics[key];
 }
 
+// httpJson wrapper that records latency + count + error on the viewer's metrics bucket.
 function timedHttpJson(url, opts, viewer, bucketKey) {
   const bucket = ensureMetricBucket(viewer, bucketKey);
   const t0 = Date.now();
@@ -1380,6 +1521,7 @@ function timedHttpJson(url, opts, viewer, bucketKey) {
   );
 }
 
+// Poll all flat viewer endpoints in parallel for the picked tab; stash conversation IDs for detail calls.
 async function pollFlatEndpointsParallel(viewer, tab) {
   const headers = await getAuthHeaders(viewer.runtime);
   const tabParams = buildTabParams(viewer, tab);
@@ -1427,6 +1569,7 @@ async function pollFlatEndpointsParallel(viewer, tab) {
   }
 }
 
+// Poll detail endpoints (conversation/:id, participants, sla-metrics, history) for a random conversation.
 async function pollDetailEndpointsParallel(viewer) {
   if (viewer.lastConversationIds.length === 0) return;
   const headers = await getAuthHeaders(viewer.runtime);
@@ -1457,6 +1600,7 @@ async function pollDetailEndpointsParallel(viewer) {
   await Promise.all(promises);
 }
 
+// Run one viewer poll cycle: pick tab, hit flat endpoints, optionally hit detail endpoints.
 async function pollViewerOnce(viewer, options) {
   viewer.pollIndex += 1;
 
@@ -1471,6 +1615,7 @@ async function pollViewerOnce(viewer, options) {
   }
 }
 
+// Viewer main loop — warmup, then poll flat + detail on interval until stopSignal fires.
 async function runViewerLoop(viewer, stopSignal, options) {
   if (options.viewerWarmupMs > 0) {
     await sleep(options.viewerWarmupMs);
@@ -1496,6 +1641,7 @@ function parseViewerRoleSpecs(rawRoles, defaultCount) {
   }).filter((r) => r.loginType);
 }
 
+// Build all viewers from --viewer-roles spec (login each, discover channels/teams per viewer).
 async function buildViewers(parentOptions) {
   const viewers = [];
   if (!parentOptions.viewerRoles || parentOptions.viewerRoles.length === 0) {
@@ -1532,12 +1678,14 @@ async function buildViewers(parentOptions) {
   return viewers;
 }
 
+// Return p-th percentile from a pre-sorted numeric array.
 function percentile(sorted, p) {
   if (sorted.length === 0) return 0;
   const idx = Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length));
   return sorted[idx];
 }
 
+// Format duration array into 'min/avg/p50/p95/max' ms summary string.
 function formatDurationStats(durations) {
   if (durations.length === 0) return 'n/a';
   const sorted = [...durations].sort((a, b) => a - b);
@@ -1550,6 +1698,7 @@ function formatDurationStats(durations) {
   return `min=${min}ms avg=${avg}ms p50=${p50}ms p95=${p95}ms max=${max}ms`;
 }
 
+// Print per-viewer endpoint metrics table (count / errors / latency stats) at end of run.
 function printViewerSummary(viewers) {
   if (viewers.length === 0) return;
   console.log('');
@@ -1568,7 +1717,14 @@ function printViewerSummary(viewers) {
   }
 }
 
+// Validate each target against BE before publishing: account channel healthy, contact exists, company matches.
 async function preflightTargets(targets, runtime, options) {
+  const pairs = buildDiscoveryPairs(options, runtime);
+  const runtimeByCompanyId = new Map(
+    pairs
+      .filter((pair) => pair.companyId)
+      .map((pair) => [String(pair.companyId), pair.runtime])
+  );
   const accountChannelCache = new Map();
   const contactCache = new Map();
   const validatedTargets = [];
@@ -1582,10 +1738,11 @@ async function preflightTargets(targets, runtime, options) {
 
   for (const target of targets) {
     const route = resolveRoute(target, options);
+    const targetRuntime = target.runtime || runtimeByCompanyId.get(String(target.targetCompanyId || '')) || runtime;
 
     if (!accountChannelCache.has(target.channelAccountId)) {
       try {
-        const accountChannel = await fetchAccountChannelById(runtime, target.channelAccountId);
+        const accountChannel = await fetchAccountChannelById(targetRuntime, target.channelAccountId);
         accountChannelCache.set(target.channelAccountId, accountChannel);
       } catch (error) {
         if (options.explicitTargetSource) {
@@ -1640,9 +1797,10 @@ async function preflightTargets(targets, runtime, options) {
       allowedInactiveExisting += 1;
     }
 
-    if (!contactCache.has(target.clientContactId)) {
+    const syntheticNewContact = target.synthetic || target.poolSource === 'new-contact-new-conv';
+    if (!syntheticNewContact && !contactCache.has(target.clientContactId)) {
       try {
-        const clientContact = await fetchClientContactById(runtime, target.clientContactId);
+        const clientContact = await fetchClientContactById(targetRuntime, target.clientContactId);
         contactCache.set(target.clientContactId, clientContact);
       } catch (error) {
         if (options.explicitTargetSource) {
@@ -1653,7 +1811,7 @@ async function preflightTargets(targets, runtime, options) {
       }
     }
 
-    const clientContact = contactCache.get(target.clientContactId);
+    const clientContact = syntheticNewContact ? null : contactCache.get(target.clientContactId);
     const contactReferenceId = firstDefined(
       target.contactReferenceId,
       extractContactReferenceId(clientContact),
@@ -1664,7 +1822,7 @@ async function preflightTargets(targets, runtime, options) {
       for (const memberId of ensureArray(target.memberContactIds)) {
         if (!contactCache.has(memberId)) {
           try {
-            const memberContact = await fetchClientContactById(runtime, memberId);
+            const memberContact = await fetchClientContactById(targetRuntime, memberId);
             contactCache.set(memberId, memberContact);
           } catch (error) {
             if (options.explicitTargetSource) {
@@ -1700,6 +1858,7 @@ async function preflightTargets(targets, runtime, options) {
 }
 
 
+// Load targets from --targets-file OR build them from --channel-account-id + --client-contact-ids.
 function loadTargets(options) {
   if (options.targetsFile) {
     const loaded = loadJson(options.targetsFile);
@@ -1731,6 +1890,7 @@ function loadTargets(options) {
   }));
 }
 
+// Sanity-check every target has required fields (channelAccountId, clientContactId, group memberContactIds).
 function validateTargets(targets, options) {
   for (const [index, target] of targets.entries()) {
     const route = resolveRoute(target, options);
@@ -1748,6 +1908,7 @@ function validateTargets(targets, options) {
   }
 }
 
+// Pick a message variant factory for a given messageType + seq; falls back for non-whatsapp mixed mode.
 function pickVariant(messageType, seq, channelProfile) {
   if (messageType === 'mixed-2045' && channelProfile !== 'whatsapp') {
     return { fallbackFrom: 'mixed-2045', name: 'text', factory: MESSAGE_VARIANTS.text };
@@ -1765,6 +1926,7 @@ function pickVariant(messageType, seq, channelProfile) {
   return { name: messageType, factory };
 }
 
+// Add channel-specific fields (email subject/html, instagram post/comment ids, replyMessageId, attachments) to payload.
 function addChannelSpecificFields(payload, target, channelProfile, seq, options) {
   const enriched = { ...payload };
 
@@ -1794,6 +1956,7 @@ function addChannelSpecificFields(payload, target, channelProfile, seq, options)
   return enriched;
 }
 
+// Build the full inbound message payload for one target+seq (base + variant + channel-specific enrichment).
 function buildPayload(target, seq, options) {
   const channelProfile = detectChannelProfile(target, options);
   const route = resolveRoute(target, options);
@@ -1828,6 +1991,7 @@ function buildPayload(target, seq, options) {
   return payload;
 }
 
+// Fisher-Yates shuffle — returns a new shuffled copy, source array untouched.
 function shuffleArray(items) {
   const next = [...items];
   for (let index = next.length - 1; index > 0; index -= 1) {
@@ -1837,6 +2001,7 @@ function shuffleArray(items) {
   return next;
 }
 
+// Pop one item from a per-key randomized pool, refilling from sourceItems when the pool is empty.
 function popFromRandomizedPool(pools, key, sourceItems) {
   let pool = pools.get(key) || [];
   if (pool.length === 0) {
@@ -1847,6 +2012,7 @@ function popFromRandomizedPool(pools, key, sourceItems) {
   return picked;
 }
 
+// Build 2-phase schedule (seed one msg per new-conv pair, settle, then main flood) mixing pools A/B/C.
 function buildPoolAwarePlan(poolA, poolB, poolC, split, options) {
   const subSchedule = (pool, count) => {
     if (count <= 0 || pool.length === 0) return [];
@@ -1934,6 +2100,7 @@ function buildPoolAwarePlan(poolA, poolB, poolC, split, options) {
   };
 }
 
+// Enforce per-company quota so multi-company runs get balanced target counts.
 function takePerCompanyQuota(targets, options) {
   const allowedCompanyIds = normalizeIdList(options.companyIds);
   if (!allowedCompanyIds.length) return targets;
@@ -1973,6 +2140,7 @@ function takePerCompanyQuota(targets, options) {
   return picked.slice(0, requested);
 }
 
+// Render an ASCII progress bar string: `[####----] 42% 12/100`.
 function renderProgressBar(done, total, width = 24) {
   const safeTotal = Math.max(1, total);
   const ratio = Math.max(0, Math.min(1, done / safeTotal));
@@ -1980,6 +2148,7 @@ function renderProgressBar(done, total, width = 24) {
   return `[${'#'.repeat(filled)}${'-'.repeat(width - filled)}] ${String(Math.round(ratio * 100)).padStart(3)}% ${done}/${total}`;
 }
 
+// Build the flat publish schedule (round-robin or randomized, optionally company-balanced).
 function buildSchedule(targets, options) {
   const totalMessages = options.totalMessages > 0
     ? options.totalMessages
@@ -2025,10 +2194,12 @@ function buildSchedule(targets, options) {
   return Array.from({ length: totalMessages }, (_, index) => targets[index % targets.length]);
 }
 
+// Promise-based sleep.
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Build amqplib TLS connection options from --tls-ca/--tls-cert/--tls-key CLI flags.
 function createConnectionOptions(options) {
   if (!(options.tlsCa && options.tlsCert && options.tlsKey)) {
     return undefined;
@@ -2042,6 +2213,7 @@ function createConnectionOptions(options) {
   };
 }
 
+// Connect to RabbitMQ (confirm channel) and assert every required queue exists.
 async function openRabbit(options, queueNames) {
   const amqp = require('amqplib');
   const connection = await amqp.connect(options.rabbitmqUrl, createConnectionOptions(options));
@@ -2052,6 +2224,7 @@ async function openRabbit(options, queueNames) {
   return { channel, connection };
 }
 
+// Wrap payload in the NestJS microservice envelope shape: { data, pattern }.
 function buildEnvelope(pattern, payload) {
   return {
     data: payload,
@@ -2059,6 +2232,7 @@ function buildEnvelope(pattern, payload) {
   };
 }
 
+// Aggregate route stats: direct vs group counts, per-profile counts, per-company counts.
 function summarizeRoutes(targets, options) {
   return targets.reduce(
     (accumulator, target) => {
@@ -2074,18 +2248,21 @@ function summarizeRoutes(targets, options) {
   );
 }
 
+// Format profile-count map as 'profile:count, profile:count'.
 function formatProfileSummary(summary) {
   return Object.entries(summary)
     .map(([profile, count]) => `${profile}:${count}`)
     .join(', ');
 }
 
+// Format company-count map as 'companyId:count, companyId:count'.
 function formatCompanySummary(summary) {
   return Object.entries(summary)
     .map(([companyId, count]) => `${companyId}:${count}`)
     .join(', ');
 }
 
+// Decide whether to log a specific publish line (verbose, sample head, log-every N, or last).
 function shouldLogPublish(seq, scheduleSize, options) {
   if (options.verbose) return true;
   if (seq <= options.sampleSize) return true;
@@ -2093,6 +2270,7 @@ function shouldLogPublish(seq, scheduleSize, options) {
   return seq === scheduleSize;
 }
 
+// Print the pre-publish summary block (mode/env/queues/targets/schedule/batch/delay/etc).
 function printSummary(options, targets, schedule) {
   const routeSummary = summarizeRoutes(targets, options);
   const modeLabel =
@@ -2129,6 +2307,7 @@ function printSummary(options, targets, schedule) {
   console.log('=================================');
 }
 
+// Program entry point: parse CLI -> build runtime -> discover/preflight targets -> build schedule -> publish.
 async function main() {
   const raw = parseArgs(process.argv.slice(2));
   if (raw.help) {

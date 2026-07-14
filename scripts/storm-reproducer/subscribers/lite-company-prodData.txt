@@ -1,0 +1,12 @@
+# Example multi-company subscriber file
+# One [company:<id>] header starts a company bucket.
+# Every following loginType[:count] line belongs to that company until the next header.
+
+[company:6889b71ded520395ba12028b]
+satuinboxlincah:1
+
+[company:684a7dee68bd32a1f552e453]
+admintest01:1
+
+# Backward compat: entries outside any section go to companyId=unknown
+
