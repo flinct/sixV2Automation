@@ -41,13 +41,15 @@ function credsForVu() {
 }
 
 function buildUrl(path, query) {
-  const url = new URL(path, BASE_URL);
+  let url = BASE_URL.replace(/\/+$/, '') + path;
   if (query) {
+    const params = [];
     for (const [k, v] of Object.entries(query)) {
-      url.searchParams.set(k, String(v));
+      params.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
     }
+    url += '?' + params.join('&');
   }
-  return url.toString();
+  return url;
 }
 
 export default function () {
@@ -78,8 +80,8 @@ function login(creds) {
     headers: { "Content-Type": "application/json" },
     tags: { endpoint: "login" },
   });
-  check(resp, { "login ok": (r) => r.status === 200 });
-  if (resp.status !== 200) {
+  check(resp, { "login ok": (r) => r.status >= 200 && r.status < 300 });
+  if (resp.status < 200 || resp.status >= 300) {
     exec.test.abort(`login failed: HTTP ${resp.status}`);
   }
   const body = JSON.parse(resp.body);
