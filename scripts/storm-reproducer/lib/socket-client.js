@@ -37,12 +37,14 @@ function createSocket(socketUrl, token, options = {}) {
     reconnectState.timer = null;
   };
 
-  const finishReconnect = (status) => {
+  const finishReconnect = (status, silent) => {
     if (!reconnectState.startedAt) return;
     const durationMs = Date.now() - reconnectState.startedAt;
-    logger.warn(
-      `[socket] ${status} after=${durationMs}ms retries=${reconnectState.retries} lastError=${reconnectState.lastError || 'unknown'} disconnect=${reconnectState.disconnectReason || 'unknown'}`
-    );
+    if (!silent) {
+      logger.warn(
+        `[socket] ${status} after=${durationMs}ms retries=${reconnectState.retries} lastError=${reconnectState.lastError || 'unknown'} disconnect=${reconnectState.disconnectReason || 'unknown'}`
+      );
+    }
     reconnectState.startedAt = 0;
     reconnectState.retries = 0;
     reconnectState.lastError = '';
@@ -72,8 +74,7 @@ function createSocket(socketUrl, token, options = {}) {
   };
 
   socket.on('connect', () => {
-    logger.info(`[socket] connected to ${url} (id=${socket.id})`);
-    finishReconnect('reconnected');
+    finishReconnect('reconnected', true);
   });
   socket.on('disconnect', (reason) => {
     if (reason === 'io client disconnect') {

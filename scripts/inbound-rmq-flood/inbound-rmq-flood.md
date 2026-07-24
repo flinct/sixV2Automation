@@ -884,6 +884,25 @@ npm run inbound:rmq:flood -- \
  --viewer-detail-every 3 \
  --uri "amqp://admin:$RMQ_PASS@127.0.0.1:5672"
 
+npm run inbound:rmq:flood -- \
+ --env dev \
+ --login-type admintest \
+ --discover-targets 200 \
+ --discover-profiles widget,messenger,email,instagram,whatsapp \
+ --total-messages 2000 \
+ --batch-size 10 \
+ --message-type text \
+ --log-every 10 \
+ --random-targets \
+ --existing-contact-new-conv-ratio 10 \
+ --new-contact-new-conv-ratio 20 \
+ --new-contact-count 20 \
+ --viewer-roles danyagent01:4,danyagent02:4,danyagent03:4,danyagent04:4,danyspv01:4,danyspv02:4\
+ --subscribers-file scripts/storm-reproducer/subscribers/dev-multi-company.template.txt \
+ --viewer-poll-interval-ms 2000 \
+ --viewer-detail-every 3 \
+ --uri "amqp://admin:$RMQ_PASS@127.0.0.1:5672"
+
 ### Randomized multi-target run
 
 ```bash

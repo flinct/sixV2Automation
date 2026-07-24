@@ -68,6 +68,16 @@ impact ketika development dilakukan
 bandingkan kedua file, seharusnya contact adalah existing contact yang di prod
 contact - context and visibility adalah update feature
 
+NEW PROMTP
+Pakai skill use-case.
+Task: [ide baru / brainstorming / change request]
+
+Pakai skill analyze.
+Task: [brief / task / draft yang sudah ada, mau dianalisa + direview]
+
+Pakai skill review.
+Task: [hasil analisa/artifact yang sudah ada, mau direview]
+
 ## //-------------------prompt analisa prd--------------------
 
 -

@@ -34,6 +34,7 @@ function parseArgs(argv) {
     failAfter60: String(process.env.STORM_FAIL_AFTER_60 || 'true').trim().toLowerCase() === 'true',
     hotpathEnabled: String(process.env.STORM_HOTPATH_ENABLED || '').trim().toLowerCase() === 'true',
     hotpathIntervalMs: Number(process.env.STORM_HOTPATH_INTERVAL_MS || 1000),
+    heartbeatIntervalSec: Number(process.env.STORM_HEARTBEAT_INTERVAL_SEC || 30),
     verbose: false,
   };
 
@@ -332,6 +333,34 @@ async function shutdown(subscribers, graceMs) {
   await Promise.race([Promise.allSettled(pending), graceTimeout]);
 }
 
+const ENDPOINT_NAMES = [
+  'GET /conversation (variant-1 all)',
+  'GET /conversation (variant-2 your-inbox)',
+  'GET /conversation/count',
+  'GET /conversation/filter-count?assign=true',
+  'GET /conversation/screenshot/setting',
+];
+
+function formatEndpointMetrics(subscriber, names) {
+  const parts = [];
+  for (const name of names) {
+    const bucket = subscriber.metrics.requests[name];
+    if (!bucket) { parts.push(`${name.split('(')[0].trim()}=0/0`); continue; }
+    parts.push(`${name.split('(')[0].trim()}=${bucket.ok}/${bucket.errors}`);
+  }
+  return parts.join(' ');
+}
+
+function printHeartbeat(subscribers) {
+  for (const sub of subscribers) {
+    const events =
+      (sub.metrics.events['notification.new.message'] || 0) +
+      (sub.metrics.events['conversation.assigned'] || 0) +
+      (sub.metrics.events['conversation.unassigned'] || 0);
+    console.log(`[heartbeat] ${sub.label} events=${events} ${formatEndpointMetrics(sub, ENDPOINT_NAMES)} inflight=${sub.metrics.inFlight || 0}`);
+  }
+}
+
 async function main() {
   const opts = parseArgs(process.argv);
   const resolvedSubscribers = resolveSubscriberSpec({
@@ -374,10 +403,16 @@ async function main() {
 
   console.log(`[storm] ${subscribers.length} subscriber(s) ready`);
 
+  let heartbeatTimer = null;
+  if (opts.heartbeatIntervalSec > 0) {
+    heartbeatTimer = setInterval(() => printHeartbeat(subscribers), opts.heartbeatIntervalSec * 1000);
+  }
+
   let stopping = false;
   const stop = async () => {
     if (stopping) return;
     stopping = true;
+    if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null; }
     await shutdown(subscribers, opts.shutdownGraceMs);
     printSummary(subscribers);
     process.exit(0);
