@@ -51,10 +51,10 @@ npx playwright codegen
 --env POLL_INTERVAL_SEC=2
 --env BASE_URL=dev-v2-api.satuinbox.com
 --env E2E_USER=chickentester01
---env E2E_PASSWORD=ChickenTester01!
+--env E2E_PASSWORD=ChickenTester01
 
--k6 run scripts/k6/conversation-5ep.js --env VUS=1 --env DURATION_SEC=10 --env POLL_INTERVAL_SEC=2 --env BASE_URL=https://dev-v2-api.satuinbox.com --env E2E_USER=admintest --env E2E_PASSWORD=Password1@
--
+## -k6 run scripts/k6/conversation-5ep.js --env VUS=1 --env DURATION_SEC=10 --env POLL_INTERVAL_SEC=2 --env BASE_URL=https://dev-v2-api.satuinbox.com --env E2E_USER=admintest --env E2E_PASSWORD=Password1@
+
 -
 -
 -

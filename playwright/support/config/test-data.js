@@ -109,6 +109,13 @@ const testAccounts = {
   testerdummy01: account(
     "E2E_PROD_TESTER_USER",
     "E2E_PROD_TESTER_PASSWORD",
+    "admin",
+    ["dev", "prod"],
+    "prod-tester",
+  ),
+  testerdummyagent1: account(
+    "E2E_PROD_TESTER_USER",
+    "E2E_PROD_TESTER_PASSWORD",
     "agent",
     ["dev", "prod"],
     "prod-tester",

@@ -20,17 +20,27 @@ const ALL_SPECS = [
 
 const DURATION_SEC = Number(__ENV.DURATION_SEC || 60);
 const POLL_INTERVAL_SEC = Math.max(0.2, Number(__ENV.POLL_INTERVAL_SEC || 2));
+const VUS = Number(__ENV.VUS || 1);
+const WARMUP_SEC = Math.max(1, Number(__ENV.WARMUP_SEC || 5));
 
+// ponytail: warmup stage = VUs log in + establish TCP during calm, matching browser
+// having a pre-existing session before storm. Skipped: dedicated setup() login handoff,
+// add when we need pre-shared tokens across VUs.
 export const options = {
   scenarios: {
     conv_5ep: {
-      executor: "constant-vus",
-      vus: Number(__ENV.VUS || 1),
-      duration: `${DURATION_SEC}s`,
+      executor: "ramping-vus",
+      startVUs: 0,
+      stages: [
+        { duration: `${WARMUP_SEC}s`, target: VUS },
+        { duration: `${DURATION_SEC}s`, target: VUS },
+      ],
+      gracefulRampDown: "0s",
     },
   },
   thresholds: {
     http_req_failed: ["rate<0.3"],
+    "http_req_failed{endpoint:login}": ["rate<0.05"],
   },
 };
 
