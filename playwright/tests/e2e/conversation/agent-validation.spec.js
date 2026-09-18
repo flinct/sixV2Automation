@@ -18,11 +18,26 @@ test.describe('Agent Assignment & Validation Tests', () => {
     await authPage.loginWithCredentials(credentials, { useV2: true });
   });
 
-  test('should show conversation status (Close or Reopen button)', async ({ page }) => {
-    await inboxPage.openFirstChat();
-    const hasClose = await inboxPage.closeButton.isVisible().catch(() => false);
-    const hasReopen = await inboxPage.reopenButton.isVisible().catch(() => false);
-    expect(hasClose || hasReopen).toBeTruthy();
+  test('open conversation should show Close button', async ({ page }) => {
+    await inboxPage.gotoAll();
+    await inboxPage.openChat(1);
+    await expect(inboxPage.closeButton).toBeVisible({ timeout: 10000 });
+    await expect(inboxPage.reopenButton).not.toBeVisible();
+  });
+
+  test('closed conversation should show Reopen button', async ({ page }) => {
+    await inboxPage.gotoAll();
+    await inboxPage.filterByStatus('closed');
+
+    const hasClosed = await inboxPage.hasChat(1, 5000);
+    if (!hasClosed) {
+      test.skip(true, 'No closed conversations available');
+      return;
+    }
+
+    await inboxPage.openChat(1);
+    await expect(inboxPage.reopenButton).toBeVisible({ timeout: 10000 });
+    await expect(inboxPage.closeButton).not.toBeVisible();
   });
 
   test('should show Team Inbox section', async ({ page }) => {

@@ -99,6 +99,7 @@ test.describe('verify conversation list', () => {
       inboxPage.chatListContainer
         .or(inboxPage.chatListEmpty)
         .or(inboxPage.sectionHeading('unassigned'))
+        .first()
     ).toBeVisible({ timeout: 15000 });
     console.log('[SIX-Convo-001] PASS — container or empty state visible');
   });

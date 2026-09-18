@@ -1,0 +1,520 @@
+[
+  {
+    "spec_file": "agent-validation",
+    "title": "open conversation should show Close button",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "agent-validation",
+    "title": "closed conversation should show Reopen button",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "agent-validation",
+    "title": "should show Team Inbox section",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "agent-validation",
+    "title": "should show Channel Source in detail",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "agent-validation",
+    "title": "should show Conversation ID",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should display chat list container on inbox page",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should display chat list items when chats exist",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should show all inbox section navigation buttons",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should show all available channel navigation buttons",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should navigate to your-inbox and update chat list",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should navigate to unassigned and update chat list",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should navigate to all and update chat list",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should navigate to spam and update chat list",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should navigate to starred and update chat list",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should navigate to junk and update chat list",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should filter chat list by channel: widget",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should filter chat list by channel: whatsapp_api",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should filter chat list by channel: whatsapp_web",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should filter chat list by channel: instagram",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should filter chat list by channel: facebook_messenger",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should filter chat list by channel: email",
+    "status": "skipped",
+    "attempts": 2,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should filter chat list by channel: telegram",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should open chat on click and show chat room",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should show chat list title on page load",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should switch between multiple nav sections",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "chat-list",
+    "title": "should navigate via sidebar button click",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "conversation-history",
+    "title": "should show Conversation History section in detail panel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "conversation-history",
+    "title": "should display history items when available",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "conversation-history",
+    "title": "should show empty state when no history",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "conversation-history",
+    "title": "should show history for conversations with previous interactions",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - your inbox",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - unassigned",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - all inbox",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - starred",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - spam",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - junk",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - your inbox - validate empty state",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - your inbox - validate title section",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "empty-state",
+    "title": "accessing conversation page - your inbox - testing filter component placement and visibility",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbound-outbound",
+    "title": "should send outbound message via Widget channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbound-outbound",
+    "title": "should send outbound message via WhatsApp Web channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbound-outbound",
+    "title": "should send outbound message via Instagram channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbound-outbound",
+    "title": "should send outbound message via Email channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbound-outbound",
+    "title": "should display inbound message from customer",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbound-outbound",
+    "title": "should handle multiple outbound messages in sequence",
+    "status": "failed",
+    "attempts": 2,
+    "error": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('Message-Text-Input') to be visible\u001b[22m\n\n\n   at ..\\support\\pages\\inbox.page.js:361\n\n  359 |\n  360 |   async sendMessage(text) {\n> 361 |     await this.messageInput.waitFor({ state: 'visible', timeout: 15000 });\n      |                             ^\n  362 |     await this.messageInput.fill(text);\n  3"
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should navigate to your inbox",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should navigate to unassigned inbox",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should navigate to all conversations",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should open first chat and send message",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should test channel navigation - widget",
+    "status": "passed",
+    "attempts": 2,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should send message via Widget channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should send message via WhatsApp Web channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should send message via WhatsApp API channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should send message via Instagram channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "inbox",
+    "title": "should send message via Email channel",
+    "status": "skipped",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "should open chat room with conversation detail visible",
+    "status": "passed",
+    "attempts": 2,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "should show SLA badge on conversation card in list",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "should show close or reopen button when chat opened",
+    "status": "passed",
+    "attempts": 2,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-714] Wait Time metric (\"Waktu Antre\") renders in conversation detail",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-715] RLT metric (\"Waktu Kerja Staf\") renders in conversation detail",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-716] RLT and Wait-Time are informational \u2014 no breach badge on these two metrics",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-717] Missing assignment shows RLT \"Belum tersedia\" and never a negative duration",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-718] Internal-only conversation shows RLT/Wait as \"Tidak berlaku\"",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-719] Wait Time value, when present, is a non-negative duration",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-720] RLT value, when present, is a non-negative duration",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "sla-metrics",
+    "title": "[SIX-Convo-721] FRT, RLT, TTC and Wait-Time metric rows coexist in the detail panel",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "convo-ownership",
+    "title": "[SIX-Convo-730] Sticky binding: open conversation keeps original Team Inbox after channel remap (\"Legacy-bound\")",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "convo-ownership",
+    "title": "[SIX-Convo-731] New chat after remap is created in the current owner team (routing follows current mapping)",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "convo-ownership",
+    "title": "[SIX-Convo-732] Bulk number remap does not auto-move existing conversations",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "convo-ownership",
+    "title": "[SIX-Convo-733] Manual move preserves history, resets assignee, stops SLA, shows \"Moved from {X} to {Y}\" banner",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "convo-ownership",
+    "title": "[SIX-Convo-734] Reopening a closed legacy thread offers \"Keep in {Old Team}\" (default) or \"Move to {New Team}\"",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "convo-ownership",
+    "title": "[SIX-Convo-735] Escalation-only inbox (no inbound number): moved-in conversations operable, badge \"Escalation-only\"",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  },
+  {
+    "spec_file": "convo-ownership",
+    "title": "[SIX-Convo-736] Default sender = last successful sender; when unavailable a \"Choose sender number\" picker is offered",
+    "status": "passed",
+    "attempts": 1,
+    "error": ""
+  }
+]

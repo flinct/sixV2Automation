@@ -31,8 +31,14 @@ test.describe('Auth Login Tests', () => {
   });
 
   test('check login error state', async () => {
-    await authPage.login('invalid-user', 'wrong-pass', { expectSuccess: false });
+    const result = await authPage.login('invalid-user', 'wrong-pass', { expectSuccess: false });
+    // UI must show the failure...
     await authPage.verifyLoginErrorMessage();
+    // ...and the recorded outcome must agree (UI + API response).
+    expect(result.success).toBe(false);
+    expect(result.uiError).toBeTruthy();
+    expect(result.apiOk).toBe(false);
+    expect(result.apiStatus).toBeGreaterThanOrEqual(400);
   });
 
   test('valid login with admin credentials', async () => {
@@ -43,13 +49,20 @@ test.describe('Auth Login Tests', () => {
 
   test('invalid login with wrong password', async () => {
     const credentials = config.getDefaultAccount();
-    await authPage.login(credentials.identifier, 'wrongpassword123', { expectSuccess: false });
+    const result = await authPage.login(credentials.identifier, 'wrongpassword123', { expectSuccess: false });
     await authPage.verifyLoginErrorMessage();
+    expect(result.success).toBe(false);
+    expect(result.uiError).toBeTruthy();
+    expect(result.apiOk).toBe(false);
+    expect(result.apiStatus).toBeGreaterThanOrEqual(400);
   });
 
   test('login with empty fields', async () => {
-    await authPage.login('', '', { expectSuccess: false });
+    const result = await authPage.login('', '', { expectSuccess: false });
     await authPage.verifyEmptyLoginValidation();
+    expect(result.success).toBe(false);
+    // Empty submit is blocked client-side: no API call, no server error banner.
+    expect(result.apiStatus).toBeNull();
   });
 
   test('try login with ROLE SUPERVISOR', async () => {

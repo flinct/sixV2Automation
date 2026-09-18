@@ -1,0 +1,695 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright.config.js",
+    "rootDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e\\conversation\\inbox.spec.js",
+      "file": "e2e/conversation/inbox.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Inbox Page Tests",
+          "file": "e2e/conversation/inbox.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate to your inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 52106,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:34:23.705Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "741825d6e3d192714055-4fbe127d3ad0ac19db5d",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "should navigate to unassigned inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 48430,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:35:16.075Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "741825d6e3d192714055-1de4405b9cb59e248c47",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "should navigate to all conversations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 49093,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:36:04.541Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "741825d6e3d192714055-d0570bf0c10e2db8a3e1",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 32,
+              "column": 3
+            },
+            {
+              "title": "should open first chat and send message",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 54511,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('Message-Text-Input') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('Message-Text-Input') to be visible\u001b[22m\n\n    at InboxPage.sendMessage (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js:364:29)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js:49:21",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js",
+                          "column": 29,
+                          "line": 364
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m..\\support\\pages\\inbox.page.js:364\n\n\u001b[0m \u001b[90m 362 |\u001b[39m\n \u001b[90m 363 |\u001b[39m   \u001b[36masync\u001b[39m sendMessage(text) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 364 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mmessageInput\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 365 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mmessageInput\u001b[33m.\u001b[39mfill(text)\u001b[33m;\u001b[39m\n \u001b[90m 366 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msendButton\u001b[33m.\u001b[39mclick({ force\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 367 |\u001b[39m   }\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js",
+                            "column": 29,
+                            "line": 364
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('Message-Text-Input') to be visible\u001b[22m\n\n\n   at ..\\support\\pages\\inbox.page.js:364\n\n  362 |\n  363 |   async sendMessage(text) {\n> 364 |     await this.messageInput.waitFor({ state: 'visible', timeout: 15000 });\n      |                             ^\n  365 |     await this.messageInput.fill(text);\n  366 |     await this.sendButton.click({ force: true });\n  367 |   }\n    at InboxPage.sendMessage (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js:364:29)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js:49:21"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:36:53.674Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-inbox-Inb-1cecc-first-chat-and-send-message-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-inbox-Inb-1cecc-first-chat-and-send-message-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-inbox-Inb-1cecc-first-chat-and-send-message-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js",
+                        "column": 29,
+                        "line": 364
+                      }
+                    },
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 45590,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('Message-Text-Input') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('Message-Text-Input') to be visible\u001b[22m\n\n    at InboxPage.sendMessage (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js:364:29)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js:49:21",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js",
+                          "column": 29,
+                          "line": 364
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m..\\support\\pages\\inbox.page.js:364\n\n\u001b[0m \u001b[90m 362 |\u001b[39m\n \u001b[90m 363 |\u001b[39m   \u001b[36masync\u001b[39m sendMessage(text) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 364 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mmessageInput\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 365 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mmessageInput\u001b[33m.\u001b[39mfill(text)\u001b[33m;\u001b[39m\n \u001b[90m 366 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msendButton\u001b[33m.\u001b[39mclick({ force\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 367 |\u001b[39m   }\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js",
+                            "column": 29,
+                            "line": 364
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('Message-Text-Input') to be visible\u001b[22m\n\n\n   at ..\\support\\pages\\inbox.page.js:364\n\n  362 |\n  363 |   async sendMessage(text) {\n> 364 |     await this.messageInput.waitFor({ state: 'visible', timeout: 15000 });\n      |                             ^\n  365 |     await this.messageInput.fill(text);\n  366 |     await this.sendButton.click({ force: true });\n  367 |   }\n    at InboxPage.sendMessage (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js:364:29)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js:49:21"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-08-16T05:37:50.015Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-inbox-Inb-1cecc-first-chat-and-send-message-chromium-retry1\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-inbox-Inb-1cecc-first-chat-and-send-message-chromium-retry1\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-inbox-Inb-1cecc-first-chat-and-send-message-chromium-retry1\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-inbox-Inb-1cecc-first-chat-and-send-message-chromium-retry1\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\inbox.page.js",
+                        "column": 29,
+                        "line": 364
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "741825d6e3d192714055-342119b819e70e50415f",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "should test channel navigation - widget",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 35854,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Navigate to widget channel",
+                          "duration": 884
+                        }
+                      ],
+                      "startTime": "2026-08-16T05:38:39.258Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "741825d6e3d192714055-1bc06912359b3fd11646",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 54,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Multi-Channel Message Tests",
+          "file": "e2e/conversation/inbox.spec.js",
+          "line": 63,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should send message via Widget channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "No Widget chats in this environment",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                        "line": 92,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 45751,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Open first Widget chat",
+                          "duration": 941
+                        }
+                      ],
+                      "startTime": "2026-08-16T05:39:15.517Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "No Widget chats in this environment",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                            "line": 92,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-c53a22b5a74feaac6d5d",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 86,
+              "column": 5
+            },
+            {
+              "title": "should send message via WhatsApp Web channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "No WhatsApp Web chats in this environment",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                        "line": 92,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 40431,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Open first WhatsApp Web chat",
+                          "duration": 898
+                        }
+                      ],
+                      "startTime": "2026-08-16T05:40:01.347Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "No WhatsApp Web chats in this environment",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                            "line": 92,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-59da3b574f8bc1f19083",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 86,
+              "column": 5
+            },
+            {
+              "title": "should send message via WhatsApp API channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "No WhatsApp API chats in this environment",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                        "line": 92,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 47403,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Open first WhatsApp API chat",
+                          "duration": 921
+                        }
+                      ],
+                      "startTime": "2026-08-16T05:40:41.817Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "No WhatsApp API chats in this environment",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                            "line": 92,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-79616697e8d66d41c246",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 86,
+              "column": 5
+            },
+            {
+              "title": "should send message via Instagram channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "No Instagram chats in this environment",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                        "line": 92,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 31407,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Open first Instagram chat",
+                          "duration": 819
+                        }
+                      ],
+                      "startTime": "2026-08-16T05:41:29.265Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "No Instagram chats in this environment",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                            "line": 92,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-52751922cfd37c8a6b9c",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 86,
+              "column": 5
+            },
+            {
+              "title": "should send message via Email channel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "No Email chats in this environment",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                        "line": 92,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 48386,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Open first Email chat",
+                          "duration": 816
+                        }
+                      ],
+                      "startTime": "2026-08-16T05:42:00.708Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "No Email chats in this environment",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\inbox.spec.js",
+                            "line": 92,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "741825d6e3d192714055-cb47a3a2f3ce1b64e2d1",
+              "file": "e2e/conversation/inbox.spec.js",
+              "line": 86,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-16T05:34:22.572Z",
+    "duration": 506764.563,
+    "expected": 4,
+    "skipped": 5,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

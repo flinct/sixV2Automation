@@ -140,6 +140,11 @@ class InboxPage {
     this.emojiButton = page.getByTestId('Emoji-Button');
     this.macroButton = page.getByTestId('Macro-Button');
     this.attachButton = page.getByTestId('Attach-File-Button');
+    // ponytail: no data-cy hook for the file input / attachment preview yet;
+    // generic CSS is the only option until FE adds one.
+    this.fileInput = page.locator('input[type="file"]');
+    this.attachmentPreview = page.locator('img, video').last();
+    this.attachmentErrorToast = page.getByText(/size too big|terlalu besar|max 20 ?mb/i);
     this.accountSelector = page.getByTestId('Account-Channel-Selector');
     this.accountOption = (channelId) => page.getByTestId(`Account-Channel-${channelId}`);
     this.messagesContainer = page.getByTestId('Messages-Container');
@@ -219,7 +224,11 @@ class InboxPage {
         .or(this.chatListEmpty)
         .or(this.chatListTitle)
         .or(this.sectionHeading(section))
+        .first()
     ).toBeVisible({ timeout: 15000 });
+    // ponytail: container can render before items finish loading (skeleton state);
+    // wait for skeleton to clear so callers counting chatListItems don't race it
+    await this.chatListSkeleton.first().waitFor({ state: 'hidden', timeout: 10000 }).catch(() => {});
   }
 
   async goto(pathOrSection = '/conversation', query = '') {
@@ -282,6 +291,15 @@ class InboxPage {
   async openFirstChat() {
     await this.gotoAll();
     await this.openChat(1);
+  }
+
+  async filterByStatus(status = 'open') {
+    const labels = { open: /terbuka/i, closed: /tertutup/i };
+    await this.statusFilter.click();
+    await this.page.getByRole('menuitem', { name: labels[status] || labels.open }).click();
+    // ponytail: waitForTimeout; swap to list-ready guard when filter has
+    // a deterministic loading indicator.
+    await this.page.waitForTimeout(1000);
   }
 
   async openChatByIndex(index) {
@@ -390,7 +408,7 @@ class InboxPage {
     const path = this.pathByKey(navKey);
     await this.gotoSection(navKey);
     await expect(this.page).toHaveURL(new RegExp(path.replace(/\//g, '\\/')));
-    await expect(this.chatListTitle.or(this.sectionHeading(navKey))).toBeVisible();
+    await expect(this.chatListTitle.or(this.sectionHeading(navKey)).first()).toBeVisible();
   }
 
   async verifyChannelFiltersChatList(channelKey) {
@@ -423,6 +441,11 @@ class InboxPage {
 
   async openDetailSection(slug) {
     await this.detailSection(slug).click();
+  }
+
+  async attachFile(filePath) {
+    await this.attachButton.click();
+    await this.fileInput.setInputFiles(filePath);
   }
 }
 

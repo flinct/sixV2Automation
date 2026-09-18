@@ -8,6 +8,9 @@ cekerayam01:1
 [company:696f2143246e1c1511117a72]
 testerdummy01:1
 testerdummyagent1:1
+testerdummyagent2:1
+testerdummyagent3:1
+testerdummyagent4:1
 
 # Backward compat: entries outside any section go to companyId=unknown
 

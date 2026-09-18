@@ -56,6 +56,7 @@ TOTAL_MESSAGES="${TOTAL_MESSAGES:-300}"
 DISCOVER_TARGETS="${DISCOVER_TARGETS:-100}"
 STORM_SUBSCRIBERS="${STORM_SUBSCRIBERS:-danyatmin01:1,danyspv01:2,danyagent01:2}"
 STORM_SUBSCRIBERS_FILE="${STORM_SUBSCRIBERS_FILE:-}"
+STORM_ENABLED="${STORM_ENABLED:-true}"
 STORM_ROUTE="${STORM_ROUTE:-your-inbox}"
 STORM_TEAM_ID="${STORM_TEAM_ID:-}"
 STORM_DURATION_SEC="${STORM_DURATION_SEC:-300}"
@@ -66,6 +67,18 @@ PROBE_INTERVAL_MS="${PROBE_INTERVAL_MS:-1000}"
 STORM_READY_TIMEOUT_SEC="${STORM_READY_TIMEOUT_SEC:-600}"
 FLOOD_COMPANY_IDS="${FLOOD_COMPANY_IDS:-}"
 FLOOD_COMPANY_BALANCE="${FLOOD_COMPANY_BALANCE:-false}"
+# Flood discovery filter follows the watched route so targeted conversations actually appear
+# in the subscriber's tab (else the reflex guard rejects every event). Override explicitly
+# with FLOOD_DISCOVER_FILTER=assigned|unassigned|none if you need to decouple them.
+if [[ -z "${FLOOD_DISCOVER_FILTER:-}" ]]; then
+  case "$STORM_ROUTE" in
+    your-inbox) FLOOD_DISCOVER_FILTER=assigned ;;
+    unassigned) FLOOD_DISCOVER_FILTER=unassigned ;;
+    *)          FLOOD_DISCOVER_FILTER=none ;;
+  esac
+fi
+FLOOD_POST_ASSIGN_TO="${FLOOD_POST_ASSIGN_TO:-}"
+FLOOD_POST_ASSIGN_COUNT="${FLOOD_POST_ASSIGN_COUNT:-3}"
 DEFAULT_LOG_DIR="$ROOT_DIR/scripts/storm-reproducer/logs/storm-$(date +%Y%m%d-%H%M%S)"
 LOG_DIR="${LOG_DIR:-$DEFAULT_LOG_DIR}"
 RMQ_URI="${RMQ_URI:-amqp://admin:${RMQ_PASS}@127.0.0.1:5672}"
@@ -115,41 +128,45 @@ echo "[run-all] starting hotpath probe -> $PROBE_LOG"
 PROBE_PID=$!
 
 echo "[run-all] starting storm reproducer -> $STORM_LOG"
-STORM_CMD=(
-  "$NODE_BIN" scripts/storm-reproducer/storm-reproducer.js
-  --env "$ENV_NAME"
-  --duration-sec "$STORM_DURATION_SEC"
-  --route "$STORM_ROUTE"
-)
-if [[ -n "$STORM_SUBSCRIBERS_FILE" ]]; then
-  STORM_CMD+=(--subscribers-file "$STORM_SUBSCRIBERS_FILE")
-else
-  STORM_CMD+=(--subscribers "$STORM_SUBSCRIBERS")
-fi
-if [[ "$STORM_HOTPATH_ENABLED" == "true" ]]; then
-  STORM_CMD+=(--hotpath-enabled --hotpath-interval-ms "$STORM_HOTPATH_INTERVAL_MS")
-else
-  STORM_CMD+=(--no-hotpath)
-fi
-if [[ -n "$STORM_TEAM_ID" ]]; then
-  STORM_CMD+=(--team-id "$STORM_TEAM_ID")
-fi
-"${STORM_CMD[@]}" > "$STORM_LOG" 2>&1 &
-STORM_PID=$!
-
-echo "[run-all] waiting for storm subscribers to be ready (timeout=${STORM_READY_TIMEOUT_SEC}s)..."
-for _ in $(seq 1 "$STORM_READY_TIMEOUT_SEC"); do
-  if grep -q "subscriber(s) ready" "$STORM_LOG" 2>/dev/null; then
-    echo "[run-all] storm ready"
-    break
+if [[ "$STORM_ENABLED" == "true" ]]; then
+  STORM_CMD=(
+    "$NODE_BIN" scripts/storm-reproducer/storm-reproducer.js
+    --env "$ENV_NAME"
+    --duration-sec "$STORM_DURATION_SEC"
+    --route "$STORM_ROUTE"
+  )
+  if [[ -n "$STORM_SUBSCRIBERS_FILE" ]]; then
+    STORM_CMD+=(--subscribers-file "$STORM_SUBSCRIBERS_FILE")
+  else
+    STORM_CMD+=(--subscribers "$STORM_SUBSCRIBERS")
   fi
-  sleep 1
-done
+  if [[ "$STORM_HOTPATH_ENABLED" == "true" ]]; then
+    STORM_CMD+=(--hotpath-enabled --hotpath-interval-ms "$STORM_HOTPATH_INTERVAL_MS")
+  else
+    STORM_CMD+=(--no-hotpath)
+  fi
+  if [[ -n "$STORM_TEAM_ID" ]]; then
+    STORM_CMD+=(--team-id "$STORM_TEAM_ID")
+  fi
+  "${STORM_CMD[@]}" > "$STORM_LOG" 2>&1 &
+  STORM_PID=$!
 
-if ! grep -q "subscriber(s) ready" "$STORM_LOG" 2>/dev/null; then
-  echo "[run-all] ERROR: storm-reproducer did not become ready in time" >&2
-  tail -50 "$STORM_LOG" || true
-  exit 1
+  echo "[run-all] waiting for storm subscribers to be ready (timeout=${STORM_READY_TIMEOUT_SEC}s)..."
+  for _ in $(seq 1 "$STORM_READY_TIMEOUT_SEC"); do
+    if grep -q "subscriber(s) ready" "$STORM_LOG" 2>/dev/null; then
+      echo "[run-all] storm ready"
+      break
+    fi
+    sleep 1
+  done
+
+  if ! grep -q "subscriber(s) ready" "$STORM_LOG" 2>/dev/null; then
+    echo "[run-all] ERROR: storm-reproducer did not become ready in time" >&2
+    tail -50 "$STORM_LOG" || true
+    exit 1
+  fi
+else
+  echo "[run-all] STORM_ENABLED=$STORM_ENABLED -> skipping storm reproducer (probe + flood only)"
 fi
 
 echo "[run-all] starting inbound-rmq-flood -> $FLOOD_LOG"
@@ -171,6 +188,14 @@ if [[ -n "$FLOOD_COMPANY_IDS" ]]; then
 fi
 if [[ "$FLOOD_COMPANY_BALANCE" == "true" ]]; then
   FLOOD_CMD+=(--company-balance)
+fi
+case "$FLOOD_DISCOVER_FILTER" in
+  assigned)   FLOOD_CMD+=(--discover-assigned) ;;
+  unassigned) FLOOD_CMD+=(--discover-unassigned) ;;
+esac
+if [[ -n "$FLOOD_POST_ASSIGN_TO" ]]; then
+  FLOOD_CMD+=(--post-assign-to "$FLOOD_POST_ASSIGN_TO")
+  FLOOD_CMD+=(--post-assign-count "$FLOOD_POST_ASSIGN_COUNT")
 fi
 "${FLOOD_CMD[@]}" 2>&1 | tee "$FLOOD_LOG"
 

@@ -110,7 +110,7 @@ const MESSAGE_VARIANTS = {
     type: 'utility',
   }),
   text: (seq, options) => ({
-    content: `${options.contentPrefix} text message #${seq}`,
+    content: `${options.contentPrefix} text message #${seq} @ ${new Date(Date.now() + 7 * 3600 * 1000).toISOString().replace('Z', '+07:00')}`,
     type: 'text',
   }),
 };
@@ -210,8 +210,14 @@ Optional:
   --messages-per-target <n>             Default: 1
   --total-messages <n>                  Overrides target_count * messages_per_target
   --discover-targets <n>                Auto-discover N direct targets from recent conversations when no targets are provided
+  --discover-assigned                   Restrict discovery to conversations assigned to the discovering login (assign=true).
+                                          Use with STORM_ROUTE=your-inbox (subscriber is a participant).
+  --discover-unassigned                 Restrict discovery to UNassigned conversations (unassign=true).
+                                          Use with STORM_ROUTE=unassigned (participants empty).
   --discover-profiles <p1,p2,...>       Optional profile filter for discovery (e.g. widget,messenger,email)
   --discover-limit <n>                  How many conversations to scan during discovery (default: 200)
+  --post-assign-to <userId>             After publishing, assign N discovered conversations to this user (admin→agent assign flow)
+  --post-assign-count <n>               Number of conversations to assign (default: 3)
   --existing-contact-new-conv-ratio <n> % of total-messages routed to Pool B (existing contact, NEW conversation). Default: 0
   --new-contact-new-conv-ratio <n>      % of total-messages routed to Pool C (NEW contact + NEW conversation). Default: 0
                                           Remaining % goes to Pool A (existing conversation). B+C must not exceed 100.
@@ -745,6 +751,41 @@ function diagnoseDiscoveryDrop(item, target, pair, allowedProfiles, reason) {
   console.error(`           channel.platform.code         ${JSON.stringify(item?.channel?.platform?.code ?? item?.channel?.platform ?? null)}`);
 }
 
+// Build the /conversation discovery query. The discovery filter must match the route the
+// storm subscriber watches, or the reflex guard correctly rejects every event:
+//   - your-inbox  -> assign=true    (subscriber must be a participant: checkAssignFilter)
+//   - unassigned  -> unassign=true  (participants empty: checkUnassignFilter)
+//   - all/other   -> no filter      (every open conversation)
+// Without alignment, flood hits conversations the watched tab never lists and the reflex
+// stays silent (isRelevant=false).
+function buildDiscoveryQuery(options, { limit, page }) {
+  const query = {
+    status: 'open',
+    sort: 'isPinned:desc,pinnedAt:desc,timestamp:desc',
+    hideEmpty: true,
+    limit,
+    page,
+  };
+  if (options.discoverAssigned) query.assign = true;
+  else if (options.discoverUnassigned) query.unassign = true;
+  return query;
+}
+
+// Thrown when discovery scanned /api/conversation but found zero usable EXISTING targets
+// (distinct from auth/network errors) so main() can auto-fall back to Pool C.
+class NoDiscoveryTargetsError extends Error {}
+
+// Decide the auto-fallback when discovery finds zero existing conversations (empty Pool A).
+// Returns { fallback: true, ratioC } when it is safe to continue with empty Pool A,
+// or { fallback: false } when B+C already fills 100% (no room to shift A's share).
+// When caller asked for B+C < 100%, discovery empty just means A has nothing — buildPoolAwarePlan
+// redirects A's share to B/C anyway, so we allow it.
+function resolveEmptyDiscoveryFallback(options) {
+  const ratioSum = options.newContactNewConvRatio + options.existingContactNewConvRatio;
+  if (ratioSum >= 100) return { fallback: false };
+  return { fallback: true, ratioC: 100 - options.existingContactNewConvRatio };
+}
+
 // Discover flood targets by scanning /api/conversation with per-login/company vantage pairs.
 async function discoverTargetsFromConversations(runtime, options) {
   const requested = Math.max(1, options.discoverTargets);
@@ -771,13 +812,7 @@ async function discoverTargetsFromConversations(runtime, options) {
       const remaining = scanBudget - localScanned;
       const limit = Math.min(pageSize, remaining);
       const response = await httpJson(
-        appendQuery(activeRuntime.config.endpoints.conversation, {
-          status: 'open',
-          sort: 'isPinned:desc,pinnedAt:desc,timestamp:desc',
-          hideEmpty: true,
-          limit,
-          page,
-        }),
+        appendQuery(activeRuntime.config.endpoints.conversation, buildDiscoveryQuery(options, { limit, page })),
         { headers }
       );
 
@@ -825,7 +860,7 @@ async function discoverTargetsFromConversations(runtime, options) {
 
   if (!allTargets.length) {
     diagnoseDiscoveryFailure(sampledItems, options);
-    throw new Error('No valid conversation targets discovered from /api/conversation');
+    throw new NoDiscoveryTargetsError('No valid conversation targets discovered from /api/conversation');
   }
 
   const syntheticTargets = await synthesizeMissingCompanyTargets(
@@ -2330,6 +2365,10 @@ async function main() {
     discoverLimit: Math.max(20, toInt(raw['discover-limit'], 200)),
     discoverProfiles: parseList(raw['discover-profiles']),
     discoverTargets: Math.max(0, toInt(raw['discover-targets'], 0)),
+    discoverAssigned: Boolean(raw['discover-assigned']),
+    discoverUnassigned: Boolean(raw['discover-unassigned']),
+    postAssignTo: raw['post-assign-to'] || '',
+    postAssignCount: Math.max(1, toInt(raw['post-assign-count'], 3)),
     existingContactNewConvRatio: Math.max(0, toInt(raw['existing-contact-new-conv-ratio'], 0)),
     newContactNewConvRatio: Math.max(0, toInt(raw['new-contact-new-conv-ratio'], 0)),
     newContactCount: Math.max(0, toInt(raw['new-contact-count'], 20)),
@@ -2395,13 +2434,31 @@ async function main() {
     throw new Error('Comma-separated LOGIN_TYPE discovery cannot be combined with explicit identifier/password overrides');
   }
 
-  const discoveredOrLoadedTargets = explicitTargetSource
-    ? loadTargets(options)
-    : await discoverTargetsFromConversations(runtime, options);
+  let discoveredOrLoadedTargets;
+  if (explicitTargetSource) {
+    discoveredOrLoadedTargets = loadTargets(options);
+  } else {
+    try {
+      discoveredOrLoadedTargets = await discoverTargetsFromConversations(runtime, options);
+    } catch (error) {
+      if (!(error instanceof NoDiscoveryTargetsError)) throw error;
+      // Auto-fallback: no existing open conversations to update (Pool A).
+      // When B+C ratios already fill 100%, Pool A's message share is zero anyway — just
+      // warn and proceed with empty Pool A. buildPoolAwarePlan handles the rest.
+      // When the caller has no B/C ratios set (default), switch to Pool C at 100%.
+      if (options.newContactNewConvRatio + options.existingContactNewConvRatio < 100) {
+        options.newContactNewConvRatio = 100 - options.existingContactNewConvRatio;
+      }
+      console.warn('[discover] no existing conversation targets; Pool A empty');
+      discoveredOrLoadedTargets = [];
+    }
+  }
 
   validateTargets(discoveredOrLoadedTargets, options);
 
-  const targetsA = options.preflight
+  // Preflight validates existing-conversation (Pool A) targets. An empty Pool A is legit
+  // when discovery fell back to Pool C, so skip preflight rather than throwing on nothing.
+  const targetsA = options.preflight && discoveredOrLoadedTargets.length
     ? await preflightTargets(discoveredOrLoadedTargets, runtime, options)
     : discoveredOrLoadedTargets;
 
@@ -2493,6 +2550,10 @@ async function main() {
   console.log('sample envelopes:');
   console.log(JSON.stringify(samplePayloads, null, 2));
 
+  // Assign conversations to agent BEFORE publishing so the agent is already a participant
+  // when messages arrive (conversation.assigned event fires first, then notification.new.message).
+  await postAssignConversations(runtime, targets, options);
+
   if (options.dryRun) {
     console.log('dry-run complete; nothing was published.');
     return;
@@ -2571,15 +2632,51 @@ async function main() {
   printViewerSummary(viewers);
 }
 
-main().catch((error) => {
-  console.error('[inbound-rmq-flood] failed:', error?.stack || error?.message || error);
-  if (error?.cause) {
-    const cause = error.cause;
-    console.error('  caused by:', cause?.stack || cause?.message || cause);
-    if (cause?.cause) {
-      const inner = cause.cause;
-      console.error('  inner cause:', inner?.stack || inner?.message || inner);
+// After publishing, assign N discovered conversations to a specific user via the assign API.
+// This simulates the prod flow: admin assigns unassigned conversations to an agent,
+// which triggers conversation.assigned socket event → reflex re-pulls → agent is participant.
+async function postAssignConversations(runtime, targets, options) {
+  const userId = options.postAssignTo;
+  if (!userId) return;
+  const count = Math.max(1, options.postAssignCount || 3);
+  const headers = { Authorization: `Bearer ${runtime.accessToken}` };
+  // ponytail: pick from targets that have a conversationId (existing conversations, not synthesized)
+  const candidates = targets.filter((t) => t.conversationId).slice(0, count);
+  if (!candidates.length) {
+    console.warn(`[post-assign] no targets with conversationId found; skipping assign to ${userId}`);
+    return;
+  }
+  console.log(`[post-assign] assigning ${candidates.length} conversation(s) to user=${userId} ...`);
+  let assigned = 0;
+  for (const target of candidates) {
+    const url = runtime.config.endpoints.assignConversation(target.conversationId);
+    try {
+      const res = await httpJson(url, { method: 'POST', headers, body: { memberIds: [userId] } });
+      if (res.ok) {
+        assigned += 1;
+      } else {
+        console.warn(`[post-assign] failed conv=${target.conversationId} status=${res.status}`);
+      }
+    } catch (err) {
+      console.warn(`[post-assign] error conv=${target.conversationId}: ${err.message}`);
     }
   }
-  process.exitCode = 1;
-});
+  console.log(`[post-assign] done: ${assigned}/${candidates.length} conversation(s) assigned to ${userId}`);
+}
+
+if (require.main === module) {
+  main().catch((error) => {
+    console.error('[inbound-rmq-flood] failed:', error?.stack || error?.message || error);
+    if (error?.cause) {
+      const cause = error.cause;
+      console.error('  caused by:', cause?.stack || cause?.message || cause);
+      if (cause?.cause) {
+        const inner = cause.cause;
+        console.error('  inner cause:', inner?.stack || inner?.message || inner);
+      }
+    }
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { buildDiscoveryQuery, resolveEmptyDiscoveryFallback, NoDiscoveryTargetsError };

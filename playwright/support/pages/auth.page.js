@@ -20,6 +20,12 @@ class AuthPage {
     this.keywordRequiredMessage = this.loginForm.getByText(/username atau email wajib diisi/i);
     this.passwordRequiredMessage = this.loginForm.getByText(/password minimal 8 karakter/i);
 
+    // First-login workspace-setup screen: progress bar (random 15-45s) then a
+    // "Buka workspace" button. FE has no data-cy for it yet (flow unmerged), so
+    // target by role/text. ponytail: swap to getByTestId when FE adds a hook.
+    this.workspaceSetupTitle = page.getByText(/Menyiapkan workspace Anda/i);
+    this.openWorkspaceButton = page.getByRole('button', { name: /buka workspace/i });
+
     this.regFullname = page.getByTestId('Fullname-Input');
     this.regUsername = page.getByTestId('Username-Input');
     this.regEmail = page.getByTestId('Email-Input');
@@ -79,11 +85,81 @@ class AuthPage {
     await this.keywordInput.waitFor({ state: 'visible', timeout: 15000 });
     await this.keywordInput.fill(identifier);
     await this.passwordInput.fill(password);
-    await this.loginButton.click();
 
-    if (expectSuccess) {
-      await this.page.waitForURL(/\/conversation\/your-inbox/, { timeout: 30000 });
+    // Record the login API response without blocking on it: an empty-field submit
+    // fires no request, so we must never await a response that will not arrive.
+    let loginResponse = null;
+    const onResponse = (r) => {
+      if (/\/api\/auth\/login\b/.test(r.url()) && r.request().method() === 'POST') {
+        loginResponse = r;
+      }
+    };
+    this.page.on('response', onResponse);
+
+    let outcome;
+    try {
+      await this.loginButton.click();
+
+      // Long enough for first-login workspace progress (random 15-45s) + margin.
+      // ponytail: 60s fixed; bump if BE progress duration ceiling changes.
+      const NAV_TIMEOUT_MS = 60000;
+
+      // Resolve the real UI outcome, whichever settles first.
+      // Path A: returning user → direct nav
+      // Path B: server error banner (wrong creds)
+      // Path C: client-side required-field validation (empty submit)
+      // Path D: first-login workspace setup → progress bar (15-45s) → "Buka workspace" button → nav
+      // Playwright waitFor polls internally, satisfies "check every second".
+      outcome = await Promise.race([
+        this.page
+          .waitForURL(/\/conversation\/your-inbox/, { timeout: NAV_TIMEOUT_MS })
+          .then(() => 'success')
+          .catch(() => null),
+        this.loginErrorMessage
+          .waitFor({ state: 'visible', timeout: NAV_TIMEOUT_MS })
+          .then(() => 'failed')
+          .catch(() => null),
+        Promise.race([
+          this.keywordRequiredMessage.waitFor({ state: 'visible', timeout: NAV_TIMEOUT_MS }),
+          this.passwordRequiredMessage.waitFor({ state: 'visible', timeout: NAV_TIMEOUT_MS }),
+        ])
+          .then(() => 'invalid')
+          .catch(() => null),
+        (async () => {
+          try {
+            await this.openWorkspaceButton.waitFor({ state: 'visible', timeout: NAV_TIMEOUT_MS });
+            await this.openWorkspaceButton.click();
+            await this.page.waitForURL(/\/conversation\/your-inbox/, { timeout: NAV_TIMEOUT_MS });
+            return 'success';
+          } catch {
+            return null;
+          }
+        })(),
+      ]);
+    } finally {
+      this.page.off('response', onResponse);
     }
+
+    const uiErrorText =
+      outcome === 'failed'
+        ? (await this.loginErrorMessage.textContent().catch(() => null))
+        : null;
+
+    const result = {
+      success: outcome === 'success',
+      apiStatus: loginResponse ? loginResponse.status() : null,
+      apiOk: loginResponse ? loginResponse.ok() : false,
+      uiError: uiErrorText ? uiErrorText.trim() : null,
+    };
+
+    if (expectSuccess && !result.success) {
+      throw new Error(
+        `Login failed for "${identifier}": apiStatus=${result.apiStatus}, ` +
+          `apiOk=${result.apiOk}, uiError=${JSON.stringify(result.uiError)}`
+      );
+    }
+
+    return result;
   }
 
   async loginWithCredentials(credentials, options = {}) {

@@ -1,0 +1,653 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright.config.js",
+    "rootDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e\\conversation\\empty-state.spec.js",
+      "file": "e2e/conversation/empty-state.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Conversation Empty State Tests",
+          "file": "e2e/conversation/empty-state.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "accessing conversation page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 252,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:20.395Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-246b71d36d4e8d74fd74",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 24,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 195,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:20.769Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-b8c725f9940bfe162ddd",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - unassigned",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 183,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:20.973Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-e1e425d78d6ae312e488",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - all inbox",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 198,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:21.172Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-8ba4af83f140ab4cbe06",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - starred",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 158,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:21.379Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-25697b029f513f57a13e",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - spam",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 155,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:21.545Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-7c179f28b3b738852edd",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - junk",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 188,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:21.708Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-b82506d5ad51db08439d",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox - validate empty state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 175,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:21.905Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-9653af140cc5edad4582",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 53,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox - validate title section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 168,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:22.097Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-c2e7db76659669606e40",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "accessing conversation page - your inbox - testing filter component placement and visibility",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 171,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:45:22.273Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Dedicated empty-state account is only configured for prod in current Playwright test data.",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\empty-state.spec.js",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3275451d08b4b7e4b647-aa5552ebb7ce99306ccc",
+              "file": "e2e/conversation/empty-state.spec.js",
+              "line": 64,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-15T12:45:19.790Z",
+    "duration": 2750.809,
+    "expected": 0,
+    "skipped": 10,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

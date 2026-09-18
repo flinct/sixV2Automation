@@ -1,0 +1,967 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright.config.js",
+    "rootDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e\\conversation\\chat-list.spec.js",
+      "file": "e2e/conversation/chat-list.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Chat List Validation Tests",
+          "file": "e2e/conversation/chat-list.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display chat list container on inbox page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 40913,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:21:09.309Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-c23ddcf30365106e965b",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should display chat list items when chats exist",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 35609,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:21:50.406Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d123e1adab61a436a12f",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "should show all inbox section navigation buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 35778,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:22:26.031Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-ccceb410e49d09c3bacf",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "should show all available channel navigation buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20599,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:23:01.822Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d42b457559bf287f46cc",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 38,
+              "column": 3
+            },
+            {
+              "title": "should navigate to your-inbox and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 30987,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:23:22.436Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-90166ccfbe31c29f93d2",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to unassigned and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 30173,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:23:53.436Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-93da5bdc2dca1b0f4154",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to all and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 23108,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:24:23.623Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-fb9aaeb840c45d886b9b",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to spam and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 43921,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:24:46.745Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-971a5e33ec90f1b25068",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to starred and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 41383,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:25:30.678Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d119a46a9b8569a03441",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should navigate to junk and update chat list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44835,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:26:12.073Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-9421ce2babedbc1c36f8",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 53,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: widget",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "widget channel not available or has no chats",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                        "line": 63,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 42486,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:26:56.920Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "widget channel not available or has no chats",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                            "line": 63,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-69b99cd38eec947c28ba",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: whatsapp_api",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "whatsapp_api channel not available or has no chats",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                        "line": 63,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 37291,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:27:39.418Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "whatsapp_api channel not available or has no chats",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                            "line": 63,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-311e8c0f034eca094506",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: whatsapp_web",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "whatsapp_web channel not available or has no chats",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                        "line": 63,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 42855,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:28:16.722Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "whatsapp_web channel not available or has no chats",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                            "line": 63,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-0a64f552fbf20808a427",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: instagram",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "instagram channel not available or has no chats",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                        "line": 63,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 45592,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:28:59.597Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "instagram channel not available or has no chats",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                            "line": 63,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-b0baedd605564aef96a6",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: facebook_messenger",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "facebook_messenger channel not available or has no chats",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                        "line": 63,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 36331,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:29:45.223Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "facebook_messenger channel not available or has no chats",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                            "line": 63,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-251143335431dc5be48c",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: email",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "email channel not available or has no chats",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                        "line": 63,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 24077,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:30:21.590Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "email channel not available or has no chats",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                            "line": 63,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-72b29240fe853a3551b1",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should filter chat list by channel: telegram",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "telegram channel not available or has no chats",
+                      "location": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                        "line": 63,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 39979,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:30:45.705Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "telegram channel not available or has no chats",
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\chat-list.spec.js",
+                            "line": 63,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-01dd833857fae0df421d",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 61,
+              "column": 5
+            },
+            {
+              "title": "should open chat on click and show chat room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 48050,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:31:25.732Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-a78ad2655d05a0e2b7a9",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 67,
+              "column": 3
+            },
+            {
+              "title": "should show chat list title on page load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25383,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:32:13.830Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-1c164992b8e737a8a1ed",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 72,
+              "column": 3
+            },
+            {
+              "title": "should switch between multiple nav sections",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 62797,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:32:39.249Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-d95b7aae751fc70b4eec",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 77,
+              "column": 3
+            },
+            {
+              "title": "should navigate via sidebar button click",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 36372,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-16T05:33:42.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6210c07bd42188ca47e5-f20774b53f4c806d1098",
+              "file": "e2e/conversation/chat-list.spec.js",
+              "line": 86,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-16T05:21:08.638Z",
+    "duration": 790000.333,
+    "expected": 14,
+    "skipped": 7,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

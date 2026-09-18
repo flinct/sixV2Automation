@@ -174,7 +174,7 @@ playwright/
 | `conversation/inbox.spec.js` | 10 | Legacy nav + multi-channel |
 | `conversation/empty-state.spec.js` | 10 | Empty states per nav |
 | `conversation/inbound-outbound.spec.js` | 6 | Outbound per channel, inbound, multi-msg |
-| `conversation/sla-metrics.spec.js` | 3 | Detail panel, SLA badge, close button |
+| `conversation/sla-metrics.spec.js` | 11 | SLA metrics: FRT/RLT/TTC/Wait-Time values + badge + close. 8 new tests (714-721): RLT/Wait-Time label render, no-breach, non-negative, missing-T2, internal-only, coexist |
 | `conversation/agent-validation.spec.js` | 4 | Status, team inbox, channel source, conv ID |
 | `conversation/conversation-history.spec.js` | 4 | History section, items, empty state |
 | `conversation/endpoint-detect.spec.js` | 1 | API endpoint capture |
@@ -195,14 +195,15 @@ playwright/
 | `ticket/linked-bubble.spec.js` | 45 | Linked bubble: existing (4 active + 3 fixme) + append (5 active) + remove (4 active) + navigation (2 active) + sync (9 fixme) + concurrency (5 fixme) + regression (7 active + 1 fixme) + data integrity (5 fixme) |
 | `conversation/conversation-sync.spec.js` | 0 | DEPRECATED — replaced by 6 convo-*.spec.js files below |
 | `conversation/convo-list-overview.spec.js` | 31 | TC 001-031: conversation list UI, icons, indicators, ellipsis. Active: 001,002,019,022,023,025,026,027,028,029,030,031. fixme: 003-018,020-021,024 (require device/test data) |
-| `conversation/convo-room.spec.js` | 284 | TC 032-315: set reminder (UNDEVELOPED), message input all types, bubble chat, media, delivery, typing |
-| `conversation/convo-detail-panel.spec.js` | 167 | TC 316-482: conversation details + all accordion groups |
+| `conversation/convo-room.spec.js` | 284 | TC 032-315: message input all types, bubble chat, media, delivery, typing. 8 active (056,058,060-061,064-065,068,069), 276 fixme. set reminder tagged [UNDEVELOPED] |
+| `conversation/convo-detail-panel.spec.js` | 174 | TC 316-482 + 740-752: conversation details + all accordion groups. 14 active (340,341,346,362,365,366,368,740-743,750-752), 160 fixme |
 | `conversation/convo-nav.spec.js` | 74 | TC 483-545, 688-698: inbox/unassigned/all/starred/spam/group/channel/team/junk nav |
 | `conversation/convo-list-features.spec.js` | 118 | TC 546-663: list title, status filter, read/unread, sort, advance filter, combining filter, item behavior |
 | `conversation/convo-supplement.spec.js` | 39 | TC 664-713: gap supplement — Chat List, Room, Get New Conversation, Group Handling |
+| `conversation/convo-ownership.spec.js` | 7 | TC 730-736: Ownership Decoupling — sticky binding, remap routing, bulk remap, manual move banner, reopen modal, escalation-only inbox, sender picker |
 
-**Total: 187 active tests + 713 convo spec stubs (fixme), 29 files**
-**Note:** All 713 convo-*.spec.js tests are currently `test.fixme` stubs. Nav tests (convo-nav.spec.js) have InboxPage call scaffolding ready — implement assertions to activate.
+**Total: 224 active tests + 698 convo spec stubs (fixme), 30 files**
+**Note:** convo-*.spec.js stubs are `test.fixme` placeholders from TSV. convo-room has 8 active (P0 message-input happy-path). convo-ownership (7) and sla-metrics (+8) are new coverage for Ownership Decoupling and RLT/Wait-Time SLA. convo-detail-panel has 14 active (7 activated stubs + 7 new for custom-attrs admin CRUD and member drawer HUD). Nav tests (convo-nav.spec.js) have InboxPage call scaffolding ready — implement assertions to activate.
 
 ## Config
 | File | Content |

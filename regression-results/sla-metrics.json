@@ -1,0 +1,605 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright.config.js",
+    "rootDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/MyBook SAGA 12/Desktop/sixV2Automation/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e\\conversation\\sla-metrics.spec.js",
+      "file": "e2e/conversation/sla-metrics.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "SLA Metrics Tests - FRT/RLT/TTC/Wait Time",
+          "file": "e2e/conversation/sla-metrics.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should open chat room with conversation detail visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 61808,
+                      "error": {
+                        "message": "Error: Login failed for \"cekerayam01\": apiStatus=null, apiOk=false, uiError=null",
+                        "stack": "Error: Login failed for \"cekerayam01\": apiStatus=null, apiOk=false, uiError=null\n    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:156:13)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\sla-metrics.spec.js:18:5",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
+                          "column": 13,
+                          "line": 156
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m..\\support\\pages\\auth.page.js:156\n\n\u001b[0m \u001b[90m 154 |\u001b[39m\n \u001b[90m 155 |\u001b[39m     \u001b[36mif\u001b[39m (expectSuccess \u001b[33m&&\u001b[39m \u001b[33m!\u001b[39mresult\u001b[33m.\u001b[39msuccess) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 156 |\u001b[39m       \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\n \u001b[90m     |\u001b[39m             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 157 |\u001b[39m         \u001b[32m`Login failed for \"${identifier}\": apiStatus=${result.apiStatus}, `\u001b[39m \u001b[33m+\u001b[39m\n \u001b[90m 158 |\u001b[39m           \u001b[32m`apiOk=${result.apiOk}, uiError=${JSON.stringify(result.uiError)}`\u001b[39m\n \u001b[90m 159 |\u001b[39m       )\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
+                            "column": 13,
+                            "line": 156
+                          },
+                          "message": "Error: Login failed for \"cekerayam01\": apiStatus=null, apiOk=false, uiError=null\n\n   at ..\\support\\pages\\auth.page.js:156\n\n  154 |\n  155 |     if (expectSuccess && !result.success) {\n> 156 |       throw new Error(\n      |             ^\n  157 |         `Login failed for \"${identifier}\": apiStatus=${result.apiStatus}, ` +\n  158 |           `apiOk=${result.apiOk}, uiError=${JSON.stringify(result.uiError)}`\n  159 |       );\n    at AuthPage.login (C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js:156:13)\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\sla-metrics.spec.js:18:5"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T12:58:29.408Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-ff1ea-conversation-detail-visible-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-ff1ea-conversation-detail-visible-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-ff1ea-conversation-detail-visible-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\support\\pages\\auth.page.js",
+                        "column": 13,
+                        "line": 156
+                      }
+                    },
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 28804,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-08-15T12:59:31.874Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-ff1ea-conversation-detail-visible-chromium-retry1\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "flaky"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-f9ab8d0437628ca37dd8",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should show SLA badge on conversation card in list",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31184,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:00:01.079Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-47a8002e74b3a986ca5f",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "should show close or reopen button when chat opened",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 41304,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\sla-metrics.spec.js:40:35",
+                        "location": {
+                          "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\sla-metrics.spec.js",
+                          "column": 35,
+                          "line": 40
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 38 |\u001b[39m     \u001b[36mconst\u001b[39m hasClose \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m inboxPage\u001b[33m.\u001b[39mcloseButton\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 39 |\u001b[39m     \u001b[36mconst\u001b[39m hasReopen \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m inboxPage\u001b[33m.\u001b[39mreopenButton\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 40 |\u001b[39m     expect(hasClose \u001b[33m||\u001b[39m hasReopen)\u001b[33m.\u001b[39mtoBeTruthy()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 41 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 42 |\u001b[39m\n \u001b[90m 43 |\u001b[39m   \u001b[90m// --- RLT / Wait-Time metric VALUES (PRD: Conversation & Ticket Response Metrics Tracking) ---\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\sla-metrics.spec.js",
+                            "column": 35,
+                            "line": 40
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  38 |     const hasClose = await inboxPage.closeButton.isVisible().catch(() => false);\n  39 |     const hasReopen = await inboxPage.reopenButton.isVisible().catch(() => false);\n> 40 |     expect(hasClose || hasReopen).toBeTruthy();\n     |                                   ^\n  41 |   });\n  42 |\n  43 |   // --- RLT / Wait-Time metric VALUES (PRD: Conversation & Ticket Response Metrics Tracking) ---\n    at C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\sla-metrics.spec.js:40:35"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:00:32.275Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-e24af-pen-button-when-chat-opened-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-e24af-pen-button-when-chat-opened-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-e24af-pen-button-when-chat-opened-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\tests\\e2e\\conversation\\sla-metrics.spec.js",
+                        "column": 35,
+                        "line": 40
+                      }
+                    },
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32075,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-08-15T13:01:14.233Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\MyBook SAGA 12\\Desktop\\sixV2Automation\\playwright\\test-results\\e2e-conversation-sla-metri-e24af-pen-button-when-chat-opened-chromium-retry1\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "flaky"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-53135267a8e0fd9e2496",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 36,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-714] Wait Time metric (\"Waktu Antre\") renders in conversation detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 45738,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:01:46.769Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-6e4ed22dc7794698484f",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-715] RLT metric (\"Waktu Kerja Staf\") renders in conversation detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25859,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:02:32.518Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-2e17a32907968c2fb1f3",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 57,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-716] RLT and Wait-Time are informational — no breach badge on these two metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 33120,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:02:58.387Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-99cafb748dc619e221c1",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 67,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-717] Missing assignment shows RLT \"Belum tersedia\" and never a negative duration",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 45685,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:03:31.516Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-be0a72940129f69fc764",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 86,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-718] Internal-only conversation shows RLT/Wait as \"Tidak berlaku\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 48585,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:04:17.211Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-f295c809fddc304e9d1c",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-719] Wait Time value, when present, is a non-negative duration",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 45036,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:05:05.806Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-9e694ccb3e7df1532adb",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 108,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-720] RLT value, when present, is a non-negative duration",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 53514,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:05:50.854Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-c9d076f072f6265529ba",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 118,
+              "column": 3
+            },
+            {
+              "title": "[SIX-Convo-721] FRT, RLT, TTC and Wait-Time metric rows coexist in the detail panel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 37069,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-15T13:06:44.381Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57430eed5bd8918d6d63-7047ded979951fe24071",
+              "file": "e2e/conversation/sla-metrics.spec.js",
+              "line": 128,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-15T12:58:28.856Z",
+    "duration": 532759.52,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 2
+  }
+}
